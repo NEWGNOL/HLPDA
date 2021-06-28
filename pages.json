@@ -1,0 +1,95 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/login/login",			
+			"style": {
+				"navigationBarTitleText": "登录界面",
+				"app-plus":{
+					"titleNView":{
+						"titleColor":"FFFFFF"
+					}
+				}
+			}			
+		},
+		{
+			"path": "pages/main/main",
+			"style": {
+				"navigationBarTitleText": "主界面",
+				"app-plus":{
+					"titleNView":{
+						"titleColor":"FFFFFF"
+					}
+				}
+			}			
+		},
+		{
+			"path": "pages/binding/binding",
+			"style": {
+				"navigationBarTitleText": "装箱绑定",
+				"app-plus": {
+				                    "titleNView": {	
+										"titleColor":"FFFFFF",
+				                        "buttons": [{
+				                            "text": "扫描外箱",
+				                            "fontSrc": "/static/fonts/icomoon.ttf",
+				                            "fontSize": "17px",
+											"color":"#FFFFFF",
+				                            "float": "right",
+				                            "width": "90px"											
+				                        }]
+				                    }
+				                }		
+			}			
+		},	
+		{
+			"path": "pages/proreport/proreport",
+			"style": {
+				"navigationBarTitleText": "生产汇报",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF"
+					 }
+			    }
+			}			
+		},
+		{
+			"path": "pages/proreport/proreportadd",
+			"style": {
+				"navigationBarTitleText": "新增生产汇报",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF"
+					 }
+			    }
+			}			
+		},
+		{
+			"path": "pages/proreport/teamquery",
+			"style": {
+				"navigationBarTitleText": "班组查询",
+				"app-plus":{
+					"titleNView":{
+						"titleColor":"FFFFFF"
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/proreport/workshopquery",
+			"style": {
+				"navigationBarTitleText": "车间查询",
+				"app-plus":{
+					"titleNView":{
+						"titleColor":"FFFFFF"
+					}
+				}
+			}
+		}	   
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#007AFF",
+		"backgroundColor": "#007AFF"
+	}
+}
