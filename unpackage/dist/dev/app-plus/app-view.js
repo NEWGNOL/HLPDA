@@ -2278,6 +2278,7 @@ var components
 try {
   components = {
     uniIcons: __webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 44).default,
+    cmdProgress: __webpack_require__(/*! @/components/cmd-progress/cmd-progress.vue */ 25).default,
     uniBadge: __webpack_require__(/*! @/components/uni-badge/uni-badge.vue */ 54).default
   }
 } catch (e) {
@@ -2391,7 +2392,18 @@ var render = function() {
                         { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
                         [_vm._v(_vm._$g(12, "t0-0"))]
                       )
-                    : _vm._e()
+                    : _vm._e(),
+                  _c("cmd-progress", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm._$g(13, "v-show"),
+                        expression: "_$g(13,'v-show')"
+                      }
+                    ],
+                    attrs: { _i: 13 }
+                  })
                 ],
                 1
               ),
@@ -2399,7 +2411,7 @@ var render = function() {
                 "v-uni-checkbox-group",
                 {
                   staticStyle: { "justify-content": "right" },
-                  attrs: { _i: 13 },
+                  attrs: { _i: 14 },
                   on: {
                     change: function($event) {
                       return _vm.$handleViewEvent($event)
@@ -2412,14 +2424,14 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm._$g(14, "v-show"),
-                        expression: "_$g(14,'v-show')"
+                        value: _vm._$g(15, "v-show"),
+                        expression: "_$g(15,'v-show')"
                       }
                     ],
                     attrs: {
-                      value: _vm._$g(14, "a-value"),
-                      checked: _vm._$g(14, "a-checked"),
-                      _i: 14
+                      value: _vm._$g(15, "a-value"),
+                      checked: _vm._$g(15, "a-checked"),
+                      _i: 15
                     }
                   })
                 ],
@@ -2431,34 +2443,34 @@ var render = function() {
           _vm._t(
             "footer",
             [
-              _vm._$g(16, "i")
+              _vm._$g(17, "i")
                 ? _c(
                     "v-uni-view",
                     {
-                      staticClass: _vm._$g(16, "sc"),
-                      class: _vm._$g(16, "c"),
-                      attrs: { _i: 16 }
+                      staticClass: _vm._$g(17, "sc"),
+                      class: _vm._$g(17, "c"),
+                      attrs: { _i: 17 }
                     },
                     [
-                      _vm._$g(17, "i")
+                      _vm._$g(18, "i")
                         ? _c(
                             "v-uni-text",
                             {
-                              staticClass: _vm._$g(17, "sc"),
-                              attrs: { _i: 17 }
+                              staticClass: _vm._$g(18, "sc"),
+                              attrs: { _i: 18 }
                             },
-                            [_vm._v(_vm._$g(17, "t0-0"))]
+                            [_vm._v(_vm._$g(18, "t0-0"))]
                           )
                         : _vm._e(),
-                      _vm._$g(18, "i")
-                        ? _c("uni-badge", { attrs: { _i: 18 } })
-                        : _vm._e(),
                       _vm._$g(19, "i")
+                        ? _c("uni-badge", { attrs: { _i: 19 } })
+                        : _vm._e(),
+                      _vm._$g(20, "i")
                         ? _c("v-uni-switch", {
                             attrs: {
-                              disabled: _vm._$g(19, "a-disabled"),
-                              checked: _vm._$g(19, "a-checked"),
-                              _i: 19
+                              disabled: _vm._$g(20, "a-disabled"),
+                              checked: _vm._$g(20, "a-checked"),
+                              _i: 20
                             },
                             on: {
                               change: function($event) {
@@ -2472,13 +2484,13 @@ var render = function() {
                   )
                 : _vm._e()
             ],
-            { _i: 15 }
+            { _i: 16 }
           )
         ],
         2
       ),
-      _vm._$g(20, "i")
-        ? _c("uni-icons", { staticClass: _vm._$g(20, "sc"), attrs: { _i: 20 } })
+      _vm._$g(21, "i")
+        ? _c("uni-icons", { staticClass: _vm._$g(21, "sc"), attrs: { _i: 21 } })
         : _vm._e()
     ],
     1
@@ -3482,6 +3494,7 @@ var render = function() {
             "v-uni-scroll-view",
             {
               staticClass: _vm._$g(27, "sc"),
+              class: _vm._$g(27, "c"),
               attrs: { "scroll-y": "true", _i: 27 }
             },
             [
@@ -3586,62 +3599,69 @@ var render = function() {
         1
       ),
       _c(
-        "v-uni-text",
-        {
-          staticClass: _vm._$g(36, "sc"),
-          class: _vm._$g(36, "c"),
-          attrs: { _i: 36 },
-          on: {
-            click: function($event) {
-              return _vm.$handleViewEvent($event)
-            }
-          }
-        },
-        [_vm._v("汇总")]
-      ),
-      _c("v-uni-view", {
-        staticClass: _vm._$g(37, "sc"),
-        class: _vm._$g(37, "c"),
-        attrs: { _i: 37 }
-      }),
-      _c(
-        "v-uni-text",
-        {
-          staticClass: _vm._$g(38, "sc"),
-          class: _vm._$g(38, "c"),
-          attrs: { _i: 38 },
-          on: {
-            click: function($event) {
-              return _vm.$handleViewEvent($event)
-            }
-          }
-        },
-        [_vm._v("单据")]
-      ),
-      _c("v-uni-view", {
-        staticClass: _vm._$g(39, "sc"),
-        class: _vm._$g(39, "c"),
-        attrs: { _i: 39 }
-      }),
-      _c(
-        "v-uni-text",
-        {
-          staticClass: _vm._$g(40, "sc"),
-          class: _vm._$g(40, "c"),
-          attrs: { _i: 40 },
-          on: {
-            click: function($event) {
-              return _vm.$handleViewEvent($event)
-            }
-          }
-        },
-        [_vm._v("明细")]
-      ),
-      _c("v-uni-view", {
-        staticClass: _vm._$g(41, "sc"),
-        class: _vm._$g(41, "c"),
-        attrs: { _i: 41 }
-      })
+        "v-uni-view",
+        { staticClass: _vm._$g(36, "sc"), attrs: { _i: 36 } },
+        [
+          _c(
+            "v-uni-text",
+            {
+              staticClass: _vm._$g(37, "sc"),
+              class: _vm._$g(37, "c"),
+              attrs: { _i: 37 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [_vm._v("汇总")]
+          ),
+          _c("v-uni-view", {
+            staticClass: _vm._$g(38, "sc"),
+            class: _vm._$g(38, "c"),
+            attrs: { _i: 38 }
+          }),
+          _c(
+            "v-uni-text",
+            {
+              staticClass: _vm._$g(39, "sc"),
+              class: _vm._$g(39, "c"),
+              attrs: { _i: 39 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [_vm._v("单据")]
+          ),
+          _c("v-uni-view", {
+            staticClass: _vm._$g(40, "sc"),
+            class: _vm._$g(40, "c"),
+            attrs: { _i: 40 }
+          }),
+          _c(
+            "v-uni-text",
+            {
+              staticClass: _vm._$g(41, "sc"),
+              class: _vm._$g(41, "c"),
+              attrs: { _i: 41 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [_vm._v("明细")]
+          ),
+          _c("v-uni-view", {
+            staticClass: _vm._$g(42, "sc"),
+            class: _vm._$g(42, "c"),
+            attrs: { _i: 42 }
+          })
+        ],
+        1
+      )
     ],
     1
   )
@@ -4032,7 +4052,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.content {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\t-webkit-box-orient: vertical;\n\t-webkit-box-direction: normal;\n\t-webkit-flex-direction: column;\n\t        flex-direction: column;\n\t-webkit-box-align: center;\n\t-webkit-align-items: center;\n\t        align-items: center;\n\t-webkit-box-pack: center;\n\t-webkit-justify-content: center;\n\t        justify-content: center;\n}\n.addproreport{\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50rpx;\n\tmargin-left: 20rpx;\n\tmargin-top: 50rpx;\n}\n.auditproreport{\t\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\t\t\n\tborder-radius: 50rpx;\n\tmargin-left: 200rpx;\n\tmargin-top: -96rpx;\n}\n.unauditproreport{\t\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50rpx;\n\tmargin-left: 380rpx;\n\tmargin-top: -96rpx;\n}\n.hidebillhead{\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50rpx;\n\tmargin-left: 560rpx;\n\tmargin-top: -96rpx;\n}\n.billhead{\n\twidth: 100%;\t\t\n\tmargin-top: 50rpx;\n}\n.title {\t\n\tdisplay: -webkit-box;\t\n\tdisplay: -webkit-flex;\t\n\tdisplay: flex;\t\t\n\tmargin-left:50rpx;\n\tfont-size: 40rpx;\n}\n.billnodata{\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\twidth: 200rpx;\n\tfont-size: 40rpx;\n\tmargin-top: -60rpx;\n\tmargin-left: 300rpx;\n\ttext-align: center;\n}\n.data {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\twidth: 250rpx;\n\tfont-size: 40rpx;\n\tmargin-top: -60rpx;\n\tmargin-left: 370rpx;\t\n    text-align: center;\n}\n.dataline {\n\twidth: 60%;\n\theight: 5rpx;\n\tbackground-color:#4CD964;\n\tmargin-left: 250rpx;\n}\n.proreportview {\t\n\twidth: 100%;\n\theight: 950rpx;\n}\n.sumscrollview {\n\twidth: 100%;\n\theight: 950rpx;\n}\n.infoscrollview{\n\twidth: 100%;\n\theight: 550rpx;\n\tmargin-top: 50rpx;\n}\n.detailscrollview {\n\twidth: 100%;\n\theight: 850rpx;\n\tmargin-top: 20rpx;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline{\n\tbackground-color: #007AFF;\n}\n.tableft {\n\tposition: absolute;\n\tfont-size: 40rpx;\n\tmargin-top: 650rpx;\n\tmargin-left: -270rpx;\n}\n.tabmiddle {\n\tposition: absolute;\n\tfont-size: 40rpx;\n\tmargin-top: 650rpx;\n}\n.tabright {\t\n\tposition: absolute;\n\tfont-size: 40rpx;\n\tmargin-top: 650rpx;\n\tmargin-left: 270rpx;\n}\n.tableftline {\t\n\tposition: absolute;\n\twidth: 20%;\n\theight: 5rpx;\n\tmargin-top: 680rpx;\n\tmargin-left: -270rpx;\n}\n.tabmiddleline {\n\tposition: absolute;\n\twidth: 20%;\n\theight: 5rpx;\n\tmargin-top: 680rpx;\n}\n.tabrightline {\t\t\n\tposition: absolute;\n\twidth: 20%;\n\theight: 5rpx;\n\tmargin-top: 680rpx;\n\tmargin-left: 270rpx;\n}\n.search {\n\twidth: 90%;\n\tmargin-left: 10rpx;\n}\n.selectlabel{\n\twidth: 30%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\t\t\n\tborder-radius: 50rpx;\n\tmargin-left: 150rpx;\n\tmargin-top: 20rpx;\n}\n.deletelabel{\t\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50rpx;\n\tmargin-right: 150rpx;\n\tmargin-top: -95rpx;\n}\n", ""]);
+exports.push([module.i, "\n.content {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\t-webkit-box-orient: vertical;\n\t-webkit-box-direction: normal;\n\t-webkit-flex-direction: column;\n\t        flex-direction: column;\n\t-webkit-box-align: center;\n\t-webkit-align-items: center;\n\t        align-items: center;\n\t-webkit-box-pack: center;\n\t-webkit-justify-content: center;\n\t        justify-content: center;\n}\n.addproreport{\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50rpx;\n\tmargin-left: 20rpx;\n\tmargin-top: 50rpx;\n}\n.auditproreport{\t\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\t\t\n\tborder-radius: 50rpx;\n\tmargin-left: 200rpx;\n\tmargin-top: -96rpx;\n}\n.unauditproreport{\t\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50rpx;\n\tmargin-left: 380rpx;\n\tmargin-top: -96rpx;\n}\n.hidebillhead{\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50rpx;\n\tmargin-left: 560rpx;\n\tmargin-top: -96rpx;\n}\n.billhead{\n\twidth: 100%;\t\t\n\tmargin-top: 50rpx;\n}\n.title {\t\n\tdisplay: -webkit-box;\t\n\tdisplay: -webkit-flex;\t\n\tdisplay: flex;\t\t\n\tmargin-left:50rpx;\n\tfont-size: 40rpx;\n}\n.billnodata{\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\twidth: 200rpx;\n\tfont-size: 40rpx;\n\tmargin-top: -60rpx;\n\tmargin-left: 300rpx;\n\ttext-align: center;\n}\n.data {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\twidth: 250rpx;\n\tfont-size: 40rpx;\n\tmargin-top: -60rpx;\n\tmargin-left: 370rpx;\t\n    text-align: center;\n}\n.dataline {\n\twidth: 60%;\n\theight: 5rpx;\n\tbackground-color:#4CD964;\n\tmargin-left: 250rpx;\n}\n.proreportview {\t\n\twidth: 100%;\n\theight: 950rpx;\n}\n.sumscrollview {\n\twidth: 100%;\n\theight: 950rpx;\n}\n.unselectinfoscrollview{\n\twidth: 100%;\n\theight: 550rpx;\n\tmargin-top: 50rpx;\n}\n.selectinfoscrollview{\n\twidth: 100%;\n\theight: 850rpx;\n\tmargin-top: 50rpx;\n}\n.detailscrollview {\n\twidth: 100%;\n\theight: 850rpx;\n\tmargin-top: 20rpx;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline{\n\tbackground-color: #007AFF;\n}\n.tabbackground{\n\tposition: absolute;\n\twidth: 100%;\n\theight: 100rpx;\n\tmargin-top: 660rpx;\n\tbackground-color: #F4F4F4;\n}\n.tableft {\t\n\tposition: absolute;\n\tfont-size: 45rpx;\n\tmargin-top: 20rpx;\t\n\tmargin-left: 40rpx;\n}\n.tabmiddle {\n\tposition: absolute;\n\tfont-size: 45rpx;\n\tmargin-top: 20rpx;\t\n\tmargin-left: 330rpx;\n}\n.tabright {\t\n\tposition: absolute;\n\tfont-size: 45rpx;\n\tmargin-top: 20rpx;\n\tmargin-left: 630rpx;\n}\n.tableftline {\t\n\tposition: absolute;\n\twidth: 15%;\n\theight: 5rpx;\n\tmargin-top: 80rpx;\n\tmargin-left: 30rpx;\n}\n.tabmiddleline {\n\tposition: absolute;\n\twidth: 15%;\n\theight: 5rpx;\t\n\tmargin-top: 80rpx;\n\tmargin-left: 320rpx;\n}\n.tabrightline {\t\t\n\tposition: absolute;\n\twidth: 15%;\n\theight: 5rpx;\n\tmargin-top: 80rpx;\n\tmargin-left: 620rpx;\n}\n.search {\n\twidth: 90%;\n\tmargin-left: 20rpx;\n}\n.selectlabel{\n\twidth: 30%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\t\t\n\tborder-radius: 50rpx;\n\tmargin-left: 150rpx;\n\tmargin-top: 20rpx;\n}\n.deletelabel{\t\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50rpx;\n\tmargin-right: 150rpx;\n\tmargin-top: -95rpx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 

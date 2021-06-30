@@ -5,8 +5,8 @@
 
 		<scroll-view class="scrollview" scroll-y="true">
 			<uni-list>
-				<uni-list-item v-for="(item,index) in WorkShopList" :key="index" :title="item.FName" clickable
-				:isshowcheckbox="false"	@click="ItemSelected(item)"></uni-list-item>
+				<uni-list-item v-for="(item,index) in WorkShopList" :key="index" :title="item.FNumber + '     ' + item.FName" clickable
+				:isshowcheckbox="false"	:isshowprogress="false" @click="ItemSelected(item)"></uni-list-item>
 			</uni-list>
 		</scroll-view>
 		
@@ -43,18 +43,16 @@
 						ModuleCode: 'getDeptList',
 						token: uni.getStorageSync('token'),
 						ModuleParam: {
-							FName: this.SearchValue
+							FName: this.SearchValue,
+							FNumber: this.SearchValue
 						}
 					},
-					success: (result) => {
-						let DataArray = result.data.ResultData.DeptListInfo.data0;
-						if(DataArray != 'undefined')
-						{
-						   this.WorkShopList = DataArray;
-						}
+					success: (result) => {						
+						this.WorkShopList = result.data.ResultData.DeptListInfo.data0;						
 					},
 					fail: () => {
 						Config.ShowMessage('请求失败！');	
+						Config.PopAudioContext();
 					}
 				});
 				uni.hideLoading();

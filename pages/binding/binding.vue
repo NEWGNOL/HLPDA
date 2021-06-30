@@ -28,7 +28,8 @@
 		<scroll-view class="scrollview" v-show="!IsShowBindingView" scroll-y="true">
 			<uni-list class="detaillist">
 				<uni-list-item v-for="(item,index) in DetailListData" :key="index" :title="'内箱标签：' + item.FBarCode + '\n' + '数量：' + item.FQty"
-				:checkboxvalue="item.FBarCode" :ischecked="item.FIsChecked" @CheckBoxChange="ChangeIsChecked(item)" clickable></uni-list-item>
+				:checkboxvalue="item.FBarCode" :ischecked="item.FIsChecked" :isshowprogress="false" @CheckBoxChange="ChangeIsChecked(item)" 
+				clickable></uni-list-item>
 			</uni-list>		
 		</scroll-view>		
 		
@@ -137,26 +138,34 @@
 							FBarCode: this.Label
 						}
 					},
-					success: (result) => {							
+					success: (result) => {	
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+						{						
+							Config.ShowMessage('账号登录异常，请重新登录！');	
+							Config.PopAudioContext();
+							return;
+						}						
 						let DataArray = result.data.ResultData.LabelInfo.data0;							
 			            if(DataArray.length == 0)
 						{
 							Config.ShowMessage('此外箱不存在，请重新扫描外箱条码！');	
 							Config.PopAudioContext();
 							return;
-						}											
+						}																	
 					    if(!DataArray[0].FIsPack)
 						{
 							Config.ShowMessage(this.Label + '不是外箱条码，请重新扫描外箱条码！');
 							Config.PopAudioContext();
 							return;
-						}						
+						}											
 						if(this.IsPack && this.InnerCartonLabelCount !=0 && this.ScannerLabelCount !=0 && this.InnerCartonLabelCount == this.ScannerLabelCount)							
 						{							
 							Config.ShowMessage('内箱已满，请扫描其它外箱！');	
 							Config.PopAudioContext();
 							return;
-						}						
+						}
 						this.IsPack = DataArray[0].FIsPack;						
 						this.CartonLabel = this.Label;
 						this.InnerCartonLabelCount = DataArray[0].FMaxlabelCount;
@@ -209,6 +218,14 @@
 											}
 										},
 										success: (resdetail) => {
+											let ResultCode = resdetail.data.ResultCode;
+											let ResultMsg = resdetail.data.ResultMsg;
+											if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+											{						
+												Config.ShowMessage('账号登录异常，请重新登录！');	
+												Config.PopAudioContext();
+												return;
+											}											
 											me.DetailListData = resdetail.data.ResultData.LabelInfo.data0;						                           
 										},
 										fail: () => {
@@ -243,7 +260,15 @@
 							FBarCode: this.Label
 						}
 					},
-					success: (result) => {							
+					success: (result) => {	
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+						{						
+							Config.ShowMessage('账号登录异常，请重新登录！');	
+							Config.PopAudioContext();
+							return;
+						}							
 						let DataModel = result.data.ResultData.Binding10_2Info.data0;
 						let Result = DataModel.Result;
 						if(Result == 0)
@@ -251,7 +276,7 @@
 							Config.ShowMessage(DataModel.Msg);
 							Config.PopAudioContext();
 							return;
-						}
+						}						
 						this.InnerCartonLabelCount = DataModel.FMaxlabelCount;
 						this.ScannerLabelCount = DataModel.FlabelCount;						
 						if(this.InnerCartonLabelCount != 0 && this.ScannerLabelCount != 0
@@ -279,7 +304,15 @@
 							FPackBarCode: this.CartonLabel
 						}
 					},
-					success: (result) => {							
+					success: (result) => {		
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+						{						
+							Config.ShowMessage('账号登录异常，请重新登录！');	
+							Config.PopAudioContext();
+							return;
+						}	
 					    this.DetailListData = result.data.ResultData.LabelInfo.data0;						                           
 					},
 					fail: () => {

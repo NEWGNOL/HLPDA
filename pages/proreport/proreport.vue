@@ -6,7 +6,7 @@
 		        <uni-list>
 			       <uni-list-item v-for="(item,index) in SummaryListData":key="index" :title="'车间名称：'+ item.FDeptName + '\n' + '班组名称：' + item.FTeamName
 			       + '\n' + '制单人：' + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '单据编号：' + item.FBillNo"
-			       :isshowcheckbox="false" clickable v-on:click="SummaryItemSelected(item)">
+			       :isshowcheckbox="false" :isshowprogress="false" clickable v-on:click="SummaryItemSelected(item)">
 			       </uni-list-item>
 		        </uni-list>
 		      </scroll-view>
@@ -49,12 +49,14 @@
 			<view class="dataline"></view>
 			</view>
 			
-			<scroll-view class="infoscrollview" scroll-y="true">
+			<scroll-view class="unselectinfoscrollview" v-bind:class="{selectinfoscrollview : !IsBillHeadVisible}" scroll-y="true">
 				<uni-list>
 					<uni-list-item v-for="(item,index) in InfoListData" :key="index" :title="'物料规格：' + item.FModel + '\n' 
-					+ '物料编码：' + item.FNumber + '\n' +'物料名称：'+ item.FName + '\n' + '汇总数量：' + item.FSumQty + '\n' 
-					+ '源单编号：' + item.FSrcBillNo + '\n' + '件数：' + item.FLabelCount + '\n' + '批次：' + item.FGMPBatchNo"
-					:isshowcheckbox="false" clickable v-on:click="InfoItemSelected(item)"></uni-list-item>
+					+ '物料编码：' + item.FNumber + '\n' +'物料名称：'+ item.FName + '\n' + '源单编号：' + item.FSrcBillNo
+					+ '\n' + '批次：' + item.FGMPBatchNo + '\n' + '汇总数量：' + item.FSumQty + '只/' + item.FLabelCount + '件' + '\n'
+					+ '未汇报数量：' + (item.FICMOQty - item.FSumQty)" :isshowcheckbox="false" clickable 
+					v-bind:percent="Math.round((item.FSumQty / (item.FICMOQty - item.FSumQty)) * 100, 0)" v-on:click="InfoItemSelected(item)">
+					</uni-list-item>
 				</uni-list>
 			</scroll-view>	
 		</view>
@@ -70,17 +72,19 @@
 					<uni-list-item v-for="(item,index) in DetailListData" :key="index" :title="'外箱标签：'+ item.FPackBarcode + '\n' +'物料规格：' + item.FModel + '\n' 
 					+ '物料编码：' + item.FNumber + '\n' + '物料名称：'+ item.FName + '\n' +  '数量：' + item.FQty + '\n' 
 					+ '源单编号：' + item.FSrcBillNo + '\n'"  :checkboxvalue="item.FPackBarcode" :ischecked="item.FIsChecked" 
-					@CheckBoxChange="ChangeIsChecked(item)" clickable></uni-list-item>
+					:isshowprogress="false" @CheckBoxChange="ChangeIsChecked(item)" clickable></uni-list-item>
 				</uni-list>
 			</scroll-view>	
 		</view>
 				
-		<text class="tableft" v-bind:class="{selecttab : TabSelectedIndex == 0}" v-on:click="SwitchTab(0)">汇总</text>
-		<view class="tableftline" v-bind:class="{selecttabline : TabSelectedIndex == 0}"></view>		
-		<text class="tabmiddle" v-bind:class="{selecttab : TabSelectedIndex == 1}" v-on:click="SwitchTab(1)">单据</text>
-		<view class="tabmiddleline" v-bind:class="{selecttabline : TabSelectedIndex == 1}"></view>		
-		<text class="tabright" v-bind:class="{selecttab : TabSelectedIndex == 2}" v-on:click="SwitchTab(2)">明细</text>
-		<view class="tabrightline" v-bind:class="{selecttabline : TabSelectedIndex == 2}"></view>		
+		<view class="tabbackground">
+		     <text class="tableft" v-bind:class="{selecttab : TabSelectedIndex == 0}" v-on:click="SwitchTab(0)">汇总</text>
+		     <view class="tableftline" v-bind:class="{selecttabline : TabSelectedIndex == 0}"></view>		
+		     <text class="tabmiddle" v-bind:class="{selecttab : TabSelectedIndex == 1}" v-on:click="SwitchTab(1)">单据</text>
+		     <view class="tabmiddleline" v-bind:class="{selecttabline : TabSelectedIndex == 1}"></view>		
+		     <text class="tabright" v-bind:class="{selecttab : TabSelectedIndex == 2}" v-on:click="SwitchTab(2)">明细</text>
+		     <view class="tabrightline" v-bind:class="{selecttabline : TabSelectedIndex == 2}"></view>	
+		</view>
 	</view>
 </template>
 
@@ -107,11 +111,7 @@
 				}),
 				SelectLabel:'',
 				StartDate:GetDate('start'),
-				EndDate:GetDate('end'),
-				TestData:[
-					{Name:'111'},
-					{Name:'222'}
-					     ],
+				EndDate:GetDate('end'),			
 				SummaryListData:[],
 				InfoListData: [],
 				DetailListData: [],
@@ -119,13 +119,13 @@
 				SlidingValue: 100,
 				Animation: null,
 				AnimationData: [],
-				IsStopAnimation: false,
+				IsStopAnimation: false,				
 				Main:'',
 				Receiver:''
 			}
 		},		
 	    onLoad() {	
-			this.InitAnimation();
+			//this.InitAnimation();
 			this.AddListener();			
 			this.ShowProReportSum();
 		},
@@ -212,10 +212,12 @@
 			//切换页签
 			SwitchTab:function(Index){
 				this.TabSelectedIndex = Index;
-				if(this.TabSelectedIndex == 0){
+				if(this.TabSelectedIndex == 0)
+				{
 					this.ShowProReportSum();
 				}
-				else if(this.TabSelectedIndex == 1){
+				else if(this.TabSelectedIndex == 1)
+				{
 					this.ShowProReportInfo()
 				}
 				else					
@@ -270,11 +272,21 @@
 							FBillNo:this.SearchValue,							
 						}
 					},
-					success: (result) => {							
+					success: (result) => {	
+						console.log(result.data);
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+						{						
+							Config.ShowMessage('账号登录异常，请重新登录！');	
+							Config.PopAudioContext();
+							return;
+						}						
 						this.SummaryListData = result.data.ResultData.PdaICMORptListInfo.data0;
 					},
 					fail: () => {
-						Config.ShowMessage('请求数据失败！');							
+						Config.ShowMessage('请求数据失败！');		
+	                    Config.PopAudioContext();
 					}
 				});
 			},			
@@ -316,7 +328,15 @@
 							   Msg: ''
 						}
 					},
-					success: (result) => {							
+					success: (result) => {	
+						 let ResultCode = result.data.ResultCode;
+						 let ResultMsg = result.data.ResultMsg;
+						 if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+						 {						
+						 	Config.ShowMessage('账号登录异常，请重新登录！');	
+						 	Config.PopAudioContext();
+						 	return;
+						 }						 
 						 let ResultData = result.data.ResultData.AddPdaICMORpt;
 						 let Result = ResultData.dataparam.Result;
 						 if(Result == 0)
@@ -350,6 +370,14 @@
 						}
 					},
 					success: (result) => {	
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+						{						
+							Config.ShowMessage('账号登录异常，请重新登录！');	
+							Config.PopAudioContext();
+							return;
+						}						
 						let DataModel = result.data.ResultData.PdaICMORpt.dataparam;
 						this.ProReportInterId = DataModel.FId;					
 			            this.ProReportBillNo = DataModel.FBillNo;	
@@ -362,7 +390,8 @@
 			            this.InfoListData = [];
 					},
 					fail: () => {
-						Config.ShowMessage('请求数据失败！');					
+						Config.ShowMessage('请求数据失败！');	
+						Config.PopAudioContext();
 					}
 				});	
 			},
@@ -399,7 +428,15 @@
 							   Msg: ''
 						}
 					},
-					success: (result) => {							
+					success: (result) => {	
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+						{						
+							Config.ShowMessage('账号登录异常，请重新登录！');	
+							Config.PopAudioContext();
+							return;
+						}	
 						let DataParam = result.data.ResultData.PdaICMORptToICMORpt.dataparam;
 						let Result = DataParam.Result;
 						if(Result == 0)							
@@ -430,7 +467,15 @@
 							Msg:''
 						}
 					},
-					success: (result) => {							
+					success: (result) => {	
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+						{						
+							Config.ShowMessage('账号登录异常，请重新登录！');	
+							Config.PopAudioContext();
+							return;
+						}	
 						let DataParam = result.data.ResultData.unPdaICMORptToICMORpt.dataparam;
 						let Result = DataParam.Result;
 						if(Result == 0)							
@@ -471,7 +516,15 @@
 							FId:this.ProReportInterId										
 						}
 					},
-					success: (result) => {						
+					success: (result) => {	
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+						{						
+							Config.ShowMessage('账号登录异常，请重新登录！');	
+							Config.PopAudioContext();
+							return;
+						}	
 						this.InfoListData = result.data.ResultData.PdaICMORptSumInfo.data0;
 					},
 					fail: () => {
@@ -481,7 +534,9 @@
 				});
 			},
 			//显示生产汇报单信息
-			ShowProReportInfo:function(){				
+			ShowProReportInfo:function(){	
+				if(this.ProReportInterId != 0)
+				{
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -492,7 +547,15 @@
 								FId:this.ProReportInterId										
 								}
 							},
-							success: (result) => {								
+							success: (result) => {									
+								let ResultCode = result.data.ResultCode;
+								let ResultMsg = result.data.ResultMsg;
+								if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+								{						
+									Config.ShowMessage('账号登录异常，请重新登录！');	
+									Config.PopAudioContext();
+									return;
+								}	
 								this.InfoListData = result.data.ResultData.PdaICMORptSumInfo.data0;
 							},
 							fail: () => {
@@ -500,6 +563,7 @@
 								Config.PopAudioContext();
 							}
 						});
+				 }
 			},
 			//获取选中的车间
 			GetSelectWorkShop:function(e){
@@ -525,7 +589,15 @@
 			    			FSrcInterId: this.ProReportSrcInterId
 			    		}
 			    	},
-			    	success: (result) => {							
+			    	success: (result) => {	
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+						{						
+							Config.ShowMessage('账号登录异常，请重新登录！');	
+							Config.PopAudioContext();
+							return;
+						}	
 			    		this.DetailListData = result.data.ResultData.PdaICMORptInfo.data0;
 			    	},
 			    	fail: () => {
@@ -550,7 +622,15 @@
 			    			FSrcInterId: this.ProReportSrcInterId
 			    		}
 			    	},
-			    	success: (result) => {							
+			    	success: (result) => {	
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+						{						
+							Config.ShowMessage('账号登录异常，请重新登录！');	
+							Config.PopAudioContext();
+							return;
+						}	
 			    		this.DetailListData = result.data.ResultData.PdaICMORptInfo.data0;
 			    	},
 			    	fail: () => {
@@ -628,7 +708,15 @@
 							                    FSrcInterId: me.ProReportSrcInterId									
 											}
 										},
-										success: (resdetail) => {												
+										success: (resdetail) => {
+											let ResultCode = resdetail.data.ResultCode;
+											let ResultMsg = resdetail.data.ResultMsg;
+											if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+											{						
+												Config.ShowMessage('账号登录异常，请重新登录！');	
+												Config.PopAudioContext();
+												return;
+											}	
 											me.DetailListData = resdetail.data.ResultData.PdaICMORptInfo.data0;
 										},
 										fail: () => {
@@ -773,9 +861,15 @@
 		height: 950rpx;
 	}
 	
-	.infoscrollview{
+	.unselectinfoscrollview{
 		width: 100%;
 		height: 550rpx;
+		margin-top: 50rpx;
+	}
+	
+	.selectinfoscrollview{
+		width: 100%;
+		height: 850rpx;
 		margin-top: 50rpx;
 	}
 	
@@ -793,52 +887,62 @@
 		background-color: #007AFF;
 	}
 	
-	.tableft {
+	.tabbackground{
 		position: absolute;
-		font-size: 40rpx;
-		margin-top: 650rpx;
-		margin-left: -270rpx;		
+		width: 100%;
+		height: 100rpx;
+		margin-top: 660rpx;
+		background-color: #F4F4F4;		
+	}
+	
+	.tableft {	
+		position: absolute;
+		font-size: 45rpx;
+		margin-top: 20rpx;	
+		margin-left: 40rpx;
 	}
 	
 	.tabmiddle {
 		position: absolute;
-		font-size: 40rpx;
-		margin-top: 650rpx;		
+		font-size: 45rpx;
+		margin-top: 20rpx;	
+		margin-left: 330rpx;
 	}
 	
 	.tabright {	
 		position: absolute;
-		font-size: 40rpx;
-		margin-top: 650rpx;
-		margin-left: 270rpx;
+		font-size: 45rpx;
+		margin-top: 20rpx;
+		margin-left: 630rpx;
 	}
 	
 	.tableftline {	
 		position: absolute;
-		width: 20%;
+		width: 15%;
 		height: 5rpx;
-		margin-top: 680rpx;
-		margin-left: -270rpx;
+		margin-top: 80rpx;
+		margin-left: 30rpx;
 	}
 	
 	.tabmiddleline {
 		position: absolute;
-		width: 20%;
-		height: 5rpx;
-		margin-top: 680rpx;
+		width: 15%;
+		height: 5rpx;	
+		margin-top: 80rpx;
+		margin-left: 320rpx;
 	}
 	
 	.tabrightline {		
 		position: absolute;
-		width: 20%;
+		width: 15%;
 		height: 5rpx;
-		margin-top: 680rpx;
-		margin-left: 270rpx;
+		margin-top: 80rpx;
+		margin-left: 620rpx;
 	}	
 	
 	.search {
 		width: 90%;
-		margin-left: 10rpx;
+		margin-left: 20rpx;
 	}	
 	
 	.selectlabel{

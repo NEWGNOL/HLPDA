@@ -24,13 +24,13 @@
 						:class="{ 'uni-list-item__content--center': thumb || showExtraIcon || showBadge || showSwitch }">
 						<text v-if="title" class="uni-list-item__content-title"
 							:class="[ellipsis !== 0 && ellipsis <= 2 ? 'uni-ellipsis-' + ellipsis : '']">{{ title }}</text>
-						<text v-if="note" class="uni-list-item__content-note">{{ note }}</text>						
-						<!-- <progress v-show="false" percent="50" show-info></progress> -->						
+						<text v-if="note" class="uni-list-item__content-note">{{ note }}</text>
+						<cmd-progress v-show="isshowprogress" v-bind:percent="percent"></cmd-progress>	
 					</view>	
 							
 					<checkbox-group style="justify-content: right;" @change="OnCheckBoxChange">
 							<checkbox v-show="isshowcheckbox" :value="checkboxvalue" :checked="ischecked"></checkbox>
-					</checkbox-group>
+					</checkbox-group>						
 				</slot>
 				<slot name="footer">
 					<view v-if="rightText || showBadge || showSwitch" class="uni-list-item__extra"
@@ -106,11 +106,11 @@
 			},
 			percent: {
 				type: [Number],
-				default: 0
+				default: 30
 			},
 			isshowprogress: {
 				type: [Boolean, String],
-				default: false
+				default: true
 			},
 			ischecked:{
 				type: [Boolean, Number],

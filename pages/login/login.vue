@@ -88,8 +88,9 @@
 					url: uni.getStorageSync('LoginUrl'),
 					data: '{"Sign":"sl2021","FUsername":"' + username + '","FPassword":"' + this.password + '"}',
 					method: 'POST',
-					success: (res) => {
-						if (res.data.Result == 1) {
+					success: (res) => {						
+						if (res.data.Result == 1)
+						{
 							uni.showLoading({
 								title: 'Loading'
 							});
@@ -101,7 +102,8 @@
 								url: '/pages/main/main'
 							});
 							uni.hideLoading();
-						} else {
+						} 
+						else {
 							Config.ShowMessage('用户名或密码错误！');
 							Config.PopAudioContext();
 						}
