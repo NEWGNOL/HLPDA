@@ -51,6 +51,17 @@
 					 }
 			    }
 			}			
+		},		
+		{
+			"path": "pages/proreport/cartonlabeldetail",
+			"style": {
+				"navigationBarTitleText": "外箱明细",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF"
+					 }
+			    }
+			}			
 		},
 		{
 			"path": "pages/proreport/proreportadd",

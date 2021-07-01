@@ -6,7 +6,7 @@
 		        <uni-list>
 			       <uni-list-item v-for="(item,index) in SummaryListData":key="index" :title="'车间名称：'+ item.FDeptName + '\n' + '班组名称：' + item.FTeamName
 			       + '\n' + '制单人：' + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '单据编号：' + item.FBillNo"
-			       :isshowcheckbox="false" :isshowprogress="false" clickable v-on:click="SummaryItemSelected(item)">
+			       :note="'单据状态：' + item.FStatus" clickable v-on:click="SummaryItemSelected(item)">
 			       </uni-list-item>
 		        </uni-list>
 		      </scroll-view>
@@ -28,12 +28,7 @@
 			<text class="title">车间名称：</text>		
 			<navigator url="/pages/proreport/workshopquery" hover-class="navigator-hover">		
 			    <view class="data">{{SelectWorkShopArray[1]}}</view>		   
-			</navigator>
-		   <!-- <view class="data">{{SelectWorkShopArray[1]}}</view>	
-			<uni-list>
-			<uni-list-item v-for="(item,index) in TestData" :key="index" :title="item.Name" clickable
-			:isshowcheckbox="false"></uni-list-item>
-			</uni-list> -->
+			</navigator>		   
 			<view class="dataline"></view>
 			
 			<text class="title">班组名称：</text>
@@ -51,32 +46,63 @@
 			
 			<scroll-view class="unselectinfoscrollview" v-bind:class="{selectinfoscrollview : !IsBillHeadVisible}" scroll-y="true">
 				<uni-list>
-					<uni-list-item v-for="(item,index) in InfoListData" :key="index" :title="'物料规格：' + item.FModel + '\n' 
+					<uni-list-item v-for="(item,index) in InfoListData" :key="index" :title="item.FNumber + '/' + item.FModel
+					+ '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '汇总进度：' + item.FSumQty + '/' + (item.FICMOQty - item.FSumQty)" 
+					:isshowprogress="true" v-bind:percent="Math.round((item.FSumQty / (item.FICMOQty - item.FSumQty)) * 100, 0)" 
+					clickable v-on:click="InfoItemSelected(item)">
+					</uni-list-item>
+					<!-- <uni-list-item v-for="(item,index) in InfoListData" :key="index" :title="'物料规格：' + item.FModel + '\n' 
 					+ '物料编码：' + item.FNumber + '\n' +'物料名称：'+ item.FName + '\n' + '源单编号：' + item.FSrcBillNo
 					+ '\n' + '批次：' + item.FGMPBatchNo + '\n' + '汇总数量：' + item.FSumQty + '只/' + item.FLabelCount + '件' + '\n'
-					+ '未汇报数量：' + (item.FICMOQty - item.FSumQty)" :isshowcheckbox="false" clickable 
+					+ '未汇报数量：' + (item.FICMOQty - item.FSumQty)" :isshowprogress="true" clickable 
 					v-bind:percent="Math.round((item.FSumQty / (item.FICMOQty - item.FSumQty)) * 100, 0)" v-on:click="InfoItemSelected(item)">
-					</uni-list-item>
+					</uni-list-item> -->
 				</uni-list>
 			</scroll-view>	
 		</view>
+		
 		 
 		
-		
 		<view class="proreportview" v-show="TabSelectedIndex == 2" @touchstart='TouchStart' @touchend='TouchEnd'>
-			<button class="selectlabel" v-on:click="SelectAllLabel()">全选/反选</button>
-			<button class="deletelabel" v-on:click="DeleteSelectLabel()">删除</button>
+			<text class="scanned">已扫描条码：</text>
+			<text class="queryall" clickable v-on:click="GetProReportDetail()">查看全部</text>
 			
 			<scroll-view class="detailscrollview" scroll-y="true">
-				<uni-list>
-					<uni-list-item v-for="(item,index) in DetailListData" :key="index" :title="'外箱标签：'+ item.FPackBarcode + '\n' +'物料规格：' + item.FModel + '\n' 
-					+ '物料编码：' + item.FNumber + '\n' + '物料名称：'+ item.FName + '\n' +  '数量：' + item.FQty + '\n' 
-					+ '源单编号：' + item.FSrcBillNo + '\n'"  :checkboxvalue="item.FPackBarcode" :ischecked="item.FIsChecked" 
-					:isshowprogress="false" @CheckBoxChange="ChangeIsChecked(item)" clickable></uni-list-item>
-				</uni-list>
+			<text class="detailtitle">物料编码：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FNumber : '*'}}</text>
+			<text class="detailtitle">物料名称：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FName : '*'}}</text>
+			<text class="detailtitle">标签类型：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FBarCodeType : '*'}}</text>
+			<text class="detailtitle">订单号：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FSOBillNo : '*'}}</text>
+			<text class="detailtitle">计划生产数量：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FAuxQty : '*'}}</text>
+			<text class="detailtitle">计划开工日期：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FPlanCommitDate : '*'}}</text>
+			<text class="detailtitle">实际完工日期：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? (this.ProreportInfoItem.FFinishDate != null ? this.ProreportInfoItem.FFinishDate : '*') : '*'}}</text>
+			<text class="detailtitle">生产预测单号：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? (this.ProreportInfoItem.FPPOrderBillNo != null ? this.ProreportInfoItem.FPPOrderBillNo : '*') : '*'}}</text>
+			<text class="detailtitle">班组代码：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FTeamNumber : '*'}}</text>
+			<text class="detailtitle">班组名称：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FTeamName : '*'}}</text>
+			<text class="detailtitle">车间代码：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FDeptNumber : '*'}}</text>
+			<text class="detailtitle">车间名称：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FDeptName : '*'}}</text>			
+			<text class="detailtitle">计量单位代码：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FUnitNumber : '*'}}</text>
+			<text class="detailtitle">计量单位名称：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FUnitName : '*'}}</text>
+			<text class="detailtitle">盒装数量：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FInPackPreQty : '*'}}</text>
+			<text class="detailtitle">箱装数量：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FOutPackPreQty : '*'}}</text>
 			</scroll-view>	
-		</view>
-				
+	    </view>
+		
 		<view class="tabbackground">
 		     <text class="tableft" v-bind:class="{selecttab : TabSelectedIndex == 0}" v-on:click="SwitchTab(0)">汇总</text>
 		     <view class="tableftline" v-bind:class="{selecttabline : TabSelectedIndex == 0}"></view>		
@@ -110,11 +136,12 @@
 					format: true
 				}),
 				SelectLabel:'',
+				IsSelectAllLabel: false,
 				StartDate:GetDate('start'),
 				EndDate:GetDate('end'),			
 				SummaryListData:[],
-				InfoListData: [],
-				DetailListData: [],
+				InfoListData: [],				
+				ProreportInfoItem: null,
 			    TouchStartX: 0,
 				SlidingValue: 100,
 				Animation: null,
@@ -205,7 +232,7 @@
 					this.SlidingPage(false);	
 				}
 			},			
-			//切换内箱标签是否选中
+			//切换外箱标签是否选中
 			ChangeIsChecked:function(item){
 				item.FIsChecked = !item.FIsChecked;				
 			},
@@ -222,9 +249,9 @@
 				}
 				else					
 				{
-					this.GetProReportDetailByNew();
+					this.GetProReportInfoExpand(null);
 				}
-			},
+			},			
 			//选择完工日期
 			FinishDateChange(e) {
 				this.FinishDate = e.detail.value
@@ -254,7 +281,7 @@
 				}
 				else					
 				{
-					this.GetProReportDetailByNew();
+					this.GetProReportInfoExpand(null);
 				}	
 			},
 			//显示生产汇报汇总
@@ -272,8 +299,7 @@
 							FBillNo:this.SearchValue,							
 						}
 					},
-					success: (result) => {	
-						console.log(result.data);
+					success: (result) => {							
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
@@ -564,192 +590,34 @@
 							}
 						});
 				 }
-			},
-			//获取选中的车间
-			GetSelectWorkShop:function(e){
-				let Pages = getCurrentPages();
-				let CurrPage = Pages[Pages.length-1];		
-				if(CurrPage._data != undefined && CurrPage._data.SelectWorkShopArray != undefined && CurrPage._data.SelectWorkShopArray !='' )
-				{				
-					this.SelectWorkShopArray = CurrPage._data.SelectWorkShopArray;
-				}					
-			},	
+			},			
 			//根据汇报单信息获取明细
-			GetProReportDetailByMod:function(item){
-			    this.TabSelectedIndex = 2;
-			    this.ProReportSrcInterId = item.FSrcInterId;
-			    uni.request({
-			    	url: uni.getStorageSync('OtherUrl'),
-			    	method: 'POST',
-			    	data: {
-			    		ModuleCode: 'getPdaICMORptInfo',
-			    		token: uni.getStorageSync('token'),					
-			    		ModuleParam:  {
-			    			FId: this.ProReportInterId,
-			    			FSrcInterId: this.ProReportSrcInterId
-			    		}
-			    	},
-			    	success: (result) => {	
-						let ResultCode = result.data.ResultCode;
-						let ResultMsg = result.data.ResultMsg;
-						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
-						{						
-							Config.ShowMessage('账号登录异常，请重新登录！');	
-							Config.PopAudioContext();
-							return;
-						}	
-			    		this.DetailListData = result.data.ResultData.PdaICMORptInfo.data0;
-			    	},
-			    	fail: () => {
-			    		Config.ShowMessage('请求数据失败！');	
-						Config.PopAudioContext();
-			    	}
-			    });				 
-			},		
-			//根据汇报单信息获取明细
-			GetProReportDetailByNew:function(){
-			    this.TabSelectedIndex = 2;	
-				if(this.ProReportSrcInterId != 0)
-				{
-			        uni.request({
-			    	url: uni.getStorageSync('OtherUrl'),
-			    	method: 'POST',
-			    	data: {
-			    		ModuleCode: 'getPdaICMORptInfo',
-			    		token: uni.getStorageSync('token'),					
-			    		ModuleParam:  {
-			    			FId: this.ProReportInterId,
-			    			FSrcInterId: this.ProReportSrcInterId
-			    		}
-			    	},
-			    	success: (result) => {	
-						let ResultCode = result.data.ResultCode;
-						let ResultMsg = result.data.ResultMsg;
-						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
-						{						
-							Config.ShowMessage('账号登录异常，请重新登录！');	
-							Config.PopAudioContext();
-							return;
-						}	
-			    		this.DetailListData = result.data.ResultData.PdaICMORptInfo.data0;
-			    	},
-			    	fail: () => {
-			    		Config.ShowMessage('请求数据失败！');		
-						Config.PopAudioContext();
-			    	}
-			    });	
-				}
-			    else
-				{
-					this.DetailListData = [];
-				}
-			},
-			//获取选中的标签
-			GetSelectLabel:function(){
-				this.SelectLabel = '';
-				for (var i = 0; i < this.DetailListData.length; i++) {
-					if(this.DetailListData[i].FIsChecked)
-				    {						
-						this.SelectLabel += this.DetailListData[i].FIndexId + ',';													
-					}					
-				}	
-				if(this.SelectLabel != '')					
-				{
-					this.SelectLabel = this.SelectLabel.substr(0, this.SelectLabel.length - 1);
-				}			
-			}, 
-			//全选/反选内箱列表项
-			SelectAllLabel:function(){
-				for (var i = 0; i < this.DetailListData.length; i++) {
-					this.DetailListData[i].FIsChecked = !this.IsSelectAllLabel;				
-				}		
-			    this.IsSelectAllLabel = !this.IsSelectAllLabel;
-			},	
-			//删除选中的内箱列表项
-			DeleteSelectLabel:function(){
-				this.GetSelectLabel();	
-				this.UnBinding();
-			},	
-			//扫码汇报外箱解绑
-			UnBinding: function() {	
-				let me = this;
-				if(me.SelectLabel == '')					
-				{
-					Config.ShowMessage('请选择要删除的内箱标签！');
-					Config.PopAudioContext();
-					return; 
-				}				
-				uni.showModal({
-					title: '提示',
-					content: '是否要对选中的外箱标签进行解绑？',
-					success: function (result) {
-						if (result.confirm) {
-							uni.request({
-								url: uni.getStorageSync('OtherUrl'),
-								method: 'POST',
-								data: {
-									ModuleCode: 'ICMORpt2_10',
-									token: uni.getStorageSync('token'),
-									ModuleParam: {
-										FIndexIdList: me.SelectLabel,
-										Result:0,
-										Msg:''
-									}
-								},
-								success: (res) => {										
-									uni.request({
-										url: uni.getStorageSync('OtherUrl'),
-										method: 'POST',
-										data: {
-											ModuleCode: 'getPdaICMORptInfo',
-											token: uni.getStorageSync('token'),					
-											ModuleParam:  {
-												FId: me.ProReportInterId,
-							                    FSrcInterId: me.ProReportSrcInterId									
-											}
-										},
-										success: (resdetail) => {
-											let ResultCode = resdetail.data.ResultCode;
-											let ResultMsg = resdetail.data.ResultMsg;
-											if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
-											{						
-												Config.ShowMessage('账号登录异常，请重新登录！');	
-												Config.PopAudioContext();
-												return;
-											}	
-											me.DetailListData = resdetail.data.ResultData.PdaICMORptInfo.data0;
-										},
-										fail: () => {
-											Config.ShowMessage('请求数据失败！');		
-											Config.PopAudioContext();
-										}
-									});
-									let DataModel = res.data.ResultData.ICMORpt2_10.dataparam;	
-									let Result = DataModel.Result;
-									if(Result == 0)
-									{
-										Config.ShowMessage(DataModel.Msg);
-										Config.PopAudioContext();
-										return;
-									}
-									Config.ShowMessage(DataModel.Msg);																																				
-								},
-								fail: () => {	
-									Config.ShowMessage('请求数据失败！');	
-									Config.PopAudioContext();
-								}
-							});	
-						} 
-					}
+			GetProReportDetail:function(){				
+				uni.showLoading({
+					title:'Loading'
 				});	
+				uni.navigateTo({
+					url:'/pages/proreport/cartonlabeldetail?ProReportInterId=' + this.ProReportInterId + '&ProReportSrcInterId='
+					    + this.ProReportSrcInterId
+				});
+				uni.hideLoading();
 			},
+			//根据汇报单信息获取扩展信息
+			GetProReportInfoExpand:function(item){
+				if(item != null)
+				{
+			        this.TabSelectedIndex = 2;
+			        this.ProreportInfoItem = item;	
+					this.ProReportSrcInterId = item.FSrcInterId;
+				}
+			},			
 			//汇总页面选中的Item
 			SummaryItemSelected: function(item){
 				this.GetProReportInfoBySum(item);						
 			},
 			//单据页面选中的Item
 			InfoItemSelected: function(item){	
-				this.GetProReportDetailByMod(item);
+				this.GetProReportInfoExpand(item);
 		    }			
 		}
 	}
@@ -834,7 +702,22 @@
 		margin-left: 300rpx;
 		text-align: center;
 	}
-
+	
+	.detailtitle{
+		display: flex;
+		font-size: 35rpx;
+		margin-top: 30rpx;
+		margin-left: 30rpx;		
+	}
+    
+	.detaildata{
+		display: flex;		
+		text-align: center;
+		font-size: 35rpx;
+		margin-top: -50rpx;
+		margin-left: 270rpx;		
+	}
+	
 	.data {
 		display: flex;
 		width: 250rpx;
@@ -875,7 +758,7 @@
 	
 	.detailscrollview {
 		width: 100%;
-		height: 850rpx;
+		height: 950rpx;
 		margin-top: 20rpx;
 	}
 	
@@ -944,6 +827,21 @@
 		width: 90%;
 		margin-left: 20rpx;
 	}	
+	
+	.scanned{
+		display: flex;		
+		font-size: 40rpx;
+		margin-left: 30rpx;
+		margin-top: 20rpx;		
+	}
+	
+	.queryall{
+		display: flex;		
+		font-size: 40rpx;
+		color: #007AFF;	
+		margin-left: 570rpx;
+		margin-top: -60rpx;
+	}
 	
 	.selectlabel{
 		width: 30%;

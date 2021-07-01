@@ -70,11 +70,12 @@
 		align-items: center;
 		justify-content: center;
 	}
+	
 	.search {
 		width: 90%;
-	}	
-	.scrollview{
-		/* margin-top: 10rpx; */
+	}
+		
+	.scrollview{		
 		height: 1080rpx;		
 	}
 </style>

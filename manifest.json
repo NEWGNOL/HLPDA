@@ -1,9 +1,9 @@
 {
-    "name" : "KDPDA",
+    "name" : "宏力条码",
     "appid" : "__UNI__8DC9259",
     "description" : "",
-    "versionName" : "1.0.0",
-    "versionCode" : "100",
+    "versionName" : "1.0.1",
+    "versionCode" : 101,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -38,12 +38,15 @@
                     "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
                     "<uses-feature android:name=\"android.hardware.camera\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
-                ]
+                ],
+                "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ]
             },
             /* ios打包配置 */
             "ios" : {},
             /* SDK配置 */
-            "sdkConfigs" : {},
+            "sdkConfigs" : {
+                "ad" : {}
+            },
             "icons" : {
                 "android" : {
                     "hdpi" : "unpackage/res/icons/72x72.png",
@@ -77,7 +80,13 @@
                 }
             },
             "splashscreen" : {
-                "iosStyle" : "common"
+                "iosStyle" : "common",
+                "androidStyle" : "common",
+                "android" : {
+                    "hdpi" : "unpackage/res/icons/192x192.png",
+                    "xhdpi" : "unpackage/res/icons/192x192.png",
+                    "xxhdpi" : "unpackage/res/icons/192x192.png"
+                }
             }
         }
     },

@@ -28,7 +28,7 @@
 		<scroll-view class="scrollview" v-show="!IsShowBindingView" scroll-y="true">
 			<uni-list class="detaillist">
 				<uni-list-item v-for="(item,index) in DetailListData" :key="index" :title="'内箱标签：' + item.FBarCode + '\n' + '数量：' + item.FQty"
-				:checkboxvalue="item.FBarCode" :ischecked="item.FIsChecked" :isshowprogress="false" @CheckBoxChange="ChangeIsChecked(item)" 
+				:checkboxvalue="item.FBarCode" :ischecked="item.FIsChecked" :isshowcheckbox="true" @CheckBoxChange="ChangeIsChecked(item)" 
 				clickable></uni-list-item>
 			</uni-list>		
 		</scroll-view>		
@@ -79,15 +79,16 @@
 			ChangeIsChecked:function(item){
 				item.FIsChecked = !item.FIsChecked;				
 			},
+			//切换变量
+			SwitchVariable:function(){
+				this.IsShowBindingView = !this.IsShowBindingView;
+			},
 			//切换页面
 			SwitchTab: function(IsShowBindingViewParam) {				
 				if(this.IsShowBindingView != IsShowBindingViewParam)
 				{	
-					this.IsShowBindingView = !this.IsShowBindingView;
-					if(!this.IsShowBindingView)
-					{
-					   this.GetLabelByPackBarCode();
-					}
+					this.SwitchVariable();
+					this.GetLabelByPackBarCode();					
 				}
 			},			
 			//删除选中的内箱列表项
@@ -294,6 +295,8 @@
 			},
 			//根据外箱获取内盒列表
 			GetLabelByPackBarCode: function() {	
+				if(!this.IsShowBindingView)
+			    {
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -319,13 +322,15 @@
 						Config.ShowMessage('请求数据失败！');	
 						Config.PopAudioContext();
 					}
-				});				
+				});	
+			    }
 			},	
 			//扫描条码
 			ScanBarCode:function(){					
 				if(this.IsPack)
 				{					
-					this.Binding();
+					this.Binding();	
+					this.GetLabelByPackBarCode();
 				}
 				else
 				{				

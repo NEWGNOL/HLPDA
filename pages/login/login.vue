@@ -53,7 +53,7 @@
 		onLoad() {
 			this.LoadLoginData();
 		},
-		methods: {
+		methods: {			
 			//绘制图形
 			CreateGraphic: function() {
 				var LoginContext = uni.createCanvasContext('logincanvas');
@@ -79,6 +79,8 @@
 			//加载登录数据
 			LoadLoginData: function() {
 				this.IPAddress = uni.getStorageSync('FIPAddress');
+				this.username = uni.getStorageSync('FUsername');
+				this.password = uni.getStorageSync('FPassword');
 			},
 			//登录验证
 			request() {

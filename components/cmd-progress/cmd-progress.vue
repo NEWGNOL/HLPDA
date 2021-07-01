@@ -139,7 +139,7 @@
        */
       strokeWidth: {
         type: Number,
-        default: 6
+        default: 10
       },
       /**
        * 条线的颜色，渐变色仅支持类型line
@@ -333,7 +333,6 @@
           successPercent = 100;
         }
         return `width: ${successPercent}%;
-				height: ${this.strokeWidth}px;
 				border-radius: ${this.strokeShape === 'square' ? 0 : '100px'};`;
       },
       // #ifndef H5
@@ -447,29 +446,30 @@
   }
 
   .cmd-progress-success-bg,
-  .cmd-progress-bg {
+  .cmd-progress-bg {	
     background-color: #1890ff;
     transition: all 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
-    position: relative;
+    position: relative;	
   }
 
   .cmd-progress-success-bg {
     background-color: #52c41a;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 0;	
   }
 
   .cmd-progress-text {
     word-break: normal;
     width: 60upx;
+	font-size: 35rpx;
     text-align: left;
     margin-left: 16upx;
     vertical-align: middle;
     display: inline-block;
     white-space: nowrap;
     color: rgba(0, 0, 0, 0.45);
-    line-height: 1;
+    line-height: 1;	
   }
 
   .cmd-progress-status-active .cmd-progress-bg:before {

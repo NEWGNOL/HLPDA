@@ -106,11 +106,11 @@
 			},
 			percent: {
 				type: [Number],
-				default: 30
+				default: 0
 			},
 			isshowprogress: {
 				type: [Boolean, String],
-				default: true
+				default: false
 			},
 			ischecked:{
 				type: [Boolean, Number],
@@ -188,7 +188,7 @@
 			},
 			isshowcheckbox:{
 				type: [Boolean, String],
-				default: true
+				default: false
 			},
 			checkboxvalue:{
 				type: String,
@@ -363,7 +363,7 @@
 	.uni-list-item__content-note {
 		margin-top: 6rpx;
 		color: #000;
-		font-size: 15px;
+		font-size: 18px;
 		overflow: hidden;
 	}
 

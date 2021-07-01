@@ -8,11 +8,7 @@
 				<uni-list-item v-for="(item,index) in WorkShopList" :key="index" :title="item.FNumber + '     ' + item.FName" clickable
 				:isshowcheckbox="false"	:isshowprogress="false" @click="ItemSelected(item)"></uni-list-item>
 			</uni-list>
-		</scroll-view>
-		
-		<uni-popup ref="PopupMessage" type="message"> <!-- @change="Change" -->
-			<uni-popup-message :type="MessageType" :message="Message" :duration="3000"/>
-		</uni-popup>
+		</scroll-view>		
 	</view>
 </template>
 
@@ -23,9 +19,7 @@
 			return {
 				SearchValue: '',
 				WorkShopList: [],
-				SelectWorkShop: [],
-				Message:'',
-				MessageType:'Success',
+				SelectWorkShop: []				
 			}
 		},		
 		onLoad() {			
@@ -82,11 +76,12 @@
 		align-items: center;
 		justify-content: center;
 	}
+	
 	.search {
 		width: 90%;
 	}
-	.scrollview{
-		/* margin-top: 10rpx; */
+	
+	.scrollview{		
 		height: 1080rpx;		
 	}
 </style>
