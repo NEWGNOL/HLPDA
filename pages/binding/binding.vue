@@ -1,40 +1,44 @@
 <template>
-	<view class="content">		
-		<text class="tableft" v-bind:class="{selecttab : IsShowBindingView}" v-on:click="SwitchTab(true)">汇总</text>
-		<view class="tableftline" v-bind:class="{selecttabline : IsShowBindingView}"></view>
-		
-		<text class="tabright" v-bind:class="{selecttab : !IsShowBindingView}" v-on:click="SwitchTab(false)">明细</text>
-		<view class="tabrightline" v-bind:class="{selecttabline : !IsShowBindingView}"></view>
-
+	<view class="content">	
+	     <view class="tabbackground">
+	       <text class="tableft" v-bind:class="{selecttab : IsShowBindingView}" v-on:click="SwitchTab(true)">汇总</text>
+	       <view class="tableftline" v-bind:class="{selecttabline : IsShowBindingView}"></view>
+	      
+	       <text class="tabright" v-bind:class="{selecttab : !IsShowBindingView}" v-on:click="SwitchTab(false)">明细</text>
+	       <view class="tabrightline" v-bind:class="{selecttabline : !IsShowBindingView}"></view>	
+	    </view>
+	
 		<view class="summary" v-show="IsShowBindingView">		
 		<cmd-progress style="display: flex; width: 80%; margin-top: -50rpx; margin-left: 90rpx;" v-bind:percent="Math.round((this.ScannerLabelCount / this.InnerCartonLabelCount) * 100, 0)"></cmd-progress>
 		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 40rpx;">外箱标签：</text>
-		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 350rpx; margin-top: -58rpx;">{{CartonLabel}}</text>
-		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 60rpx;">装满内箱数：</text>
-		<text style="display: flex; width: 500rpx; font-size: 50rpx; margin-left: 350rpx; margin-top: -70rpx;">{{InnerCartonLabelCount}}</text>
+		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 350rpx; margin-top: -58rpx;">{{CartonLabel}}</text>		
 		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 60rpx;">已扫内箱数：</text>
 		<text style="display: flex; width: 500rpx; font-size: 50rpx; margin-left: 350rpx; margin-top: -70rpx;">{{ScannerLabelCount}}</text>
+		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 60rpx;">装满内箱数：</text>
+		<text style="display: flex; width: 500rpx; font-size: 50rpx; margin-left: 350rpx; margin-top: -70rpx;">{{InnerCartonLabelCount}}</text>
 		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 60rpx;">物料编码：</text>
-		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -58rpx;">{{FNumber}}</text>
+		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -60rpx;">{{FNumber}}</text>
 		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 60rpx;">物料名称：</text>
-		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -58rpx;">{{FName}}</text>
+		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -60rpx;">{{FName}}</text>
 		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 60rpx;">物料规格：</text>
-		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -58rpx;">{{FModel}}</text>
+		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -60rpx;">{{FModel}}</text>
 		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 60rpx;">批次：</text>
-		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -58rpx;">{{FGMPBatchNo}}</text>
+		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -60rpx;">{{FGMPBatchNo != '' ? FGMPBatchNo : '空'}}</text>
+		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 60rpx;">扫描模式：</text>
+		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -60rpx;">{{IsPack ? '扫描内箱' : '扫描外箱'}}</text>
 		</view>
-
-      
+		
+		
+	
+	    <button v-show="!IsShowBindingView" class="selectlabel" v-on:click="SelectAllLabel()">全选/反选</button>
+	    <button v-show="!IsShowBindingView" class="deletelabel" v-on:click="DeleteSelectLabel()">删除</button>	  
 		<scroll-view class="scrollview" v-show="!IsShowBindingView" scroll-y="true">
-			<uni-list class="detaillist">
+			  <uni-list class="detaillist">
 				<uni-list-item v-for="(item,index) in DetailListData" :key="index" :title="'内箱标签：' + item.FBarCode + '\n' + '数量：' + item.FQty"
 				:checkboxvalue="item.FBarCode" :ischecked="item.FIsChecked" :isshowcheckbox="true" @CheckBoxChange="ChangeIsChecked(item)" 
 				clickable></uni-list-item>
-			</uni-list>		
-		</scroll-view>		
-		
-		<button v-show="!IsShowBindingView" class="selectlabel" v-on:click="SelectAllLabel()">全选/反选</button>
-		<button v-show="!IsShowBindingView" class="deletelabel" v-on:click="DeleteSelectLabel()">删除</button>
+			  </uni-list>		
+		</scroll-view>			
 	</view>
 </template>
 
@@ -48,13 +52,13 @@
 			return {
 				Label: '',
 				InnerCartonLabel: '*',
-				CartonLabel: '请扫描外箱标签',
+				CartonLabel: '空',
 				InnerCartonLabelCount:0,
 				ScannerLabelCount:0,
-				FNumber:'*',
-				FName:'*',
-				FModel:'*',
-				FGMPBatchNo:'*',				
+				FNumber:'空',
+				FName:'空',
+				FModel:'空',
+				FGMPBatchNo:'空',				
 				IsPack: false,//0代表扫描外箱，1代表扫描内箱
 				IsShowBindingView: true,
 				IsSelectAllLabel: false,
@@ -80,13 +84,13 @@
 				item.FIsChecked = !item.FIsChecked;				
 			},
 			//切换变量
-			SwitchVariable:function(){
-				this.IsShowBindingView = !this.IsShowBindingView;
+			SwitchVariable:function(){				
+				this.IsShowBindingView = !this.IsShowBindingView;				
 			},
 			//切换页面
 			SwitchTab: function(IsShowBindingViewParam) {				
 				if(this.IsShowBindingView != IsShowBindingViewParam)
-				{	
+				{					
 					this.SwitchVariable();
 					this.GetLabelByPackBarCode();					
 				}
@@ -338,18 +342,31 @@
 				}	
 			},
 			//切换扫描外箱模式
-		    SwitchCartonMode:function(){
+		    SwitchCartonMode:function(){	
 				let me = this;
 				uni.showModal({					
 					title: '提示',
 					content: '是否要切换外箱扫描模式？',
 					success: function (result) {
 						if (result.confirm) {
-							me.IsPack = false;
+							me.ClearPageData();
 							Config.ShowMessage('切换外箱扫描模式成功！')
 						} 
 					}
 				});	
+			},
+			//清空界面数据
+			ClearPageData:function(){	
+				this.IsPack = false;
+				this.InnerCartonLabel = '*';
+				this.CartonLabel = '空';
+				this.InnerCartonLabelCount = 0;
+				this.ScannerLabelCount = 0;
+				this.FNumber = '空';
+				this.FName = '空';
+				this.FModel = '空';
+				this.FGMPBatchNo = '空';
+				this.DetailListData = [];				
 			},
 			//获取选中的标签
 			GetSelectLabel:function(){
@@ -387,31 +404,32 @@
 	
 	.tableftline {		
 		width: 15%;
-		height: 5rpx;
-		margin-right: 300rpx;
+		height: 5rpx;		
+		margin-left: 145rpx;
 	}
 	
 	.tabrightline {			
 		width: 15%;
-		height: 5rpx;
-		margin-left: 300rpx;
+		height: 5rpx;		
+		margin-left: 500rpx;
 	}	
 	
 	.tableft {		
-		font-size: 50rpx;
-		margin-top: 30rpx;
-		margin-right: 300rpx;
+		display: flex;
+		font-size: 50rpx;		
+		margin-left: 150rpx;
 	}
 	
 	.tabright {	
+		display: flex;
 		font-size: 50rpx;
 		margin-top: -80rpx;
-		margin-left: 300rpx;
+		margin-left: 500rpx;
 	}
 	
 	.summary {
 		height: 650rpx;
-		margin-top: 100rpx;
+		margin-top: -1100rpx;
 		display: grid;
 		flex-direction: row;
 	}
@@ -444,18 +462,13 @@
 		background-color: #808080;
 	}
 	
-	.detaillist {
-		/* margin-top: 100rpx; */
+	.detaillist {		
 		width: 100%;
 	}
 	
-	.progress{
-		
-	}
-	
-	.scrollview {
-		margin-top: 50rpx;
-		height: 880rpx;
+	.scrollview {		
+		height: 870rpx;
+		margin-top: 30rpx;
 	}
 	
 	.logo {
@@ -481,15 +494,22 @@
 		color: #FFFFFF;
 		background-color: #007AFF;		
 		border-radius: 50rpx;
-		margin-left: 200rpx;
-		margin-top: 20rpx;
+		margin-top: -1150rpx;
+		margin-left: 200rpx;	
 	}
 	
 	.deletelabel{		
 		color: #FFFFFF;
 		background-color: #007AFF;
 		border-radius: 50rpx;
-		margin-right: 150rpx;
 		margin-top: -95rpx;
+		margin-right: 150rpx;		
+	}
+	
+	.tabbackground{		
+		width: 100%;
+		height: 100rpx;
+		margin-top: 1090rpx;
+		background-color: #F4F4F4;		
 	}
 </style>

@@ -2,6 +2,7 @@
 	<view class="content">			
 		<view class="proreportview" v-show="TabSelectedIndex == 0" @touchstart='TouchStart' @touchend='TouchEnd'>
 			<uni-search-bar class="search" cancelButton="none" v-model="SearchValue" @input="ValueChanged"></uni-search-bar>
+			<DropdownList class="dropdownlist" :candidates="StatusArray" v-model="SelectStatus" @input="ShowProReportSum()"></DropdownList>
 		     <scroll-view class="sumscrollview" scroll-y="true">
 		        <uni-list>
 			       <uni-list-item v-for="(item,index) in SummaryListData":key="index" :title="'车间名称：'+ item.FDeptName + '\n' + '班组名称：' + item.FTeamName
@@ -9,7 +10,8 @@
 			       :note="'单据状态：' + item.FStatus" clickable v-on:click="SummaryItemSelected(item)">
 			       </uni-list-item>
 		        </uni-list>
-		      </scroll-view>
+		      </scroll-view>	 
+			 <!-- @TouchStart="ItemTouchStart" @TouchEnd="ItemTouchEnd" @LongPress="ItemLongPress(item)" -->
 		</view>
 		
 		
@@ -18,7 +20,8 @@
 			<button class="addproreport" v-on:click="AddProReport()">新增</button>
 			<button class="auditproreport" v-on:click="AuditProReport()">审核</button>
 			<button class="unauditproreport" v-on:click="UnAuditProReport()">反审</button>
-			<button class="hidebillhead" v-on:click="SwitchBillHeadVisible()">隐藏</button>			
+			<button class="hidebillhead" v-on:click="SwitchBillHeadVisible()">隐藏</button>	
+			<button class="deletebill" v-on:click="DeleteProreportBill()">删除</button>	
 			
 			<view class="billhead" v-show="IsBillHeadVisible">
 			<text class="title">单据编号：</text>
@@ -69,37 +72,37 @@
 			
 			<scroll-view class="detailscrollview" scroll-y="true">
 			<text class="detailtitle">物料编码：</text>
-			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FNumber : '*'}}</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FNumber : '空'}}</text>
 			<text class="detailtitle">物料名称：</text>
-			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FName : '*'}}</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FName : '空'}}</text>
 			<text class="detailtitle">标签类型：</text>
-			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FBarCodeType : '*'}}</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FBarCodeType : '空'}}</text>
 			<text class="detailtitle">订单号：</text>
-			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FSOBillNo : '*'}}</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FSOBillNo : '空'}}</text>
 			<text class="detailtitle">计划生产数量：</text>
-			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FAuxQty : '*'}}</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FAuxQty : '空'}}</text>
 			<text class="detailtitle">计划开工日期：</text>
-			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FPlanCommitDate : '*'}}</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FPlanCommitDate : '空'}}</text>
 			<text class="detailtitle">实际完工日期：</text>
-			<text class="detaildata">{{this.ProreportInfoItem != null ? (this.ProreportInfoItem.FFinishDate != null ? this.ProreportInfoItem.FFinishDate : '*') : '*'}}</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? (this.ProreportInfoItem.FFinishDate != null ? this.ProreportInfoItem.FFinishDate : '空') : '空'}}</text>
 			<text class="detailtitle">生产预测单号：</text>
-			<text class="detaildata">{{this.ProreportInfoItem != null ? (this.ProreportInfoItem.FPPOrderBillNo != null ? this.ProreportInfoItem.FPPOrderBillNo : '*') : '*'}}</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? (this.ProreportInfoItem.FPPOrderBillNo != null ? this.ProreportInfoItem.FPPOrderBillNo : '空') : '空'}}</text>
 			<text class="detailtitle">班组代码：</text>
-			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FTeamNumber : '*'}}</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FTeamNumber : '空'}}</text>
 			<text class="detailtitle">班组名称：</text>
-			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FTeamName : '*'}}</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FTeamName : '空'}}</text>
 			<text class="detailtitle">车间代码：</text>
-			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FDeptNumber : '*'}}</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FDeptNumber : '空'}}</text>
 			<text class="detailtitle">车间名称：</text>
-			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FDeptName : '*'}}</text>			
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FDeptName : '空'}}</text>
 			<text class="detailtitle">计量单位代码：</text>
-			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FUnitNumber : '*'}}</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FUnitNumber : '空'}}</text>
 			<text class="detailtitle">计量单位名称：</text>
-			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FUnitName : '*'}}</text>
-			<text class="detailtitle">盒装数量：</text>
-			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FInPackPreQty : '*'}}</text>
-			<text class="detailtitle">箱装数量：</text>
-			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FOutPackPreQty : '*'}}</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FUnitName : '空'}}</text>
+			<text class="detailtitle">箱数：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FInPackPreQty : '空'}}</text>
+			<text class="detailtitle">每箱数量：</text>
+			<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FOutPackPreQty : '空'}}</text>
 			</scroll-view>	
 	    </view>
 		
@@ -119,30 +122,35 @@
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
 	import Config from '../../common/config.js';
-	export default {
+	export default {		
 		data() {			
 			return {	
 				TabSelectedIndex: 0,
 				SearchValue: '',
+				SelectStatus: '全部',
 				ProReportInterId: 0,				
-				ProReportBillNo: '*',
+				ProReportBillNo: '空',
 				ProReportSrcInterId: 0,
-				IsBillHeadVisible: true,
-				WorkShopName: '',
+				IsBillHeadVisible: true,				
 				SelectWorkShopArray: [0,'请选择车间'],
 				SelectTeamArray: [0,'请选择班组'],				
 				Label: '',
-				FinishDate: GetDate({
+				FinishDate: DateFormat({
 					format: true
 				}),
+				ItemTouchStartDate: null,
 				SelectLabel:'',
 				IsSelectAllLabel: false,
-				StartDate:GetDate('start'),
-				EndDate:GetDate('end'),			
+				StartDate:DateFormat('start'),
+				EndDate:DateFormat('end'),			
 				SummaryListData:[],
-				InfoListData: [],				
+				InfoListData: [],	
+				StatusArray: ['全部','已审核','未审核'],
 				ProreportInfoItem: null,
+				ProreportItem: null,
 			    TouchStartX: 0,
+				ItemTouchStartX: 0,	
+				LongPressTime: 2,
 				SlidingValue: 100,
 				Animation: null,
 				AnimationData: [],
@@ -216,11 +224,11 @@
 					this.IsStopAnimation = true;
 				}
 			},
-			//获取手指滑动的起点
+			//获取手指滑动页面的起点
 			TouchStart:function(e){
 				this.TouchStartX = e.changedTouches[0].clientX;				
 			},
-			//获取手指滑动的终点
+			//获取手指滑动页面的终点
 			TouchEnd:function(e){				
 				let TouchEndX = e.changedTouches[0].clientX;
 				if(this.TouchStartX - TouchEndX >= this.SlidingValue && this.TabSelectedIndex < 2) 
@@ -231,7 +239,100 @@
 				{					
 					this.SlidingPage(false);	
 				}
-			},			
+			},	
+			//获取手指滑列表项的起点
+			ItemTouchStart:function(e){			
+				this.ItemTouchStartDate = new Date();
+				this.ItemTouchStartX = e.changedTouches[0].clientX;					
+			},
+			//获取手指滑列表项的终点
+			ItemTouchEnd:function(e){	
+				let me = this;
+				let ItemTouchEndDate = new Date();
+				let ItemTouchEndX = e.changedTouches[0].clientX;
+				let LongPressTime = CalDateDiff(ItemTouchEndDate, me.ItemTouchStartDate);				
+				if(LongPressTime >= me.LongPressTime && me.ItemTouchStartX == ItemTouchEndX)
+				{					
+					uni.showModal({
+						title: '提示',
+						content: '是否需要删除单据编号为' + me.ProreportItem.FBillNo + '的汇报单？',
+						success: function (result) {
+							if (result.confirm) {							
+								uni.request({
+								url: uni.getStorageSync('OtherUrl'),
+								method: 'POST',
+								data: {
+									ModuleCode: 'ICMORpt2_9',
+									token: uni.getStorageSync('token'),
+									ModuleParam:  {									
+										FId:me.ProreportItem.FId,
+										Result:0,									
+										Msg:''
+									}
+								},
+								success: (resdelete) => {										
+									let ResultCode = resdelete.data.ResultCode;
+									let ResultMsg = resdelete.data.ResultMsg;
+									if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+									{						
+										Config.ShowMessage('账号登录异常，请重新登录！');	
+										Config.PopAudioContext();
+										return;
+									}	
+									let DataParam = resdelete.data.ResultData.ICMORpt2_9.dataparam;
+									ResultCode = DataParam.Result;
+									if(ResultCode == 0)
+									{
+										Config.ShowMessage(DataParam.Msg);
+										Config.PopAudioContext();
+										return;
+									}
+									
+									uni.request({
+									url: uni.getStorageSync('OtherUrl'),
+									method: 'POST',
+									data: {
+										ModuleCode: 'getPdaICMORptList',
+										token: uni.getStorageSync('token'),
+										PageIndex: 0,
+										PageSize: 50,
+										PageRefresh: 0,
+										ModuleParam:  {							
+											FBillNo:this.SearchValue,							
+										}
+									},
+									success: (res) => {										
+										let ResultCode = res.data.ResultCode;
+										let ResultMsg = res.data.ResultMsg;
+										if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+										{						
+											Config.ShowMessage('账号登录异常，请重新登录！');	
+											Config.PopAudioContext();
+											return;
+										}						
+										this.SummaryListData = res.data.ResultData.PdaICMORptListInfo.data0;
+									},
+									fail: () => {
+										Config.ShowMessage('请求数据失败！');
+										Config.PopAudioContext();
+									}
+								    });
+								},
+								fail: () => {
+									Config.ShowMessage('请求数据失败！');	
+									Config.PopAudioContext();
+								}
+							    });
+							}
+						}
+					});
+				}			
+			},
+			//记录选中的单据编号
+			ItemLongPress:function(item)
+			{
+				this.ProreportItem = item;
+			},
 			//切换外箱标签是否选中
 			ChangeIsChecked:function(item){
 				item.FIsChecked = !item.FIsChecked;				
@@ -251,15 +352,7 @@
 				{
 					this.GetProReportInfoExpand(null);
 				}
-			},			
-			//选择完工日期
-			FinishDateChange(e) {
-				this.FinishDate = e.detail.value
-			},
-			//条件搜索汇报单列表
-			ValueChanged: function() {
-				this.ShowProReportSum();				
-			},
+			},		
 			//滑动页面
 			SlidingPage:function(IsSlidingLeftPage){
 				if(IsSlidingLeftPage)
@@ -285,7 +378,7 @@
 				}	
 			},
 			//显示生产汇报汇总
-			ShowProReportSum:function(){			
+			ShowProReportSum:function(){				
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -293,10 +386,11 @@
 						ModuleCode: 'getPdaICMORptList',
 						token: uni.getStorageSync('token'),
 						PageIndex: 0,
-						PageSize: 50,
 						PageRefresh: 0,
 						ModuleParam:  {							
-							FBillNo:this.SearchValue,							
+							FBillNo: this.SearchValue,
+							FBillerID: uni.getStorageSync('FUserId'),
+							FStatus: this.SelectStatus == '全部' ? '0,1' : (this.SelectStatus == '已审核' ? '1' : '0')
 						}
 					},
 					success: (result) => {							
@@ -318,7 +412,7 @@
 			},			
 			//扫描条码
 			ScanBarCode:function(){	
-				if(this.ProReportBillNo == '*')
+				if(this.ProReportBillNo == '空')
 				{
 					Config.ShowMessage('请新增汇报单！');
 					Config.PopAudioContext();
@@ -354,7 +448,7 @@
 							   Msg: ''
 						}
 					},
-					success: (result) => {	
+					success: (result) => {							
 						 let ResultCode = result.data.ResultCode;
 						 let ResultMsg = result.data.ResultMsg;
 						 if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
@@ -395,7 +489,7 @@
 							Msg:''
 						}
 					},
-					success: (result) => {	
+					success: (result) => {							
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
@@ -410,7 +504,7 @@
 						this.ProReportSrcInterId = 0
 						this.SelectWorkShopArray = [0,'请选择车间'];
 						this.SelectTeamArray = [0,'请选择班组'];
-						this.FinishDate = GetDate({
+						this.FinishDate = DateFormat({
 					                      format: true
 				                                  });	
 			            this.InfoListData = [];
@@ -454,7 +548,7 @@
 							   Msg: ''
 						}
 					},
-					success: (result) => {	
+					success: (result) => {							
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
@@ -493,7 +587,7 @@
 							Msg:''
 						}
 					},
-					success: (result) => {	
+					success: (result) => {							
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
@@ -523,6 +617,84 @@
 			{
 				this.IsBillHeadVisible = !this.IsBillHeadVisible;
 			},
+			//删除汇报单
+			DeleteProreportBill:function(){
+				if(this.ProReportBillNo == '空')
+				{
+					Config.ShowMessage('请新增汇报单！');
+					Config.PopAudioContext();
+					return;
+				}
+				if(this.SelectWorkShopArray[0] == 0)
+				{
+					Config.ShowMessage('请填写车间！');	
+					Config.PopAudioContext();
+					return;
+				}				
+				if(this.SelectTeamArray[0] == 0)
+				{
+					Config.ShowMessage('请填写班组！');	
+					Config.PopAudioContext();
+					return;
+				}	
+				
+				let me = this;	
+				uni.showModal({
+					title: '提示',
+					content: '是否需要删除单据编号为' + me.ProReportBillNo + '的汇报单？',
+					success: function (result) {
+						if (result.confirm) {							
+							uni.request({
+							url: uni.getStorageSync('OtherUrl'),
+							method: 'POST',
+							data: {
+								    ModuleCode: 'ICMORpt2_9',
+									token: uni.getStorageSync('token'),
+									ModuleParam:  {									
+										FId: me.ProReportInterId,
+										Result:0,									
+										Msg:''
+									}
+								},
+							success: (resdelete) => {	
+								console.log(resdelete.data);
+								let ResultCode = resdelete.data.ResultCode;
+								let ResultMsg = resdelete.data.ResultMsg;
+								if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+								{						
+									Config.ShowMessage('账号登录异常，请重新登录！');	
+									Config.PopAudioContext();
+									return;
+								}	
+								let DataParam = resdelete.data.ResultData.ICMORpt2_9.dataparam;
+								ResultCode = DataParam.Result;
+								if(ResultCode == 0)
+								{
+									Config.ShowMessage(DataParam.Msg);
+									Config.PopAudioContext();
+									return;
+								}
+								
+								Config.ShowMessage(DataParam.Msg);	
+								me.ProReportInterId = 0;
+								me.ProReportBillNo = '空';
+								me.ProReportSrcInterId = 0;								
+								me.SelectWorkShopArray = [0,'请选择车间'];
+								me.SelectTeamArray = [0,'请选择班组'];			
+								me.FinishDate = DateFormat({
+									format: true
+								});	
+								me.GetProReportInfoExpand(null);
+						    },
+							fail: () => {
+								    Config.ShowMessage('请求数据失败！');	
+								    Config.PopAudioContext();
+								}
+							});
+							}
+						}
+					});
+			},
 			//获取汇报单信息
 			GetProReportInfoBySum:function(item){
 				this.TabSelectedIndex = 1;
@@ -530,8 +702,7 @@
 				this.ProReportBillNo = item.FBillNo;	
 				this.SelectWorkShopArray = [item.FDeptId, item.FDeptName];
 				this.SelectTeamArray = [item.FTeamId, item.FTeamName];
-				this.FinishDate = item.FDate;	
-				
+				this.FinishDate = item.FDate;					
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -542,7 +713,7 @@
 							FId:this.ProReportInterId										
 						}
 					},
-					success: (result) => {	
+					success: (result) => {							
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
@@ -560,17 +731,17 @@
 				});
 			},
 			//显示生产汇报单信息
-			ShowProReportInfo:function(){	
+			ShowProReportInfo:function(){
 				if(this.ProReportInterId != 0)
-				{
-				uni.request({
+				{					
+				    uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
 					data: {
 							ModuleCode: 'getPdaICMORptSumInfo',
 							token: uni.getStorageSync('token'),					
 							ModuleParam:  {
-								FId:this.ProReportInterId										
+								   FId:this.ProReportInterId										
 								}
 							},
 							success: (result) => {									
@@ -585,7 +756,7 @@
 								this.InfoListData = result.data.ResultData.PdaICMORptSumInfo.data0;
 							},
 							fail: () => {
-								Config.ShowMessage('请求失败！');
+								Config.ShowMessage('请求数据失败！');
 								Config.PopAudioContext();
 							}
 						});
@@ -597,18 +768,22 @@
 					title:'Loading'
 				});	
 				uni.navigateTo({
-					url:'/pages/proreport/cartonlabeldetail?ProReportInterId=' + this.ProReportInterId + '&ProReportSrcInterId='
-					    + this.ProReportSrcInterId
+					url:'/pages/proreport/cartonlabeldetail?ProReportInterId=' + this.ProReportInterId 
+					+ '&ProReportSrcInterId=' + this.ProReportSrcInterId
 				});
 				uni.hideLoading();
 			},
 			//根据汇报单信息获取扩展信息
 			GetProReportInfoExpand:function(item){
-				if(item != null)
+			    if(item != null)
 				{
 			        this.TabSelectedIndex = 2;
 			        this.ProreportInfoItem = item;	
 					this.ProReportSrcInterId = item.FSrcInterId;
+				}
+				else
+				{
+					this.ProreportInfoItem = null;
 				}
 			},			
 			//汇总页面选中的Item
@@ -618,25 +793,50 @@
 			//单据页面选中的Item
 			InfoItemSelected: function(item){	
 				this.GetProReportInfoExpand(item);
-		    }			
+		    },
+			//选择完工日期
+			FinishDateChange(e) {
+				this.FinishDate = e.detail.value
+			},
+			//条件搜索汇报单列表
+			ValueChanged: function() {
+				this.ShowProReportSum();				
+			}			
 		}
 	}
-	    //获取选中的日期
-        function GetDate(type) {
-		const CurrentDate = new Date();
-		let Year = CurrentDate.getFullYear();
-		let Month = CurrentDate.getMonth() + 1;
-		let Day = CurrentDate.getDate();
+	    //获取选中的日期格式化
+        function DateFormat(type) {
+		    const CurrentDate = new Date();
+		    let Year = CurrentDate.getFullYear();
+		    let Month = CurrentDate.getMonth() + 1;
+		    let Day = CurrentDate.getDate();
+		    let Hour = CurrentDate.getHours();
+		    let Minute = CurrentDate.getMinutes();
+		    let Second = CurrentDate.getSeconds();
 	
-		if (type === 'start') {
-			Year = Year - 60;
-		} else if (type === 'end') {
-			Year = Year + 2;
-		}
-		Month = Month > 9 ? Month : '0' + Month;;
-		Day = Day > 9 ? Day : '0' + Day;
-		return `${Year}-${Month}-${Day}`;
-		}
+		    if (type === 'start') {
+			   Year = Year - 60;
+		    } else if (type === 'end') {
+			   Year = Year + 2;
+		    }
+		    Month = Month > 9 ? Month : '0' + Month;;
+		    Day = Day > 9 ? Day : '0' + Day;
+		    if(type != ''){
+		    return `${Year}-${Month}-${Day}`;
+		    }
+		    return `${Year}-${Month}-${Day} ${Hour}:${Minute}:${Second}`;
+	   }
+	   //计算两个时间的时间差
+	   function CalDateDiff(StartDate, EndDate){
+		    var DateDiff = StartDate.getTime() - EndDate.getTime();//时间差的毫秒数
+		    var Leave1 = DateDiff % (24*3600*1000)  //计算天数后剩余的毫秒数
+		    var Hour = Math.floor(Leave1/(3600*1000))//计算出小时数	
+		    var Leave2 = Leave1 % (3600*1000) //计算小时数后剩余的毫秒数
+		    var Minutes = Math.floor(Leave2/(60*1000))  //计算相差分钟数
+		    var Leave3 = Leave2 % (60*1000)  //计算分钟数后剩余的毫秒数
+		    var Seconds = Math.round(Leave3/1000)  //计算相差秒数
+			return Seconds;
+	   }
 </script>
 
 <style>
@@ -653,7 +853,7 @@
 		background-color: #007AFF;
 		border-radius: 50rpx;
 		margin-left: 20rpx;
-		margin-top: 50rpx;
+		margin-top: 20rpx;
 	}
 	
 	.auditproreport{	
@@ -681,6 +881,15 @@
 		border-radius: 50rpx;
 		margin-left: 560rpx;
 		margin-top: -96rpx;
+	}
+	
+	.deletebill{
+		width: 20%;
+		color: #FFFFFF;
+		background-color: #007AFF;
+		border-radius: 50rpx;
+		margin-left: 20rpx;
+		margin-top: 20rpx;
 	}
 
 	.billhead{
@@ -753,7 +962,7 @@
 	.selectinfoscrollview{
 		width: 100%;
 		height: 850rpx;
-		margin-top: 50rpx;
+		margin-top: 70rpx;
 	}
 	
 	.detailscrollview {
@@ -823,10 +1032,17 @@
 		margin-left: 620rpx;
 	}	
 	
-	.search {
-		width: 90%;
-		margin-left: 20rpx;
+	.search {	
+		position: absolute;
+		width: 70%;
+		margin-left: 5rpx;
 	}	
+	
+	.dropdownlist{	
+		position: absolute;
+		margin-top: -90rpx;
+		margin-left: 570rpx;
+	}
 	
 	.scanned{
 		display: flex;		
@@ -860,4 +1076,5 @@
 		margin-right: 150rpx;
 		margin-top: -95rpx;
 	}
+	
 </style>

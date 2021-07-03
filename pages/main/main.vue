@@ -34,43 +34,7 @@
 					url:url
 				});
 				uni.hideLoading();
-			},
-			//软件更新
-			UpdateSoftware:function(){
-				uni.showModal({
-					title: '提示',
-					content: '是否要进行软件更新？',
-					success: function (result) {
-						if (result.confirm) {
-							uni.showLoading({
-								title:'更新中......'
-							});		
-							uni.downloadFile({
-									url:'https://192.168.16.13/D://HLPDA//__UNI__8DC9259_0630192020',
-									success: download =>
-									{	
-										//console.log(download);
-										uni.hideLoading();	
-										if(download.statusCode == 200)//下载成功状态码									
-										{											
-											plus.runtime.install(
-												download.tempFilePath,{
-													force:true
-												}
-											);																						
-											plus.runtime.restart();
-										}
-									},
-									fail: () => {
-									        uni.hideLoading();
-						                    Config.ShowMessage('更新文件失败！');		
-	                                        Config.PopAudioContext();					
-									}
-								});							
-						} 
-					}
-				});				
-			}			
+			}	
 		}
 	}
 </script>

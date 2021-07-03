@@ -5,7 +5,7 @@
 
 		<view :class="{ 'uni-list-item--disabled': disabled }"
 			:hover-class="(!clickable && !link) || disabled || showSwitch ? '' : 'uni-list-item--hover'"
-			class="uni-list-item" @click.stop="onClick">
+			class="uni-list-item" @click.stop="onClick" @longpress='LongPress' @touchstart='TouchStart' @touchend='TouchEnd'>
 			<view v-if="!isFirstChild" class="border--left" :class="{ 'uni-list--border': border }"></view>
 			<view class="uni-list-item__container"
 				:class="{ 'container--right': showArrow || link, 'flex--direction': direction === 'column' }">
@@ -266,6 +266,15 @@
 			},
 			OnCheckBoxChange(e){
 				this.$emit('CheckBoxChange', e);
+			},
+			LongPress(e){				
+				this.$emit('LongPress', e);
+			},
+			TouchStart(e){
+				this.$emit('TouchStart', e);
+			},
+			TouchEnd(e){
+				this.$emit('TouchEnd', e);
 			}
 		}
 	};

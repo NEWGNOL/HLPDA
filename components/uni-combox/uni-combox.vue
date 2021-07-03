@@ -144,7 +144,8 @@
 		/* #endif */
 		flex: 1;
 		flex-direction: row;
-		align-items: center;
+		align-items: center;	
+			width: 100rpx;
 	}
 
 	.uni-combox__input {

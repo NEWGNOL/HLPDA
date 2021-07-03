@@ -1,10 +1,6 @@
 <template>
-	<view class="content">
-		<!-- <uni-card title="参数">
-			
-		</uni-card>
-		 -->
-		<image src="../../static/logo.png" class="img" mode="center"></image>
+	<view class="content">		
+		<image src="../../static/login.png" class="img" mode="widthFix"></image>
 
 		<text class="tableft" v-bind:class="{selecttab : IsShowLoginView}" v-on:click="ClickTabTitle(true)">登录</text>
 		<view class="tableftline" v-bind:class="{selecttabline : IsShowLoginView}"></view>
@@ -27,7 +23,9 @@
 		<view class="summary" v-show="!IsShowLoginView">
 			<!-- <canvas class="loginpagecanvas" canvas-id="configcanvas" id="configcanvas" v-show="!IsShowLoginView"> -->
 				<view class="usernametext">IP地址：</view>
-				<input v-model="IPAddress" placeholder="请输入IP地址" class="cla" />
+				<input v-model="IPAddress" placeholder="请输入IP地址" class="cla"/>
+				<!-- <view class="usernametext">域名：</view>
+				<input v-model="DomainName" placeholder="请输入域名" class="cla"/> -->
 				<button class="button" v-on:click="SaveLoginData()">确认</button>
 		<!-- 	</canvas> -->
 		</view>
@@ -43,6 +41,7 @@
 				password: "",
 				IsShowLoginView: true,
 				IPAddress: '',
+				DomainName: '',
 				focus1: false,
 				focus2: false
 			}
@@ -52,6 +51,7 @@
 		},
 		onLoad() {
 			this.LoadLoginData();
+			this.AndroidCheckUpdate();
 		},
 		methods: {			
 			//绘制图形
@@ -144,6 +144,58 @@
 			},
 			tabEnter2() {
 				this.request()
+			},
+			AndroidCheckUpdate:function(){
+		            var _this=this;  
+			        uni.request({  
+			        url: uni.getStorageSync('OtherUrl'),
+		            method: 'POST',  
+									                    data: {
+															ModuleCode: 'Base_6',
+															token: uni.getStorageSync('token'),												
+														},  
+									                    success: res => {  
+															console.log(res.data);
+									                        
+									                            if(plus.networkinfo.getCurrentType()!=3){  
+									                                uni.showToast({  
+									                                    title: '有新的版本发布，检测到您目前非Wifi连接，为节约您的流量，程序已停止自动更新，将在您连接WIFI之后重新检测更新。',  
+									                                    mask: false,  
+									                                    duration: 5000,  
+									                                    icon:"none"  
+									                                });  
+									                                return;  
+									                            }  
+									                            uni.showToast({  
+									                                title: '有新的版本发布，检测到您目前为Wifi连接，程序已启动自动更新。新版本下载完成后将自动弹出安装程序。',  
+									                                mask: false,  
+									                                duration: 5000,  
+									                                icon:"none"  
+									                            });  
+									                            var dtask = plus.downloader.createDownload( "http://xxxx.com/app.apk", {}, function ( d, status ) {  
+									                                    // 下载完成  
+									                                    if ( status == 200 ) {   
+									                                        plus.runtime.install(plus.io.convertLocalFileSystemURL(d.filename),{},{},function(error){  
+									                                            uni.showToast({  
+									                                                title: '安装失败',  
+									                                                mask: false,  
+									                                                duration: 1500  
+									                                            });  
+									                                        })  
+									                                    } else {  
+									                                         uni.showToast({  
+									                                            title: '更新失败',  
+									                                            mask: false,  
+									                                            duration: 1500  
+									                                         });  
+									                                    }    
+									                                });  
+									                            dtask.start();   
+									                         
+									                    },  
+									                    fail: () => {},  
+									                    complete: () => {}  
+			}); 
 			}
 		}
 	}
@@ -169,13 +221,15 @@
 		margin-left: 400rpx;
 	}
 
-	.img {
-		width: 500rpx;
-		height: 400rpx;
+	.img {		
+		width: 400rpx;
+		height: 200rpx;
+		margin-top: 50rpx;		
 	}
 
 	.tableft {
 		font-size: 50rpx;
+		margin-top: 100rpx;
 		margin-left: -500rpx;
 	}
 
