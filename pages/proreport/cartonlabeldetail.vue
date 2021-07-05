@@ -51,7 +51,7 @@
 							FSrcInterId: this.ProReportSrcInterId
 						}
 					},
-					success: (result) => {							
+					success: (result) => {						
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')

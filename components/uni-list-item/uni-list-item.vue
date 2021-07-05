@@ -30,7 +30,9 @@
 							
 					<checkbox-group style="justify-content: right;" @change="OnCheckBoxChange">
 							<checkbox v-show="isshowcheckbox" :value="checkboxvalue" :checked="ischecked"></checkbox>
-					</checkbox-group>						
+					</checkbox-group>
+						
+				    <image v-show="isshowicon" class="icon" src="../../static/BillStatus.png"></image>
 				</slot>
 				<slot name="footer">
 					<view v-if="rightText || showBadge || showSwitch" class="uni-list-item__extra"
@@ -113,6 +115,10 @@
 				default: false
 			},
 			ischecked:{
+				type: [Boolean, Number],
+				default: false
+			},
+			isshowicon:{
 				type: [Boolean, Number],
 				default: false
 			},
@@ -479,5 +485,11 @@
 		display: block;	
 		margin-left: 1000px;
 		/* #endif */
+	}
+	
+	.icon{		
+		width: 70rpx;
+		height: 70rpx;	
+	    margin-right: 100rpx;
 	}
 </style>

@@ -7,7 +7,7 @@
 		        <uni-list>
 			       <uni-list-item v-for="(item,index) in SummaryListData":key="index" :title="'车间名称：'+ item.FDeptName + '\n' + '班组名称：' + item.FTeamName
 			       + '\n' + '制单人：' + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '单据编号：' + item.FBillNo"
-			       :note="'单据状态：' + item.FStatus" clickable v-on:click="SummaryItemSelected(item)">
+			       :note="'单据状态：' + item.FStatus" clickable :isshowicon="item.FIsScanned" v-on:click="SummaryItemSelected(item)">
 			       </uni-list-item>
 		        </uni-list>
 		      </scroll-view>	 
@@ -19,13 +19,12 @@
 		<view class="proreportview" v-show="TabSelectedIndex == 1" @touchstart='TouchStart' @touchend='TouchEnd'>
 			<button class="addproreport" v-on:click="AddProReport()">新增</button>
 			<button class="auditproreport" v-on:click="AuditProReport()">审核</button>
-			<button class="unauditproreport" v-on:click="UnAuditProReport()">反审</button>
-			<button class="hidebillhead" v-on:click="SwitchBillHeadVisible()">隐藏</button>	
+			<button class="unauditproreport" v-on:click="UnAuditProReport()">反审</button>			
 			<button class="deletebill" v-on:click="DeleteProreportBill()">删除</button>	
 			
 			<view class="billhead" v-show="IsBillHeadVisible">
 			<text class="title">单据编号：</text>
-			<text class="billnodata">{{ProReportBillNo}}</text>
+			<text class="billnoempty" v-bind:class="{billnofull : ProReportBillNo != '空'}">{{ProReportBillNo}}</text>
 			<view class="dataline"></view>			
 			
 			<text class="title">车间名称：</text>		
@@ -51,7 +50,7 @@
 				<uni-list>
 					<uni-list-item v-for="(item,index) in InfoListData" :key="index" :title="item.FNumber + '/' + item.FModel
 					+ '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '汇总进度：' + item.FSumQty + '/' + (item.FICMOQty - item.FSumQty)" 
-					:isshowprogress="true" v-bind:percent="Math.round((item.FSumQty / (item.FICMOQty - item.FSumQty)) * 100, 0)" 
+					isshowprogress v-bind:percent="Math.round((item.FSumQty / item.FICMOQty) * 100, 0)" 
 					clickable v-on:click="InfoItemSelected(item)">
 					</uni-list-item>
 					<!-- <uni-list-item v-for="(item,index) in InfoListData" :key="index" :title="'物料规格：' + item.FModel + '\n' 
@@ -125,7 +124,7 @@
 	export default {		
 		data() {			
 			return {	
-				TabSelectedIndex: 0,
+				TabSelectedIndex: 1,
 				SearchValue: '',
 				SelectStatus: '全部',
 				ProReportInterId: 0,				
@@ -166,7 +165,10 @@
 		},
 		onUnload() {
 			this.RemoveListener();
-		},		
+		},	
+		onNavigationBarButtonTap() {
+			this.SwitchBillHeadVisible();	
+		},
 		methods: {				
 			//添加广播监听
 			AddListener:function() {
@@ -617,6 +619,17 @@
 			{
 				this.IsBillHeadVisible = !this.IsBillHeadVisible;
 			},
+			//清除单据头数据
+			ClearBillHeadData:function(me){
+				me.ProReportInterId = 0;
+				me.ProReportBillNo = '空';
+				me.ProReportSrcInterId = 0;								
+				me.SelectWorkShopArray = [0,'请选择车间'];
+				me.SelectTeamArray = [0,'请选择班组'];			
+				me.FinishDate = DateFormat({
+					format: true
+				});	
+			},
 			//删除汇报单
 			DeleteProreportBill:function(){
 				if(this.ProReportBillNo == '空')
@@ -633,7 +646,7 @@
 				}				
 				if(this.SelectTeamArray[0] == 0)
 				{
-					Config.ShowMessage('请填写班组！');	
+					Config.ShowMe8sage('请填写班组！');	
 					Config.PopAudioContext();
 					return;
 				}	
@@ -656,8 +669,7 @@
 										Msg:''
 									}
 								},
-							success: (resdelete) => {	
-								console.log(resdelete.data);
+							success: (resdelete) => {									
 								let ResultCode = resdelete.data.ResultCode;
 								let ResultMsg = resdelete.data.ResultMsg;
 								if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
@@ -676,14 +688,7 @@
 								}
 								
 								Config.ShowMessage(DataParam.Msg);	
-								me.ProReportInterId = 0;
-								me.ProReportBillNo = '空';
-								me.ProReportSrcInterId = 0;								
-								me.SelectWorkShopArray = [0,'请选择车间'];
-								me.SelectTeamArray = [0,'请选择班组'];			
-								me.FinishDate = DateFormat({
-									format: true
-								});	
+								me.ClearBillHeadData(me);
 								me.GetProReportInfoExpand(null);
 						    },
 							fail: () => {
@@ -761,7 +766,7 @@
 							}
 						});
 				 }
-			},			
+			},
 			//根据汇报单信息获取明细
 			GetProReportDetail:function(){				
 				uni.showLoading({
@@ -861,16 +866,16 @@
 		color: #FFFFFF;
 		background-color: #007AFF;		
 		border-radius: 50rpx;
-		margin-left: 200rpx;
+		margin-left: 380rpx;
 		margin-top: -96rpx;
 	}
 	
 	.unauditproreport{	
 		width: 20%;
 		color: #FFFFFF;
-		background-color: #007AFF;
+		background-color: #007AFF;		
 		border-radius: 50rpx;
-		margin-left: 380rpx;
+		margin-left: 560rpx;
 		margin-top: -96rpx;
 	}
 	
@@ -883,13 +888,13 @@
 		margin-top: -96rpx;
 	}
 	
-	.deletebill{
+	.deletebill{		
 		width: 20%;
 		color: #FFFFFF;
 		background-color: #007AFF;
 		border-radius: 50rpx;
-		margin-left: 20rpx;
-		margin-top: 20rpx;
+		margin-left: 200rpx;
+		margin-top: -96rpx;
 	}
 
 	.billhead{
@@ -903,13 +908,24 @@
 		font-size: 40rpx;
 	}
 	
-	.billnodata{
+	.billnoempty{
 		display: flex;
 		width: 200rpx;
 		font-size: 40rpx;
 		margin-top: -60rpx;
 		margin-left: 300rpx;
 		text-align: center;
+		color: #777777;
+	}
+	
+	.billnofull{
+		display: flex;
+		width: 200rpx;
+		font-size: 40rpx;
+		margin-top: -60rpx;
+		margin-left: 300rpx;
+		text-align: center;	
+	    color: #000000;
 	}
 	
 	.detailtitle{

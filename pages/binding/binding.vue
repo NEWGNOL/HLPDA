@@ -12,19 +12,19 @@
 		<cmd-progress style="display: flex; width: 80%; margin-top: -50rpx; margin-left: 90rpx;" v-bind:percent="Math.round((this.ScannerLabelCount / this.InnerCartonLabelCount) * 100, 0)"></cmd-progress>
 		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 40rpx;">外箱标签：</text>
 		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 350rpx; margin-top: -58rpx;">{{CartonLabel}}</text>		
-		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 60rpx;">已扫内箱数：</text>
+		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 50rpx;">已扫内箱数：</text>
 		<text style="display: flex; width: 500rpx; font-size: 50rpx; margin-left: 350rpx; margin-top: -70rpx;">{{ScannerLabelCount}}</text>
-		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 60rpx;">装满内箱数：</text>
+		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 50rpx;">装满内箱数：</text>
 		<text style="display: flex; width: 500rpx; font-size: 50rpx; margin-left: 350rpx; margin-top: -70rpx;">{{InnerCartonLabelCount}}</text>
-		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 60rpx;">物料编码：</text>
+		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 50rpx;">物料编码：</text>
 		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -60rpx;">{{FNumber}}</text>
-		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 60rpx;">物料名称：</text>
+		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 50rpx;">物料名称：</text>
 		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -60rpx;">{{FName}}</text>
-		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 60rpx;">物料规格：</text>
+		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 50rpx;">物料规格：</text>
 		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -60rpx;">{{FModel}}</text>
-		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 60rpx;">批次：</text>
+		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 50rpx;">批次：</text>
 		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -60rpx;">{{FGMPBatchNo != '' ? FGMPBatchNo : '空'}}</text>
-		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 60rpx;">扫描模式：</text>
+		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 50rpx;">扫描模式：</text>
 		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -60rpx;">{{IsPack ? '扫描内箱' : '扫描外箱'}}</text>
 		</view>
 		
@@ -404,26 +404,29 @@
 	
 	.tableftline {		
 		width: 15%;
-		height: 5rpx;		
+		height: 5rpx;	
+		margin-top: 5rpx;
 		margin-left: 145rpx;
 	}
 	
 	.tabrightline {			
 		width: 15%;
-		height: 5rpx;		
-		margin-left: 500rpx;
+		height: 5rpx;	
+	    margin-top: 5rpx;
+		margin-left: 495rpx;
 	}	
 	
 	.tableft {		
 		display: flex;
-		font-size: 50rpx;		
+		font-size: 50rpx;
+		margin-top: 5rpx;
 		margin-left: 150rpx;
 	}
 	
 	.tabright {	
 		display: flex;
 		font-size: 50rpx;
-		margin-top: -80rpx;
+		margin-top: -86rpx;
 		margin-left: 500rpx;
 	}
 	
@@ -494,7 +497,7 @@
 		color: #FFFFFF;
 		background-color: #007AFF;		
 		border-radius: 50rpx;
-		margin-top: -1150rpx;
+		margin-top: -1170rpx;
 		margin-left: 200rpx;	
 	}
 	

@@ -12,7 +12,7 @@
 			
 		<!-- <view class="updatesoftware" @click="UpdateSoftware()">
 			<image src="" mode="aspectFit" class="img"></image>
-			<text class="text1">软件更新</text>
+			<text class="text1">参数设置</text>
 		</view>	 -->		
 	</view>	
 </template>

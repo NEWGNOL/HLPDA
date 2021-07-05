@@ -13,8 +13,8 @@ const PopAudioContext=()=>{
 	  //console.log('开始播放');
 	});
 	AudioContext.onError((res) => {
-	  //console.log(res.errMsg);
-	  //console.log(res.errCode);
+	  console.log(res.errMsg);
+	  console.log(res.errCode);
     });
 };//播放错误提示音    
 export default {		
