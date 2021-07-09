@@ -1,14 +1,24 @@
 <template>
 	<view>	
-		<view class="binding" @click="JumpPage('/pages/binding/binding')">
-			<image src="../../static/zhuangxiang.png" mode="center" class="img"></image>
-			<text class="text1">装箱绑定</text>
+		<view class="leftmode" @click="JumpPage('/pages/binding/binding')">
+			<image class="img" src="../../static/zhuangxiang.png" mode="aspectFit"></image>
+			<text class="title">装箱绑定</text>
 		</view>
 			
-		<view class="proreport" @click="JumpPage('/pages/proreport/proreport')">
-			<image src="../../static/shengchan.png" mode="aspectFit" class="img"></image>
-			<text class="text1">生产汇报</text>
+		<view class="rightmode" @click="JumpPage('/pages/proreport/proreport')">
+			<image class="img" src="../../static/shengchan.png" mode="aspectFit" ></image>
+			<text class="title">生产汇报</text>
 		</view>
+		
+		<view class="leftmode" @click="JumpPage('/pages/instorage/instorage')">
+			<image class="img" src="../../static/instorage.png" mode="aspectFit"></image>
+			<text class="title">入库</text>
+		</view>	
+		
+		<view class="rightmode" @click="JumpPage('/pages/outstorage/outstorage')">
+			<image class="img" src="../../static/outstorage.png" mode="aspectFit"></image>
+			<text class="title">出库</text>
+		</view>	
 			
 		<!-- <view class="updatesoftware" @click="UpdateSoftware()">
 			<image src="" mode="aspectFit" class="img"></image>
@@ -25,8 +35,8 @@
 			}
 		},		
 		methods: {
-			//跳转到指定页面
-			JumpPage:function(url){			
+			//跳转到指定页面			
+			JumpPage:function(url){					
 				uni.showLoading({
 					title:'Loading'
 				});	
@@ -52,11 +62,17 @@
 		margin-top: 30rpx;
 	}	
 	
-	.text1{
+	.title{
 		color: #FFFFFF;
 	}
 	
-	.binding{
+	.img{
+		margin-top: 10rpx;
+		width: 80rpx;
+		margin-left: 110rpx;
+	}
+	
+	.leftmode{
 		display: flex;
 		flex-direction: column;
 		text-align: center;
@@ -68,7 +84,7 @@
 		margin-top: 30rpx;
 	}
 	
-	.proreport{
+	.rightmode{
 		display: flex;
 		flex-direction: column;
 		text-align: center;
@@ -78,23 +94,5 @@
 		border-radius: 25rpx;	
 		margin-left: 410rpx;
 		margin-top: -150rpx;
-	}
-	
-	.updatesoftware{
-		display: flex;
-		flex-direction: column;
-		text-align: center;
-		width: 300rpx;
-		height: 150rpx;
-		background-color: #007AFF;
-		border-radius: 25rpx;	
-		margin-left: 50rpx;	
-	    margin-top: 50rpx;
-	}
-	
-	.img{
-		margin-top: 10rpx;
-		width: 80rpx;
-		margin-left: 110rpx;
-	}
+	}	
 </style>

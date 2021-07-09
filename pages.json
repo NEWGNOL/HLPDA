@@ -103,7 +103,29 @@
 					}
 				}
 			}
-		}	   
+		},
+		{
+			"path": "pages/instorage/instorage",
+			"style": {
+				"navigationBarTitleText": "入库",
+				"app-plus":{
+					"titleNView":{
+						"titleColor":"FFFFFF"						
+					}					
+				}				
+			}
+		},
+		{
+			"path": "pages/outstorage/outstorage",
+			"style": {
+				"navigationBarTitleText": "出库",
+				"app-plus":{
+					"titleNView":{
+						"titleColor":"FFFFFF"						
+					}					
+				}				
+			}
+		}			   
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -111,4 +133,21 @@
 		"navigationBarBackgroundColor": "#007AFF",
 		"backgroundColor": "#007AFF"
 	}
+	// ,
+	// "tabBar":{
+	// 	"backgroundColor":"#FFFFFF",
+	// 	"list":[{
+	// 		 "pagePath": "pages/binding/binding",
+	// 		                "iconPath": "static/zhuangxiang.png",
+	// 		                "selectedIconPath": "static/zhuangxiang.png",
+	// 		                "text": "首页"
+	// 		            }, 
+	// 					{
+	// 		                "pagePath": "pages/proreport/proreport",
+	// 		                "iconPath": "static/icon/shengchan.png",
+	// 		                "selectedIconPath": "static/icon/shengchan.png",
+	// 		                "text": "发现"
+	// 		            }		            		
+	// 	}]
+	// }
 }

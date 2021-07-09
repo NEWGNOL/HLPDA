@@ -2,7 +2,7 @@
 	<view class="content">			
 		<view class="proreportview" v-show="TabSelectedIndex == 0" @touchstart='TouchStart' @touchend='TouchEnd'>
 			<uni-search-bar class="search" cancelButton="none" v-model="SearchValue" @input="ValueChanged"></uni-search-bar>
-			<DropdownList class="dropdownlist" :candidates="StatusArray" v-model="SelectStatus" @input="ShowProReportSum()"></DropdownList>
+			<BillStatus class="billstatus" :candidates="StatusArray" v-model="SelectStatus" @input="ShowProReportSum()"></BillStatus>
 		     <scroll-view class="sumscrollview" scroll-y="true">
 		        <uni-list>
 			       <uni-list-item v-for="(item,index) in SummaryListData":key="index" :title="'车间名称：'+ item.FDeptName + '\n' + '班组名称：' + item.FTeamName
@@ -117,8 +117,6 @@
 </template>
 
 
-<script src="vue.js" type="text/javascript" charset="UTF-8"></script>
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
 	import Config from '../../common/config.js';
 	export default {		
@@ -167,7 +165,7 @@
 			this.RemoveListener();
 		},	
 		onNavigationBarButtonTap() {
-			this.SwitchBillHeadVisible();	
+			this.SwitchBillHeadVisible();		   
 		},
 		methods: {				
 			//添加广播监听
@@ -1054,7 +1052,7 @@
 		margin-left: 5rpx;
 	}	
 	
-	.dropdownlist{	
+	.billstatus{	
 		position: absolute;
 		margin-top: -90rpx;
 		margin-left: 570rpx;
@@ -1091,6 +1089,5 @@
 		border-radius: 50rpx;
 		margin-right: 150rpx;
 		margin-top: -95rpx;
-	}
-	
+	}	
 </style>

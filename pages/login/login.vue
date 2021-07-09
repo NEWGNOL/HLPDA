@@ -179,10 +179,9 @@
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
 					data: {
-						ModuleCode: 'Base_6',
-						token: uni.getStorageSync('token'),
+						ModuleCode: 'Base_6'
 					},
-					success: (result) => {							
+					success: (result) => {						  
 					   let Version = result.data.ResultData.Base_6.data0.FVersion;
 						if(plus.runtime.versionCode < Version)
 						{							

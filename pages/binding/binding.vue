@@ -9,23 +9,23 @@
 	    </view>
 	
 		<view class="summary" v-show="IsShowBindingView">		
-		<cmd-progress style="display: flex; width: 80%; margin-top: -50rpx; margin-left: 90rpx;" v-bind:percent="Math.round((this.ScannerLabelCount / this.InnerCartonLabelCount) * 100, 0)"></cmd-progress>
-		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 40rpx;">外箱标签：</text>
-		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 350rpx; margin-top: -58rpx;">{{CartonLabel}}</text>		
-		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 50rpx;">已扫内箱数：</text>
-		<text style="display: flex; width: 500rpx; font-size: 50rpx; margin-left: 350rpx; margin-top: -70rpx;">{{ScannerLabelCount}}</text>
-		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 50rpx;">装满内箱数：</text>
-		<text style="display: flex; width: 500rpx; font-size: 50rpx; margin-left: 350rpx; margin-top: -70rpx;">{{InnerCartonLabelCount}}</text>
-		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 50rpx;">物料编码：</text>
-		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -60rpx;">{{FNumber}}</text>
-		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 50rpx;">物料名称：</text>
-		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -60rpx;">{{FName}}</text>
-		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 50rpx;">物料规格：</text>
-		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -60rpx;">{{FModel}}</text>
-		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 50rpx;">批次：</text>
-		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -60rpx;">{{FGMPBatchNo != '' ? FGMPBatchNo : '空'}}</text>
-		<text style="display: flex; font-size: 40rpx; margin-left: 90rpx; margin-top: 50rpx;">扫描模式：</text>
-		<text style="display: flex; width: 500rpx; font-size: 40rpx; margin-left: 310rpx; margin-top: -60rpx;">{{IsPack ? '扫描内箱' : '扫描外箱'}}</text>
+		<cmd-progress style="width: 80%; margin-top: -50rpx; margin-left: 90rpx;" v-bind:percent="Math.round((this.ScannerLabelCount / this.InnerCartonLabelCount) * 100, 0)"></cmd-progress>
+		<text class="cartonlabeltitle">外箱标签：</text>
+		<text class="cartonlabelcode">{{CartonLabel}}</text>		
+		<text class="otherscantitle">已扫内箱数：</text>
+		<text class="scannedcount">{{ScannerLabelCount}}</text>
+		<text class="otherscantitle">装满内箱数：</text>
+		<text class="otherscandata">{{InnerCartonLabelCount}}</text>
+		<text class="otherscantitle">物料编码：</text>
+		<text class="otherscandata">{{FNumber}}</text>
+		<text class="otherscantitle">物料名称：</text>
+		<text class="otherscandata">{{FName}}</text>
+		<text class="otherscantitle">物料规格：</text>
+		<text class="otherscandata">{{FModel}}</text>
+		<text class="otherscantitle">批次：</text>
+		<text class="otherscandata">{{FGMPBatchNo != '' ? FGMPBatchNo : '空'}}</text>
+		<text class="otherscantitle">扫描模式：</text>
+		<text class="otherscandata">{{IsPack ? '扫码装箱' : '查询外箱'}}</text>
 		</view>
 		
 		
@@ -59,7 +59,7 @@
 				FName:'空',
 				FModel:'空',
 				FGMPBatchNo:'空',				
-				IsPack: false,//0代表扫描外箱，1代表扫描内箱
+				IsPack: false,//0代表查询外箱，1代表扫码装箱
 				IsShowBindingView: true,
 				IsSelectAllLabel: false,
 				Type:'top',
@@ -400,6 +400,45 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+	}
+	
+	.cartonlabeltitle{
+		display: flex; 
+		font-size: 40rpx; 
+		margin-left: 90rpx; 
+		margin-top: 40rpx;
+	}
+	
+	.cartonlabelcode{
+		display: flex; 
+		width: 500rpx; 
+		font-size: 45rpx; 
+		margin-left: 350rpx; 
+		margin-top: -63rpx;
+	}
+	
+	.otherscantitle{
+		display: flex; 
+		font-size: 40rpx; 
+		margin-left: 90rpx; 
+		margin-top: 50rpx;
+	}
+	
+	.otherscandata{
+		display: flex;
+		width: 500rpx; 
+		font-size: 45rpx; 
+		margin-left: 350rpx; 
+		margin-top: -63rpx;
+	}
+	
+	.scannedcount{
+		display: flex; 
+		width: 500rpx; 
+		font-size: 50rpx; 
+		margin-left: 350rpx; 
+		margin-top: -70rpx;
+		color:#1AAD19;
 	}
 	
 	.tableftline {		
