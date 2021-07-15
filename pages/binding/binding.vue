@@ -9,23 +9,23 @@
 	    </view>
 	
 		<view class="summary" v-show="IsShowBindingView">		
-		<cmd-progress style="width: 80%; margin-top: -50rpx; margin-left: 90rpx;" v-bind:percent="Math.round((this.ScannerLabelCount / this.InnerCartonLabelCount) * 100, 0)"></cmd-progress>
-		<text class="cartonlabeltitle">外箱标签：</text>
-		<text class="cartonlabelcode">{{CartonLabel}}</text>		
-		<text class="otherscantitle">已扫内箱数：</text>
-		<text class="scannedcount">{{ScannerLabelCount}}</text>
-		<text class="otherscantitle">装满内箱数：</text>
-		<text class="otherscandata">{{InnerCartonLabelCount}}</text>
-		<text class="otherscantitle">物料编码：</text>
-		<text class="otherscandata">{{FNumber}}</text>
-		<text class="otherscantitle">物料名称：</text>
-		<text class="otherscandata">{{FName}}</text>
-		<text class="otherscantitle">物料规格：</text>
-		<text class="otherscandata">{{FModel}}</text>
-		<text class="otherscantitle">批次：</text>
-		<text class="otherscandata">{{FGMPBatchNo != '' ? FGMPBatchNo : '空'}}</text>
-		<text class="otherscantitle">扫描模式：</text>
-		<text class="otherscandata">{{IsPack ? '扫码装箱' : '查询外箱'}}</text>
+		     <cmd-progress style="width: 80%; margin-top: -50rpx; margin-left: 90rpx;" v-bind:percent="Math.round((this.ScannerLabelCount / this.InnerCartonLabelCount) * 100, 0)"></cmd-progress>
+		     <text class="cartonlabeltitle">外箱标签：</text>
+		     <text class="cartonlabelcode">{{CartonLabel}}</text>		
+		     <text class="otherscantitle">已扫内箱数：</text>
+		     <text class="scannedcount">{{ScannerLabelCount}}</text>
+		     <text class="otherscantitle">装满内箱数：</text>
+		     <text class="otherscandata">{{InnerCartonLabelCount}}</text>
+		     <text class="otherscantitle">物料编码：</text>
+		     <text class="otherscandata">{{FNumber}}</text>
+		     <text class="otherscantitle">物料名称：</text>
+		     <text class="otherscandata">{{FName}}</text>
+		     <text class="otherscantitle">物料规格：</text>
+		     <text class="otherscandata">{{FModel}}</text>
+		     <text class="otherscantitle">批次：</text>
+		     <text class="otherscandata">{{FGMPBatchNo != '' ? FGMPBatchNo : '空'}}</text>
+		     <text class="otherscantitle">扫描模式：</text>
+		     <text class="otherscandata">{{IsPack ? '扫码装箱' : '查询外箱'}}</text>
 		</view>
 		
 		
@@ -42,9 +42,6 @@
 	</view>
 </template>
 
-
-<script src="vue.js" type="text/javascript" charset="UTF-8"></script>
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
 	import Config from '../../common/config.js';
 	export default {
@@ -79,7 +76,7 @@
 				 this.SwitchCartonMode();
 				},
 		methods: {	
-			//切换内箱标签是否选中
+			//检测内箱标签是否选中
 			ChangeIsChecked:function(item){
 				item.FIsChecked = !item.FIsChecked;				
 			},
@@ -117,8 +114,8 @@
 				main.registerReceiver(receiver, filter); //注册监听 
 					
 				//记录窗体和接收者用于关闭窗体的同时也关闭监听		
-				this.Main = main;	
-				this.Receiver = receiver;
+				me.Main = main;	
+				me.Receiver = receiver;
 					
 				function doReceive(context, intent) { 			
 				    plus.android.importClass(intent);  		
@@ -149,26 +146,26 @@
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 						{						
 							Config.ShowMessage('账号登录异常，请重新登录！');	
-							Config.PopAudioContext();
+							Config.PopAudioContext(false);
 							return;
 						}						
 						let DataArray = result.data.ResultData.LabelInfo.data0;							
 			            if(DataArray.length == 0)
 						{
 							Config.ShowMessage('此外箱不存在，请重新扫描外箱条码！');	
-							Config.PopAudioContext();
+							Config.PopAudioContext(false);
 							return;
 						}																	
 					    if(!DataArray[0].FIsPack)
 						{
 							Config.ShowMessage(this.Label + '不是外箱条码，请重新扫描外箱条码！');
-							Config.PopAudioContext();
+							Config.PopAudioContext(false);
 							return;
 						}											
 						if(this.IsPack && this.InnerCartonLabelCount !=0 && this.ScannerLabelCount !=0 && this.InnerCartonLabelCount == this.ScannerLabelCount)							
 						{							
 							Config.ShowMessage('内箱已满，请扫描其它外箱！');	
-							Config.PopAudioContext();
+							Config.PopAudioContext(false);
 							return;
 						}
 						this.IsPack = DataArray[0].FIsPack;						
@@ -182,7 +179,7 @@
 					},
 					fail: () => {	
 						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext();
+						Config.PopAudioContext(false);
 					}
 				});			
 			},
@@ -192,7 +189,7 @@
 				if(me.SelectLabel == '')					
 				{
 					Config.ShowMessage('请选择要删除的内箱标签！');
-					Config.PopAudioContext();
+					Config.PopAudioContext(false);
 					return; 
 				}		
 				uni.showModal({					
@@ -228,24 +225,25 @@
 											if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 											{						
 												Config.ShowMessage('账号登录异常，请重新登录！');	
-												Config.PopAudioContext();
+												Config.PopAudioContext(false);
 												return;
 											}											
 											me.DetailListData = resdetail.data.ResultData.LabelInfo.data0;						                           
 										},
 										fail: () => {
 											Config.ShowMessage('请求数据失败！');	
-											Config.PopAudioContext();
+											Config.PopAudioContext(false);
 										}
 									});			
 									let DataModel = res.data.ResultData.Binding1_5.data0;									
 									me.ScannerLabelCount = DataModel.FlabelCount;
 									me.IsPack = true;
-									Config.ShowMessage(DataModel.Msg);																																				
+									Config.ShowMessage(DataModel.Msg);
+									Config.PopAudioContext(true);																																				
 								},
 								fail: () => {	
 									Config.ShowMessage('请求数据失败！');	
-									Config.PopAudioContext();
+									Config.PopAudioContext(false);
 								}
 							});	
 						} 
@@ -271,7 +269,7 @@
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 						{						
 							Config.ShowMessage('账号登录异常，请重新登录！');	
-							Config.PopAudioContext();
+							Config.PopAudioContext(false);
 							return;
 						}							
 						let DataModel = result.data.ResultData.Binding10_2Info.data0;
@@ -279,7 +277,7 @@
 						if(Result == 0)
 						{
 							Config.ShowMessage(DataModel.Msg);
-							Config.PopAudioContext();
+							Config.PopAudioContext(false);
 							return;
 						}						
 						this.InnerCartonLabelCount = DataModel.FMaxlabelCount;
@@ -289,11 +287,12 @@
 						{
 							this.IsPack = false;
 						}						
-						Config.ShowMessage(DataModel.Msg);				
+						Config.ShowMessage(DataModel.Msg);
+						Config.PopAudioContext(true);
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext();
+						Config.PopAudioContext(false);
 					}
 				});				
 			},
@@ -317,14 +316,14 @@
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 						{						
 							Config.ShowMessage('账号登录异常，请重新登录！');	
-							Config.PopAudioContext();
+							Config.PopAudioContext(false);
 							return;
 						}	
 					    this.DetailListData = result.data.ResultData.LabelInfo.data0;						                           
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');	
-						Config.PopAudioContext();
+						Config.PopAudioContext(false);
 					}
 				});	
 			    }
@@ -351,6 +350,7 @@
 						if (result.confirm) {
 							me.ClearPageData();
 							Config.ShowMessage('切换外箱扫描模式成功！')
+							Config.PopAudioContext(true);
 						} 
 					}
 				});	

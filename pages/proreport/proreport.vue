@@ -2,7 +2,7 @@
 	<view class="content">			
 		<view class="proreportview" v-show="TabSelectedIndex == 0" @touchstart='TouchStart' @touchend='TouchEnd'>
 			<uni-search-bar class="search" cancelButton="none" v-model="SearchValue" @input="ValueChanged"></uni-search-bar>
-			<BillStatus class="billstatus" :candidates="StatusArray" v-model="SelectStatus" @input="ShowProReportSum()"></BillStatus>
+			<billstatus class="billstatus" :candidates="StatusArray" v-model="SelectStatus" @input="ShowProReportSum()"></billstatus>
 		     <scroll-view class="sumscrollview" scroll-y="true">
 		        <uni-list>
 			       <uni-list-item v-for="(item,index) in SummaryListData":key="index" :title="'车间名称：'+ item.FDeptName + '\n' + '班组名称：' + item.FTeamName
@@ -49,7 +49,7 @@
 			<scroll-view class="unselectinfoscrollview" v-bind:class="{selectinfoscrollview : !IsBillHeadVisible}" scroll-y="true">
 				<uni-list>
 					<uni-list-item v-for="(item,index) in InfoListData" :key="index" :title="item.FNumber + '/' + item.FModel
-					+ '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '汇总进度：' + item.FSumQty + '/' + (item.FICMOQty - item.FSumQty)" 
+					+ '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '汇总进度：' + item.FSumQty + '/' + item.FICMOQty" 
 					isshowprogress v-bind:percent="Math.round((item.FSumQty / item.FICMOQty) * 100, 0)" 
 					clickable v-on:click="InfoItemSelected(item)">
 					</uni-list-item>
@@ -63,6 +63,7 @@
 			</scroll-view>	
 		</view>
 		
+		 
 		 
 		
 		<view class="proreportview" v-show="TabSelectedIndex == 2" @touchstart='TouchStart' @touchend='TouchEnd'>
@@ -135,9 +136,7 @@
 				FinishDate: DateFormat({
 					format: true
 				}),
-				ItemTouchStartDate: null,
-				SelectLabel:'',
-				IsSelectAllLabel: false,
+				ItemTouchStartDate: null,			
 				StartDate:DateFormat('start'),
 				EndDate:DateFormat('end'),			
 				SummaryListData:[],
@@ -158,8 +157,7 @@
 		},		
 	    onLoad() {	
 			//this.InitAnimation();
-			this.AddListener();			
-			this.ShowProReportSum();
+			this.AddListener();		
 		},
 		onUnload() {
 			this.RemoveListener();
@@ -185,8 +183,8 @@
 				main.registerReceiver(receiver, filter); //注册监听 	
 					
 				//记录窗体和接收者用于关闭窗体的同时也关闭监听	
-				this.Main = main;	
-				this.Receiver = receiver;
+				me.Main = main;	
+				me.Receiver = receiver;
 					
 				function doReceive(context, intent) { 			
 				    plus.android.importClass(intent);  		
@@ -276,7 +274,7 @@
 									if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 									{						
 										Config.ShowMessage('账号登录异常，请重新登录！');	
-										Config.PopAudioContext();
+										Config.PopAudioContext(false);
 										return;
 									}	
 									let DataParam = resdelete.data.ResultData.ICMORpt2_9.dataparam;
@@ -284,7 +282,7 @@
 									if(ResultCode == 0)
 									{
 										Config.ShowMessage(DataParam.Msg);
-										Config.PopAudioContext();
+										Config.PopAudioContext(false);
 										return;
 									}
 									
@@ -307,20 +305,20 @@
 										if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 										{						
 											Config.ShowMessage('账号登录异常，请重新登录！');	
-											Config.PopAudioContext();
+											Config.PopAudioContext(false);
 											return;
 										}						
 										this.SummaryListData = res.data.ResultData.PdaICMORptListInfo.data0;
 									},
 									fail: () => {
 										Config.ShowMessage('请求数据失败！');
-										Config.PopAudioContext();
+										Config.PopAudioContext(false);
 									}
 								    });
 								},
 								fail: () => {
 									Config.ShowMessage('请求数据失败！');	
-									Config.PopAudioContext();
+									Config.PopAudioContext(false);
 								}
 							    });
 							}
@@ -346,6 +344,7 @@
 				}
 				else if(this.TabSelectedIndex == 1)
 				{
+					this
 					this.ShowProReportInfo()
 				}
 				else					
@@ -399,14 +398,14 @@
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 						{						
 							Config.ShowMessage('账号登录异常，请重新登录！');	
-							Config.PopAudioContext();
+							Config.PopAudioContext(false);
 							return;
 						}						
 						this.SummaryListData = result.data.ResultData.PdaICMORptListInfo.data0;
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');		
-	                    Config.PopAudioContext();
+	                    Config.PopAudioContext(false);
 					}
 				});
 			},			
@@ -415,19 +414,19 @@
 				if(this.ProReportBillNo == '空')
 				{
 					Config.ShowMessage('请新增汇报单！');
-					Config.PopAudioContext();
+					Config.PopAudioContext(false);
 					return;
 				}				
 				if(this.SelectWorkShopArray[0] == 0)
 				{
 					Config.ShowMessage('请填写车间！');	
-					Config.PopAudioContext();
+					Config.PopAudioContext(false);
 					return;
 				}				
 				if(this.SelectTeamArray[0] == 0)
 				{
 					Config.ShowMessage('请填写班组！');	
-					Config.PopAudioContext();
+					Config.PopAudioContext(false);
 					return;
 				}				
 				uni.request({
@@ -454,7 +453,7 @@
 						 if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 						 {						
 						 	Config.ShowMessage('账号登录异常，请重新登录！');	
-						 	Config.PopAudioContext();
+						 	Config.PopAudioContext(false);
 						 	return;
 						 }						 
 						 let ResultData = result.data.ResultData.AddPdaICMORpt;
@@ -462,15 +461,16 @@
 						 if(Result == 0)
 						 {
 							 Config.ShowMessage(ResultData.dataparam.Msg);	
-							 Config.PopAudioContext();
+							 Config.PopAudioContext(false);
 							 return;
 						 }
 						 this.InfoListData = ResultData.data0;	
-						 Config.ShowMessage(ResultData.dataparam.Msg);	
+						 Config.ShowMessage(ResultData.dataparam.Msg);
+						 Config.PopAudioContext(true);
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');	
-						Config.PopAudioContext();
+						Config.PopAudioContext(false);
 					}
 				});
 			},
@@ -495,7 +495,7 @@
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 						{						
 							Config.ShowMessage('账号登录异常，请重新登录！');	
-							Config.PopAudioContext();
+							Config.PopAudioContext(false);
 							return;
 						}						
 						let DataModel = result.data.ResultData.PdaICMORpt.dataparam;
@@ -511,7 +511,7 @@
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');	
-						Config.PopAudioContext();
+						Config.PopAudioContext(false);
 					}
 				});	
 			},
@@ -520,19 +520,19 @@
 				if(this.SelectWorkShopArray[0] == 0)
 				{
 					Config.ShowMessage('请填写车间！');
-					Config.PopAudioContext();
+					Config.PopAudioContext(false);
 					return;
 				}				
 				if(this.SelectTeamArray[0] == 0)
 				{
 					Config.ShowMessage('请填写班组！');	
-					Config.PopAudioContext();
+					Config.PopAudioContext(false);
 					return;
 				}				
 				 if(this.InfoListData.length == 0)					 
 				 {
 					 Config.ShowMessage('汇报单无扫描数据！');	
-					 Config.PopAudioContext();
+					 Config.PopAudioContext(false);
 					 return;
 				 }				
 				 uni.request({
@@ -554,7 +554,7 @@
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 						{						
 							Config.ShowMessage('账号登录异常，请重新登录！');	
-							Config.PopAudioContext();
+							Config.PopAudioContext(false);
 							return;
 						}	
 						let DataParam = result.data.ResultData.PdaICMORptToICMORpt.dataparam;
@@ -562,14 +562,15 @@
 						if(Result == 0)							
 						{
 							Config.ShowMessage(DataParam.Msg);
-							Config.PopAudioContext();
+							Config.PopAudioContext(false);
 							return;
 						}
-						Config.ShowMessage(DataParam.Msg);						
+						Config.ShowMessage(DataParam.Msg);	
+						Config.PopAudioContext(true);
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext();
+						Config.PopAudioContext(false);
 					}
 				});
 			},
@@ -593,7 +594,7 @@
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 						{						
 							Config.ShowMessage('账号登录异常，请重新登录！');	
-							Config.PopAudioContext();
+							Config.PopAudioContext(false);
 							return;
 						}	
 						let DataParam = result.data.ResultData.unPdaICMORptToICMORpt.dataparam;
@@ -601,14 +602,15 @@
 						if(Result == 0)							
 						{
 							Config.ShowMessage(DataParam.Msg);
-							Config.PopAudioContext();
+							Config.PopAudioContext(false);
 							return;
 						}
 						Config.ShowMessage(DataParam.Msg);
+						Config.PopAudioContext(true);
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');	
-						Config.PopAudioContext();
+						Config.PopAudioContext(false);
 					}
 				});
 			},
@@ -632,23 +634,10 @@
 			DeleteProreportBill:function(){
 				if(this.ProReportBillNo == '空')
 				{
-					Config.ShowMessage('请新增汇报单！');
-					Config.PopAudioContext();
-					return;
-				}
-				if(this.SelectWorkShopArray[0] == 0)
-				{
-					Config.ShowMessage('请填写车间！');	
-					Config.PopAudioContext();
+					Config.ShowMessage('请选择要删除的汇报单！');
+					Config.PopAudioContext(false);
 					return;
 				}				
-				if(this.SelectTeamArray[0] == 0)
-				{
-					Config.ShowMe8sage('请填写班组！');	
-					Config.PopAudioContext();
-					return;
-				}	
-				
 				let me = this;	
 				uni.showModal({
 					title: '提示',
@@ -673,7 +662,7 @@
 								if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 								{						
 									Config.ShowMessage('账号登录异常，请重新登录！');	
-									Config.PopAudioContext();
+									Config.PopAudioContext(false);
 									return;
 								}	
 								let DataParam = resdelete.data.ResultData.ICMORpt2_9.dataparam;
@@ -681,18 +670,18 @@
 								if(ResultCode == 0)
 								{
 									Config.ShowMessage(DataParam.Msg);
-									Config.PopAudioContext();
+									Config.PopAudioContext(false);
 									return;
-								}
-								
-								Config.ShowMessage(DataParam.Msg);	
+								}							
 								me.ClearBillHeadData(me);
 								me.GetProReportInfoExpand(null);
+								Config.ShowMessage(DataParam.Msg);
+								Config.PopAudioContext(true);
 						    },
 							fail: () => {
-								    Config.ShowMessage('请求数据失败！');	
-								    Config.PopAudioContext();
-								}
+								Config.ShowMessage('请求数据失败！');	
+								Config.PopAudioContext(false);
+						    }
 							});
 							}
 						}
@@ -722,14 +711,14 @@
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 						{						
 							Config.ShowMessage('账号登录异常，请重新登录！');	
-							Config.PopAudioContext();
+							Config.PopAudioContext(false);
 							return;
 						}	
 						this.InfoListData = result.data.ResultData.PdaICMORptSumInfo.data0;
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');	
-						Config.PopAudioContext();
+						Config.PopAudioContext(false);
 					}
 				});
 			},
@@ -753,14 +742,14 @@
 								if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 								{						
 									Config.ShowMessage('账号登录异常，请重新登录！');	
-									Config.PopAudioContext();
+									Config.PopAudioContext(false);
 									return;
 								}	
 								this.InfoListData = result.data.ResultData.PdaICMORptSumInfo.data0;
 							},
 							fail: () => {
 								Config.ShowMessage('请求数据失败！');
-								Config.PopAudioContext();
+								Config.PopAudioContext(false);
 							}
 						});
 				 }
@@ -855,8 +844,17 @@
 		color: #FFFFFF;
 		background-color: #007AFF;
 		border-radius: 50rpx;
-		margin-left: 20rpx;
+		margin-left: 23rpx;
 		margin-top: 20rpx;
+	}
+	
+	.deletebill{
+		width: 20%;
+		color: #FFFFFF;
+		background-color: #007AFF;
+		border-radius: 50rpx;
+		margin-left: 206rpx;
+		margin-top: -96rpx;
 	}
 	
 	.auditproreport{	
@@ -864,7 +862,7 @@
 		color: #FFFFFF;
 		background-color: #007AFF;		
 		border-radius: 50rpx;
-		margin-left: 380rpx;
+		margin-left: 389rpx;
 		margin-top: -96rpx;
 	}
 	
@@ -873,7 +871,7 @@
 		color: #FFFFFF;
 		background-color: #007AFF;		
 		border-radius: 50rpx;
-		margin-left: 560rpx;
+		margin-left: 572rpx;
 		margin-top: -96rpx;
 	}
 	
@@ -886,15 +884,6 @@
 		margin-top: -96rpx;
 	}
 	
-	.deletebill{		
-		width: 20%;
-		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50rpx;
-		margin-left: 200rpx;
-		margin-top: -96rpx;
-	}
-
 	.billhead{
 		width: 100%;		
 		margin-top: 50rpx;
@@ -976,7 +965,7 @@
 	.selectinfoscrollview{
 		width: 100%;
 		height: 850rpx;
-		margin-top: 70rpx;
+		margin-top: 50rpx;
 	}
 	
 	.detailscrollview {
@@ -1072,22 +1061,4 @@
 		margin-left: 570rpx;
 		margin-top: -60rpx;
 	}
-	
-	.selectlabel{
-		width: 30%;
-		color: #FFFFFF;
-		background-color: #007AFF;		
-		border-radius: 50rpx;
-		margin-left: 150rpx;
-		margin-top: 20rpx;
-	}
-	
-	.deletelabel{	
-		width: 20%;
-		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50rpx;
-		margin-right: 150rpx;
-		margin-top: -95rpx;
-	}	
 </style>

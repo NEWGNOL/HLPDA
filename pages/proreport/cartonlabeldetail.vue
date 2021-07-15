@@ -57,14 +57,14 @@
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 						{						
 							Config.ShowMessage('账号登录异常，请重新登录！');	
-							Config.PopAudioContext();
+							Config.PopAudioContext(false);
 							return;
 						}	
 						this.DetailListData = result.data.ResultData.PdaICMORptInfo.data0;
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');	
-						Config.PopAudioContext();
+						Config.PopAudioContext(false);
 					}
 				});	
 			},
@@ -103,7 +103,7 @@
 				if(me.SelectLabel == '')					
 				{
 					Config.ShowMessage('请选择要删除的内箱标签！');
-					Config.PopAudioContext();
+					Config.PopAudioContext(false);
 					return; 
 				}				
 				uni.showModal({
@@ -129,7 +129,7 @@
 									if(ResultCode == 'res' && ResultMsg == '不存在的Token')
 									{						
 										Config.ShowMessage('账号登录异常，请重新登录！');	
-										Config.PopAudioContext();
+										Config.PopAudioContext(false);
 										return;
 									}	
 									uni.request({
@@ -149,14 +149,14 @@
 											if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 											{						
 												Config.ShowMessage('账号登录异常，请重新登录！');	
-												Config.PopAudioContext();
+												Config.PopAudioContext(false);
 												return;
 											}	
 											me.DetailListData = resdetail.data.ResultData.PdaICMORptInfo.data0;
 										},
 										fail: () => {
 											Config.ShowMessage('请求数据失败！');		
-											Config.PopAudioContext();
+											Config.PopAudioContext(false);
 										}
 									});
 									let DataModel = res.data.ResultData.ICMORpt2_10.dataparam;	
@@ -164,14 +164,15 @@
 									if(Result == 0)
 									{
 										Config.ShowMessage(DataModel.Msg);
-										Config.PopAudioContext();
+										Config.PopAudioContext(false);
 										return;
 									}
-									Config.ShowMessage(DataModel.Msg);																																				
+									Config.ShowMessage(DataModel.Msg);	
+									Config.PopAudioContext(true);																																			
 								},
 								fail: () => {	
 									Config.ShowMessage('请求数据失败！');	
-									Config.PopAudioContext();
+									Config.PopAudioContext(false);
 								}
 							});	
 						} 

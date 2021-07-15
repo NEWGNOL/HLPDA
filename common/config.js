@@ -5,18 +5,25 @@ const ShowMessage=(Message)=>{
 		duration:3000		
 	});	
 };//弹出消息提示框
-const PopAudioContext=()=>{
+const PopAudioContext=(IsSuccess)=>{
 	let AudioContext = uni.createInnerAudioContext();
 	AudioContext.autoplay = true;
-	AudioContext.src = '/static/warning.wav';
+	if(IsSuccess)		
+	{
+		AudioContext.src = '/static/success.mp3';
+	}
+	else
+	{
+		AudioContext.src = '/static/warning.wav';
+	}	
 	AudioContext.onPlay(() => {
 	  //console.log('开始播放');
 	});
-	AudioContext.onError((res) => {
-	  console.log(res.errMsg);
-	  console.log(res.errCode);
+	AudioContext.onError((result) => {
+	  console.log(result.errMsg);
+	  console.log(result.errCode);
     });
-};//播放错误提示音    
+};//播放操作成功失败提示音    
 export default {		
 	ShowMessage,
 	PopAudioContext

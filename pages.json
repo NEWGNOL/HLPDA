@@ -37,7 +37,8 @@
 				                            "float": "right",
 				                            "width": "90px"											
 				                        }]
-				                    }
+				                    },
+									"bounce":"none"
 				                }		
 			}			
 		},	
@@ -70,18 +71,7 @@
 					 }
 			    }
 			}			
-		},
-		{
-			"path": "pages/proreport/proreportadd",
-			"style": {
-				"navigationBarTitleText": "新增生产汇报",
-				"app-plus":{
-				                  "titleNView":{
-				                  "titleColor":"FFFFFF"
-					 }
-			    }
-			}			
-		},
+		},			
 		{
 			"path": "pages/proreport/teamquery",
 			"style": {
@@ -109,10 +99,18 @@
 			"style": {
 				"navigationBarTitleText": "入库",
 				"app-plus":{
-					"titleNView":{
-						"titleColor":"FFFFFF"						
-					}					
-				}				
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF",
+								  "buttons": [{
+								      "text": "隐藏表头",
+								      "fontSrc": "/static/fonts/icomoon.ttf",
+								      "fontSize": "17px",
+								  	  "color":"#FFFFFF",
+								      "float": "right",
+								      "width": "90px"											
+								  }]
+					 }
+				}			
 			}
 		},
 		{

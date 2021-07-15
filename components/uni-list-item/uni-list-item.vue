@@ -32,7 +32,7 @@
 							<checkbox v-show="isshowcheckbox" :value="checkboxvalue" :checked="ischecked"></checkbox>
 					</checkbox-group>
 						
-				    <image v-show="isshowicon" class="icon" src="../../static/BillStatus.png"></image>
+				    <image v-show="isshowicon" class="icon" src="../../static/billstatus.png"></image>
 				</slot>
 				<slot name="footer">
 					<view v-if="rightText || showBadge || showSwitch" class="uni-list-item__extra"

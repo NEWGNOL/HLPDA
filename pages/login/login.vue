@@ -135,12 +135,12 @@
 							uni.hideLoading();
 						} else {
 							Config.ShowMessage('用户名或密码错误！');
-							Config.PopAudioContext();
+							Config.PopAudioContext(false);
 						}
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext();
+						Config.PopAudioContext(false);
 					}
 				})
 			},
@@ -148,6 +148,7 @@
 			SaveLoginData: function() {
 				if (this.IPAddress == '') {
 					Config.ShowMessage('请输入IP地址！');
+					Config.PopAudioContext(false);
 					return;
 				}
 				uni.setStorageSync("FIPAddress", this.IPAddress);
@@ -193,11 +194,11 @@
 									plus.runtime.install(plus.io.convertLocalFileSystemURL(d
 									.filename), {}, {}, function(error) {
 										Config.ShowMessage('安装失败！');	
-										Config.PopAudioContext();
+										Config.PopAudioContext(false);
 									})
 								} else {    //下载失败
 									Config.ShowMessage('更新失败！');		
-									Config.PopAudioContext();
+									Config.PopAudioContext(false);
 								}
 							});
 							APKFile.start();
@@ -205,7 +206,7 @@
 					},
 					fail: () => {
 						Config.ShowMessage('请求更新资源失败！');
-						Config.PopAudioContext();
+						Config.PopAudioContext(false);
 					}
 				});
 			}
@@ -228,7 +229,7 @@
 	}
 
 	.tabrightline {
-		width: 20%;
+		width: 29%;
 		height: 5rpx;
 		margin-left: 400rpx;
 	}
