@@ -133,27 +133,28 @@
 								url: '/pages/main/main'
 							});
 							uni.hideLoading();
-						} else {
-							Config.ShowMessage('用户名或密码错误！');
+						} else {							
 							Config.PopAudioContext(false);
+							Config.ShowMessage('用户名或密码错误！');
 						}
 					},
-					fail: () => {
-						Config.ShowMessage('请求数据失败！');
+					fail: () => {						
 						Config.PopAudioContext(false);
+						Config.ShowMessage('请求数据失败！');
 					}
 				})
 			},
 			//保存登录数据
 			SaveLoginData: function() {
-				if (this.IPAddress == '') {
-					Config.ShowMessage('请输入IP地址！');
+				if (this.IPAddress == '') {					
 					Config.PopAudioContext(false);
+					Config.ShowMessage('请输入IP地址！');
 					return;
 				}
 				uni.setStorageSync("FIPAddress", this.IPAddress);
 				uni.setStorageSync('LoginUrl', 'http://' + uni.getStorageSync('FIPAddress') + '/api/myapi/login');
 				uni.setStorageSync('OtherUrl', 'http://' + uni.getStorageSync('FIPAddress') + '/api/fastmodule');
+				Config.PopAudioContext(true);
 				Config.ShowMessage('参数配置成功！');
 			},
 			tabEnter1() {
@@ -190,23 +191,25 @@
 							let APKFilePath = result.data.ResultData.Base_6.data0.FPath;
 							let APKFile = plus.downloader.createDownload(APKFilePath, {}, function(
 								d, status) {							 
-								if (status == 200) {   //下载成功 								
-									plus.runtime.install(plus.io.convertLocalFileSystemURL(d
-									.filename), {}, {}, function(error) {
-										Config.ShowMessage('安装失败！');	
+								if (status == 200) {   
+									    //下载成功 								
+									    plus.runtime.install(plus.io.convertLocalFileSystemURL(d
+									    .filename), {}, {}, function(error) {										
 										Config.PopAudioContext(false);
+										Config.ShowMessage('安装失败！');	
 									})
-								} else {    //下载失败
-									Config.ShowMessage('更新失败！');		
-									Config.PopAudioContext(false);
+								} else {    
+									    //下载失败
+										Config.PopAudioContext(false);
+									    Config.ShowMessage('更新失败！');	
 								}
 							});
 							APKFile.start();
 						}						
 					},
-					fail: () => {
-						Config.ShowMessage('请求更新资源失败！');
+					fail: () => {						
 						Config.PopAudioContext(false);
+						Config.ShowMessage('请求更新资源失败！');
 					}
 				});
 			}

@@ -97,22 +97,33 @@
 		{
 			"path": "pages/instorage/instorage",
 			"style": {
-				"navigationBarTitleText": "入库",
+				"navigationBarTitleText": "汇报入库",
 				"app-plus":{
 				                  "titleNView":{
-				                  "titleColor":"FFFFFF",
-								  "buttons": [{
-								      "text": "隐藏表头",
-								      "fontSrc": "/static/fonts/icomoon.ttf",
-								      "fontSize": "17px",
-								  	  "color":"#FFFFFF",
-								      "float": "right",
-								      "width": "90px"											
-								  }]
+				                  "titleColor":"FFFFFF"
+								  // "buttons": [{
+								  //     "text": "隐藏表头",
+								  //     "fontSrc": "/static/fonts/icomoon.ttf",
+								  //     "fontSize": "17px",
+								  // 	  "color":"#FFFFFF",
+								  //     "float": "right",
+								  //     "width": "90px"											
+								  // }]
 					 }
 				}			
 			}
 		},
+		{
+			"path": "pages/instorage/cartonlabeldetail",
+			"style": {
+				"navigationBarTitleText": "外箱明细",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF"
+					 }
+			    }
+			}			
+		},	
 		{
 			"path": "pages/outstorage/outstorage",
 			"style": {

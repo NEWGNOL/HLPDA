@@ -55,18 +55,30 @@
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
-						{						
-							Config.ShowMessage('账号登录异常，请重新登录！');	
+						{					
 							Config.PopAudioContext(false);
+							Config.ShowMessage('账号登录异常，请重新登录！');	
 							return;
 						}	
 						this.DetailListData = result.data.ResultData.PdaICMORptInfo.data0;
 					},
-					fail: () => {
-						Config.ShowMessage('请求数据失败！');	
+					fail: () => {						
 						Config.PopAudioContext(false);
+						Config.ShowMessage('请求数据失败！');	
 					}
 				});	
+			},
+			//删除选中的外箱列表项
+			DeleteSelectLabel:function(){
+				this.GetSelectLabel();	
+				this.UnBinding();
+			},
+			//全选/反选外箱列表项
+			SelectAllLabel:function(){
+				for (var i = 0; i < this.DetailListData.length; i++) {
+					this.DetailListData[i].FIsChecked = !this.IsSelectAllLabel;				
+				}		
+			    this.IsSelectAllLabel = !this.IsSelectAllLabel;
 			},
 			//切换内箱标签是否选中
 			ChangeIsChecked:function(item){
@@ -85,25 +97,13 @@
 				{
 					this.SelectCartonLabel = this.SelectCartonLabel.substr(0, this.SelectCartonLabel.length - 1);
 				}			
-			}, 
-			//全选/反选外箱列表项
-			SelectAllLabel:function(){
-				for (var i = 0; i < this.DetailListData.length; i++) {
-					this.DetailListData[i].FIsChecked = !this.IsSelectAllLabel;				
-				}		
-			    this.IsSelectAllLabel = !this.IsSelectAllLabel;
-			},
-			//删除选中的外箱列表项
-			DeleteSelectLabel:function(){
-				this.GetSelectLabel();	
-				this.UnBinding();
-			},
+			}, 		
 			UnBinding: function() {	
-				let me = this;
-				if(me.SelectLabel == '')					
-				{
-					Config.ShowMessage('请选择要删除的内箱标签！');
+				let me = this;			
+				if(me.SelectCartonLabel == '')					
+				{					
 					Config.PopAudioContext(false);
+					Config.ShowMessage('请选择要删除的内箱标签！');
 					return; 
 				}				
 				uni.showModal({
@@ -127,9 +127,9 @@
 									let ResultCode = res.data.ResultCode;
 									let ResultMsg = res.data.ResultMsg;
 									if(ResultCode == 'res' && ResultMsg == '不存在的Token')
-									{						
-										Config.ShowMessage('账号登录异常，请重新登录！');	
+									{					
 										Config.PopAudioContext(false);
+										Config.ShowMessage('账号登录异常，请重新登录！');	
 										return;
 									}	
 									uni.request({
@@ -147,32 +147,32 @@
 											let ResultCode = resdetail.data.ResultCode;
 											let ResultMsg = resdetail.data.ResultMsg;
 											if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
-											{						
-												Config.ShowMessage('账号登录异常，请重新登录！');	
+											{					
 												Config.PopAudioContext(false);
+												Config.ShowMessage('账号登录异常，请重新登录！');	
 												return;
 											}	
 											me.DetailListData = resdetail.data.ResultData.PdaICMORptInfo.data0;
 										},
-										fail: () => {
-											Config.ShowMessage('请求数据失败！');		
+										fail: () => {												
 											Config.PopAudioContext(false);
+											Config.ShowMessage('请求数据失败！');	
 										}
 									});
 									let DataModel = res.data.ResultData.ICMORpt2_10.dataparam;	
 									let Result = DataModel.Result;
 									if(Result == 0)
-									{
-										Config.ShowMessage(DataModel.Msg);
+									{										
 										Config.PopAudioContext(false);
+										Config.ShowMessage(DataModel.Msg);
 										return;
-									}
-									Config.ShowMessage(DataModel.Msg);	
-									Config.PopAudioContext(true);																																			
+									}										
+									Config.PopAudioContext(true);	
+									Config.ShowMessage(DataModel.Msg);																																		
 								},
-								fail: () => {	
-									Config.ShowMessage('请求数据失败！');	
+								fail: () => {
 									Config.PopAudioContext(false);
+									Config.ShowMessage('请求数据失败！');	
 								}
 							});	
 						} 

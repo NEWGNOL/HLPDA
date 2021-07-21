@@ -36,12 +36,19 @@
 									FNumber: this.SearchValue
 								}
 					},
-					success: (result) => {						
+					success: (result) => {	
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.PopAudioContext(false);
+							Config.ShowMessage('账号登录异常，请重新登录！');							
+							return;
+						}
 						this.TeamList = result.data.ResultData.TeamListInfo.data0;						
 					},
-					fail:() =>{
-						Config.ShowMessage('请求失败！');
-						Config.PopAudioContext();
+					fail:() =>{						
+						Config.PopAudioContext(false);
+						Config.ShowMessage('请求数据失败！');
 					}
 				})
 			},

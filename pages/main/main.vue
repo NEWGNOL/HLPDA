@@ -12,7 +12,7 @@
 		
 		<view class="leftmode" @click="JumpPage('/pages/instorage/instorage')">
 			<image class="img" src="../../static/instorage.png" mode="aspectFit"></image>
-			<text class="title">入库</text>
+			<text class="title">汇报入库</text>
 		</view>	
 		
 		<view class="rightmode" @click="JumpPage('/pages/outstorage/outstorage')">
