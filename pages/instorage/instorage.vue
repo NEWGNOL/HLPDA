@@ -9,8 +9,8 @@
 			<button class="querystoragein" v-bind:disabled="IsAddStorageIn" v-on:click="QueryStorageIn()">查询</button>
 			<scroll-view class="icmoscrollview" scroll-y="true">
 				<uni-list>
-					<uni-list-item v-for="(item,index) in IcmoListData" :key="index" :title="'制单人：'
-				   + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '汇报单编号：' + item.FBillNo" clickable
+					<uni-list-item v-for="(item,index) in IcmoListData" :key="index" :title="'汇报单制单人：'
+				   + item.FBillerName + '\n'+ '汇报单制单日期：' + item.FDate + '\n' + '汇报单编号：' + item.FBillNo" clickable
 						:ischecked="item.FIsChecked" :isshowcheckbox="true" @CheckBoxChange="ChangeIsChecked(item)">
 					</uni-list-item>
 				</uni-list>
@@ -21,13 +21,19 @@
 
 		<view class="proreportview" v-show="TabSelectedIndex == 1" @touchstart='TouchStart' @touchend='TouchEnd'>
 			<button class="deletebill" v-on:click="DeleteProreportBill()">删除</button>
-			<button class="auditproreport" v-on:click="AuditStorageIn()">审核</button>
-			<button class="unauditproreport" v-on:click="UnAuditProReport()">反审</button>
+			<button class="auditstoragein" v-on:click="AuditStorageIn()">审核</button>
+			<button class="unauditstoragein" v-on:click="UnAuditStorageIn()">反审</button>
 
 			<view class="billhead" v-show="IsBillHeadVisible">
 				<text class="title">单据编号：</text>
 				<text class="billnoempty"
 					v-bind:class="{billnofull : StorageInBillNo != '空'}">{{StorageInBillNo}}</text>
+				<view class="dataline"></view>
+				
+				<text class="title">交货单位：</text>
+				<navigator url="/pages/basic/workshopquery" hover-class="navigator-hover">
+					<view class="data">{{SelectWorkShopArray[1]}}</view>
+				</navigator>
 				<view class="dataline"></view>
 
 				<text class="title">入库日期：</text>
@@ -54,56 +60,21 @@
 
 		<view class="proreportview" v-show="TabSelectedIndex == 2" @touchstart='TouchStart' @touchend='TouchEnd'>
 			<text class="scanned">已扫描条码：</text>
-			<text class="queryall" clickable v-on:click="GetProReportDetail()">查看全部</text>
+			<text class="queryall" clickable v-on:click="GetStorageInCartonDetail()">查看全部</text>
 
 			<scroll-view class="detailscrollview" scroll-y="true">
 				<text class="detailtitle">物料编码：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FNumber : '空'}}</text>
+				<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FNumber : '空'}}</text>
 				<text class="detailtitle">物料名称：</text>
 				<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FName : '空'}}</text>
 				<text class="detailtitle">标签类型：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FBarCodeType : '空'}}</text>
+				<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FBarCodeType : '空'}}</text>
 				<text class="detailtitle">订单号：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FSOBillNo : '空'}}</text>
-				<text class="detailtitle">计划生产数量：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FAuxQty : '空'}}</text>
-				<text class="detailtitle">计划开工日期：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FPlanCommitDate : '空'}}</text>
-				<text class="detailtitle">实际完工日期：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? (this.ProreportInfoItem.FFinishDate != null ? this.ProreportInfoItem.FFinishDate : '空') : '空'}}</text>
-				<text class="detailtitle">生产预测单号：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? (this.ProreportInfoItem.FPPOrderBillNo != null ? this.ProreportInfoItem.FPPOrderBillNo : '空') : '空'}}</text>
-				<text class="detailtitle">班组代码：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FTeamNumber : '空'}}</text>
-				<text class="detailtitle">班组名称：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FTeamName : '空'}}</text>
-				<text class="detailtitle">车间代码：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FDeptNumber : '空'}}</text>
-				<text class="detailtitle">车间名称：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FDeptName : '空'}}</text>
-				<text class="detailtitle">计量单位代码：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FUnitNumber : '空'}}</text>
-				<text class="detailtitle">计量单位名称：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FUnitName : '空'}}</text>
-				<text class="detailtitle">箱数：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FInPackPreQty : '空'}}</text>
-				<text class="detailtitle">每箱数量：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FOutPackPreQty : '空'}}</text>
+				<text class="detaildata">{{(this.ProreportInfoItem != null && this.ProreportInfoItem.FSOBillNo != null) ? this.ProreportInfoItem.FSOBillNo : '空'}}</text>					
+				<text class="detailtitle">仓库编码：</text>
+				<text class="detaildata">{{(this.ProreportInfoItem != null && this.ProreportInfoItem.FStorageNumber != null) ? this.ProreportInfoItem.FStorageNumber : '空'}}</text>					
+				<text class="detailtitle">仓库名称：</text>
+				<text class="detaildata">{{(this.ProreportInfoItem != null && this.ProreportInfoItem.FStorageName != null) ? this.ProreportInfoItem.FStorageName : '空'}}</text>	
 			</scroll-view>
 		</view>
 
@@ -137,9 +108,10 @@
 				ProReportSrcInterId: 0,
 				IsBillHeadVisible: true,
 				IsAddStorageIn: true,
+				IsRequesting: false,
 				StorageBinIsActive: false,
-				StorageArray: [0, '请选择仓库'],
-				StorageBinArray: [0, '请选择仓位'],
+				SelectWorkShopArray: [0, '请选择交货单位'],		
+				StatusArray: ['未入库', '已入库'],
 				FinishDate: DateFormat({
 					format: true
 				}),
@@ -147,13 +119,10 @@
 				StartDate: DateFormat('start'),
 				EndDate: DateFormat('end'),
 				IcmoListData: [],
-				StorageInListData: [],
-				StatusArray: ['未入库', '已入库'],
+				StorageInListData: [],				
 				SelectedProreport: '',
 				SelectedIcmo: '',
-				ProreportInfoItem: null,
-				ProreportItem: null,
-				MaterialInfo: null,
+				ProreportInfoItem: null,			
 				TouchStartX: 0,
 				ItemTouchStartX: 0,
 				LongPressTime: 2,
@@ -196,19 +165,25 @@
 
 				function doReceive(context, intent) {
 					plus.android.importClass(intent);
-					var Barcode = intent.getStringExtra("barcode_string");
+					var Barcode = intent.getStringExtra("barcode_string");					
 					if (me.TabSelectedIndex == 0) {
 						me.CheckedProreport(Barcode);
 					}
-
-					if (me.TabSelectedIndex == 1) {
+					else if (me.TabSelectedIndex == 1) {
 						me.ScanBarCode(Barcode);						
+					}
+					else{
+						me.ScanWareHouse(Barcode);						
 					}
 				}
 			},
 			//移除广播监听
 			RemoveListener: function() {
 				this.Main.unregisterReceiver(this.Receiver); //取消监听
+			},
+			//设置请求标志
+			SetRequestingFlag: function(IsRequesting) {
+				this.IsRequesting = IsRequesting;
 			},
 			//检测汇报单是否选中
 			ChangeIsChecked: function(item) {
@@ -248,58 +223,78 @@
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
 						Config.PopAudioContext(false);
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+					    Config.PopAudioContext(false);
+						Config.ShowMessage(ResultMsg);							
 					}
+				}
 				});
 			},
 			//扫描仓库
-			ScanWareHouse: function() {
+			ScanWareHouse: function(BarCode) {				
 				let me = this;
 				if (me.StorageInBillNo == '空') {
 					Config.ShowMessage('请新增入库单！');
 					Config.PopAudioContext(false);
+					uni.hideLoading();
 					return;
 				}
-				uni.scanCode({
-					success: function(result) {
-						uni.request({
-							url: uni.getStorageSync('OtherUrl'),
-							method: 'POST',
-							data: {
-								ModuleCode: 'getStockByNumber',
-								token: uni.getStorageSync('token'),
-								ModuleParam: {
-									FNumber: result.result
-								}
-							},
-							success: (result) => {
-								let ResultCode = result.data.ResultCode;
-								let ResultMsg = result.data.ResultMsg;
-								if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-									Config.ShowMessage('账号登录异常，请重新登录！');
-									Config.PopAudioContext(false);
-									return;
-								}
-
-								let DataModel = result.data.ResultData.getStockByNumberInfo
-									.data0;
-								me.StorageArray = [DataModel.FItemID, DataModel.FName];
-								// if(me.StorageBinIsActive)
-								// {
-								// 	console.log(me.StorageBinIsActive);
-								// }
-								// else
-								// {
-								//     let DataModel = result.data.ResultData.getStockByNumberInfo.data0;
-								//     me.StorageArray = [DataModel.FItemID, DataModel.FName];	
-								// }
-							},
-							fail: () => {
-								Config.ShowMessage('请求数据失败！');
-								Config.PopAudioContext(false);
+					
+				uni.showLoading({
+					title: 'Loading',
+					mask: true
+				});				
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						     ModuleCode: 'getStockByNumber',
+						     token: uni.getStorageSync('token'),
+							 ModuleParam: {
+								FNumber: BarCode
 							}
-						});
+						  },
+					success: (result) => {		
+						  //console.log(result.data);
+						  let ResultCode = result.data.ResultCode;
+						  let ResultMsg = result.data.ResultMsg;
+						  if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							  Config.ShowMessage('账号登录异常，请重新登录！');
+							  Config.PopAudioContext(false);
+							  uni.hideLoading();
+							  return;
+						  }							
+						 
+                          if(me.StorageBinIsActive == 'true')
+						  {
+						      
+						  }
+						  else
+						  {
+						      let DataModel = result.data.ResultData.getStockByNumberInfo.data0;
+							  me.ProreportInfoItem.FStorageId = DataModel.FItemID;
+							  me.ProreportInfoItem.FStorageNumber = DataModel.FNumber;
+							  me.ProreportInfoItem.FStorageName = DataModel.FName;							  
+						  }	
+					      uni.hideLoading();						  
+					},
+					fail: () => {
+						   Config.ShowMessage('请求数据失败！');
+						   Config.PopAudioContext(false);
+						   uni.hideLoading();
+					},
+					complete: (resultcomp) => {
+						   let ResultMsg = resultcomp.data.ResultMsg;
+						   if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+						   Config.PopAudioContext(false);
+						   Config.ShowMessage(ResultMsg);
+						   uni.hideLoading();
 					}
-				});
+					}
+		    });					
 			},
 			//获取手指滑动页面的起点
 			TouchStart: function(e) {
@@ -319,16 +314,43 @@
 			SwitchTab: function(TabSelectedIndex) {
 				if (this.TabSelectedIndex != TabSelectedIndex) {
 					this.TabSelectedIndex = TabSelectedIndex;
+					if (this.TabSelectedIndex == 0) {						
+					} else if (this.TabSelectedIndex == 1) {
+						if (this.IsAddStorageIn) {
+							this.ShowProReportGroupInfoByAdd();
+						} else {
+							this.ShowProReportGroupInfoByQuery();
+						}
+					} else {						
+					}
 				}
 			},
 			//滑动页面
 			SlidingPage: function(IsSlidingLeftPage) {
-				this.TabSelectedIndex = IsSlidingLeftPage ? 1 : 0;
+				if (IsSlidingLeftPage) {
+					this.TabSelectedIndex++;
+				} else {
+					this.TabSelectedIndex--;
+				}
+				
+				if (this.TabSelectedIndex == 0) {
+				} else if (this.TabSelectedIndex == 1) {
+					if (this.IsAddStorageIn) {
+						this.ShowProReportGroupInfoByAdd();
+					} else {
+						this.ShowProReportGroupInfoByQuery();
+					}
+				} else {						
+				}
 			},
 			//显示汇报单
 			ShowPdaIcmoInfo: function() {
 				if (this.SelectStatus == '未入库') {
 					this.IsAddStorageIn = true;
+					uni.showLoading({
+						title: 'Loading',
+						mask: true
+					});
 					uni.request({
 						url: uni.getStorageSync('OtherUrl'),
 						method: 'POST',
@@ -347,17 +369,32 @@
 							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 								Config.ShowMessage('账号登录异常，请重新登录！');
 								Config.PopAudioContext(false);
+								uni.hideLoading();
 								return;
 							}
+							uni.hideLoading();
 							this.IcmoListData = result.data.ResultData.getPdaIcmoRptNoPutInListInfo.data0;
 						},
 						fail: () => {
 							Config.ShowMessage('请求数据失败！');
 							Config.PopAudioContext(false);
-						}
+							uni.hideLoading();
+						},
+						complete: (resultcomp) => {
+						        let ResultMsg = resultcomp.data.ResultMsg;
+						        if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							    Config.PopAudioContext(false);
+							    Config.ShowMessage(ResultMsg);	
+								uni.hideLoading();
+					        }
+					    }
 					});
 				} else {
 					this.IsAddStorageIn = false;
+					uni.showLoading({
+						title: 'Loading',
+						mask: true
+					});
 					uni.request({
 						url: uni.getStorageSync('OtherUrl'),
 						method: 'POST',
@@ -376,14 +413,25 @@
 							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 								Config.ShowMessage('账号登录异常，请重新登录！');
 								Config.PopAudioContext(false);
+								uni.hideLoading();
 								return;
 							}
+							uni.hideLoading();
 							this.IcmoListData = result.data.ResultData.getPdaIcmoRptPutInListInfo.data0;
 						},
 						fail: () => {
 							Config.ShowMessage('请求数据失败！');
 							Config.PopAudioContext(false);
+							uni.hideLoading();
+						},
+						complete: (resultcomp) => {
+						    let ResultMsg = resultcomp.data.ResultMsg;
+						    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.PopAudioContext(false);
+							Config.ShowMessage(ResultMsg);	
+						    uni.hideLoading();
 						}
+					}
 					});
 				}
 			},
@@ -414,6 +462,13 @@
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
 						Config.PopAudioContext(false);
+					},
+					complete: (resultcomp) => {
+					        let ResultMsg = resultcomp.data.ResultMsg;
+					        if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+						    Config.PopAudioContext(false);
+						    Config.ShowMessage(ResultMsg);							
+					    }
 					}
 				});
 
@@ -430,7 +485,8 @@
 						this.SelectedProreport += this.IcmoListData[i].FId + ',';
 						this.SelectedIcmo += this.IcmoListData[i].FSrcInterId + ',';
 						this.StorageInBillNo = this.IcmoListData[i].FBillNoStorageIn;
-						this.StorageInterId = this.IcmoListData[i].FId;
+						this.StorageInterId = this.IcmoListData[i].FStorageInId;
+						this.SelectWorkShopArray = [this.IcmoListData[i].FWorkShopId, this.IcmoListData[i].FWorkShopName];
 						this.FinishDate = this.IcmoListData[i].FDateStorageIn;
 					}
 				}
@@ -474,17 +530,41 @@
 				}
 
 				if (this.SelectedProreport == '0') {
-					Config.ShowMessage('请选择需要新增入库的汇报单！');
 					Config.PopAudioContext(false);
+					Config.ShowMessage('请选择需要新增入库的汇报单！');					
 					return 0;
 				}
 			},
-			//扫描条码
-			ScanBarCode: function(Barcode) {
+			//检测扫描条码
+			CheckScanBarCode: function() {
 				if (this.StorageInBillNo == '空') {
-					Config.ShowMessage('请新增入库单！');
 					Config.PopAudioContext(false);
+					Config.ShowMessage('请新增入库单！');	
+					return 0;
 				}
+				if (this.SelectWorkShopArray[0] == 0) {
+					Config.PopAudioContext(false);
+					Config.ShowMessage('请填写交货单位！');
+					return 0;
+				}
+				
+				for (var i = 0; i < this.StorageInListData.length; i++) {
+					let DataModel = this.StorageInListData[i];
+					if(DataModel.FStorageInId == null || DataModel.FStorageInId == 0){
+						Config.PopAudioContext(false);
+						Config.ShowMessage('汇报单编号为' + DataModel.FBillNo + '没有选择仓库或仓位！');
+						return 0;
+					}
+				}
+				return 1;
+			},
+			//扫描条码
+			ScanBarCode: function(Barcode) {				
+				let IsSuccess = this.CheckScanBarCode();				
+				if(IsSuccess == 0){
+					return;
+				}
+				
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -494,22 +574,26 @@
 						ModuleParam: {
 							FId: this.StorageInterId,
 							FBillNo: this.StorageInBillNo,
+							FWorkShopId: this.SelectWorkShopArray[0],
 							FDate: this.FinishDate,
 							FBillerID: uni.getStorageSync('FUserId'),
 							FPackBarCode: Barcode,
+							FStorageId: this.ProreportInfoItem.FStorageId,
+							FStorageBinId: 0,
 							FIcmoRptIds: this.SelectedProreport,
 							FIcmoRptId: '',
 							Result: 0,
 							Msg: ''
 						}
 					},
-					success: (result) => {
-						//console.log(result.data);
+					success: (result) => {	
+						console.log(result.data);
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 							Config.ShowMessage('账号登录异常，请重新登录！');
 							Config.PopAudioContext(false);
+							
 							return;
 						}
 						let ResultData = result.data.ResultData.AddPdaStorageInRpt;
@@ -517,21 +601,33 @@
 						if (Result == 0) {
 							Config.ShowMessage(ResultData.dataparam.Msg);
 							Config.PopAudioContext(false);
+							
 							return;
 						}
 						Config.ShowMessage(ResultData.dataparam.Msg);
-						Config.PopAudioContext(true);											
-						if (this.IsAddStorageIn) {
-							this.ShowProReportGroupInfoByAdd();
-						} else {
-							this.ShowProReportGroupInfoByQuery();
-						}
+						Config.PopAudioContext(true);	
+						
+						// if (this.IsAddStorageIn) {
+						// 	this.ShowProReportGroupInfoByAdd();
+						// } else {
+						// 	this.ShowProReportGroupInfoByQuery();
+						// }
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
 						Config.PopAudioContext(false);
+						
+					},
+					complete: (resultcomp) => {
+						console.log(resultcomp.data);
+					    let ResultMsg = resultcomp.data.ResultMsg;
+					    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+						Config.PopAudioContext(false);
+						Config.ShowMessage(ResultMsg);	
+										
 					}
-				});
+				}
+				});				
 			},
 			//新增入库单
 			AddStorageIn: function() {
@@ -577,11 +673,23 @@
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
 						Config.PopAudioContext(false);
+					},
+					complete: (resultcomp) => {
+					        let ResultMsg = resultcomp.data.ResultMsg;
+					        if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+						    Config.PopAudioContext(false);
+						    Config.ShowMessage(ResultMsg);							
+					    }
 					}
 				});
 			},
 			//显示生产汇报单分组信息
 			ShowProReportGroupInfoByAdd: function() {
+			    if(this.SelectedProreport != ''){
+				uni.showLoading({
+					title: 'Loading',
+					mask: true
+				});
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -593,24 +701,40 @@
 						}
 					},
 					success: (result) => {
-						console.log(result.data);
+						//console.log(result.data);
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 							Config.ShowMessage('账号登录异常，请重新登录！');
 							Config.PopAudioContext();
+							uni.hideLoading();
 							return;
 						}
-						this.StorageInListData = result.data.ResultData.PdaICMORptGroupInfo.data0;
+						uni.hideLoading();
+						this.StorageInListData = result.data.ResultData.PdaICMORptGroupInfo.data0;						
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
 						Config.PopAudioContext();
+						uni.hideLoading();
+					},
+					complete: (resultcomp) => {
+					    let ResultMsg = resultcomp.data.ResultMsg;
+					    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+						Config.PopAudioContext(false);
+						Config.ShowMessage(ResultMsg);	
+					    uni.hideLoading();
 					}
+				}
 				});
+			}
 			},
 			//显示生产汇报单分组信息
 			ShowProReportGroupInfoByQuery: function() {
+				uni.showLoading({
+					title: 'Loading',
+					mask: true
+				});
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -622,21 +746,32 @@
 						}
 					},
 					success: (result) => {
-						console.log(result.data);
+						//console.log(result.data);
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 							Config.ShowMessage('账号登录异常，请重新登录！');
 							Config.PopAudioContext();
+							uni.hideLoading();
 							return;
 						}
+						uni.hideLoading();	
 						this.StorageInListData = result.data.ResultData.PdaICMORptGroupInfo.data0;
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
 						Config.PopAudioContext();
+						uni.hideLoading();
+					},
+					complete: (resultcomp) => {
+					    let ResultMsg = resultcomp.data.ResultMsg;
+					    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+						Config.PopAudioContext(false);
+						Config.ShowMessage(ResultMsg);	
+						uni.hideLoading();
 					}
-				});
+			    }
+				});				
 			},
 			//查询入库单
 			QueryStorageIn: function() {
@@ -650,58 +785,99 @@
 			//审核入库单
 			AuditStorageIn: function() {
 				if (this.StorageInBillNo == '空') {
-					Config.ShowMessage('请新增或者选择入库单！');
 					Config.PopAudioContext(false);
+					Config.ShowMessage('请新增或者选择入库单！');					
+					return;
+				}				
+				if(this.SelectWorkShopArray[0] == 0)
+				{
+					Config.PopAudioContext(false);
+					Config.ShowMessage('请选择交货单位！');					
 					return;
 				}
+				
+				if (!this.IsRequesting) {
+				this.SetRequestingFlag(true);
+				uni.showLoading({
+					title: 'Loading',
+					mask: true
+				});
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
 					data: {
-						ModuleCode: 'pdaICMORptToICMORpt',
+						ModuleCode: 'pdaICMORptToStorageInRpt',
 						token: uni.getStorageSync('token'),
 						ModuleParam: {
-							FId: this.ProReportInterId,
-							FBillNo: this.ProReportBillNo,
+							FId: this.StorageInterId,							
 							Result: 0,
+							FStatus: 0,
+							FStatusCN: '',
 							Msg: ''
 						}
 					},
 					success: (result) => {
+						//console.log(result.data);
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 							Config.ShowMessage('账号登录异常，请重新登录！');
 							Config.PopAudioContext(false);
+							uni.hideLoading();
+							this.SetRequestingFlag(false);
 							return;
 						}
-						let DataParam = result.data.ResultData.PdaICMORptToICMORpt.dataparam;
+						let DataParam = result.data.ResultData.PdaICMORptToStorageInRpt.dataparam;
 						let Result = DataParam.Result;
 						if (Result == 0) {
 							Config.ShowMessage(DataParam.Msg);
 							Config.PopAudioContext(false);
+							uni.hideLoading();
+							this.SetRequestingFlag(false);
 							return;
 						}
 						Config.ShowMessage(DataParam.Msg);
 						Config.PopAudioContext(true);
+						uni.hideLoading();
+						this.SetRequestingFlag(false);
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
 						Config.PopAudioContext(false);
-					}
-				});
+						uni.hideLoading();
+						this.SetRequestingFlag(false);
+					},
+					complete: (resultcomp) => {
+					    let ResultMsg = resultcomp.data.ResultMsg;
+					    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+						Config.PopAudioContext(false);
+						Config.ShowMessage(ResultMsg);		
+						uni.hideLoading();
+						this.SetRequestingFlag(false);
+					    }
+				    }
+				    });
+			     }
 			},
-			//反审核生产汇报单
-			UnAuditProReport: function() {
+			//反审核入库单
+			UnAuditStorageIn: function() {
+				if (!this.IsRequesting) {
+				this.SetRequestingFlag(true);
+				uni.showLoading({
+					title: 'Loading',
+					mask: true
+				});
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
 					data: {
-						ModuleCode: 'unPdaICMORptToICMORpt',
+						ModuleCode: 'unPdaICMORptToStorageInRpt',
 						token: uni.getStorageSync('token'),
 						ModuleParam: {
 							FId: this.StorageInterId,
 							Result: 0,
+							FStatus: 0,
+							FStatusCN: '',
 							Msg: ''
 						}
 					},
@@ -711,23 +887,41 @@
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 							Config.ShowMessage('账号登录异常，请重新登录！');
 							Config.PopAudioContext(false);
+							uni.hideLoading();
+							this.SetRequestingFlag(false);
 							return;
 						}
-						let DataParam = result.data.ResultData.unPdaICMORptToICMORpt.dataparam;
+						let DataParam = result.data.ResultData.UnPdaICMORptToStorageInRpt.dataparam;
 						let Result = DataParam.Result;
 						if (Result == 0) {
 							Config.ShowMessage(DataParam.Msg);
 							Config.PopAudioContext(false);
+							uni.hideLoading();
+							this.SetRequestingFlag(false);
 							return;
 						}
 						Config.ShowMessage(DataParam.Msg);
 						Config.PopAudioContext(true);
+						uni.hideLoading();
+						this.SetRequestingFlag(false);
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
 						Config.PopAudioContext(false);
+						uni.hideLoading();
+						this.SetRequestingFlag(false);
+					},
+					complete: (resultcomp) => {
+					        let ResultMsg = resultcomp.data.ResultMsg;
+					        if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+						    Config.PopAudioContext(false);
+						    Config.ShowMessage(ResultMsg);
+							uni.hideLoading();
+							this.SetRequestingFlag(false);
+					    }
 					}
 				});
+			}
 			},
 			//切换表头是否可见
 			SwitchBillHeadVisible: function() {
@@ -738,13 +932,12 @@
 				me.StorageInterId = 0;
 				me.StorageInBillNo = '空';
 				me.ProReportSrcInterId = 0;
-				me.SelectWorkShopArray = [0, '请选择车间'];
-				me.SelectTeamArray = [0, '请选择班组'];
+				me.SelectWorkShopArray = [0, '请选择交货单位'];			
 				me.FinishDate = DateFormat({
 					format: true
 				});
 			},
-			//删除汇报单
+			//删除入库单
 			DeleteProreportBill: function() {
 				let me = this;
 				if (me.StorageInBillNo == '空') {
@@ -803,26 +996,33 @@
 								fail: () => {
 									Config.ShowMessage('请求数据失败！');
 									Config.PopAudioContext();
+								},
+								complete: (resultcomp) => {
+								        let ResultMsg = resultcomp.data.ResultMsg;
+								        if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+									    Config.PopAudioContext(false);
+									    Config.ShowMessage(ResultMsg);							
+								    }
 								}
 							});
 						}
 					}
 				});
 			},
-			//根据汇报单信息获取明细
-			GetProReportDetail: function() {
+			//获取入库单外箱明细信息
+			GetStorageInCartonDetail: function() {		
 				uni.showLoading({
 					title: 'Loading'
 				});
 				uni.navigateTo({
-					url: '/pages/instorage/cartonlabeldetail?ProReportInterId=' + this.ProReportInterId +
+					url: '/pages/instorage/cartonlabeldetail?StorageInterId=' + this.StorageInterId +
 						'&ProReportSrcInterId=' + this.ProReportSrcInterId
 				});
 				uni.hideLoading();
 			},
 			//根据汇报单信息获取扩展信息
 			GetProReportInfoExpand: function(item) {
-				if (item != null) {
+				if (item != null) {				
 					this.TabSelectedIndex = 2;
 					this.ProreportInfoItem = item;
 					this.ProReportInterId = item.FId;
@@ -933,7 +1133,7 @@
 		margin-top: 20rpx;
 	}
 
-	.auditproreport {
+	.auditstoragein {
 		width: 20%;
 		color: #FFFFFF;
 		background-color: #007AFF;
@@ -942,7 +1142,7 @@
 		margin-top: -96rpx;
 	}
 
-	.unauditproreport {
+	.unauditstoragein {
 		width: 20%;
 		color: #FFFFFF;
 		background-color: #007AFF;

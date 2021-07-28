@@ -18,7 +18,7 @@
 	export default {
 		data() {
 			return {
-				ProReportInterId: 0,
+				StorageInterId: 0,
 				ProReportSrcInterId: 0,
 				DetailListData: [],
 				SelectCartonLabel: '',
@@ -26,28 +26,28 @@
 			}
 		},		
 		onLoad() {	
-			this.GetProReportId();
-			this.ShowProReportDetail();
+			this.GetStorageInterId();
+			this.ShowStorageInDetail();
 		},
 		methods: {
-			GetProReportId:function(){
+			GetStorageInterId:function(){
 				let Pages = getCurrentPages();
 				let PrevPage = Pages[Pages.length - 2];  //上一个页面	
-				//#ifdef APP-PLUS
-				this.ProReportInterId = PrevPage.$vm.ProReportInterId;
-				this.ProReportSrcInterId = PrevPage.$vm.ProReportSrcInterId;								
+				//#ifdef APP-PLUS				
+				this.StorageInterId = PrevPage.$vm.StorageInterId;
+				this.ProReportSrcInterId = PrevPage.$vm.ProReportSrcInterId;					
 				//#endif
 			},
-			//显示汇报单外箱明细
-			ShowProReportDetail:function(){				
+			//显示入库的汇报单外箱明细
+			ShowStorageInDetail:function(){	
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
 					data: {
-						ModuleCode: 'getPdaICMORptInfo',
+						ModuleCode: 'getPdaStorageInRptCartonList',
 						token: uni.getStorageSync('token'),					
 						ModuleParam:  {
-							FId: this.ProReportInterId,
+							FId: this.StorageInterId,
 							FSrcInterId: this.ProReportSrcInterId
 						}
 					},
@@ -56,17 +56,25 @@
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
-						{						
-							Config.ShowMessage('账号登录异常，请重新登录！');	
+						{	
 							Config.PopAudioContext(false);
+							Config.ShowMessage('账号登录异常，请重新登录！');
 							return;
 						}	
-						this.DetailListData = result.data.ResultData.PdaICMORptInfo.data0;
+						this.DetailListData = result.data.ResultData.getPdaStorageInRptCartonListInfo.data0;
 					},
 					fail: () => {
-						Config.ShowMessage('请求数据失败！');	
 						Config.PopAudioContext(false);
+						Config.ShowMessage('请求数据失败！');						
+					},
+					complete: (resultcomp) => {
+					    let ResultMsg = resultcomp.data.ResultMsg;
+					    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+						Config.PopAudioContext(false);
+						Config.ShowMessage(ResultMsg);	
+						uni.hideLoading();
 					}
+				}
 				});	
 			},
 			//切换内箱标签是否选中
@@ -97,14 +105,15 @@
 			//删除选中的外箱列表项
 			DeleteSelectLabel:function(){
 				this.GetSelectLabel();	
-				this.UnBinding();
+				this.UnBinding();				
 			},
+			//入库单选中的外箱解绑
 			UnBinding: function() {	
 				let me = this;
-				if(me.SelectLabel == '')					
+				if(me.SelectCartonLabel == '')					
 				{
-					Config.ShowMessage('请选择要删除的内箱标签！');
 					Config.PopAudioContext(false);
+					Config.ShowMessage('请选择要删除的内箱标签！');					
 					return; 
 				}				
 				uni.showModal({
@@ -116,7 +125,7 @@
 								url: uni.getStorageSync('OtherUrl'),
 								method: 'POST',
 								data: {
-									ModuleCode: 'ICMORpt2_10',
+									ModuleCode: 'delPdaStorageInRptCartonList',
 									token: uni.getStorageSync('token'),
 									ModuleParam: {
 										FIndexIdList: me.SelectCartonLabel,
@@ -127,54 +136,36 @@
 								success: (res) => {											
 									let ResultCode = res.data.ResultCode;
 									let ResultMsg = res.data.ResultMsg;
-									if(ResultCode == 'res' && ResultMsg == '不存在的Token')
-									{						
-										Config.ShowMessage('账号登录异常，请重新登录！');	
+									if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
+									{	
 										Config.PopAudioContext(false);
+										Config.ShowMessage('账号登录异常，请重新登录！');											
 										return;
-									}	
-									uni.request({
-										url: uni.getStorageSync('OtherUrl'),
-										method: 'POST',
-										data: {
-											ModuleCode: 'getPdaICMORptInfo',
-											token: uni.getStorageSync('token'),					
-											ModuleParam:  {
-												FId: me.ProReportInterId,
-							                    FSrcInterId: me.ProReportSrcInterId									
-											}
-										},
-										success: (resdetail) => {											
-											let ResultCode = resdetail.data.ResultCode;
-											let ResultMsg = resdetail.data.ResultMsg;
-											if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
-											{						
-												Config.ShowMessage('账号登录异常，请重新登录！');	
-												Config.PopAudioContext(false);
-												return;
-											}	
-											me.DetailListData = resdetail.data.ResultData.PdaICMORptInfo.data0;
-										},
-										fail: () => {
-											Config.ShowMessage('请求数据失败！');		
-											Config.PopAudioContext(false);
-										}
-									});
-									let DataModel = res.data.ResultData.ICMORpt2_10.dataparam;	
-									let Result = DataModel.Result;
+									}										
+									let DataParam = res.data.ResultData.delPdaStorageInRptCartonListInfo.dataparam;	
+									let Result = DataParam.Result;
 									if(Result == 0)
 									{
-										Config.ShowMessage(DataModel.Msg);
 										Config.PopAudioContext(false);
+										Config.ShowMessage(DataParam.Msg);										
 										return;
 									}
-									Config.ShowMessage(DataModel.Msg);	
-									Config.PopAudioContext(true);																																			
+									Config.PopAudioContext(true);
+									Config.ShowMessage(DataParam.Msg);	
+									me.ShowStorageInDetail();																																												
 								},
 								fail: () => {	
 									Config.ShowMessage('请求数据失败！');	
 									Config.PopAudioContext(false);
+								},
+								complete: (resultcomp) => {
+					                let ResultMsg = resultcomp.data.ResultMsg;
+					                if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+						            Config.PopAudioContext(false);
+						            Config.ShowMessage(ResultMsg);	
+						            uni.hideLoading();
 								}
+					        }
 							});	
 						} 
 					}

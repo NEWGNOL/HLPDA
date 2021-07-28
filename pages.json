@@ -73,7 +73,7 @@
 			}			
 		},			
 		{
-			"path": "pages/proreport/teamquery",
+			"path": "pages/basic/teamquery",
 			"style": {
 				"navigationBarTitleText": "班组查询",
 				"app-plus":{
@@ -84,7 +84,7 @@
 			}
 		},
 		{
-			"path": "pages/proreport/workshopquery",
+			"path": "pages/basic/workshopquery",
 			"style": {
 				"navigationBarTitleText": "车间查询",
 				"app-plus":{

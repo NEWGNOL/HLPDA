@@ -12,7 +12,8 @@
 		<view class="summary" v-show="IsShowLoginView">
 			<!-- <canvas class="loginpagecanvas" canvas-id="logincanvas" id="logincanvas" v-show="IsShowLoginView"> -->
 			<view class="usernametext">用户名：</view>
-			<usernamesearch class="cla" :candidates="UserNameArray" placeholder="请输入用户名" v-model="UserName" @input="SearchInput"></usernamesearch>
+			<usernamesearch class="cla" :candidates="UserNameArray" placeholder="请输入用户名" v-model="UserName"
+				@input="SearchInput"></usernamesearch>
 			<!-- <input v-model="username" placeholder="请输入用户名" class="cla" :focus="focus1" @confirm="tabEnter1" /> -->
 			<view class="passwordtext">密码：</view>
 			<input password="true" placeholder="请输入密码" v-model="Password" class="cla" :focus="focus2"
@@ -38,8 +39,8 @@
 	export default {
 		data() {
 			return {
-				UserName: '',	
-				UserNameSearch:'',			
+				UserName: '',
+				UserNameSearch: '',
 				UserNameArray: [],
 				Password: '',
 				IsShowLoginView: true,
@@ -58,17 +59,14 @@
 		},
 		methods: {
 			//输入搜索
-			SearchInput:function(e){
+			SearchInput: function(e) {
 				let OldUserName = uni.getStorageSync('FUserName');
 				let OldPassword = uni.getStorageSync('FPassword');
-				if(e == OldUserName)
-				{
+				if (e == OldUserName) {
 					this.Password = OldPassword;
-				}
-				else
-				{
+				} else {
 					this.Password = '';
-				}				
+				}
 			},
 			//绘制图形
 			CreateGraphic: function() {
@@ -97,30 +95,26 @@
 				this.IPAddress = uni.getStorageSync('FIPAddress');
 				this.UserName = uni.getStorageSync('FUserName');
 				this.Password = uni.getStorageSync('FPassword');
-				this.UserNameSearch = uni.getStorageSync('FUserNameSearch');				
+				this.UserNameSearch = uni.getStorageSync('FUserNameSearch');
 				this.UserNameArray = this.UserNameSearch.split(',');
 			},
 			//登录验证
 			Request() {
-				let me = this;					
+				let me = this;
 				uni.request({
 					url: uni.getStorageSync('LoginUrl'),
 					data: '{"Sign":"sl2021","FUsername":"' + me.UserName + '","FPassword":"' + me.Password + '"}',
 					method: 'POST',
-					success: (result) => {						
+					success: (result) => {
 						if (result.data.Result == 1) {
-							if(me.UserNameSearch.indexOf(me.UserName) == -1)
-							{
-								if(me.UserNameSearch.length == 0)
-								{
-								    me.UserNameSearch += me.UserName;
-								}
-								else
-								{
+							if (me.UserNameSearch.indexOf(me.UserName) == -1) {
+								if (me.UserNameSearch.length == 0) {
+									me.UserNameSearch += me.UserName;
+								} else {
 									me.UserNameSearch += ',' + me.UserName;
-								}								
-							}							
-							
+								}
+							}
+
 							uni.showLoading({
 								title: 'Loading'
 							});
@@ -133,20 +127,20 @@
 								url: '/pages/main/main'
 							});
 							uni.hideLoading();
-						} else {							
+						} else {
 							Config.PopAudioContext(false);
 							Config.ShowMessage('用户名或密码错误！');
 						}
 					},
-					fail: () => {						
+					fail: () => {
 						Config.PopAudioContext(false);
 						Config.ShowMessage('请求数据失败！');
 					}
-				})
+			    })					
 			},
 			//保存登录数据
 			SaveLoginData: function() {
-				if (this.IPAddress == '') {					
+				if (this.IPAddress == '') {
 					Config.PopAudioContext(false);
 					Config.ShowMessage('请输入IP地址！');
 					return;
@@ -176,38 +170,37 @@
 				this.request()
 			},
 			//自动检测更新
-			AutoCheckUpdate: function() {				
+			AutoCheckUpdate: function() {
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
 					data: {
 						ModuleCode: 'Base_6'
 					},
-					success: (result) => {						  
-					   let Version = result.data.ResultData.Base_6.data0.FVersion;
-						if(plus.runtime.versionCode < Version)
-						{							
+					success: (result) => {
+						let Version = result.data.ResultData.Base_6.data0.FVersion;
+						if (plus.runtime.versionCode < Version) {
 							Config.ShowMessage('有新的版本发布，程序已启动自动更新,新版本下载完成后将自动弹出安装程序！');
 							let APKFilePath = result.data.ResultData.Base_6.data0.FPath;
 							let APKFile = plus.downloader.createDownload(APKFilePath, {}, function(
-								d, status) {							 
-								if (status == 200) {   
-									    //下载成功 								
-									    plus.runtime.install(plus.io.convertLocalFileSystemURL(d
-									    .filename), {}, {}, function(error) {										
+								d, status) {
+								if (status == 200) {
+									//下载成功 								
+									plus.runtime.install(plus.io.convertLocalFileSystemURL(d
+										.filename), {}, {}, function(error) {
 										Config.PopAudioContext(false);
-										Config.ShowMessage('安装失败！');	
+										Config.ShowMessage('安装失败！');
 									})
-								} else {    
-									    //下载失败
-										Config.PopAudioContext(false);
-									    Config.ShowMessage('更新失败！');	
+								} else {
+									//下载失败
+									Config.PopAudioContext(false);
+									Config.ShowMessage('更新失败！');
 								}
 							});
 							APKFile.start();
-						}						
+						}
 					},
-					fail: () => {						
+					fail: () => {
 						Config.PopAudioContext(false);
 						Config.ShowMessage('请求更新资源失败！');
 					}

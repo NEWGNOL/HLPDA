@@ -32,13 +32,13 @@
 				<view class="dataline"></view>
 
 				<text class="title">车间名称：</text>
-				<navigator url="/pages/proreport/workshopquery" hover-class="navigator-hover">
+				<navigator url="/pages/basic/workshopquery" hover-class="navigator-hover">
 					<view class="data">{{SelectWorkShopArray[1]}}</view>
 				</navigator>
 				<view class="dataline"></view>
 
 				<text class="title">班组名称：</text>
-				<navigator url="/pages/proreport/teamquery" hover-class="navigator-hover">
+				<navigator url="/pages/basic/teamquery" hover-class="navigator-hover">
 					<view class="data">{{SelectTeamArray[1]}}</view>
 				</navigator>
 				<view class="dataline"></view>
@@ -71,56 +71,41 @@
 
 			<scroll-view class="detailscrollview" scroll-y="true">
 				<text class="detailtitle">物料编码：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FNumber : '空'}}</text>
+				<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FNumber : '空'}}</text>
 				<text class="detailtitle">物料名称：</text>
 				<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FName : '空'}}</text>
 				<text class="detailtitle">标签类型：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FBarCodeType : '空'}}</text>
+				<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FBarCodeType : '空'}}</text>
 				<text class="detailtitle">订单号：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FSOBillNo : '空'}}</text>
+				<text class="detaildata">{{(this.ProreportInfoItem != null && this.ProreportInfoItem.FSOBillNo != null) ? this.ProreportInfoItem.FSOBillNo : '空'}}</text>
 				<text class="detailtitle">计划生产数量：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FAuxQty : '空'}}</text>
+				<text class="detaildata">{{(this.ProreportInfoItem != null && this.ProreportInfoItem.FAuxQty != null) ? this.ProreportInfoItem.FAuxQty : '空'}}</text>
 				<text class="detailtitle">计划开工日期：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FPlanCommitDate : '空'}}</text>
+				<text class="detaildata">{{(this.ProreportInfoItem != null && this.ProreportInfoItem.FPlanCommitDate != null) ? this.ProreportInfoItem.FPlanCommitDate : '空'}}</text>
 				<text class="detailtitle">实际完工日期：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? (this.ProreportInfoItem.FFinishDate != null ? this.ProreportInfoItem.FFinishDate : '空') : '空'}}</text>
+				<text class="detaildata">{{(this.ProreportInfoItem != null && this.ProreportInfoItem.FFinishDate != null) ? this.ProreportInfoItem.FFinishDate : '空'}}</text>
 				<text class="detailtitle">生产预测单号：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? (this.ProreportInfoItem.FPPOrderBillNo != null ? this.ProreportInfoItem.FPPOrderBillNo : '空') : '空'}}</text>
+				<text class="detaildata">{{(this.ProreportInfoItem != null && this.ProreportInfoItem.FPPOrderBillNo != null) ? this.ProreportInfoItem.FPPOrderBillNo : '空'}}</text>
 				<text class="detailtitle">班组代码：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FTeamNumber : '空'}}</text>
+				<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FTeamNumber : '空'}}</text>
 				<text class="detailtitle">班组名称：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FTeamName : '空'}}</text>
+				<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FTeamName : '空'}}</text>
 				<text class="detailtitle">车间代码：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FDeptNumber : '空'}}</text>
+				<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FDeptNumber : '空'}}</text>
 				<text class="detailtitle">车间名称：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FDeptName : '空'}}</text>
+				<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FDeptName : '空'}}</text>
 				<text class="detailtitle">计量单位代码：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FUnitNumber : '空'}}</text>
+				<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FUnitNumber : '空'}}</text>
 				<text class="detailtitle">计量单位名称：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FUnitName : '空'}}</text>
+				<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FUnitName : '空'}}</text>
 				<text class="detailtitle">箱数：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FInPackPreQty : '空'}}</text>
+				<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FInPackPreQty : '空'}}</text>
 				<text class="detailtitle">每箱数量：</text>
-				<text
-					class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FOutPackPreQty : '空'}}</text>
+				<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FOutPackPreQty : '空'}}</text>
 			</scroll-view>
 		</view>
-		
-		
+
+
 
 		<view class="tabbackground">
 			<text class="tableft" v-bind:class="{selecttab : TabSelectedIndex == 0}" v-on:click="SwitchTab(0)">汇总</text>
@@ -151,6 +136,7 @@
 				IsRequesting: false,
 				SelectWorkShopArray: [0, '请选择车间'],
 				SelectTeamArray: [0, '请选择班组'],
+				StatusArray: ['全部', '已审核', '未审核'],
 				FinishDate: DateFormat({
 					format: true
 				}),
@@ -158,8 +144,7 @@
 				StartDate: DateFormat('start'),
 				EndDate: DateFormat('end'),
 				SummaryListData: [],
-				InfoListData: [],
-				StatusArray: ['全部', '已审核', '未审核'],
+				InfoListData: [],				
 				ProreportInfoItem: null,
 				ProreportItem: null,
 				TouchStartX: 0,
@@ -284,7 +269,7 @@
 									success: (resdelete) => {
 										let ResultCode = resdelete.data.ResultCode;
 										let ResultMsg = resdelete.data.ResultMsg;
-										if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {											
+										if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 											Config.PopAudioContext(false);
 											Config.ShowMessage('账号登录异常，请重新登录！');
 											return;
@@ -292,7 +277,7 @@
 										let DataParam = resdelete.data.ResultData.ICMORpt2_9
 											.dataparam;
 										ResultCode = DataParam.Result;
-										if (ResultCode == 0) {											
+										if (ResultCode == 0) {
 											Config.PopAudioContext(false);
 											Config.ShowMessage(DataParam.Msg);
 											return;
@@ -316,7 +301,7 @@
 													.ResultCode;
 												let ResultMsg = res.data.ResultMsg;
 												if (ResultCode == 'FAIL' &&
-													ResultMsg == '不存在的Token') {													
+													ResultMsg == '不存在的Token') {
 													Config.PopAudioContext(false);
 													Config.ShowMessage(
 														'账号登录异常，请重新登录！');
@@ -326,16 +311,25 @@
 													.ResultData.PdaICMORptListInfo
 													.data0;
 											},
-											fail: () => {												
+											fail: () => {
 												Config.PopAudioContext(false);
 												Config.ShowMessage('请求数据失败！');
 											}
 										});
 									},
-									fail: () => {										
+									fail: () => {
 										Config.PopAudioContext(false);
 										Config.ShowMessage('请求数据失败！');
-									}
+									},
+						            complete: (resultcomp) => {
+							        let ResultMsg = resultcomp.data.ResultMsg;
+							        if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+								        Config.PopAudioContext(false);
+								        Config.ShowMessage(ResultMsg);
+								        uni.hideLoading();
+								        this.SetRequestingFlag(false);
+							        }
+						        }
 								});
 							}
 						}
@@ -401,32 +395,40 @@
 					success: (result) => {
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
-						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {							
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 							Config.PopAudioContext(false);
 							Config.ShowMessage('账号登录异常，请重新登录！');
 							return;
 						}
 						this.SummaryListData = result.data.ResultData.PdaICMORptListInfo.data0;
 					},
-					fail: () => {						
+					fail: () => {
 						Config.PopAudioContext(false);
 						Config.ShowMessage('请求数据失败！');
+					},
+					complete: (resultcomp) => {
+					    let ResultMsg = resultcomp.data.ResultMsg;
+					    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+						    Config.PopAudioContext(false);
+							Config.ShowMessage(ResultMsg);
+							uni.hideLoading();							
+					    }
 					}
 				});
 			},
 			//扫描条码
 			ScanBarCode: function(Barcode) {
-				if (this.ProReportBillNo == '空') {					
+				if (this.ProReportBillNo == '空') {
 					Config.PopAudioContext(false);
 					Config.ShowMessage('请新增汇报单！');
 					return;
 				}
-				if (this.SelectWorkShopArray[0] == 0) {					
+				if (this.SelectWorkShopArray[0] == 0) {
 					Config.PopAudioContext(false);
 					Config.ShowMessage('请填写车间！');
 					return;
 				}
-				if (this.SelectTeamArray[0] == 0) {					
+				if (this.SelectTeamArray[0] == 0) {
 					Config.PopAudioContext(false);
 					Config.ShowMessage('请填写班组！');
 					return;
@@ -434,6 +436,10 @@
 
 				if (!this.IsRequesting) {
 					this.SetRequestingFlag(true);
+					uni.showLoading({
+						title: 'Loading',
+						mask: true
+					});
 					uni.request({
 						url: uni.getStorageSync('OtherUrl'),
 						method: 'POST',
@@ -456,29 +462,42 @@
 							//console.log(result.data);
 							let ResultCode = result.data.ResultCode;
 							let ResultMsg = result.data.ResultMsg;
-							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {								
-								Config.PopAudioContext(false);	
+							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+								Config.PopAudioContext(false);
 								Config.ShowMessage('账号登录异常，请重新登录！');
+								uni.hideLoading();
 								this.SetRequestingFlag(false);
 								return;
 							}
 							let ResultData = result.data.ResultData.AddPdaICMORpt;
 							let Result = ResultData.dataparam.Result;
-							if (Result == 0) {								
+							if (Result == 0) {
 								Config.PopAudioContext(false);
 								Config.ShowMessage(ResultData.dataparam.Msg);
+								uni.hideLoading();
 								this.SetRequestingFlag(false);
 								return;
 							}
 							Config.PopAudioContext(true);
-							Config.ShowMessage(ResultData.dataparam.Msg);							
-							this.GetProReportByScan();
+							Config.ShowMessage(ResultData.dataparam.Msg);
+							uni.hideLoading();
 							this.SetRequestingFlag(false);
+							this.GetProReportByScan();
 						},
 						fail: () => {
 							Config.PopAudioContext(false);
-							Config.ShowMessage('请求数据失败！');	
+							Config.ShowMessage('请求数据失败！');
+							uni.hideLoading();
 							this.SetRequestingFlag(false);
+						},
+						complete: (resultcomp) => {
+							let ResultMsg = resultcomp.data.ResultMsg;
+							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+								Config.PopAudioContext(false);
+								Config.ShowMessage(ResultMsg);
+								uni.hideLoading();
+								this.SetRequestingFlag(false);
+							}
 						}
 					});
 				}
@@ -503,7 +522,7 @@
 						let ResultMsg = result.data.ResultMsg;
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 							Config.PopAudioContext(false);
-							Config.ShowMessage('账号登录异常，请重新登录！');							
+							Config.ShowMessage('账号登录异常，请重新登录！');
 							return;
 						}
 						let DataModel = result.data.ResultData.PdaICMORpt.dataparam;
@@ -519,7 +538,16 @@
 					},
 					fail: () => {
 						Config.PopAudioContext(false);
-						Config.ShowMessage('请求数据失败！');						
+						Config.ShowMessage('请求数据失败！');
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.PopAudioContext(false);
+							Config.ShowMessage(ResultMsg);
+							uni.hideLoading();
+							this.SetRequestingFlag(false);
+						}
 					}
 				});
 			},
@@ -527,15 +555,15 @@
 			AuditProReport() {
 				if (this.SelectWorkShopArray[0] == 0) {
 					Config.PopAudioContext(false);
-					Config.ShowMessage('请填写车间！');					
+					Config.ShowMessage('请填写车间！');
 					return;
 				}
 				if (this.SelectTeamArray[0] == 0) {
 					Config.PopAudioContext(false);
-					Config.ShowMessage('请填写班组！');					
+					Config.ShowMessage('请填写班组！');
 					return;
 				}
-				if (this.InfoListData.length == 0) {					
+				if (this.InfoListData.length == 0) {
 					Config.PopAudioContext(false);
 					Config.ShowMessage('汇报单无扫描数据！');
 					return;
@@ -545,7 +573,7 @@
 					this.SetRequestingFlag(true);
 					uni.showLoading({
 						title: 'Loading',
-						mask: true					
+						mask: true
 					});
 					uni.request({
 						url: uni.getStorageSync('OtherUrl'),
@@ -566,7 +594,7 @@
 							let ResultMsg = result.data.ResultMsg;
 							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 								Config.PopAudioContext(false);
-								Config.ShowMessage('账号登录异常，请重新登录！');	
+								Config.ShowMessage('账号登录异常，请重新登录！');
 								uni.hideLoading();
 								this.SetRequestingFlag(false);
 								return;
@@ -575,82 +603,101 @@
 							let Result = DataParam.Result;
 							if (Result == 0) {
 								Config.PopAudioContext(false);
-								Config.ShowMessage(DataParam.Msg);							
+								Config.ShowMessage(DataParam.Msg);
 								uni.hideLoading();
 								this.SetRequestingFlag(false);
 								return;
 							}
 							Config.PopAudioContext(true);
-							Config.ShowMessage(DataParam.Msg);	
+							Config.ShowMessage(DataParam.Msg);
 							uni.hideLoading();
-							this.SetRequestingFlag(false);							
+							this.SetRequestingFlag(false);
 						},
 						fail: () => {
 							Config.PopAudioContext(false);
-							Config.ShowMessage('请求数据失败！');	
+							Config.ShowMessage('请求数据失败！');
 							uni.hideLoading();
-							this.SetRequestingFlag(false);							
+							this.SetRequestingFlag(false);
+						},
+						complete: (resultcomp) => {
+							console.log(resultcomp);
+							let ResultMsg = resultcomp.data.ResultMsg;
+							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+								Config.PopAudioContext(false);
+								Config.ShowMessage(ResultMsg);
+								uni.hideLoading();
+								this.SetRequestingFlag(false);
+							}
 						}
-					});					
+					});
 				}
 			},
 			//反审核生产汇报单
 			UnAuditProReport: function() {
 				if (this.ProReportBillNo == '空' || this.SelectWorkShopArray[0] == 0 || this.SelectTeamArray[0] == 0) {
 					Config.PopAudioContext(false);
-					Config.ShowMessage('请选择需要反审核的汇报单！');					
+					Config.ShowMessage('请选择需要反审核的汇报单！');
 					return;
 				}
 				
 				if (!this.IsRequesting) {
-				this.SetRequestingFlag(true);
-				uni.showLoading({
-					title: 'Loading',
-					mask: true
-				});
-				uni.request({
-					url: uni.getStorageSync('OtherUrl'),
-					method: 'POST',
-					data: {
-						ModuleCode: 'unPdaICMORptToICMORpt',
-						token: uni.getStorageSync('token'),
-						ModuleParam: {
-							FId: this.ProReportInterId,
-							Result: 0,
-							Msg: ''
-						}
-					},
-					success: (result) => {
-						let ResultCode = result.data.ResultCode;
-						let ResultMsg = result.data.ResultMsg;
-						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-							Config.PopAudioContext(false);
-							Config.ShowMessage('账号登录异常，请重新登录！');	
-							uni.hideLoading();
-							this.SetRequestingFlag(false);
-							return;
-						}
-						let DataParam = result.data.ResultData.unPdaICMORptToICMORpt.dataparam;
-						let Result = DataParam.Result;
-						if (Result == 0) {
-							Config.PopAudioContext(false);
+					this.SetRequestingFlag(true);
+					uni.showLoading({
+						title: 'Loading',
+						mask: true
+					});
+					uni.request({
+						url: uni.getStorageSync('OtherUrl'),
+						method: 'POST',
+						data: {
+							ModuleCode: 'unPdaICMORptToICMORpt',
+							token: uni.getStorageSync('token'),
+							ModuleParam: {
+								FId: this.ProReportInterId,
+								Result: 0,
+								Msg: ''
+							}
+						},
+						success: (result) => {
+							let ResultCode = result.data.ResultCode;
+							let ResultMsg = result.data.ResultMsg;
+							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+								Config.PopAudioContext(false);
+								Config.ShowMessage('账号登录异常，请重新登录！');
+								uni.hideLoading();
+								this.SetRequestingFlag(false);
+								return;
+							}
+							let DataParam = result.data.ResultData.unPdaICMORptToICMORpt.dataparam;
+							let Result = DataParam.Result;
+							if (Result == 0) {
+								Config.PopAudioContext(false);
+								Config.ShowMessage(DataParam.Msg);
+								uni.hideLoading();
+								this.SetRequestingFlag(false);
+								return;
+							}
+							Config.PopAudioContext(true);
 							Config.ShowMessage(DataParam.Msg);
 							uni.hideLoading();
 							this.SetRequestingFlag(false);
-							return;
+						},
+						fail: () => {
+							Config.PopAudioContext(false);
+							Config.ShowMessage('请求数据失败！');
+							uni.hideLoading();
+							this.SetRequestingFlag(false);
+						},
+						complete: (resultcomp) => {
+							let ResultMsg = resultcomp.data.ResultMsg;
+							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+								Config.PopAudioContext(false);
+								Config.ShowMessage(ResultMsg);
+								uni.hideLoading();
+								this.SetRequestingFlag(false);
+							}
 						}
-						Config.PopAudioContext(true);
-						Config.ShowMessage(DataParam.Msg);	
-						uni.hideLoading();
-						this.SetRequestingFlag(false);
-					},
-					fail: () => {
-						Config.PopAudioContext(false);
-						Config.ShowMessage('请求数据失败！');	
-						uni.hideLoading();
-						this.SetRequestingFlag(false);
-					}
-				});	
+					});
 				}
 			},
 			//切换表头是否可见
@@ -672,7 +719,7 @@
 			DeleteProreportBill: function() {
 				if (this.ProReportBillNo == '空') {
 					Config.PopAudioContext(false);
-					Config.ShowMessage('请选择要删除的汇报单！');					
+					Config.ShowMessage('请选择要删除的汇报单！');
 					return;
 				}
 				let me = this;
@@ -698,7 +745,7 @@
 									let ResultMsg = resdelete.data.ResultMsg;
 									if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 										Config.PopAudioContext(false);
-										Config.ShowMessage('账号登录异常，请重新登录！');										
+										Config.ShowMessage('账号登录异常，请重新登录！');
 										return;
 									}
 									let DataParam = resdelete.data.ResultData.ICMORpt2_9
@@ -706,18 +753,27 @@
 									ResultCode = DataParam.Result;
 									if (ResultCode == 0) {
 										Config.PopAudioContext(false);
-										Config.ShowMessage(DataParam.Msg);										
+										Config.ShowMessage(DataParam.Msg);
 										return;
 									}
 									me.ClearBillHeadData(me);
 									me.GetProReportInfoExpand(null);
 									Config.PopAudioContext(true);
-									Config.ShowMessage(DataParam.Msg);									
+									Config.ShowMessage(DataParam.Msg);
 								},
 								fail: () => {
 									Config.PopAudioContext(false);
-									Config.ShowMessage('请求数据失败！');									
-								}
+									Config.ShowMessage('请求数据失败！');
+								},
+					            complete: (resultcomp) => {
+						        let ResultMsg = resultcomp.data.ResultMsg;
+						        if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							        Config.PopAudioContext(false);
+							        Config.ShowMessage(ResultMsg);
+							        uni.hideLoading();
+							        this.SetRequestingFlag(false);
+						        }
+					        }
 							});
 						}
 					}
@@ -738,7 +794,7 @@
 					success: (result) => {
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
-						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {							
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 							Config.PopAudioContext(false);
 							Config.ShowMessage('账号登录异常，请重新登录！');
 							return;
@@ -747,47 +803,27 @@
 					},
 					fail: () => {
 						Config.PopAudioContext(false);
-						Config.ShowMessage('请求数据失败！');						
-					}
+						Config.ShowMessage('请求数据失败！');
+					},
+					complete: (resultcomp) => {
+					    let ResultMsg = resultcomp.data.ResultMsg;
+					    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.PopAudioContext(false);
+							Config.ShowMessage(ResultMsg);
+							uni.hideLoading();
+							this.SetRequestingFlag(false);
+					    }
+				    }
 				});
 			},
 			//根据列表选中的汇报单获取最新汇报单信息
 			GetProReportByList: function(item) {
-				this.TabSelectedIndex = 1;
-				this.ProReportInterId = item.FId;
-				this.ProReportBillNo = item.FBillNo;
-				this.SelectWorkShopArray = [item.FDeptId, item.FDeptName];
-				this.SelectTeamArray = [item.FTeamId, item.FTeamName];
-				this.FinishDate = item.FDate;
-				uni.request({
-					url: uni.getStorageSync('OtherUrl'),
-					method: 'POST',
-					data: {
-						ModuleCode: 'getPdaICMORptSumInfo',
-						token: uni.getStorageSync('token'),
-						ModuleParam: {
-							FId: this.ProReportInterId
-						}
-					},
-					success: (result) => {
-						let ResultCode = result.data.ResultCode;
-						let ResultMsg = result.data.ResultMsg;
-						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-							Config.PopAudioContext(false);
-							Config.ShowMessage('账号登录异常，请重新登录！');							
-							return;
-						}
-						this.InfoListData = result.data.ResultData.PdaICMORptSumInfo.data0;
-					},
-					fail: () => {
-						Config.PopAudioContext(false);
-						Config.ShowMessage('请求数据失败！');						
-					}
-				});
-			},
-			//显示生产汇报单信息
-			ShowProReportInfo: function() {
-				if (this.ProReportInterId != 0) {
+				if (!this.IsRequesting) {
+					this.SetRequestingFlag(true);
+					uni.showLoading({
+						title: 'Loading',
+						mask: true
+					});					
 					uni.request({
 						url: uni.getStorageSync('OtherUrl'),
 						method: 'POST',
@@ -795,24 +831,97 @@
 							ModuleCode: 'getPdaICMORptSumInfo',
 							token: uni.getStorageSync('token'),
 							ModuleParam: {
-								FId: this.ProReportInterId
+								FId: item.FId
 							}
 						},
 						success: (result) => {
 							let ResultCode = result.data.ResultCode;
 							let ResultMsg = result.data.ResultMsg;
 							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+								this.SetRequestingFlag(false);
 								Config.PopAudioContext(false);
-								Config.ShowMessage('账号登录异常，请重新登录！');								
+								Config.ShowMessage('账号登录异常，请重新登录！');
+								uni.hideLoading();
 								return;
 							}
+							this.SetRequestingFlag(false);
 							this.InfoListData = result.data.ResultData.PdaICMORptSumInfo.data0;
+							uni.hideLoading();
 						},
 						fail: () => {
+							this.SetRequestingFlag(false);
 							Config.PopAudioContext(false);
-							Config.ShowMessage('请求数据失败！');							
+							Config.ShowMessage('请求数据失败！');
+							uni.hideLoading();
+						},
+						complete: (resultcomp) => {
+						    let ResultMsg = resultcomp.data.ResultMsg;
+						    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+								Config.PopAudioContext(false);
+								Config.ShowMessage(ResultMsg);
+								uni.hideLoading();
+								this.SetRequestingFlag(false);
+						    }
 						}
-					});
+					});					
+					this.TabSelectedIndex = 1;
+					this.ProReportInterId = item.FId;
+					this.ProReportBillNo = item.FBillNo;
+					this.SelectWorkShopArray = [item.FDeptId, item.FDeptName];
+					this.SelectTeamArray = [item.FTeamId, item.FTeamName];
+					this.FinishDate = item.FDate;
+				}
+			},
+			//显示生产汇报单信息
+			ShowProReportInfo: function() {
+				if (this.ProReportInterId != 0) {
+					if (!this.IsRequesting) {
+						this.SetRequestingFlag(true);
+						uni.showLoading({
+							title: 'Loading',
+							mask: true
+						});
+						uni.request({
+							url: uni.getStorageSync('OtherUrl'),
+							method: 'POST',
+							data: {
+								ModuleCode: 'getPdaICMORptSumInfo',
+								token: uni.getStorageSync('token'),
+								ModuleParam: {
+									FId: this.ProReportInterId
+								}
+							},
+							success: (result) => {
+								let ResultCode = result.data.ResultCode;
+								let ResultMsg = result.data.ResultMsg;
+								if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+									Config.PopAudioContext(false);
+									Config.ShowMessage('账号登录异常，请重新登录！');
+									uni.hideLoading();
+									this.SetRequestingFlag(false);
+									return;
+								}
+								uni.hideLoading();
+								this.SetRequestingFlag(false);
+								this.InfoListData = result.data.ResultData.PdaICMORptSumInfo.data0;
+							},
+							fail: () => {
+								Config.PopAudioContext(false);
+								Config.ShowMessage('请求数据失败！');
+								uni.hideLoading();
+								this.SetRequestingFlag(false);
+							},
+							complete: (resultcomp) => {
+							    let ResultMsg = resultcomp.data.ResultMsg;
+							    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+									Config.PopAudioContext(false);
+									Config.ShowMessage(ResultMsg);
+									uni.hideLoading();
+									this.SetRequestingFlag(false);
+							    }
+							}
+						});
+					}
 				}
 			},
 			//根据汇报单信息获取明细

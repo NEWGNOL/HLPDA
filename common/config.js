@@ -1,10 +1,12 @@
+//弹出消息提示框
 const ShowMessage=(Message)=>{
 	uni.showToast({		
 		title:Message,        
 		icon:'none',
 		duration:3000		
 	});	
-};//弹出消息提示框
+};
+//播放操作提示音 
 const PopAudioContext=(IsSuccess)=>{
 	let AudioContext = uni.createInnerAudioContext();
 	AudioContext.autoplay = true;   
@@ -26,16 +28,18 @@ const PopAudioContext=(IsSuccess)=>{
 		console.log('播放停止');
 	});
 	AudioContext.onEnded(() =>{
+		AudioContext.destroy();
 		console.log('播放结束');
 	});
 	AudioContext.onWaiting(() =>{
 		console.log('播放加载中');
 	});
 	AudioContext.onError((result) => {
+	  AudioContext.destroy();
 	  console.log(result.errMsg);
 	  console.log(result.errCode);
     });
-};//播放操作成功失败提示音    
+};   
 export default {		
 	ShowMessage,
 	PopAudioContext

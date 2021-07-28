@@ -185,6 +185,13 @@
 					fail: () => {						
 						Config.PopAudioContext(false);
 						Config.ShowMessage('请求数据失败！');
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.PopAudioContext(false);
+							Config.ShowMessage(ResultMsg);							
+						}
 					}
 				});
 			},
@@ -241,7 +248,14 @@
 										fail: () => {											
 											Config.PopAudioContext(false);
 											Config.ShowMessage('请求数据失败！');
-										}
+										},
+					                    complete: (resultcomp) => {
+						                    let ResultMsg = resultcomp.data.ResultMsg;
+						                    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							                Config.PopAudioContext(false);
+							                Config.ShowMessage(ResultMsg);							
+						                }
+					                }
 									});
 									let DataModel = res.data.ResultData.Binding1_5.data0;
 									me.ScannerLabelCount = DataModel.FlabelCount;
@@ -252,7 +266,14 @@
 								fail: () => {									
 									Config.PopAudioContext(false);
 									Config.ShowMessage('请求数据失败！');
-								}
+								},
+					            complete: (resultcomp) => {
+						            let ResultMsg = resultcomp.data.ResultMsg;
+						            if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							        Config.PopAudioContext(false);
+							        Config.ShowMessage(ResultMsg);							
+						        }
+					        }
 							});
 						}
 					}
@@ -304,13 +325,24 @@
 							Config.ShowMessage('请求数据失败！');
 							Config.PopAudioContext(false);
 							this.SetRequestingFlag(false);
-						}
+						},
+					    complete: (resultcomp) => {
+						    let ResultMsg = resultcomp.data.ResultMsg;
+						    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.PopAudioContext(false);
+							Config.ShowMessage(ResultMsg);							
+					    }
+				    }
 					});
 				}
 			},
 			//根据外箱获取内盒列表
 			GetLabelByPackBarCode: function() {
 				if (!this.IsShowBindingView) {
+					uni.showLoading({
+						title: 'Loading',
+						mask: true
+					});
 					uni.request({
 						url: uni.getStorageSync('OtherUrl'),
 						method: 'POST',
@@ -327,14 +359,24 @@
 							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 								Config.ShowMessage('账号登录异常，请重新登录！');
 								Config.PopAudioContext(false);
+								uni.hideLoading();
 								return;
 							}
 							this.DetailListData = result.data.ResultData.LabelInfo.data0;
+							uni.hideLoading();
 						},
 						fail: () => {
 							Config.ShowMessage('请求数据失败！');
 							Config.PopAudioContext(false);
-						}
+							uni.hideLoading();
+						},
+					    complete: (resultcomp) => {
+						    let ResultMsg = resultcomp.data.ResultMsg;
+						    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.PopAudioContext(false);
+							Config.ShowMessage(ResultMsg);							
+					    }
+					}
 					});
 				}
 			},
