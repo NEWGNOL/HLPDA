@@ -22,14 +22,10 @@
 			<!-- 	</canvas> -->
 		</view>
 
-		<view class="summary" v-show="!IsShowLoginView">
-			<!-- <canvas class="loginpagecanvas" canvas-id="configcanvas" id="configcanvas" v-show="!IsShowLoginView"> -->
+		<view class="summary" v-show="!IsShowLoginView">			
 			<view class="usernametext">IP地址：</view>
-			<input v-model="IPAddress" placeholder="请输入IP地址" class="cla" />
-			<!-- <view class="usernametext">域名：</view>
-				<input v-model="DomainName" placeholder="请输入域名" class="cla"/> -->
-			<button class="button" v-on:click="SaveLoginData()">确认</button>
-			<!-- 	</canvas> -->
+			<input v-model="IPAddress" placeholder="请输入IP地址" class="cla">			
+			<button class="button" v-on:click="SaveLoginData()">确认</button>		
 		</view>
 	</view>
 </template>

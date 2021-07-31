@@ -54,9 +54,10 @@
 				scroll-y="true">
 				<uni-list>
 					<uni-list-item v-for="(item,index) in InfoListData" :key="index" :title="item.FNumber + '/' + item.FModel
-					+ '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '汇总进度：' + item.FSumQty + '/' + item.FICMOQty" isshowprogress
-						v-bind:percent="Math.round((item.FSumQty / item.FICMOQty) * 100, 0)" clickable
-						v-on:click="GetProReportInfoExpand(item)">
+					 + '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '批号：' + item.FGMPBatchNo + '\n' + '汇总进度：' + item.FSumQty
+					 + '/' + item.FICMOQty" isshowprogress
+					 v-bind:percent="Math.round((item.FSumQty / item.FICMOQty) * 100, 0)" clickable
+					 v-on:click="GetProReportInfoExpand(item)">
 					</uni-list-item>
 				</uni-list>
 			</scroll-view>
@@ -78,6 +79,8 @@
 				<text class="detaildata">{{this.ProreportInfoItem != null ? this.ProreportInfoItem.FBarCodeType : '空'}}</text>
 				<text class="detailtitle">订单号：</text>
 				<text class="detaildata">{{(this.ProreportInfoItem != null && this.ProreportInfoItem.FSOBillNo != null) ? this.ProreportInfoItem.FSOBillNo : '空'}}</text>
+				<text class="detailtitle">批号：</text>
+				<text class="detaildata">{{(this.ProreportInfoItem != null && this.ProreportInfoItem.FGMPBatchNo != null) ? this.ProreportInfoItem.FGMPBatchNo : '空'}}</text>
 				<text class="detailtitle">计划生产数量：</text>
 				<text class="detaildata">{{(this.ProreportInfoItem != null && this.ProreportInfoItem.FAuxQty != null) ? this.ProreportInfoItem.FAuxQty : '空'}}</text>
 				<text class="detailtitle">计划开工日期：</text>
@@ -131,7 +134,7 @@
 				SelectStatus: '全部',
 				ProReportInterId: 0,
 				ProReportBillNo: '空',
-				ProReportSrcInterId: 0,
+				ProReportSrcInterId: 0,				
 				IsBillHeadVisible: true,
 				IsRequesting: false,
 				SelectWorkShopArray: [0, '请选择车间'],
@@ -937,7 +940,7 @@
 			},
 			//根据汇报单信息获取扩展信息
 			GetProReportInfoExpand: function(item) {
-				if (item != null) {
+				if (item != null) {					
 					this.TabSelectedIndex = 2;
 					this.ProreportInfoItem = item;
 					this.ProReportSrcInterId = item.FSrcInterId;
@@ -1031,15 +1034,6 @@
 		background-color: #007AFF;
 		border-radius: 50rpx;
 		margin-left: 572rpx;
-		margin-top: -96rpx;
-	}
-
-	.hidebillhead {
-		width: 20%;
-		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50rpx;
-		margin-left: 560rpx;
 		margin-top: -96rpx;
 	}
 

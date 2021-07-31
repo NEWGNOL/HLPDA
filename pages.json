@@ -95,26 +95,45 @@
 			}
 		},
 		{
-			"path": "pages/instorage/instorage",
+			"path": "pages/proreportinstorage/proreportinstorage",
 			"style": {
 				"navigationBarTitleText": "汇报入库",
 				"app-plus":{
 				                  "titleNView":{
-				                  "titleColor":"FFFFFF"
-								  // "buttons": [{
-								  //     "text": "隐藏表头",
-								  //     "fontSrc": "/static/fonts/icomoon.ttf",
-								  //     "fontSize": "17px",
-								  // 	  "color":"#FFFFFF",
-								  //     "float": "right",
-								  //     "width": "90px"											
-								  // }]
+				                  "titleColor":"FFFFFF",
+								  "buttons": [{
+								      "text": "隐藏表头",
+								      "fontSrc": "/static/fonts/icomoon.ttf",
+								      "fontSize": "17px",
+								  	  "color":"#FFFFFF",
+								      "float": "right",
+								      "width": "90px"											
+								  }]							 
 					 }
 				}			
 			}
 		},
 		{
-			"path": "pages/instorage/cartonlabeldetail",
+			"path": "pages/purchaseinstorage/purchaseinstorage",
+			"style": {
+				"navigationBarTitleText": "采购入库",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF",
+								  "buttons": [{
+								      "text": "隐藏表头",
+								      "fontSrc": "/static/fonts/icomoon.ttf",
+								      "fontSize": "17px",
+								  	  "color":"#FFFFFF",
+								      "float": "right",
+								      "width": "90px"											
+								  }]							 
+					 }
+				}			
+			}
+		},
+		{
+			"path": "pages/proreportinstorage/cartonlabeldetail",
 			"style": {
 				"navigationBarTitleText": "外箱明细",
 				"app-plus":{
@@ -134,7 +153,7 @@
 					}					
 				}				
 			}
-		}			   
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
