@@ -1,5 +1,5 @@
 <template>
-	<view class="content">
+	<view class="container">
 		<uni-search-bar class="search" cancelButton="none" v-model="SearchValue" @input="TeamChanged"></uni-search-bar>
 
 		<scroll-view class="scrollview" scroll-y="true">
@@ -56,8 +56,7 @@
 						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							Config.PopAudioContext(false);
 							Config.ShowMessage(ResultMsg);
-							uni.hideLoading();
-							this.SetRequestingFlag(false);
+							uni.hideLoading();							
 						}
 					}
 				})
@@ -80,14 +79,7 @@
 	}
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
+<style>	
 	.search {
 		width: 90%;
 	}

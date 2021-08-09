@@ -1,5 +1,5 @@
 <template>
-	<view class="content">
+	<view class="container">
 		<view class="instorageview" v-show="TabSelectedIndex == 0" @touchstart='TouchStart' @touchend='TouchEnd'>
 			<uni-search-bar class="search" cancelButton="none" v-model="SearchValue" @input="ValueChanged">
 			</uni-search-bar>
@@ -63,8 +63,8 @@
 				StorageInBillNo: '空',
 				SelectSupplierArray: [0, '请选择供应商'],
 				SearchValue: '',
-				SelectStatus: '',
-				StatusArray: ['未入库', '已入库'],
+				SelectStatus: '全部',
+				StatusArray: ['全部','已审核', '未审核'],
 				StorageInAndBin: [],
 				TabSelectedIndex: 0,
 				TouchStartX: 0,
@@ -236,14 +236,7 @@
 	}
 </script>
 
-<style>
-    .content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-	
+<style>   
 	.search {
 		position: absolute;
 		width: 70%;
@@ -272,7 +265,7 @@
 		background-color: #007AFF;
 		border-radius: 50upx;
 		margin-left: 450upx;
-		margin-top: -90upx;
+		margin-top: -95upx;
 	}
 	
 	.billhead {

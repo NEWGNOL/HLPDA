@@ -1,5 +1,5 @@
 <template>
-	<view class="content">
+	<view class="container">
 		<view class="proreportview" v-show="TabSelectedIndex == 0" @touchstart='TouchStart' @touchend='TouchEnd'>
 			<uni-search-bar class="search" cancelButton="none" v-model="SearchValue" @input="ValueChanged">
 			</uni-search-bar>
@@ -131,7 +131,7 @@
 			return {
 				TabSelectedIndex: 1,
 				SearchValue: '',
-				SelectStatus: '全部',
+				SelectStatus: '未审核',
 				ProReportInterId: 0,
 				ProReportBillNo: '空',
 				ProReportSrcInterId: 0,				
@@ -139,7 +139,7 @@
 				IsRequesting: false,
 				SelectWorkShopArray: [0, '请选择车间'],
 				SelectTeamArray: [0, '请选择班组'],
-				StatusArray: ['全部', '已审核', '未审核'],
+				StatusArray: ['未审核', '已审核', '全部'],
 				FinishDate: DateFormat({
 					format: true
 				}),
@@ -195,7 +195,7 @@
 				function doReceive(context, intent) {
 					plus.android.importClass(intent);
 					var Barcode = intent.getStringExtra("barcode_string");
-					me.ScanBarCode(Barcode);
+					me.ScanBarCodeToProreport(Barcode);
 				}
 			},
 			//移除广播监听
@@ -380,6 +380,10 @@
 			},
 			//显示生产汇报汇总
 			ShowProReportSum: function() {
+				uni.showLoading({
+					title: 'Loading',
+					mask: true
+				});
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -403,11 +407,14 @@
 							Config.ShowMessage('账号登录异常，请重新登录！');
 							return;
 						}
+						uni.hideLoading();
 						this.SummaryListData = result.data.ResultData.PdaICMORptListInfo.data0;
 					},
 					fail: () => {
 						Config.PopAudioContext(false);
 						Config.ShowMessage('请求数据失败！');
+						uni.hideLoading();
+						return;
 					},
 					complete: (resultcomp) => {
 					    let ResultMsg = resultcomp.data.ResultMsg;
@@ -419,22 +426,30 @@
 					}
 				});
 			},
+			//扫描外箱条码做汇报
+			ScanBarCodeToProreport:function(Barcode){
+				let IsSuccess = this.ScanBarCode(Barcode);
+				if(IsSuccess == 0){
+					return;
+				}
+				this.GetProReportByScan();
+			},
 			//扫描条码
 			ScanBarCode: function(Barcode) {
 				if (this.ProReportBillNo == '空') {
 					Config.PopAudioContext(false);
 					Config.ShowMessage('请新增汇报单！');
-					return;
+					return 0;
 				}
 				if (this.SelectWorkShopArray[0] == 0) {
 					Config.PopAudioContext(false);
 					Config.ShowMessage('请填写车间！');
-					return;
+					return 0;
 				}
 				if (this.SelectTeamArray[0] == 0) {
 					Config.PopAudioContext(false);
 					Config.ShowMessage('请填写班组！');
-					return;
+					return 0;
 				}
 
 				if (!this.IsRequesting) {
@@ -470,7 +485,7 @@
 								Config.ShowMessage('账号登录异常，请重新登录！');
 								uni.hideLoading();
 								this.SetRequestingFlag(false);
-								return;
+								return 0;
 							}
 							let ResultData = result.data.ResultData.AddPdaICMORpt;
 							let Result = ResultData.dataparam.Result;
@@ -479,19 +494,19 @@
 								Config.ShowMessage(ResultData.dataparam.Msg);
 								uni.hideLoading();
 								this.SetRequestingFlag(false);
-								return;
+								return 0;
 							}
 							Config.PopAudioContext(true);
 							Config.ShowMessage(ResultData.dataparam.Msg);
 							uni.hideLoading();
-							this.SetRequestingFlag(false);
-							this.GetProReportByScan();
+							this.SetRequestingFlag(false);							
 						},
 						fail: () => {
 							Config.PopAudioContext(false);
 							Config.ShowMessage('请求数据失败！');
 							uni.hideLoading();
 							this.SetRequestingFlag(false);
+							return 0;
 						},
 						complete: (resultcomp) => {
 							let ResultMsg = resultcomp.data.ResultMsg;
@@ -500,6 +515,7 @@
 								Config.ShowMessage(ResultMsg);
 								uni.hideLoading();
 								this.SetRequestingFlag(false);
+								return 0;
 							}
 						}
 					});
@@ -807,14 +823,14 @@
 					fail: () => {
 						Config.PopAudioContext(false);
 						Config.ShowMessage('请求数据失败！');
+						return;
 					},
 					complete: (resultcomp) => {
 					    let ResultMsg = resultcomp.data.ResultMsg;
 					    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							Config.PopAudioContext(false);
 							Config.ShowMessage(ResultMsg);
-							uni.hideLoading();
-							this.SetRequestingFlag(false);
+							uni.hideLoading();													
 					    }
 				    }
 				});
@@ -993,14 +1009,7 @@
 	}
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
+<style>	
 	.addproreport {
 		width: 20%;
 		color: #FFFFFF;

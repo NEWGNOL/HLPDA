@@ -1,5 +1,5 @@
 <template>
-	<view class="content">
+	<view class="container">
 		<view class="tabbackground">
 			<text class="tableft" v-bind:class="{selecttab : IsShowBindingView}" v-on:click="SwitchTab(true)">汇总</text>
 			<view class="tableftline" v-bind:class="{selecttabline : IsShowBindingView}"></view>
@@ -441,14 +441,7 @@
 </script>
 
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
+<style>	
 	.cartonlabeltitle {
 		display: flex;
 		font-size: 40rpx;
@@ -486,6 +479,13 @@
 		margin-left: 350rpx;
 		margin-top: -70rpx;
 		color: #1AAD19;
+	}
+	
+	.tabbackground {
+		width: 100%;
+		height: 100rpx;
+		margin-top: 1090rpx;
+		background-color: #F4F4F4;
 	}
 
 	.tableftline {
@@ -593,12 +593,5 @@
 		border-radius: 50rpx;
 		margin-top: -95rpx;
 		margin-right: 150rpx;
-	}
-
-	.tabbackground {
-		width: 100%;
-		height: 100rpx;
-		margin-top: 1090rpx;
-		background-color: #F4F4F4;
-	}
+	}	
 </style>

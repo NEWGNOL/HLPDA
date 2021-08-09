@@ -1,5 +1,5 @@
 <template>
-	<view class="content">
+	<view class="container">
 		<image src="../../static/login.png" class="img" mode="widthFix"></image>
 
 		<text class="tableft" v-bind:class="{selecttab : IsShowLoginView}" v-on:click="ClickTabTitle(true)">登录</text>
@@ -112,7 +112,8 @@
 							}
 
 							uni.showLoading({
-								title: 'Loading'
+								title: 'Loading',
+								mask: true
 							});
 							uni.setStorageSync("FUserName", me.UserName);
 							uni.setStorageSync("FPassword", me.Password);
@@ -206,14 +207,7 @@
 	}
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
+<style>	
 	.tableftline {
 		width: 15%;
 		height: 5rpx;

@@ -84,6 +84,17 @@
 			}
 		},
 		{
+			"path": "pages/basic/stock",
+			"style": {
+				"navigationBarTitleText": "仓库查询",
+				"app-plus":{
+					"titleNView":{
+						"titleColor":"FFFFFF"
+					}
+				}
+			}
+		},
+		{
 			"path": "pages/basic/workshopquery",
 			"style": {
 				"navigationBarTitleText": "车间查询",

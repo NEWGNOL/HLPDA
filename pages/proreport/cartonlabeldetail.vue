@@ -1,5 +1,5 @@
 <template>
-	<view class="content">	
+<view class="container">	
 	<button class="selectlabel" v-on:click="SelectAllLabel()">全选/反选</button>
 	<button class="deletelabel" v-on:click="DeleteSelectLabel()">删除</button>
 	
@@ -10,7 +10,7 @@
 			@CheckBoxChange="ChangeIsChecked(item)" clickable></uni-list-item>
 		</uni-list>	
 	</scroll-view>
-	</view>
+</view>
 </template>
 
 <script>
@@ -71,7 +71,8 @@
 					fail: () => {						
 						Config.PopAudioContext(false);
 						Config.ShowMessage('请求数据失败！');	
-						uni.hideLoading();						
+						uni.hideLoading();
+						return;
 					},
 					complete: (resultcomp) => {
 					    let ResultMsg = resultcomp.data.ResultMsg;
@@ -121,7 +122,12 @@
 					Config.PopAudioContext(false);
 					Config.ShowMessage('请选择要删除的内箱标签！');
 					return; 
-				}				
+				}	
+							
+				uni.showLoading({
+					title: 'Loading',
+					mask: true					
+				});			
 				uni.showModal({
 					title: '提示',
 					content: '是否要对选中的外箱标签进行解绑？',
@@ -145,7 +151,8 @@
 									if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 									{					
 										Config.PopAudioContext(false);
-										Config.ShowMessage('账号登录异常，请重新登录！');																			
+										Config.ShowMessage('账号登录异常，请重新登录！');	
+										uni.hideLoading();																			
 										return;
 									}										
 									let DataModel = res.data.ResultData.ICMORpt2_10.dataparam;	
@@ -153,16 +160,20 @@
 									if(Result == 0)
 									{										
 										Config.PopAudioContext(false);
-										Config.ShowMessage(DataModel.Msg);										
+										Config.ShowMessage(DataModel.Msg);
+										uni.hideLoading();											
 										return;
 									}										
 									Config.PopAudioContext(true);	
 									Config.ShowMessage(DataModel.Msg);
-									me.ShowProReportDetail();																																																	
+									me.ShowProReportDetail();
+									uni.hideLoading();																																																		
 								},
 								fail: () => {
 									Config.PopAudioContext(false);
-									Config.ShowMessage('请求数据失败！');																
+									Config.ShowMessage('请求数据失败！');
+									uni.hideLoading();		
+									return;															
 								},
 								complete: (resultcomp) => {
 								    let ResultMsg = resultcomp.data.ResultMsg;
@@ -181,14 +192,7 @@
 	}
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-	
+<style>	
 	.scrollview{	
 		margin-top: 20rpx;
 		height: 1000rpx;		

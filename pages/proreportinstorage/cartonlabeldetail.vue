@@ -1,5 +1,5 @@
 <template>
-	<view class="content">
+	<view class="container">
 	<button class="selectlabel" v-on:click="SelectAllLabel()">全选/反选</button>
 	<button class="deletelabel" v-on:click="DeleteSelectLabel()">删除</button>
 	
@@ -40,6 +40,10 @@
 			},
 			//显示入库的汇报单外箱明细
 			ShowStorageInDetail:function(){	
+				uni.showLoading({
+					title: 'Loading',
+					mask: true
+				});
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -60,12 +64,15 @@
 							Config.PopAudioContext(false);
 							Config.ShowMessage('账号登录异常，请重新登录！');
 							return;
-						}	
+						}
 						this.DetailListData = result.data.ResultData.getPdaStorageInRptCartonListInfo.data0;
+						uni.hideLoading();
 					},
 					fail: () => {
 						Config.PopAudioContext(false);
-						Config.ShowMessage('请求数据失败！');						
+						Config.ShowMessage('请求数据失败！');	
+						uni.hideLoading();
+						return;
 					},
 					complete: (resultcomp) => {
 					    let ResultMsg = resultcomp.data.ResultMsg;
@@ -175,14 +182,7 @@
 	}
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-	
+<style>	
 	.scrollview{	
 		margin-top: 20rpx;
 		height: 1000rpx;		

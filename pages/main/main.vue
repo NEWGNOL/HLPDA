@@ -1,5 +1,5 @@
-<template class="content">
-	<view>	
+<template>
+	<view class="container">	
 		<view class="binding" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[0].FIsAllow : true" @click="JumpPage('/pages/binding/binding')">
 			<image class="img" src="../../static/zhuangxiang.png" mode="aspectFit"></image>
 			<text class="title">装箱绑定</text>
@@ -84,7 +84,8 @@
 			//跳转到指定页面			
 			JumpPage:function(url){					
 				uni.showLoading({
-					title:'Loading'
+					title:'Loading',
+					mask: true
 				});	
 				uni.navigateTo({
 					url:url
@@ -95,14 +96,7 @@
 	}
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: center;
-	}	
-	
+<style>	
 	.binding{
 		position: absolute;
 		width: 300upx;
@@ -110,8 +104,8 @@
 		background-color: #007AFF;
 		border-radius: 25upx;	
 		text-align: center;
-		margin-left: 50upx;	
-		margin-top: 30upx;
+		margin-left: -190upx;	
+		margin-top: 100upx;
 	}
 	
 	.proreport{
@@ -121,8 +115,8 @@
 		background-color: #007AFF;
 		border-radius: 25upx;
 		text-align: center;	
-		margin-left: 410upx;
-		margin-top: 30upx;
+		margin-left: 190upx;
+		margin-top: 100upx;
 	}
 	
 	.proreportinstorage{
@@ -132,8 +126,8 @@
 		background-color: #007AFF;
 		border-radius: 25upx;	
 		text-align: center;
-		margin-left: 50upx;	
-		margin-top: 210upx;
+		margin-left: -190upx;	
+		margin-top: 280upx;
 	}
 	
 	.purchaseinstorage{
@@ -143,8 +137,8 @@
 		background-color: #007AFF;
 		border-radius: 25upx;
 		text-align: center;	
-		margin-left: 410upx;
-		margin-top: 210upx;
+		margin-left: 190upx;
+		margin-top: 280upx;
 	}
 	
 	

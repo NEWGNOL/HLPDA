@@ -14,4 +14,11 @@
 
 <style>
 	/*每个页面公共css */
+	/*每个页面的容器样式*/
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
 </style>
