@@ -783,14 +783,14 @@
 								fail: () => {
 									Config.PopAudioContext(false);
 									Config.ShowMessage('请求数据失败！');
+									return;
 								},
 					            complete: (resultcomp) => {
 						        let ResultMsg = resultcomp.data.ResultMsg;
 						        if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							        Config.PopAudioContext(false);
 							        Config.ShowMessage(ResultMsg);
-							        uni.hideLoading();
-							        this.SetRequestingFlag(false);
+							        uni.hideLoading();							        
 						        }
 					        }
 							});

@@ -20,10 +20,10 @@
 			<text class="title">采购入库</text>
 		</view>	
 		
-		<!-- <view class="leftmode" @click="JumpPage('/pages/outstorage/outstorage')">
+		<view class="outstorage" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[4].FIsAllow : true" @click="JumpPage('/pages/outstorage/outstorage')">
 			<image class="img" src="../../static/outstorage.png" mode="aspectFit"></image>
-			<text class="title">出库</text>
-		</view>	 -->
+			<text class="title">销售出库</text>
+		</view>	
 			
 		<!-- <view class="updatesoftware" @click="UpdateSoftware()">
 			<image src="" mode="aspectFit" class="img"></image>
@@ -139,6 +139,17 @@
 		text-align: center;	
 		margin-left: 190upx;
 		margin-top: 280upx;
+	}
+	
+	.outstorage{
+		position: absolute;
+		width: 300upx;
+		height: 150upx;
+		background-color: #007AFF;
+		border-radius: 25upx;	
+		text-align: center;
+		margin-left: -190upx;	
+		margin-top: 460upx;
 	}
 	
 	

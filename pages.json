@@ -125,6 +125,17 @@
 			}
 		},
 		{
+			"path": "pages/proreportinstorage/cartonlabeldetail",
+			"style": {
+				"navigationBarTitleText": "外箱明细",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF"
+					 }
+			    }
+			}			
+		},	
+		{
 			"path": "pages/purchaseinstorage/purchaseinstorage",
 			"style": {
 				"navigationBarTitleText": "采购入库",
@@ -144,7 +155,7 @@
 			}
 		},
 		{
-			"path": "pages/proreportinstorage/cartonlabeldetail",
+			"path": "pages/purchaseinstorage/cartonlabeldetail",
 			"style": {
 				"navigationBarTitleText": "外箱明细",
 				"app-plus":{
@@ -153,7 +164,7 @@
 					 }
 			    }
 			}			
-		},	
+		},
 		{
 			"path": "pages/outstorage/outstorage",
 			"style": {
