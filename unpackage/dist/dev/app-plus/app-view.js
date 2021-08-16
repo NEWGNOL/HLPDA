@@ -6536,7 +6536,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.search {\n\tposition: absolute;\n\twidth: 70%;\n\tmargin-left: 5rpx;\n}\n.addstoragein {\n\twidth: 20%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.querystoragein {\n\twidth: 20%;\n\theight: 90rpx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 450upx;\n\tmargin-top: -90upx;\n}\n.icmoscrollview {\n\twidth: 100%;\n\theight: 850upx;\n\tmargin-top: 20upx;\n}\n.auditstoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 10upx;\n\tmargin-top: 30upx;\n}\n.unauditstoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 200upx;\n\tmargin-top: -96upx;\n}\n.deletestoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 380upx;\n\tmargin-top: -96upx;\n}\n.scancartonbarcode {\n\twidth: 25%;\n\tcolor: #FFFFFF;\n\tbackground-color: #F0AD4E;\n\tborder-radius: 50upx;\n\tmargin-left: 560upx;\n\tmargin-top: -96upx;\n}\n.scanwarehousebarcode{\n\twidth: 25%;\n\tcolor: #FFFFFF;\n\tbackground-color: #1AAD19;\n\tborder-radius: 50upx;\n\tmargin-left: 560upx;\n\tmargin-top: -96upx;\n}\n.billhead {\n\twidth: 100%;\n\tmargin-top: 50upx;\n}\n.title {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\tmargin-left: 50upx;\n\tfont-size: 40upx;\n}\n.billnoempty {\t\n\tdisplay: -webkit-box;\t\n\tdisplay: -webkit-flex;\t\n\tdisplay: flex;\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 300upx;\n\ttext-align: center;\n\tcolor: #777777;\n}\n.billnofull {\t\t\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 300upx;\n\ttext-align: center;\n\tcolor: #000000;\n}\n.detailtitle {\t\n\tdisplay: -webkit-box;\t\n\tdisplay: -webkit-flex;\t\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: 30upx;\n\tmargin-left: 30upx;\n}\n.detaildata {\t\n\tdisplay: -webkit-box;\t\n\tdisplay: -webkit-flex;\t\n\tdisplay: flex;\t\t\n\tfont-size: 35upx;\n\tmargin-top: -50upx;\n\tmargin-left: 270upx;\n\ttext-align: center;\n}\n.data {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\twidth: 300upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 320upx;\n\ttext-align: center;\n}\n.dataline {\n\twidth: 60%;\n\theight: 5upx;\n\tbackground-color: #4CD964;\n\tmargin-left: 250upx;\n}\n.proreportview {\n\twidth: 100%;\n\theight: 950upx;\n}\n.sumscrollview {\n\twidth: 100%;\n\theight: 920upx;\n\tmargin-top: 30upx;\n}\n.cartonlabelscrollview {\n\twidth: 100%;\n\theight: 550upx;\n\tmargin-top: 20upx;\n}\n.selectinfoscrollview {\t\t\n\twidth: 100%;\n\theight: 620upx;\n\tmargin-top: 50upx;\n}\n.unselectinfoscrollview {\t\t\n\twidth: 100%;\n\theight: 900upx;\n\tmargin-top: 50upx;\n}\n.detailscrollview {\n\twidth: 100%;\n\theight: 950upx;\n\tmargin-top: 20upx;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline {\n\tbackground-color: #007AFF;\n}\n.tabbackground {\t\t\t\n\twidth: 100%;\n\theight: 90upx;\n\tmargin-top: 100upx;\n\tbackground-color: #F4F4F4;\n}\n.tableft {\t\t\n\tfont-size: 45upx;\n\tmargin-top: 30upx;\n\tmargin-left: 40upx;\n}\n.tabmiddle {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 330upx;\n}\n.tabright {\t\n\tdisplay: -webkit-box;\t\n\tdisplay: -webkit-flex;\t\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 630upx;\n}\n.tableftline {\t\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 40upx;\n}\n.tabmiddleline {\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 330upx;\n}\n.tabrightline {\t\t\n\twidth: 15%;\n\theight: 5upx;\t\t\n\tmargin-left: 620upx;\n}\n.billstatus {\n\tmargin-top: -90upx;\n\tmargin-left: 570upx;\n}\n.productdetail {\t\t\n\tmargin-top: 50upx;\n}\n.scanned {\t\n\tdisplay: -webkit-box;\t\n\tdisplay: -webkit-flex;\t\n\tdisplay: flex;\t\t\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 20upx;\n}\n.queryall {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\t\n\tfont-size: 40upx;\n\tcolor: #007AFF;\n\tmargin-left: 570upx;\n\tmargin-top: -60upx;\n}\n.modeltitle {\t\t\n\tfont-size: 40upx;\n\tmargin-left: 50upx;\n\tmargin-top: 180upx;\n}\n.modeldata {\t\t\n\twidth: 500upx;\n\tfont-size: 45upx;\n\tmargin-left: 300upx;\n\tmargin-top: 180upx;\n}\n.numbertitle {\t\t\n\tfont-size: 40upx;\n\tmargin-left: 50upx;\n\tmargin-top: 280upx;\n}\n.numberdata {\t\t\n\twidth: 500upx;\n\tfont-size: 45upx;\n\tmargin-left: 300upx;\n\tmargin-top: 280upx;\n}\n.nametitle {\t\t\n\tfont-size: 40upx;\n\tmargin-left: 50upx;\n\tmargin-top: 380upx;\n}\n.namedata {\t\t\n\twidth: 500upx;\n\tfont-size: 45upx;\n\tmargin-left: 300upx;\n\tmargin-top: 380upx;\n}\n.labelcounttitle {\t\t\n\tfont-size: 40upx;\n\tmargin-left: 50upx;\n\tmargin-top: 480upx;\n}\n.labelcountdata {\t\t\n\twidth: 500upx;\n\tfont-size: 45upx;\n\tmargin-left: 300upx;\n\tmargin-top: 480upx;\n}\n.selectlabel {\n\twidth: 30%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.deletelabel {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-right: 150upx;\n\tmargin-top: -95upx;\n}\t\n", ""]);
+exports.push([module.i, "\n.addstoragein {\n\twidth: 20%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.querystoragein {\n\twidth: 20%;\n\theight: 90rpx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 450upx;\n\tmargin-top: -90upx;\n}\n.icmoscrollview {\n\twidth: 100%;\n\theight: 850upx;\n\tmargin-top: 20upx;\n}\n.auditstoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 10upx;\n\tmargin-top: 30upx;\n}\n.unauditstoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 200upx;\n\tmargin-top: -96upx;\n}\n.deletestoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 380upx;\n\tmargin-top: -96upx;\n}\n.scancartonbarcode {\n\twidth: 25%;\n\tcolor: #FFFFFF;\n\tbackground-color: #F0AD4E;\n\tborder-radius: 50upx;\n\tmargin-left: 560upx;\n\tmargin-top: -96upx;\n}\n.scanwarehousebarcode{\n\twidth: 25%;\n\tcolor: #FFFFFF;\n\tbackground-color: #1AAD19;\n\tborder-radius: 50upx;\n\tmargin-left: 560upx;\n\tmargin-top: -96upx;\n}\n.billhead {\n\twidth: 100%;\n\tmargin-top: 50upx;\n}\n.title {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\tmargin-left: 50upx;\n\tfont-size: 40upx;\n}\n.billnoempty {\t\n\tdisplay: -webkit-box;\t\n\tdisplay: -webkit-flex;\t\n\tdisplay: flex;\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 300upx;\n\ttext-align: center;\n\tcolor: #777777;\n}\n.billnofull {\t\t\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 300upx;\n\ttext-align: center;\n\tcolor: #000000;\n}\n.detailtitle {\t\n\tdisplay: -webkit-box;\t\n\tdisplay: -webkit-flex;\t\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: 30upx;\n\tmargin-left: 30upx;\n}\n.detaildata {\t\n\tdisplay: -webkit-box;\t\n\tdisplay: -webkit-flex;\t\n\tdisplay: flex;\t\t\n\tfont-size: 35upx;\n\tmargin-top: -50upx;\n\tmargin-left: 270upx;\n\ttext-align: center;\n}\n.data {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\twidth: 300upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 320upx;\n\ttext-align: center;\n}\n.dataline {\n\twidth: 60%;\n\theight: 5upx;\n\tbackground-color: #4CD964;\n\tmargin-left: 250upx;\n}\n.proreportview {\n\twidth: 100%;\n\theight: 950upx;\n}\n.sumscrollview {\n\twidth: 100%;\n\theight: 920upx;\n\tmargin-top: 30upx;\n}\n.cartonlabelscrollview {\n\twidth: 100%;\n\theight: 550upx;\n\tmargin-top: 20upx;\n}\n.selectinfoscrollview {\t\t\n\twidth: 100%;\n\theight: 620upx;\n\tmargin-top: 50upx;\n}\n.unselectinfoscrollview {\t\t\n\twidth: 100%;\n\theight: 900upx;\n\tmargin-top: 50upx;\n}\n.detailscrollview {\n\twidth: 100%;\n\theight: 950upx;\n\tmargin-top: 20upx;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline {\n\tbackground-color: #007AFF;\n}\n.tabbackground {\t\t\t\n\twidth: 100%;\n\theight: 90upx;\n\tmargin-top: 100upx;\n\tbackground-color: #F4F4F4;\n}\n.tableft {\t\t\n\tfont-size: 45upx;\n\tmargin-top: 30upx;\n\tmargin-left: 40upx;\n}\n.tabmiddle {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 330upx;\n}\n.tabright {\t\n\tdisplay: -webkit-box;\t\n\tdisplay: -webkit-flex;\t\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 630upx;\n}\n.tableftline {\t\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 40upx;\n}\n.tabmiddleline {\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 330upx;\n}\n.tabrightline {\t\t\n\twidth: 15%;\n\theight: 5upx;\t\t\n\tmargin-left: 620upx;\n}\n.productdetail {\t\t\n\tmargin-top: 50upx;\n}\n.scanned {\t\n\tdisplay: -webkit-box;\t\n\tdisplay: -webkit-flex;\t\n\tdisplay: flex;\t\t\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 20upx;\n}\n.queryall {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\t\n\tfont-size: 40upx;\n\tcolor: #007AFF;\n\tmargin-left: 570upx;\n\tmargin-top: -60upx;\n}\n.modeltitle {\t\t\n\tfont-size: 40upx;\n\tmargin-left: 50upx;\n\tmargin-top: 180upx;\n}\n.modeldata {\t\t\n\twidth: 500upx;\n\tfont-size: 45upx;\n\tmargin-left: 300upx;\n\tmargin-top: 180upx;\n}\n.numbertitle {\t\t\n\tfont-size: 40upx;\n\tmargin-left: 50upx;\n\tmargin-top: 280upx;\n}\n.numberdata {\t\t\n\twidth: 500upx;\n\tfont-size: 45upx;\n\tmargin-left: 300upx;\n\tmargin-top: 280upx;\n}\n.nametitle {\t\t\n\tfont-size: 40upx;\n\tmargin-left: 50upx;\n\tmargin-top: 380upx;\n}\n.namedata {\t\t\n\twidth: 500upx;\n\tfont-size: 45upx;\n\tmargin-left: 300upx;\n\tmargin-top: 380upx;\n}\n.labelcounttitle {\t\t\n\tfont-size: 40upx;\n\tmargin-left: 50upx;\n\tmargin-top: 480upx;\n}\n.labelcountdata {\t\t\n\twidth: 500upx;\n\tfont-size: 45upx;\n\tmargin-left: 300upx;\n\tmargin-top: 480upx;\n}\n.selectlabel {\n\twidth: 30%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.deletelabel {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-right: 150upx;\n\tmargin-top: -95upx;\n}\t\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -7394,7 +7394,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.search {\n\tposition: absolute;\n\twidth: 70%;\n\tmargin-left: 5upx;\n}\n.billstatus {\n\tmargin-top: -90upx;\n\tmargin-left: 570upx;\n}\n.poinstockscrollview {\n\twidth: 100%;\n\theight: 850upx;\n\tmargin-top: 20upx;\n}\n.selectinfoscrollview {\n\twidth: 100%;\n\theight: 620upx;\n\tmargin-top: 50upx;\n}\n.unselectinfoscrollview {\n\twidth: 100%;\n\theight: 900upx;\n\tmargin-top: 50upx;\n}\n.addstoragein {\n\twidth: 20%;\n\tuheight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.querystoragein {\n\twidth: 20%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 450upx;\n\tmargin-top: -95upx;\n}\n.billhead {\n\twidth: 100%;\n\tmargin-top: 50upx;\n}\n.title {\n\tmargin-left: 50upx;\n\tfont-size: 40upx;\n}\n.billnoempty {\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 100upx;\n\ttext-align: center;\n\tcolor: #777777;\n}\n.data {\n\twidth: 300upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 320upx;\n\ttext-align: center;\n}\n.dataline {\n\twidth: 60%;\n\theight: 5upx;\n\tbackground-color: #4CD964;\n\tmargin-left: 250upx;\n}\n.auditstoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 300upx;\n\tmargin-top: -96upx;\n}\n.unauditstoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 550upx;\n\tmargin-top: -96upx;\n}\n.deletestoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 50upx;\n\tmargin-top: 20upx;\n}\n.instorageview {\n\twidth: 100%;\n\theight: 950upx;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline {\n\tbackground-color: #007AFF;\n}\n.tabbackground {\n\tposition: absolute;\n\twidth: 100%;\n\theight: 100upx;\n\tmargin-top: 660upx;\n\tbackground-color: #F4F4F4;\n}\n.tableft {\n\tposition: absolute;\n\tfont-size: 45upx;\n\tmargin-top: 20upx;\n\tmargin-left: 40upx;\n}\n.tabmiddle {\n\tposition: absolute;\n\tfont-size: 45upx;\n\tmargin-top: 20upx;\n\tmargin-left: 330upx;\n}\n.tabright {\n\tposition: absolute;\n\tfont-size: 45upx;\n\tmargin-top: 20upx;\n\tmargin-left: 630upx;\n}\n.tableftline {\n\tposition: absolute;\n\twidth: 18%;\n\theight: 5upx;\n\tmargin-top: 80upx;\n\tmargin-left: 40upx;\n}\n.tabmiddleline {\n\tposition: absolute;\n\twidth: 18%;\n\theight: 5upx;\n\tmargin-top: 80upx;\n\tmargin-left: 330upx;\n}\n.tabrightline {\n\tposition: absolute;\n\twidth: 15%;\n\theight: 5upx;\n\tmargin-top: 80upx;\n\tmargin-left: 620upx;\n}\n.scanned {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 20upx;\n}\n.queryall {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\tfont-size: 40upx;\n\tcolor: #007AFF;\n\tmargin-left: 570upx;\n\tmargin-top: -60upx;\n}\n", ""]);
+exports.push([module.i, "\n.poinstockscrollview {\n\twidth: 100%;\n\theight: 850upx;\n\tmargin-top: 20upx;\n}\n.selectinfoscrollview {\n\twidth: 100%;\n\theight: 620upx;\n\tmargin-top: 50upx;\n}\n.unselectinfoscrollview {\n\twidth: 100%;\n\theight: 900upx;\n\tmargin-top: 50upx;\n}\n.addstoragein {\n\twidth: 20%;\n\tuheight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.querystoragein {\n\twidth: 20%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 450upx;\n\tmargin-top: -95upx;\n}\n.billhead {\n\twidth: 100%;\n\tmargin-top: 50upx;\n}\n.title {\n\tmargin-left: 50upx;\n\tfont-size: 40upx;\n}\n.billnoempty {\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 100upx;\n\ttext-align: center;\n\tcolor: #777777;\n}\n.data {\n\twidth: 300upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 320upx;\n\ttext-align: center;\n}\n.dataline {\n\twidth: 60%;\n\theight: 5upx;\n\tbackground-color: #4CD964;\n\tmargin-left: 250upx;\n}\n.auditstoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 300upx;\n\tmargin-top: -96upx;\n}\n.unauditstoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 550upx;\n\tmargin-top: -96upx;\n}\n.deletestoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 50upx;\n\tmargin-top: 20upx;\n}\n.instorageview {\n\twidth: 100%;\n\theight: 950upx;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline {\n\tbackground-color: #007AFF;\n}\n.tabbackground {\t\t\n\twidth: 100%;\n\theight: 90upx;\n\tmargin-top: 150upx;\n\tbackground-color: #F4F4F4;\n}\n.tableft {\t\t\n\tfont-size: 45upx;\n\tmargin-top: 20upx;\n\tmargin-left: 40upx;\n}\n.tabmiddle {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 330upx;\n}\n.tabright {\t\t\n\tdisplay: -webkit-box;\t\t\n\tdisplay: -webkit-flex;\t\t\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 630upx;\n}\n.tableftline {\t\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 40upx;\n}\n.tabmiddleline {\t\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 330upx;\n}\n.tabrightline {\t\t\n\twidth: 15%;\n\theight: 5upx;\t\t\n\tmargin-left: 620upx;\n}\n.scanned {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 20upx;\n}\n.queryall {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\tfont-size: 40upx;\n\tcolor: #007AFF;\n\tmargin-left: 570upx;\n\tmargin-top: -60upx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -7664,16 +7664,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _outstorage_vue_vue_type_template_id_47edcd76_mpType_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./outstorage.vue?vue&type=template&id=47edcd76&mpType=page */ 169);
 /* harmony import */ var _outstorage_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./outstorage.vue?vue&type=script&lang=js&mpType=page */ 171);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _outstorage_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _outstorage_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js */ 21);
+/* harmony import */ var _outstorage_vue_vue_type_style_index_0_lang_css_mpType_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./outstorage.vue?vue&type=style&index=0&lang=css&mpType=page */ 176);
+/* harmony import */ var _HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js */ 21);
 
 var renderjs
 
 
 
 
+
 /* normalize component */
 
-var component = Object(_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _outstorage_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_1__["default"],
   _outstorage_vue_vue_type_template_id_47edcd76_mpType_page__WEBPACK_IMPORTED_MODULE_0__["render"],
   _outstorage_vue_vue_type_template_id_47edcd76_mpType_page__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -7725,11 +7727,188 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
+try {
+  components = {
+    uniSearchBar: __webpack_require__(/*! @/components/uni-search-bar/uni-search-bar.vue */ 83)
+      .default,
+    billstatus: __webpack_require__(/*! @/components/billstatus/billstatus.vue */ 91).default,
+    uniList: __webpack_require__(/*! @/components/uni-list/uni-list.vue */ 51).default,
+    uniListItem: __webpack_require__(/*! @/components/uni-list-item/uni-list-item.vue */ 59).default
+  }
+} catch (e) {
+  if (
+    e.message.indexOf("Cannot find module") !== -1 &&
+    e.message.indexOf(".vue") !== -1
+  ) {
+    console.error(e.message)
+    console.error("1. 排查组件名称拼写是否正确")
+    console.error(
+      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
+    )
+    console.error(
+      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
+    )
+  } else {
+    throw e
+  }
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "v-uni-view",
+    { staticClass: _vm._$g(0, "sc"), attrs: { _i: 0 } },
+    [
+      _c(
+        "v-uni-view",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm._$g(1, "v-show"),
+              expression: "_$g(1,'v-show')"
+            }
+          ],
+          staticClass: _vm._$g(1, "sc"),
+          attrs: { _i: 1 },
+          on: {
+            touchstart: function($event) {
+              return _vm.$handleViewEvent($event)
+            },
+            touchend: function($event) {
+              return _vm.$handleViewEvent($event)
+            }
+          }
+        },
+        [
+          _c("uni-search-bar", {
+            staticClass: _vm._$g(2, "sc"),
+            attrs: { _i: 2 },
+            on: {
+              input: function($event) {
+                return _vm.$handleViewEvent($event)
+              }
+            },
+            model: {
+              value: _vm._$g(2, "v-model"),
+              callback: function() {},
+              expression: "SearchValue"
+            }
+          }),
+          _c("billstatus", {
+            staticClass: _vm._$g(3, "sc"),
+            attrs: { _i: 3 },
+            on: {
+              input: function($event) {
+                return _vm.$handleViewEvent($event)
+              }
+            },
+            model: {
+              value: _vm._$g(3, "v-model"),
+              callback: function() {},
+              expression: "SelectStatus"
+            }
+          }),
+          _c(
+            "v-uni-button",
+            {
+              staticClass: _vm._$g(4, "sc"),
+              attrs: { disabled: _vm._$g(4, "a-disabled"), _i: 4 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [_vm._v("新增")]
+          ),
+          _c(
+            "v-uni-button",
+            {
+              staticClass: _vm._$g(5, "sc"),
+              attrs: { disabled: _vm._$g(5, "a-disabled"), _i: 5 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [_vm._v("查询")]
+          ),
+          _c(
+            "v-uni-scroll-view",
+            {
+              staticClass: _vm._$g(6, "sc"),
+              attrs: { "scroll-y": "true", _i: 6 }
+            },
+            [
+              _c(
+                "uni-list",
+                { attrs: { _i: 7 } },
+                _vm._l(_vm._$g(8, "f"), function(item, index, $20, $30) {
+                  return _c("uni-list-item", {
+                    key: item,
+                    attrs: { _i: "8-" + $30 },
+                    on: {
+                      CheckBoxChange: function($event) {
+                        return _vm.$handleViewEvent($event)
+                      }
+                    }
+                  })
+                }),
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _c("v-uni-view", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm._$g(9, "v-show"),
+            expression: "_$g(9,'v-show')"
+          }
+        ],
+        staticClass: _vm._$g(9, "sc"),
+        attrs: { _i: 9 },
+        on: {
+          touchstart: function($event) {
+            return _vm.$handleViewEvent($event)
+          },
+          touchend: function($event) {
+            return _vm.$handleViewEvent($event)
+          }
+        }
+      }),
+      _c("v-uni-view", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm._$g(10, "v-show"),
+            expression: "_$g(10,'v-show')"
+          }
+        ],
+        staticClass: _vm._$g(10, "sc"),
+        attrs: { _i: 10 },
+        on: {
+          touchstart: function($event) {
+            return _vm.$handleViewEvent($event)
+          },
+          touchend: function($event) {
+            return _vm.$handleViewEvent($event)
+          }
+        }
+      })
+    ],
+    1
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -7819,7 +7998,59 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*每个页面公共css */\n/*每个页面的容器样式*/\n.container {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\t-webkit-box-orient: vertical;\n\t-webkit-box-direction: normal;\n\t-webkit-flex-direction: column;\n\t        flex-direction: column;\n\t-webkit-box-align: center;\n\t-webkit-align-items: center;\n\t        align-items: center;\n\t-webkit-box-pack: center;\n\t-webkit-justify-content: center;\n\t        justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*每个页面公共css */\n/*每个页面的容器样式*/\n.container {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\t-webkit-box-orient: vertical;\n\t-webkit-box-direction: normal;\n\t-webkit-flex-direction: column;\n\t        flex-direction: column;\n\t-webkit-box-align: center;\n\t-webkit-align-items: center;\n\t        align-items: center;\n\t-webkit-box-pack: center;\n\t-webkit-justify-content: center;\n\t        justify-content: center;\n}\n/*搜索框样式*/\n.search {\n\tposition: absolute;\n\twidth: 70%;\n\tmargin-left: 5upx;\n}\n/*单据状态样式*/\n.billstatus {\n\tmargin-top: -90upx;\n\tmargin-left: 570upx;\n}\n", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+/* 176 */
+/*!*******************************************************************************************************************!*\
+  !*** D:/所有公司工作资料/金蝶/开发项目/KDPDA/KDPDA/pages/outstorage/outstorage.vue?vue&type=style&index=0&lang=css&mpType=page ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_6_oneOf_1_0_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_2_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_outstorage_vue_vue_type_style_index_0_lang_css_mpType_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/app-vue-style-loader??ref--6-oneOf-1-0!../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/cjs.js??ref--6-oneOf-1-1!../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-2!../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--6-oneOf-1-3!../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./outstorage.vue?vue&type=style&index=0&lang=css&mpType=page */ 177);
+/* harmony import */ var _HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_6_oneOf_1_0_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_2_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_outstorage_vue_vue_type_style_index_0_lang_css_mpType_page__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_6_oneOf_1_0_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_2_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_outstorage_vue_vue_type_style_index_0_lang_css_mpType_page__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_6_oneOf_1_0_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_2_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_outstorage_vue_vue_type_style_index_0_lang_css_mpType_page__WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_6_oneOf_1_0_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_2_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_outstorage_vue_vue_type_style_index_0_lang_css_mpType_page__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_6_oneOf_1_0_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_6_oneOf_1_2_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_HBuilderX_3_1_13_20210514_full_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_outstorage_vue_vue_type_style_index_0_lang_css_mpType_page__WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+/* 177 */
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/app-vue-style-loader??ref--6-oneOf-1-0!./node_modules/css-loader/dist/cjs.js??ref--6-oneOf-1-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-2!./node_modules/postcss-loader/src??ref--6-oneOf-1-3!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!D:/所有公司工作资料/金蝶/开发项目/KDPDA/KDPDA/pages/outstorage/outstorage.vue?vue&type=style&index=0&lang=css&mpType=page ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(/*! !../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/cjs.js??ref--6-oneOf-1-1!../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-2!../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--6-oneOf-1-3!../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./outstorage.vue?vue&type=style&index=0&lang=css&mpType=page */ 178);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/app-vue-style-loader/lib/addStylesClient.js */ 19).default
+var update = add("373cbb15", content, false, {"sourceMap":false,"shadowMode":false});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 178 */
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ref--6-oneOf-1-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-2!./node_modules/postcss-loader/src??ref--6-oneOf-1-3!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!D:/所有公司工作资料/金蝶/开发项目/KDPDA/KDPDA/pages/outstorage/outstorage.vue?vue&type=style&index=0&lang=css&mpType=page ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "\n.outstorageview {\n\twidth: 100%;\n\theight: 950upx;\n}\n.poorderscrollview {\n\twidth: 100%;\n\theight: 850upx;\n\tmargin-top: 20upx;\n}\n.addstorageout {\n\twidth: 20%;\n\tuheight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.querystorageout {\n\twidth: 20%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 450upx;\n\tmargin-top: -95upx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 

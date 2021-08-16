@@ -1069,13 +1069,7 @@
 	}
 </script>
 
-<style>	
-	.search {
-		position: absolute;
-		width: 70%;
-		margin-left: 5rpx;
-	}
-
+<style>		
 	.addstoragein {
 		width: 20%;
 		height: 90upx;
@@ -1295,12 +1289,7 @@
 		height: 5upx;		
 		margin-left: 620upx;
 	}
-
-	.billstatus {
-		margin-top: -90upx;
-		margin-left: 570upx;
-	}
-
+	
 	.productdetail {		
 		margin-top: 50upx;
 	}

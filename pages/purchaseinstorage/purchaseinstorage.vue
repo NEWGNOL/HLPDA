@@ -305,7 +305,8 @@
 							}
 						}
 					});
-				} else {
+				} 
+				else {
 					uni.showLoading({
 						title: 'Loading',
 						mask: true
@@ -377,6 +378,7 @@
 						}
 					},
 					success: (result) => {
+						//console.log(result.data);
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
@@ -803,8 +805,7 @@
 					Config.ShowMessage('请选择要删除的入库单！');
 					Config.PopAudioContext(false);					
 					return;
-				}
-				
+				}				
 				let me = this;
 				uni.showModal({
 					title: '提示',
@@ -860,8 +861,8 @@
 								    }
 							}
 							});
-							}
-							}
+					}
+					}
 					});
 			},	
 			//选择入库日期
@@ -870,7 +871,7 @@
 			},
 			//条件搜索采购订单列表
 			ValueChanged: function() {
-				this.ShowPurchaseInfo();
+				this.ShowPOInstockInfo();
 			}
 		}
 	}
@@ -899,18 +900,7 @@
 	}
 </script>
 
-<style>
-	.search {
-		position: absolute;
-		width: 70%;
-		margin-left: 5upx;
-	}
-
-	.billstatus {
-		margin-top: -90upx;
-		margin-left: 570upx;
-	}
-
+<style>		
 	.poinstockscrollview {
 		width: 100%;
 		height: 850upx;
@@ -1023,56 +1013,48 @@
 		background-color: #007AFF;
 	}
 
-	.tabbackground {
-		position: absolute;
+	.tabbackground {		
 		width: 100%;
-		height: 100upx;
-		margin-top: 660upx;
+		height: 90upx;
+		margin-top: 150upx;
 		background-color: #F4F4F4;
 	}
 
-	.tableft {
-		position: absolute;
+	.tableft {		
 		font-size: 45upx;
 		margin-top: 20upx;
 		margin-left: 40upx;
 	}
 
 	.tabmiddle {
-		position: absolute;
+		display: flex;
 		font-size: 45upx;
-		margin-top: 20upx;
+		margin-top: -68upx;
 		margin-left: 330upx;
 	}
 
-	.tabright {
-		position: absolute;
+	.tabright {		
+		display: flex;
 		font-size: 45upx;
-		margin-top: 20upx;
+		margin-top: -68upx;
 		margin-left: 630upx;
 	}
 
-	.tableftline {
-		position: absolute;
+	.tableftline {		
 		width: 18%;
-		height: 5upx;
-		margin-top: 80upx;
+		height: 5upx;		
 		margin-left: 40upx;
 	}
 
-	.tabmiddleline {
-		position: absolute;
+	.tabmiddleline {		
 		width: 18%;
-		height: 5upx;
-		margin-top: 80upx;
+		height: 5upx;		
 		margin-left: 330upx;
 	}
 
-	.tabrightline {
-		position: absolute;
+	.tabrightline {		
 		width: 15%;
-		height: 5upx;
-		margin-top: 80upx;
+		height: 5upx;		
 		margin-left: 620upx;
 	}
 
