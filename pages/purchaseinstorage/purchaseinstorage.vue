@@ -121,6 +121,9 @@
 			this.GetGblSetting();
 			this.ShowPOInstockInfo();
 		},
+		onUnload() {
+			this.RemoveListener();
+		},
 		onShow() {
 			if (this.IsAddStorageIn) {
 				this.ShowPOInStockGroupInfoByAdd();
@@ -159,6 +162,10 @@
 					}
 				}
 			},
+			//移除广播监听
+			RemoveListener: function() {
+				this.Main.unregisterReceiver(this.Receiver); //取消监听
+			},	
 			//获取手指滑动页面的起点
 			TouchStart: function(e) {
 				this.TouchStartX = e.changedTouches[0].clientX;
@@ -397,12 +404,13 @@
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
 						Config.PopAudioContext(false);
+						return;
 					},
 					complete: (resultcomp) => {
 						let ResultMsg = resultcomp.data.ResultMsg;
 						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-							Config.PopAudioContext(false);
 							Config.ShowMessage(ResultMsg);
+							Config.PopAudioContext(false);							
 						}
 					}
 				});

@@ -573,18 +573,18 @@
 			//审核生产汇报单
 			AuditProReport() {
 				if (this.SelectWorkShopArray[0] == 0) {
-					Config.PopAudioContext(false);
 					Config.ShowMessage('请填写车间！');
+					Config.PopAudioContext(false);					
 					return;
 				}
 				if (this.SelectTeamArray[0] == 0) {
-					Config.PopAudioContext(false);
 					Config.ShowMessage('请填写班组！');
+					Config.PopAudioContext(false);					
 					return;
 				}
 				if (this.InfoListData.length == 0) {
-					Config.PopAudioContext(false);
 					Config.ShowMessage('汇报单无扫描数据！');
+					Config.PopAudioContext(false);					
 					return;
 				}
 
@@ -612,8 +612,8 @@
 							let ResultCode = result.data.ResultCode;
 							let ResultMsg = result.data.ResultMsg;
 							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-								Config.PopAudioContext(false);
 								Config.ShowMessage('账号登录异常，请重新登录！');
+								Config.PopAudioContext(false);								
 								uni.hideLoading();
 								this.SetRequestingFlag(false);
 								return;
@@ -621,29 +621,29 @@
 							let DataParam = result.data.ResultData.PdaICMORptToICMORpt.dataparam;
 							let Result = DataParam.Result;
 							if (Result == 0) {
-								Config.PopAudioContext(false);
 								Config.ShowMessage(DataParam.Msg);
+								Config.PopAudioContext(false);								
 								uni.hideLoading();
 								this.SetRequestingFlag(false);
 								return;
 							}
-							Config.PopAudioContext(true);
 							Config.ShowMessage(DataParam.Msg);
+							Config.PopAudioContext(true);							
 							uni.hideLoading();
 							this.SetRequestingFlag(false);
 						},
 						fail: () => {
-							Config.PopAudioContext(false);
 							Config.ShowMessage('请求数据失败！');
+							Config.PopAudioContext(false);							
 							uni.hideLoading();
 							this.SetRequestingFlag(false);
+							return;
 						},
-						complete: (resultcomp) => {
-							console.log(resultcomp);
+						complete: (resultcomp) => {							
 							let ResultMsg = resultcomp.data.ResultMsg;
 							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-								Config.PopAudioContext(false);
 								Config.ShowMessage(ResultMsg);
+								Config.PopAudioContext(false);								
 								uni.hideLoading();
 								this.SetRequestingFlag(false);
 							}

@@ -168,13 +168,32 @@
 		{
 			"path": "pages/outstorage/outstorage",
 			"style": {
-				"navigationBarTitleText": "出库",
+				"navigationBarTitleText": "销售出库",
 				"app-plus":{
-					"titleNView":{
-						"titleColor":"FFFFFF"						
-					}					
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF",
+								  "buttons": [{
+								      "text": "隐藏表头",
+								      "fontSrc": "/static/fonts/icomoon.ttf",
+								      "fontSize": "17px",
+								  	  "color":"#FFFFFF",
+								      "float": "right",
+								      "width": "90px"											
+								  }]							 
+					 }
 				}				
 			}
+		},
+		{
+			"path": "pages/outstorage/cartonlabeldetail",
+			"style": {
+				"navigationBarTitleText": "外箱明细",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF"
+					 }
+			    }
+			}			
 		}
     ],
 	"globalStyle": {

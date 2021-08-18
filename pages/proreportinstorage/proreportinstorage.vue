@@ -396,9 +396,11 @@
 						this.SelectedIcmo += DataModel.FSrcInterId + ',';
 						this.StorageInBillNo = DataModel.FBillNoStorageIn;
 						this.StorageInterId = DataModel.FStorageInId;
-						this.InStorageDate = DataModel.FDateStorageIn;											  
+						this.InStorageDate = DataModel.FDateStorageIn;	
+						if(this.SelectWorkShopArray[0] == 0 && this.SelectWareHouseArray[0] == 0){										
 					    this.SelectWorkShopArray = [DataModel.FDeptId, DataModel.FDeptName];
-						this.SelectWareHouseArray = [DataModel.FStockId, DataModel.FStorageName];						
+						this.SelectWareHouseArray = [DataModel.FStockId, DataModel.FStockName];	
+						}
 					}
 				}
 				if (this.SelectedProreport != '') {
@@ -862,8 +864,8 @@
 			//反审核入库单
 			UnAuditStorageIn: function() {
 				if (this.StorageInBillNo == '空') {
-					Config.PopAudioContext(false);
 					Config.ShowMessage('请选择入库单！');
+					Config.PopAudioContext(false);					
 					return 0;
 				}
 				uni.showLoading({
