@@ -20,6 +20,7 @@
 			return {
 				StorageOutInterId: 0,
 				SEOrderSrcInterId: 0,
+				ItemId: 0,
 				DetailListData: [],
 				SelectCartonLabel: '',
 				IsSelectAllLabel: false
@@ -33,9 +34,10 @@
 			GetStorageOutInterId:function(){
 				let Pages = getCurrentPages();
 				let PrevPage = Pages[Pages.length - 2];  //上一个页面	
-				//#ifdef APP-PLUS				
+				//#ifdef APP-PLUS
 				this.StorageOutInterId = PrevPage.$vm.StorageOutInterId;
-				this.SEOrderSrcInterId = PrevPage.$vm.SEOrderSrcInterId;					
+				this.SEOrderSrcInterId = PrevPage.$vm.SEOrderSrcInterId;
+				this.ItemId = PrevPage.$vm.SelectGroupModel.FItemID;					
 				//#endif
 			},
 			//显示出库单外箱明细
@@ -52,7 +54,8 @@
 						token: uni.getStorageSync('token'),					
 						ModuleParam:  {
 							FId: this.StorageOutInterId,
-							FSrcInterId: this.SEOrderSrcInterId
+							FSrcInterId: this.SEOrderSrcInterId,
+							FItemId: this.ItemId 
 						}
 					},
 					success: (result) => {	

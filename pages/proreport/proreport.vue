@@ -195,7 +195,7 @@
 				function doReceive(context, intent) {
 					plus.android.importClass(intent);
 					var Barcode = intent.getStringExtra("barcode_string");
-					me.ScanBarCodeToProreport(Barcode);
+					me.ScanBarCode(Barcode);
 				}
 			},
 			//移除广播监听
@@ -425,31 +425,23 @@
 					    }
 					}
 				});
-			},
-			//扫描外箱条码做汇报
-			ScanBarCodeToProreport:function(Barcode){
-				let IsSuccess = this.ScanBarCode(Barcode);
-				if(IsSuccess == 0){
-					return;
-				}
-				this.GetProReportByScan();
-			},
+			},			
 			//扫描条码
 			ScanBarCode: function(Barcode) {
 				if (this.ProReportBillNo == '空') {
 					Config.PopAudioContext(false);
 					Config.ShowMessage('请新增汇报单！');
-					return 0;
+					return;
 				}
 				if (this.SelectWorkShopArray[0] == 0) {
 					Config.PopAudioContext(false);
 					Config.ShowMessage('请填写车间！');
-					return 0;
+					return;
 				}
 				if (this.SelectTeamArray[0] == 0) {
 					Config.PopAudioContext(false);
 					Config.ShowMessage('请填写班组！');
-					return 0;
+					return;
 				}
 
 				if (!this.IsRequesting) {
@@ -485,7 +477,7 @@
 								Config.ShowMessage('账号登录异常，请重新登录！');
 								uni.hideLoading();
 								this.SetRequestingFlag(false);
-								return 0;
+								return;
 							}
 							let ResultData = result.data.ResultData.AddPdaICMORpt;
 							let Result = ResultData.dataparam.Result;
@@ -494,19 +486,20 @@
 								Config.ShowMessage(ResultData.dataparam.Msg);
 								uni.hideLoading();
 								this.SetRequestingFlag(false);
-								return 0;
+								return;
 							}
 							Config.PopAudioContext(true);
 							Config.ShowMessage(ResultData.dataparam.Msg);
 							uni.hideLoading();
-							this.SetRequestingFlag(false);							
+							this.SetRequestingFlag(false);
+							this.GetProReportByScan();							
 						},
 						fail: () => {
 							Config.PopAudioContext(false);
 							Config.ShowMessage('请求数据失败！');
 							uni.hideLoading();
 							this.SetRequestingFlag(false);
-							return 0;
+							return;
 						},
 						complete: (resultcomp) => {
 							let ResultMsg = resultcomp.data.ResultMsg;
@@ -514,8 +507,7 @@
 								Config.PopAudioContext(false);
 								Config.ShowMessage(ResultMsg);
 								uni.hideLoading();
-								this.SetRequestingFlag(false);
-								return 0;
+								this.SetRequestingFlag(false);								
 							}
 						}
 					});

@@ -383,7 +383,8 @@
 				this.IsAddStorageIn = this.SelectStatus == '未入库' ? true : false;
 			},						
 			//获取选中的汇报单
-			GetSelectProreportByQuery: function() {				
+			GetSelectProreportByQuery: function() {	
+				this.SelectedProreport = '';
 				this.StorageInBillNo = '';
 				this.StorageInterId = 0;
 				this.InStorageDate = '';
@@ -718,7 +719,7 @@
 					});				
 			},
 			//显示生产汇报单分组信息
-			ShowProReportGroupInfoByQuery: function() {
+			ShowProReportGroupInfoByQuery: function() {				
 				uni.showLoading({
 					title: 'Loading',
 					mask: true
@@ -781,21 +782,21 @@
 			//审核入库单验证
 			CheckAuditStorageIn:function(){
 				if (this.StorageInBillNo == '空') {
-					Config.PopAudioContext(false);
 					Config.ShowMessage('请选择入库单！');
+					Config.PopAudioContext(false);					
 					return 0;
 				}
 				if (this.SelectWorkShopArray[0] == 0) {
-					Config.PopAudioContext(false);
 					Config.ShowMessage('请选择交货单位！');
+					Config.PopAudioContext(false);					
 					return 0;
 				}
 				for (var i = 0; i < this.StorageInListData.length; i++) {
 					let DataModel = this.StorageInListData[i];	
 					if(DataModel.FStorageInCount < DataModel.FSumQty)
 					{
-						Config.PopAudioContext(false);
-						Config.ShowMessage('汇报单编号为' + DataModel.FBillNo + '汇报没有完成！');
+						Config.ShowMessage('汇报单编号为' + DataModel.FBillNo + '汇报没有完成，不允许审核单据！');
+						Config.PopAudioContext(false);						
 						return 0;
 					}
 				}				
@@ -849,7 +850,8 @@
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
 						Config.PopAudioContext(false);
-						uni.hideLoading();						
+						uni.hideLoading();	
+						return;
 					},
 					complete: (resultcomp) => {
 						let ResultMsg = resultcomp.data.ResultMsg;

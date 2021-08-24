@@ -280,7 +280,7 @@
 <style scoped>
 	.uni-easyinput {
 		/* #ifndef APP-NVUE */
-		width: 100%;
+		width: 30%;
 		/* #endif */
 		flex: 1;
 		position: relative;
@@ -297,7 +297,7 @@
 		box-sizing: border-box;
 		/* #endif */
 		/* #ifndef APP-NVUE */
-		min-height: 36px;
+		min-height: 26px;
 		/* #endif */
 		flex-direction: row;
 		align-items: center;
@@ -305,13 +305,13 @@
 
 	.uni-easyinput__content-input {
 		/* #ifndef APP-NVUE */
-		width: auto;
+		width: 100%;
 		/* #endif */
 		position: relative;
 		overflow: hidden;
 		flex: 1;
 		line-height: 1;
-		font-size: 14px;
+		font-size: 16px;
 	}
 
 	.is-textarea {
@@ -327,13 +327,13 @@
 		overflow: hidden;
 		flex: 1;
 		line-height: 1.5;
-		font-size: 14px;
+		font-size: 16px;
 		padding-top: 6px;
 		padding-bottom: 10px;
 		height: 80px;
 		/* #ifndef APP-NVUE */
 		min-height: 80px;
-		width: auto;
+		width: 100%;
 		/* #endif */
 	}
 

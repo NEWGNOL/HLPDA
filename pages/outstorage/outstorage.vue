@@ -12,7 +12,7 @@
 				<uni-list>
 					<uni-list-item v-for="(item,index) in SEOrderListData" :key="index" :title="'制单人：'
 				    + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '编号：' + item.FBillNo
-					+ '\n' + '发货单编号：' + item.FSEOutStockBillNo" clickable :ischecked="item.FIsChecked" :isshowcheckbox="true"
+					+ '\n' + '发货单编号：' + item.FSEOutStockBillNo + '\n' + '购货单位：' + item.FCustName" clickable :ischecked="item.FIsChecked" :isshowcheckbox="true"
 					@CheckBoxChange="ChangeIsChecked(item)">
 					</uni-list-item>
 				</uni-list>
@@ -20,37 +20,38 @@
 		</view>
 		
 		
-		<view class="outstorageview" v-show="TabSelectedIndex == 1" @touchstart='TouchStart' @touchend='TouchEnd'>
-			<button class="deletestorageout" v-on:click="DeleteStorageOut()">删除</button>
+		<view class="outstorageview" v-show="TabSelectedIndex == 1" @touchstart='TouchStart' @touchend='TouchEnd'>			
 			<button class="auditstorageout" v-on:click="AuditStorageOut()">审核</button>
 			<button class="unauditstorageout" v-on:click="UnAuditStorageOut()">反审</button>
+			<button class="deletestorageout" v-on:click="DeleteStorageOut()">删除</button>
+			<button class="checkitem" v-on:click="OpenPopupWindow()">校验</button>
 			
 			<view class="billhead" v-show="IsBillHeadVisible">
 			      <text class="title">单据编号：</text>
 			      <text class="billnoempty">{{StorageOutBillNo}}</text>
 			      <view class="dataline"></view>
 			
-			      <text class="title">客户：</text>
+			      <!-- <text class="title">客户：</text>
 			      <view class="data">{{SelectCustomerArray[1]}}</view>
-			      <view class="dataline"></view>
+			      <view class="dataline"></view> -->
 			
-			      <text class="title">入库日期：</text>
+			      <text class="title">出库日期：</text>
 			      <picker mode="date" :value="OutStorageDate" :start="StartDate" :end="EndDate"
 				  @change="OutStorageDateChange">
 				  <view class="data">{{OutStorageDate}}</view>
 			      </picker>
-			      <view class="dataline"></view>
+			      <view class="dataline"></view>				  
 			</view>
 			
 			<scroll-view class="selectinfoscrollview" v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}"
 				scroll-y="true">
 				<uni-list>
-					<uni-list-item v-for="(item,index) in SEOrderGroupData" :key="index" :title="item.FNumber 
-			 			+ '/' + item.FModel + '\n'  + '仓库：' + item.FStockName 
-						+ '\n'  + '应发数量：' + item.FShouldSendQty + '\n'  + '实发数量：' + item.FRealSendQty" 
-						isshowprogress v-bind:percent="Math.round((item.FShouldSendQty / item.FRealSendQty) * 100, 0)" clickable
-						v-on:click="GetSEOrderInfoExpand(item)">
-					</uni-list-item>
+					<fill-qty v-for="(item,index) in SEOrderGroupData" :key="index" :title="item.FNumber 
+			 			+ '/' + item.FModel + '\n'  + '仓库：' + item.FStockName + '\n'  + '应发数量：'
+						 + item.FShouldSendQty + '\n'  + '实发数量：'+ item.FRealSendQty" 
+						@ButtonClick="PopupFillQtyWindow()" v-bind:percent="Math.round((item.FRealSendQty 
+						/ item.FShouldSendQty) * 100, 0)" isshowprogress clickable v-on:click="GetSEOrderInfoExpand(item)">
+					</fill-qty>
 				</uni-list>
 			</scroll-view>
 		</view>
@@ -65,8 +66,8 @@
 				<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FNumber : '空'}}</text>
 				<text class="detailtitle">物料名称：</text>
 				<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FItemName : '空'}}</text>
-				<text class="detailtitle">标签类型：</text>
-				<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FBarCodeType : '空'}}</text>				
+				<!-- <text class="detailtitle">标签类型：</text>
+				<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FBarCodeType : '空'}}</text> -->				
 			</scroll-view>
 		</view>
 		
@@ -76,12 +77,22 @@
 				v-on:click="SwitchTab(0)">销售单</text>
 			<view class="tableftline" v-bind:class="{selecttabline : TabSelectedIndex == 0}"></view>
 			<text class="tabmiddle" v-bind:class="{selecttab : TabSelectedIndex == 1}"
-				v-on:click="SwitchTab(1)">入库单</text>
+				v-on:click="SwitchTab(1)">出库单</text>
 			<view class="tabmiddleline" v-bind:class="{selecttabline : TabSelectedIndex == 1}"></view>
 			<text class="tabright" v-bind:class="{selecttab : TabSelectedIndex == 2}"
 				v-on:click="SwitchTab(2)">明细</text>
 			<view class="tabrightline" v-bind:class="{selecttabline : TabSelectedIndex == 2}"></view>
 		</view>
+		
+		
+		<uni-popup ref="fillqty" type="center" :mask-click="false">
+			<uni-popup-dialog mode="input" message="成功消息" title="校验物料" placeholder="请输入物料编码" :duration="2000" :before-close="true" @close="ClosePopupWindow" 
+			@confirm="ClosePopupWindow"></uni-popup-dialog>
+			<!-- <view style="display: flex; height:300upx;width:500upx;background:#FFFFFF;border-radius:50upx">
+				<text style="inputsectiontitle">实发数量：</text>
+				<input style="inputsection"></input>
+			</view> -->
+		</uni-popup>
 	</view>
 </template>
 
@@ -117,7 +128,7 @@
 			}
 		},
 		onShow() {
-			this.ShowSEOrderGroupInfo();
+			this.ShowSEOrderGroupInfo();			
 		},
 		onLoad() {	
 			this.AddListener();
@@ -130,6 +141,67 @@
 			this.SwitchBillHeadVisible();
 		},
 		methods:{
+			//打开弹窗
+			OpenPopupWindow: function(){
+				this.$refs.fillqty.open();
+			},
+			//关闭弹窗
+			ClosePopupWindow: function(e){
+				//console.log(e);
+				this.$refs.fillqty.close();
+				if(e == null || e == ''){
+				   Config.ShowMessage('请填写要校验的物料编码！');
+				   Config.PopAudioContext(false);					
+				   return;
+				}				
+				
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'checkItemBySEOrder',
+						token: uni.getStorageSync('token'),
+						ModuleParam: {
+							FId: this.StorageOutInterId,
+							FItem: e,
+							FICItems: this.SelectItems,							
+							Result: 0,
+							Msg: ''
+						}
+					},
+					success: (result) => {
+						//console.log(result.data);
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.ShowMessage('账号登录异常，请重新登录！');
+							Config.PopAudioContext(false);
+							return;
+						}
+						let ResultData = result.data.ResultData.CheckItemBySEOrder;
+						let Result = ResultData.dataparam.Result;
+						if (Result == 0) {
+							Config.ShowMessage(ResultData.dataparam.Msg);
+							Config.PopAudioContext(false);
+							return;
+						}
+						Config.ShowMessage(ResultData.dataparam.Msg);
+						Config.PopAudioContext(true);						
+					},
+					fail: () => {
+						Config.ShowMessage('请求数据失败！');
+						Config.PopAudioContext(false);
+						return;
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.ShowMessage(ResultMsg);
+							Config.PopAudioContext(false);							
+						}
+					}
+				});				
+			},
 			//获取手指滑动页面的起点
 			TouchStart: function(e) {
 				this.TouchStartX = e.changedTouches[0].clientX;
@@ -155,7 +227,8 @@
 					if (this.TabSelectedIndex == 0) {
 						
 					} 
-					else if (this.TabSelectedIndex == 1) {			
+					else if (this.TabSelectedIndex == 1) {	
+						
 					} 
 					else {						
 					}
@@ -185,7 +258,7 @@
 					plus.android.importClass(intent);
 					var Barcode = intent.getStringExtra("barcode_string");
 					if (me.TabSelectedIndex == 0) {
-						//me.CheckedPOInstock(Barcode);
+						me.CheckedSEOrder(Barcode);
 					} else if (me.TabSelectedIndex == 1) {
 						me.ScanBarCode(Barcode);
 					}
@@ -201,7 +274,7 @@
 					Config.ShowMessage('请新增出库单！');
 					Config.PopAudioContext(false);					
 					return;
-				}
+				}		      
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -219,7 +292,7 @@
 							FCustID: this.SelectSEOrderModel.FCustID,							
 							FStorageId: this.SelectSEOrderModel.FStorageId,
 							FStorageBinId: this.SelectSEOrderModel.FStorageBinId,
-							FSEOrderInterId: this.SelectSEOrderModel.FInterID,
+							FSEOrderInterId: this.SelectSEOrderModel.FInterID,							
 							FPackBarCode: Barcode,
 							FICItems: this.SelectItems,
 							Result: 0,
@@ -227,7 +300,7 @@
 						}
 					},
 					success: (result) => {
-						console.log(result.data);
+						//console.log(result.data);
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
@@ -243,8 +316,8 @@
 							return;
 						}
 						Config.ShowMessage(ResultData.dataparam.Msg);
-						Config.PopAudioContext(true);
-						this.ShowSEOrderGroupInfo();
+						Config.PopAudioContext(true);	
+						this.ShowSEOrderGroupInfo();											
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -260,6 +333,16 @@
 					}
 				});
 			},
+			//选中销售订单（发货通知单）
+			CheckedSEOrder: function(BarCode){
+				for (var i = 0; i < this.SEOrderListData.length; i++) {
+					let DataModel = this.SEOrderListData[i];
+					if (DataModel.FBillNo == BarCode || DataModel.FSEOutStockBillNo == BarCode) {
+						DataModel.FIsChecked = true;
+						return;
+					}
+				}
+			},
 			//新增销售出库单
 			AddStorageOut:function(){
 				let IsSuccess= this.GetSelectSEOrderByAdd();
@@ -268,7 +351,7 @@
 				}
 				this.SwitchTab(1);
 				this.AddStorageOutBillNo();
-				this.ShowSEOrderGroupInfo();				
+				this.ShowSEOrderGroupInfo();							
 			},
 			//查询销售出库单
 			QueryStorageOut:function(){
@@ -277,14 +360,10 @@
 					return;
 				}
 				this.SwitchTab(1);
-				this.ShowSEOrderGroupInfo();
+				this.ShowSEOrderGroupInfo();				
 			},
 			//新增入库单编号
-			AddStorageOutBillNo: function() {
-				uni.showLoading({
-					title: 'Loading',
-					mask: true
-				});
+			AddStorageOutBillNo: function() {				
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -306,8 +385,7 @@
 						let ResultMsg = result.data.ResultMsg;
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 							Config.ShowMessage('账号登录异常，请重新登录！');
-							Config.PopAudioContext(false);
-							uni.hideLoading();
+							Config.PopAudioContext(false);							
 							return;
 						}
 						let DataModel = result.data.ResultData.GetPdaStorageOutRptMaxId.dataparam;
@@ -315,21 +393,18 @@
 						this.StorageOutBillNo = DataModel.FBillNo;
 						this.OutStorageDate = DateFormat({
 							format: true,
-						});	
-						uni.hideLoading();					
+						});											
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);
-						uni.hideLoading();
+						Config.PopAudioContext(false);						
 						return;
 					},
 					complete: (resultcomp) => {
 						let ResultMsg = resultcomp.data.ResultMsg;
 						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							Config.ShowMessage(ResultMsg);
-							Config.PopAudioContext(false);
-							uni.hideLoading();							
+							Config.PopAudioContext(false);														
 						}
 					}
 				});
@@ -397,7 +472,7 @@
 							}
 						},
 						success: (result) => {
-							console.log(result.data);
+							//console.log(result.data);
 							let ResultCode = result.data.ResultCode;
 							let ResultMsg = result.data.ResultMsg;
 							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
@@ -448,7 +523,7 @@
 								return 0;
 							}
 						}						
-						this.SelectSEOrder += SelectSEOrderModel.FInterID + ',';
+						this.SelectSEOrder += this.SelectSEOrderModel.FInterID + ',';
 						//this.StorageInSrcInterId = DataModel.FPOOrderInterId;						
 						//this.SelectWareHouseArray = [DataModel.FStorageId, DataModel.FStorageName];						
 					}
@@ -474,7 +549,7 @@
 				for (var i = 0; i < this.SEOrderListData.length; i++) {
 					let DataModel = this.SEOrderListData[i];
 					if (DataModel.FIsChecked) {	
-						this.SelectSEOrderModel = DataModel;
+						this.SelectSEOrderModel = DataModel;						
 						this.SEOrderSrcInterId = this.SelectSEOrderModel.FInterID;
 						this.StorageOutInterId = this.SelectSEOrderModel.FStorageOutId;
 						this.StorageOutBillNo = this.SelectSEOrderModel.FStorageOutBillNo;
@@ -490,7 +565,7 @@
 								return 0;
 							}
 						}						
-						this.SelectSEOrder += DataModel.FInterID + ',';
+						this.SelectSEOrder += this.SelectSEOrderModel.FInterID + ',';
 						//this.StorageInSrcInterId = DataModel.FPOOrderInterId;						
 						//this.SelectWareHouseArray = [DataModel.FStorageId, DataModel.FStorageName];						
 					}
@@ -510,7 +585,7 @@
 			},
 			//显示销售订单分组信息
 			ShowSEOrderGroupInfo: function() {
-				if(this.SelectSEOrder != ''){					
+				if(this.SelectSEOrder != ''){						
 				uni.showLoading({
 					title: 'Loading',
 					mask: true
@@ -519,39 +594,34 @@
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
 					data: {
-						ModuleCode: 'getPdaSEOrderGroupInfo',
+						ModuleCode: 'getPdaSEOrderGroupInfoByItemId',
 						token: uni.getStorageSync('token'),
 						ModuleParam: {
 							FIndexIdList: this.SelectSEOrder
 						}
 					},
 					success: (result) => {
-						console.log(result.data);
+						//console.log(result.data);
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 							Config.ShowMessage('账号登录异常，请重新登录！');
-							Config.PopAudioContext();
-							uni.hideLoading();
-							return;
-						}
-						this.SEOrderGroupData = result.data.ResultData.GetPdaSEOrderGroupInfo.data0;
-						this.GetSEOrderSelectItem();
-						uni.hideLoading();
+							Config.PopAudioContext(false);							
+						}						
+						this.SEOrderGroupData = result.data.ResultData.GetPdaSEOrderGroupInfoByItemId.data0;	
+						this.GetSEOrderSelectItem();											
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext();
-						uni.hideLoading();
-						return;
+						Config.PopAudioContext(false);						
 					},
 					complete: (resultcomp) => {
 						let ResultMsg = resultcomp.data.ResultMsg;
 						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							Config.ShowMessage(ResultMsg);
-							Config.PopAudioContext(false);							
-							uni.hideLoading();
+							Config.PopAudioContext(false);						
 						}
+						uni.hideLoading();
 					}
 				});
 				}
@@ -563,7 +633,7 @@
 					let DataModel = this.SEOrderGroupData[i];
 					this.SelectItems += DataModel.FItemID + ',';					
 				}
-				this.SelectItems = this.SelectItems.substr(0, this.SelectItems.length - 1);				
+				this.SelectItems = this.SelectItems.substr(0, this.SelectItems.length - 1);					
 			},
 			//获取销售订单的扩展信息
 			GetSEOrderInfoExpand:function(item){
@@ -637,11 +707,11 @@
 					});
 			},
 			//反审核销售出库单
-			UnAuditStorageOut: function() {
+			UnAuditStorageOut: function() {				
 				if (this.StorageOutBillNo == '空') {
 					Config.ShowMessage('请选择要反审核的销售出库单！');
 					Config.PopAudioContext(false);					
-					return 0;
+					return;
 				}
 				uni.showLoading({
 					title: 'Loading',
@@ -654,7 +724,7 @@
 						ModuleCode: 'unPdaSEOrderRptToStorageOutRpt',
 						token: uni.getStorageSync('token'),
 						ModuleParam: {
-							FId: this.StorageInterId,
+							FId: this.StorageOutInterId,
 							Result: 0,
 							FStatus: 0,
 							FStatusCN: '',
@@ -698,23 +768,117 @@
 					}
 				});
 			},
+			//校验审核销售出库单
+			CheckAuditStorageOut:function(){
+				if (this.StorageOutBillNo == '空') {
+					Config.ShowMessage('请选择要审核的销售出库单！');
+					Config.PopAudioContext(false);					
+					return 0;
+				}				
+				// for (var i = 0; i < this.SEOrderGroupData.length; i++) {
+				// 	let DataModel = this.SEOrderGroupData[i];	
+				// 	if(DataModel.FRealSendQty == 0)
+				// 	{
+				// 		Config.ShowMessage('型号为 ' + DataModel.FNumber + '/' + DataModel.FModel + '实发数量为0，请重新扫描！');
+				// 		Config.PopAudioContext(false);						
+				// 		return 0;
+				// 	}
+				// 	if(DataModel.FRealSendQty > DataModel.FShouldSendQty){
+				// 		Config.ShowMessage('型号为 ' + DataModel.FNumber + '/' + DataModel.FModel + '实发数量大于应发数量，请重新扫描！');
+				// 		Config.PopAudioContext(false);						
+				// 		return 0;
+				// 	}					
+				// }	
+			},
 			//审核销售出库单
 			AuditStorageOut: function() {
+				let IsSuccess = this.CheckAuditStorageOut();
+				if(IsSuccess == 0){
+					return;
+				}
+				uni.showLoading({
+					title: 'Loading',
+					mask: true
+				});
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'pdaSEOrderRptToStorageOutRpt',
+						token: uni.getStorageSync('token'),
+						ModuleParam: {
+							FIndexIdList: this.SEOrderSrcInterId,
+							FId: this.StorageOutInterId,
+							FDate: this.OutStorageDate,
+							FBillerID: uni.getStorageSync('FUserId'),
+							FBillNo: this.StorageOutBillNo,
+							FDeptID: this.SelectSEOrderModel.FDeptID,
+							FManagerID: this.SelectSEOrderModel.FManagerID,
+							FEmpID: this.SelectSEOrderModel.FEmpID,
+							FCustID: this.SelectSEOrderModel.FCustID,
+							Result: 0,
+							FStatus: 0,
+							FStatusCN: '',
+							Msg: ''
+						}
+					},
+					success: (result) => {
+						//console.log(result.data);
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.ShowMessage('账号登录异常，请重新登录！');
+							Config.PopAudioContext(false);
+							uni.hideLoading();							
+							return;
+						}
+						let DataParam = result.data.ResultData.PdaSEOrderRptToStorageOutRpt.dataparam;
+						let Result = DataParam.Result;
+						if (Result == 0) {
+							Config.ShowMessage(DataParam.Msg);
+							Config.PopAudioContext(false);
+							uni.hideLoading();							
+							return;
+						}
+						Config.ShowMessage(DataParam.Msg);
+						Config.PopAudioContext(true);
+						uni.hideLoading();						
+					},
+					fail: () => {
+						Config.ShowMessage('请求数据失败！');
+						Config.PopAudioContext(false);
+						uni.hideLoading();	
+						return;
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.ShowMessage(ResultMsg);
+							Config.PopAudioContext(false);							
+							uni.hideLoading();							
+						}
+					}
+				});
 			},
 			//获取出库单外箱明细信息
-			GetStorageOutCartonDetail:function(){
+			GetStorageOutCartonDetail:function(){				
 				uni.showLoading({
 					title: 'Loading'
 				});
 				uni.navigateTo({
 					url: '/pages/outstorage/cartonlabeldetail?StorageOutInterId=' + this.StorageOutInterId +
-						'&SEOrderSrcInterId=' + this.seorderin
+						'&SEOrderSrcInterId=' + this.SEOrderSrcInterId + '&ItemId=' + this.SelectGroupModel.FItemID
 				});
 				uni.hideLoading();
 			},
 			//获取选中的分组信息
 			GetSelectGroupModel:function(item){				
 				this.SelectGroupModel = item;
+			},
+			//弹出填写数量窗口
+			PopupFillQtyWindow:function(){
+				//console.log('PopupFillQtyWindow');
+				this.$refs.fillqty.open();
 			},
 			//检测销售订单（发货通知单）是否选中
 			ChangeIsChecked: function(item) {
@@ -769,13 +933,13 @@
 	
 	.selectinfoscrollview {
 		width: 100%;
-		height: 620upx;
+		height: 720upx;
 		margin-top: 50upx;
 	}
 	
 	.unselectinfoscrollview {
 		width: 100%;
-		height: 900upx;
+		height: 800upx;
 		margin-top: 50upx;
 	}
 	
@@ -804,8 +968,8 @@
 		color: #FFFFFF;
 		background-color: #007AFF;
 		border-radius: 50upx;
-		margin-left: 300upx;
-		margin-top: -96upx;
+		margin-left: 10upx;
+		margin-top: 30upx;
 	}
 	
 	.unauditstorageout {
@@ -813,7 +977,7 @@
 		color: #FFFFFF;
 		background-color: #007AFF;
 		border-radius: 50upx;
-		margin-left: 550upx;
+		margin-left: 210upx;
 		margin-top: -96upx;
 	}
 	
@@ -822,8 +986,17 @@
 		color: #FFFFFF;
 		background-color: #007AFF;
 		border-radius: 50upx;
-		margin-left: 50upx;
-		margin-top: 20upx;
+		margin-left: 400upx;
+		margin-top: -96upx;
+	}
+	
+	.checkitem {
+		width: 20%;
+		color: #FFFFFF;
+		background-color: #007AFF;
+		border-radius: 50upx;
+		margin-left: 590upx;
+		margin-top: -96upx;
 	}
 	
 	.billhead {
@@ -835,7 +1008,7 @@
 		width: 200upx;
 		font-size: 40upx;
 		margin-top: -60upx;
-		margin-left: 100upx;
+		margin-left: 50upx;
 		text-align: center;
 		color: #777777;
 	}
@@ -846,10 +1019,10 @@
 	}
 	
 	.data {
-		width: 300upx;
+		width: 450upx;
 		font-size: 40upx;
 		margin-top: -60upx;
-		margin-left: 320upx;
+		margin-left: 250upx;
 		text-align: center;
 	}
 	
@@ -947,5 +1120,20 @@
 		width: 15%;
 		height: 5upx;		
 		margin-left: 620upx;
+	}
+	
+	.inputsectiontitle{
+		font-size: 16px;
+		color: #000000;	
+		margin-top: 20upx;
+	}
+	
+	.inputsection{		
+		font-size: 16px;
+		color: #000000;
+		border: 5upx solid;
+		border-color: #888888;
+		margin-left: 170upx;
+		margin-top: -55upx;
 	}
 </style>
