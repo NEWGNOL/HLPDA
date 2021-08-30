@@ -3,10 +3,12 @@
 		<view class="proreportview" v-show="TabSelectedIndex == 0" @touchstart='TouchStart' @touchend='TouchEnd'>
 			<uni-search-bar class="search" cancelButton="none" v-model="SearchValue" @input="ValueChanged">
 			</uni-search-bar>
-			<billstatus class="billstatus" :candidates="StatusArray" v-model="SelectStatus" @input="ShowPdaIcmoInfo()">
+			<billstatus class="billstatus" :candidates="StatusArray" v-model="SelectStatus" @input="ShowPdaIcmoInfo('')">
 			</billstatus>
+			
 			<button class="addstoragein" v-bind:disabled="!IsAddStorageIn" v-on:click="AddStorageIn()">新增</button>
 			<button class="querystoragein" v-bind:disabled="IsAddStorageIn" v-on:click="QueryStorageIn()">查询</button>
+			
 			<scroll-view class="icmoscrollview" scroll-y="true">
 				<uni-list>
 					<uni-list-item v-for="(item,index) in IcmoListData" :key="index" :title="'制单人：'
@@ -143,7 +145,7 @@
 		onLoad() {
 			this.AddListener();
 			this.GetGblSetting();
-			this.ShowPdaIcmoInfo();
+			this.ShowPdaIcmoInfo('');
 		},
 		onUnload() {
 			this.RemoveListener();
@@ -180,7 +182,7 @@
 					plus.android.importClass(intent);
 					var Barcode = intent.getStringExtra("barcode_string");
 					if (me.TabSelectedIndex == 0) {
-						me.CheckedProreport(Barcode);
+						me.ShowPdaIcmoInfo(Barcode);
 					} 
 					else if (me.TabSelectedIndex == 1) {
 						if(me.IsScanCartonBarCode){
@@ -202,12 +204,12 @@
 			},
 			//选中汇报单
 			CheckedProreport: function(BarCode) {				
-				for (var i = 0; i < this.IcmoListData.length; i++) {
-					let DataModel = this.IcmoListData[i];					
-					if (DataModel.FBillNo == BarCode) {
-						DataModel.FIsChecked = true;
-					}
-				}			
+				// for (var i = 0; i < this.IcmoListData.length; i++) {
+				// 	let DataModel = this.IcmoListData[i];					
+				// 	if (DataModel.FBillNo == BarCode) {
+				// 		DataModel.FIsChecked = true;
+				// 	}
+				// }			
 			},
 			//获取系统参数
 			GetGblSetting: function() {
@@ -291,7 +293,7 @@
 				} 				
 			},
 			//显示汇报单
-			ShowPdaIcmoInfo: function() {				
+			ShowPdaIcmoInfo: function(BarCode) {				
 				if (this.SelectStatus == '未入库') {					
 					uni.showLoading({
 						title: 'Loading',
@@ -304,6 +306,7 @@
 							ModuleCode: 'getPdaIcmoRptNoPutInList',
 							token: uni.getStorageSync('token'),
 							ModuleParam: {
+								FBillNoList: BarCode,
 								FBillNo: this.SearchValue								
 							}
 						},
@@ -690,7 +693,7 @@
 							let ResultMsg = result.data.ResultMsg;
 							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 								Config.ShowMessage('账号登录异常，请重新登录！');
-								Config.PopAudioContext();
+								Config.PopAudioContext(false);
 								uni.hideLoading();
 								return;
 							}					
@@ -699,22 +702,19 @@
 							for (let i = 0; i < this.StorageInListData.length; i++) {
 								let StorageInAndBinInfo = [0, '空', '空', 0, '空', '空'];
 								this.StorageInAndBinArray.push(StorageInAndBinInfo);
-							}	
-							uni.hideLoading();							
+							}															
 						},
 						fail: () => {
 							Config.ShowMessage('请求数据失败！');
-							Config.PopAudioContext();
-							uni.hideLoading();
-							return;
+							Config.PopAudioContext(false);							
 						},
 						complete: (resultcomp) => {
 							let ResultMsg = resultcomp.data.ResultMsg;
 							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 								Config.ShowMessage(ResultMsg);
-								Config.PopAudioContext(false);								
-								uni.hideLoading();
-							}							
+								Config.PopAudioContext(false);							
+							}	
+							uni.hideLoading();						
 						}
 					});				
 			},
@@ -1034,7 +1034,7 @@
 			},
 			//条件搜索汇报单列表
 			ValueChanged: function() {
-				this.ShowPdaIcmoInfo();
+				this.ShowPdaIcmoInfo('');
 			}
 		}
 	}

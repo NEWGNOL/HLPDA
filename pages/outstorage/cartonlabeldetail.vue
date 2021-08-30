@@ -18,8 +18,7 @@
 	export default {
 		data() {
 			return {
-				StorageOutInterId: 0,
-				SEOrderSrcInterId: 0,
+				StorageOutInterId: 0,				
 				ItemId: 0,
 				DetailListData: [],
 				SelectCartonLabel: '',
@@ -35,8 +34,7 @@
 				let Pages = getCurrentPages();
 				let PrevPage = Pages[Pages.length - 2];  //上一个页面	
 				//#ifdef APP-PLUS
-				this.StorageOutInterId = PrevPage.$vm.StorageOutInterId;
-				this.SEOrderSrcInterId = PrevPage.$vm.SEOrderSrcInterId;
+				this.StorageOutInterId = PrevPage.$vm.StorageOutInterId;				
 				this.ItemId = PrevPage.$vm.SelectGroupModel.FItemID;					
 				//#endif
 			},
@@ -53,8 +51,7 @@
 						ModuleCode: 'getPdaStorageOutRptCartonList',
 						token: uni.getStorageSync('token'),					
 						ModuleParam:  {
-							FId: this.StorageOutInterId,
-							FSrcInterId: this.SEOrderSrcInterId,
+							FId: this.StorageOutInterId,							
 							FItemId: this.ItemId 
 						}
 					},

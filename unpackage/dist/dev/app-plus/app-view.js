@@ -7821,14 +7821,15 @@ var render = function() {
             "v-uni-button",
             {
               staticClass: _vm._$g(4, "sc"),
-              attrs: { disabled: _vm._$g(4, "a-disabled"), _i: 4 },
+              class: _vm._$g(4, "c"),
+              attrs: { _i: 4 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
                 }
               }
             },
-            [_vm._v("新增")]
+            [_vm._v(_vm._$g(4, "t0-0"))]
           ),
           _c(
             "v-uni-button",
@@ -7841,22 +7842,77 @@ var render = function() {
                 }
               }
             },
+            [_vm._v("新增")]
+          ),
+          _c(
+            "v-uni-button",
+            {
+              staticClass: _vm._$g(6, "sc"),
+              attrs: { disabled: _vm._$g(6, "a-disabled"), _i: 6 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
             [_vm._v("查询")]
           ),
           _c(
             "v-uni-scroll-view",
             {
-              staticClass: _vm._$g(6, "sc"),
-              attrs: { "scroll-y": "true", _i: 6 }
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm._$g(7, "v-show"),
+                  expression: "_$g(7,'v-show')"
+                }
+              ],
+              staticClass: _vm._$g(7, "sc"),
+              attrs: { "scroll-y": "true", _i: 7 }
             },
             [
               _c(
                 "uni-list",
-                { attrs: { _i: 7 } },
-                _vm._l(_vm._$g(8, "f"), function(item, index, $20, $30) {
+                { attrs: { _i: 8 } },
+                _vm._l(_vm._$g(9, "f"), function(item, index, $20, $30) {
                   return _c("uni-list-item", {
                     key: item,
-                    attrs: { _i: "8-" + $30 },
+                    attrs: { _i: "9-" + $30 },
+                    on: {
+                      CheckBoxChange: function($event) {
+                        return _vm.$handleViewEvent($event)
+                      }
+                    }
+                  })
+                }),
+                1
+              )
+            ],
+            1
+          ),
+          _c(
+            "v-uni-scroll-view",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm._$g(10, "v-show"),
+                  expression: "_$g(10,'v-show')"
+                }
+              ],
+              staticClass: _vm._$g(10, "sc"),
+              attrs: { "scroll-y": "true", _i: 10 }
+            },
+            [
+              _c(
+                "uni-list",
+                { attrs: { _i: 11 } },
+                _vm._l(_vm._$g(12, "f"), function(item, index, $21, $31) {
+                  return _c("uni-list-item", {
+                    key: item,
+                    attrs: { _i: "12-" + $31 },
                     on: {
                       CheckBoxChange: function($event) {
                         return _vm.$handleViewEvent($event)
@@ -7879,12 +7935,12 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm._$g(9, "v-show"),
-              expression: "_$g(9,'v-show')"
+              value: _vm._$g(13, "v-show"),
+              expression: "_$g(13,'v-show')"
             }
           ],
-          staticClass: _vm._$g(9, "sc"),
-          attrs: { _i: 9 },
+          staticClass: _vm._$g(13, "sc"),
+          attrs: { _i: 13 },
           on: {
             touchstart: function($event) {
               return _vm.$handleViewEvent($event)
@@ -7898,8 +7954,8 @@ var render = function() {
           _c(
             "v-uni-button",
             {
-              staticClass: _vm._$g(10, "sc"),
-              attrs: { _i: 10 },
+              staticClass: _vm._$g(14, "sc"),
+              attrs: { _i: 14 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -7911,8 +7967,8 @@ var render = function() {
           _c(
             "v-uni-button",
             {
-              staticClass: _vm._$g(11, "sc"),
-              attrs: { _i: 11 },
+              staticClass: _vm._$g(15, "sc"),
+              attrs: { _i: 15 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -7924,8 +7980,8 @@ var render = function() {
           _c(
             "v-uni-button",
             {
-              staticClass: _vm._$g(12, "sc"),
-              attrs: { _i: 12 },
+              staticClass: _vm._$g(16, "sc"),
+              attrs: { _i: 16 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -7937,8 +7993,8 @@ var render = function() {
           _c(
             "v-uni-button",
             {
-              staticClass: _vm._$g(13, "sc"),
-              attrs: { _i: 13 },
+              staticClass: _vm._$g(17, "sc"),
+              attrs: { _i: 17 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -7954,31 +8010,31 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm._$g(14, "v-show"),
-                  expression: "_$g(14,'v-show')"
+                  value: _vm._$g(18, "v-show"),
+                  expression: "_$g(18,'v-show')"
                 }
               ],
-              staticClass: _vm._$g(14, "sc"),
-              attrs: { _i: 14 }
+              staticClass: _vm._$g(18, "sc"),
+              attrs: { _i: 18 }
             },
             [
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
+                { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
                 [_vm._v("单据编号：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
-                [_vm._v(_vm._$g(16, "t0-0"))]
+                { staticClass: _vm._$g(20, "sc"), attrs: { _i: 20 } },
+                [_vm._v(_vm._$g(20, "t0-0"))]
               ),
               _c("v-uni-view", {
-                staticClass: _vm._$g(17, "sc"),
-                attrs: { _i: 17 }
+                staticClass: _vm._$g(21, "sc"),
+                attrs: { _i: 21 }
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
+                { staticClass: _vm._$g(22, "sc"), attrs: { _i: 22 } },
                 [_vm._v("出库日期：")]
               ),
               _c(
@@ -7986,10 +8042,10 @@ var render = function() {
                 {
                   attrs: {
                     mode: "date",
-                    value: _vm._$g(19, "a-value"),
-                    start: _vm._$g(19, "a-start"),
-                    end: _vm._$g(19, "a-end"),
-                    _i: 19
+                    value: _vm._$g(23, "a-value"),
+                    start: _vm._$g(23, "a-start"),
+                    end: _vm._$g(23, "a-end"),
+                    _i: 23
                   },
                   on: {
                     change: function($event) {
@@ -8000,15 +8056,29 @@ var render = function() {
                 [
                   _c(
                     "v-uni-view",
-                    { staticClass: _vm._$g(20, "sc"), attrs: { _i: 20 } },
-                    [_vm._v(_vm._$g(20, "t0-0"))]
+                    { staticClass: _vm._$g(24, "sc"), attrs: { _i: 24 } },
+                    [_vm._v(_vm._$g(24, "t0-0"))]
                   )
                 ],
                 1
               ),
               _c("v-uni-view", {
-                staticClass: _vm._$g(21, "sc"),
-                attrs: { _i: 21 }
+                staticClass: _vm._$g(25, "sc"),
+                attrs: { _i: 25 }
+              }),
+              _c(
+                "v-uni-text",
+                { staticClass: _vm._$g(26, "sc"), attrs: { _i: 26 } },
+                [_vm._v("源单编号：")]
+              ),
+              _c(
+                "v-uni-view",
+                { staticClass: _vm._$g(27, "sc"), attrs: { _i: 27 } },
+                [_vm._v(_vm._$g(27, "t0-0"))]
+              ),
+              _c("v-uni-view", {
+                staticClass: _vm._$g(28, "sc"),
+                attrs: { _i: 28 }
               })
             ],
             1
@@ -8016,18 +8086,18 @@ var render = function() {
           _c(
             "v-uni-scroll-view",
             {
-              staticClass: _vm._$g(22, "sc"),
-              class: _vm._$g(22, "c"),
-              attrs: { "scroll-y": "true", _i: 22 }
+              staticClass: _vm._$g(29, "sc"),
+              class: _vm._$g(29, "c"),
+              attrs: { "scroll-y": "true", _i: 29 }
             },
             [
               _c(
                 "uni-list",
-                { attrs: { _i: 23 } },
-                _vm._l(_vm._$g(24, "f"), function(item, index, $21, $31) {
+                { attrs: { _i: 30 } },
+                _vm._l(_vm._$g(31, "f"), function(item, index, $22, $32) {
                   return _c("fill-qty", {
                     key: item,
-                    attrs: { _i: "24-" + $31 },
+                    attrs: { _i: "31-" + $32 },
                     on: {
                       ButtonClick: function($event) {
                         return _vm.$handleViewEvent($event)
@@ -8053,12 +8123,12 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm._$g(25, "v-show"),
-              expression: "_$g(25,'v-show')"
+              value: _vm._$g(32, "v-show"),
+              expression: "_$g(32,'v-show')"
             }
           ],
-          staticClass: _vm._$g(25, "sc"),
-          attrs: { _i: 25 },
+          staticClass: _vm._$g(32, "sc"),
+          attrs: { _i: 32 },
           on: {
             touchstart: function($event) {
               return _vm.$handleViewEvent($event)
@@ -8071,14 +8141,14 @@ var render = function() {
         [
           _c(
             "v-uni-text",
-            { staticClass: _vm._$g(26, "sc"), attrs: { _i: 26 } },
+            { staticClass: _vm._$g(33, "sc"), attrs: { _i: 33 } },
             [_vm._v("已扫描条码：")]
           ),
           _c(
             "v-uni-text",
             {
-              staticClass: _vm._$g(27, "sc"),
-              attrs: { clickable: true, _i: 27 },
+              staticClass: _vm._$g(34, "sc"),
+              attrs: { clickable: true, _i: 34 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -8090,29 +8160,29 @@ var render = function() {
           _c(
             "v-uni-scroll-view",
             {
-              staticClass: _vm._$g(28, "sc"),
-              attrs: { "scroll-y": "true", _i: 28 }
+              staticClass: _vm._$g(35, "sc"),
+              attrs: { "scroll-y": "true", _i: 35 }
             },
             [
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(29, "sc"), attrs: { _i: 29 } },
+                { staticClass: _vm._$g(36, "sc"), attrs: { _i: 36 } },
                 [_vm._v("物料编码：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(30, "sc"), attrs: { _i: 30 } },
-                [_vm._v(_vm._$g(30, "t0-0"))]
+                { staticClass: _vm._$g(37, "sc"), attrs: { _i: 37 } },
+                [_vm._v(_vm._$g(37, "t0-0"))]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(31, "sc"), attrs: { _i: 31 } },
+                { staticClass: _vm._$g(38, "sc"), attrs: { _i: 38 } },
                 [_vm._v("物料名称：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(32, "sc"), attrs: { _i: 32 } },
-                [_vm._v(_vm._$g(32, "t0-0"))]
+                { staticClass: _vm._$g(39, "sc"), attrs: { _i: 39 } },
+                [_vm._v(_vm._$g(39, "t0-0"))]
               )
             ],
             1
@@ -8122,33 +8192,33 @@ var render = function() {
       ),
       _c(
         "v-uni-view",
-        { staticClass: _vm._$g(33, "sc"), attrs: { _i: 33 } },
+        { staticClass: _vm._$g(40, "sc"), attrs: { _i: 40 } },
         [
           _c(
             "v-uni-text",
             {
-              staticClass: _vm._$g(34, "sc"),
-              class: _vm._$g(34, "c"),
-              attrs: { _i: 34 },
+              staticClass: _vm._$g(41, "sc"),
+              class: _vm._$g(41, "c"),
+              attrs: { _i: 41 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
                 }
               }
             },
-            [_vm._v("销售单")]
+            [_vm._v("来源单")]
           ),
           _c("v-uni-view", {
-            staticClass: _vm._$g(35, "sc"),
-            class: _vm._$g(35, "c"),
-            attrs: { _i: 35 }
+            staticClass: _vm._$g(42, "sc"),
+            class: _vm._$g(42, "c"),
+            attrs: { _i: 42 }
           }),
           _c(
             "v-uni-text",
             {
-              staticClass: _vm._$g(36, "sc"),
-              class: _vm._$g(36, "c"),
-              attrs: { _i: 36 },
+              staticClass: _vm._$g(43, "sc"),
+              class: _vm._$g(43, "c"),
+              attrs: { _i: 43 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -8158,16 +8228,16 @@ var render = function() {
             [_vm._v("出库单")]
           ),
           _c("v-uni-view", {
-            staticClass: _vm._$g(37, "sc"),
-            class: _vm._$g(37, "c"),
-            attrs: { _i: 37 }
+            staticClass: _vm._$g(44, "sc"),
+            class: _vm._$g(44, "c"),
+            attrs: { _i: 44 }
           }),
           _c(
             "v-uni-text",
             {
-              staticClass: _vm._$g(38, "sc"),
-              class: _vm._$g(38, "c"),
-              attrs: { _i: 38 },
+              staticClass: _vm._$g(45, "sc"),
+              class: _vm._$g(45, "c"),
+              attrs: { _i: 45 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -8177,19 +8247,19 @@ var render = function() {
             [_vm._v("明细")]
           ),
           _c("v-uni-view", {
-            staticClass: _vm._$g(39, "sc"),
-            class: _vm._$g(39, "c"),
-            attrs: { _i: 39 }
+            staticClass: _vm._$g(46, "sc"),
+            class: _vm._$g(46, "c"),
+            attrs: { _i: 46 }
           })
         ],
         1
       ),
       _c(
         "uni-popup",
-        { ref: "fillqty", attrs: { _i: 40 } },
+        { ref: "fillqty", attrs: { _i: 47 } },
         [
           _c("uni-popup-dialog", {
-            attrs: { _i: 41 },
+            attrs: { _i: 48 },
             on: {
               close: function($event) {
                 return _vm.$handleViewEvent($event)
@@ -9354,7 +9424,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.outstorageview {\n\twidth: 100%;\n\theight: 950upx;\n}\n.poorderscrollview {\n\twidth: 100%;\n\theight: 850upx;\n\tmargin-top: 20upx;\n}\n.selectinfoscrollview {\n\twidth: 100%;\n\theight: 720upx;\n\tmargin-top: 50upx;\n}\n.unselectinfoscrollview {\n\twidth: 100%;\n\theight: 800upx;\n\tmargin-top: 50upx;\n}\n.addstorageout {\n\twidth: 20%;\n\tuheight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.querystorageout {\n\twidth: 20%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 450upx;\n\tmargin-top: -95upx;\n}\n.auditstorageout {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 10upx;\n\tmargin-top: 30upx;\n}\n.unauditstorageout {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 210upx;\n\tmargin-top: -96upx;\n}\n.deletestorageout {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 400upx;\n\tmargin-top: -96upx;\n}\n.checkitem {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 590upx;\n\tmargin-top: -96upx;\n}\n.billhead {\n\twidth: 100%;\n\tmargin-top: 50upx;\n}\n.billnoempty {\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 50upx;\n\ttext-align: center;\n\tcolor: #777777;\n}\n.title {\n\tmargin-left: 50upx;\n\tfont-size: 40upx;\n}\n.data {\n\twidth: 450upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 250upx;\n\ttext-align: center;\n}\n.dataline {\n\twidth: 60%;\n\theight: 5upx;\n\tbackground-color: #4CD964;\n\tmargin-left: 250upx;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline {\n\tbackground-color: #007AFF;\n}\n.scanned {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\t\t\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 20upx;\n}\n.queryall {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\t\n\tfont-size: 40upx;\n\tcolor: #007AFF;\n\tmargin-left: 570upx;\n\tmargin-top: -60upx;\n}\n.detailscrollview {\n\twidth: 100%;\n\theight: 950upx;\n\tmargin-top: 20upx;\n}\n.detailtitle {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: 30upx;\n\tmargin-left: 30upx;\n}\n.detaildata {\t\n\tdisplay: -webkit-box;\t\n\tdisplay: -webkit-flex;\t\n\tdisplay: flex;\t\t\n\tfont-size: 35upx;\n\tmargin-top: -50upx;\n\tmargin-left: 270upx;\n\ttext-align: center;\n}\n.tabbackground {\t\t\n\twidth: 100%;\n\theight: 90upx;\n\tmargin-top: 150upx;\n\tbackground-color: #F4F4F4;\n}\n.tableft {\t\t\n\tfont-size: 45upx;\n\tmargin-top: 20upx;\n\tmargin-left: 40upx;\n}\n.tabmiddle {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 330upx;\n}\n.tabright {\t\t\n\tdisplay: -webkit-box;\t\t\n\tdisplay: -webkit-flex;\t\t\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 630upx;\n}\n.tableftline {\t\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 40upx;\n}\n.tabmiddleline {\t\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 330upx;\n}\n.tabrightline {\t\t\n\twidth: 15%;\n\theight: 5upx;\t\t\n\tmargin-left: 620upx;\n}\n.inputsectiontitle{\n\tfont-size: 16px;\n\tcolor: #000000;\t\n\tmargin-top: 20upx;\n}\n.inputsection{\t\t\n\tfont-size: 16px;\n\tcolor: #000000;\n\tborder: 5upx solid;\n\tborder-color: #888888;\n\tmargin-left: 170upx;\n\tmargin-top: -55upx;\n}\n", ""]);
+exports.push([module.i, "\n.outstorageview {\n\twidth: 100%;\n\theight: 950upx;\n}\n.poorderscrollview {\n\twidth: 100%;\n\theight: 850upx;\n\tmargin-top: 20upx;\n}\n.selectinfoscrollview {\n\twidth: 100%;\n\theight: 670upx;\n\tmargin-top: 50upx;\n}\n.unselectinfoscrollview {\n\twidth: 100%;\n\theight: 750upx;\n\tmargin-top: 50upx;\n}\n.scanseorder {\n\twidth: 31%;\n\tcolor: #FFFFFF;\n\tbackground-color: #F0AD4E;\n\tborder-radius: 50upx;\n\tmargin-left: 50upx;\n\tmargin-top: 30upx;\n}\n.scanseoutstockorder {\n\twidth: 31%;\n\tcolor: #FFFFFF;\n\tbackground-color: #1AAD19;;\n\tborder-radius: 50upx;\n\tmargin-left: 50upx;\n\tmargin-top: 30upx;\n}\n.addstorageout {\n\twidth: 20%;\n\tuheight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 350upx;\n\tmargin-top: -96upx;\n}\n.querystorageout {\n\twidth: 20%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 550upx;\n\tmargin-top: -96upx;\n}\n.auditstorageout {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 10upx;\n\tmargin-top: 30upx;\n}\n.unauditstorageout {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 210upx;\n\tmargin-top: -96upx;\n}\n.deletestorageout {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 400upx;\n\tmargin-top: -96upx;\n}\n.checkitem {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 590upx;\n\tmargin-top: -96upx;\n}\n.billhead {\n\twidth: 100%;\n\tmargin-top: 50upx;\n}\n.billnoempty {\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 50upx;\n\ttext-align: center;\n\tcolor: #777777;\n}\n.title {\n\tmargin-left: 50upx;\n\tfont-size: 40upx;\n}\n.data {\n\twidth: 450upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 250upx;\n\ttext-align: center;\n}\n.dataline {\n\twidth: 60%;\n\theight: 5upx;\n\tbackground-color: #4CD964;\n\tmargin-left: 250upx;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline {\n\tbackground-color: #007AFF;\n}\n.scanned {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\t\t\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 20upx;\n}\n.queryall {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\t\n\tfont-size: 40upx;\n\tcolor: #007AFF;\n\tmargin-left: 570upx;\n\tmargin-top: -60upx;\n}\n.detailscrollview {\n\twidth: 100%;\n\theight: 950upx;\n\tmargin-top: 20upx;\n}\n.detailtitle {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: 30upx;\n\tmargin-left: 30upx;\n}\n.detaildata {\t\n\tdisplay: -webkit-box;\t\n\tdisplay: -webkit-flex;\t\n\tdisplay: flex;\t\t\n\tfont-size: 35upx;\n\tmargin-top: -50upx;\n\tmargin-left: 270upx;\n\ttext-align: center;\n}\n.tabbackground {\t\t\n\twidth: 100%;\n\theight: 90upx;\n\tmargin-top: 150upx;\n\tbackground-color: #F4F4F4;\n}\n.tableft {\t\t\n\tfont-size: 45upx;\n\tmargin-top: 20upx;\n\tmargin-left: 40upx;\n}\n.tabmiddle {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 330upx;\n}\n.tabright {\t\t\n\tdisplay: -webkit-box;\t\t\n\tdisplay: -webkit-flex;\t\t\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 630upx;\n}\n.tableftline {\t\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 40upx;\n}\n.tabmiddleline {\t\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 330upx;\n}\n.tabrightline {\t\t\n\twidth: 15%;\n\theight: 5upx;\t\t\n\tmargin-left: 620upx;\n}\n.inputsectiontitle{\n\tfont-size: 16px;\n\tcolor: #000000;\t\n\tmargin-top: 20upx;\n}\n.inputsection{\t\t\n\tfont-size: 16px;\n\tcolor: #000000;\n\tborder: 5upx solid;\n\tborder-color: #888888;\n\tmargin-left: 170upx;\n\tmargin-top: -55upx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
