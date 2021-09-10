@@ -366,9 +366,8 @@
 					return;
 				}
 				this.SwitchTab(1);
-				this.AddStorageInBillNo();
-				this.ShowPOInStockGroupInfoByAdd();
-			},
+				this.AddStorageInBillNo();				
+			},			
 			//新增入库单编号
 			AddStorageInBillNo: function() {
 				uni.request({
@@ -394,12 +393,8 @@
 							return;
 						}
 						let DataModel = result.data.ResultData.PdaStorageInRpt.dataparam;
-						this.StorageInterId = DataModel.FId;
-						this.StorageInBillNo = DataModel.FBillNo;
-						this.InStorageDate = DateFormat({
-							format: true,
-						});
-						this.StorageInListData = [];
+						this.ShowStorageInBillHeadInfo(DataModel);
+						this.ShowPOInStockGroupInfoByAdd();
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -626,6 +621,15 @@
 					Config.PopAudioContext(false);					
 					return 0;
 				}
+			},
+			//显示入库单单据头信息
+			ShowStorageInBillHeadInfo: function(DataModel){
+				this.StorageInterId = DataModel.FId;
+				this.StorageInBillNo = DataModel.FBillNo;
+				this.InStorageDate = DateFormat({
+					format: true,
+				});
+				this.StorageInListData = [];
 			},
 			//显示收料通知单分组信息
 			ShowPOInStockGroupInfoByAdd: function() {

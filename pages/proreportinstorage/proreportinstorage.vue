@@ -9,8 +9,8 @@
 			<button class="addstoragein" v-bind:disabled="!IsAddStorageIn" v-on:click="AddStorageIn()">新增</button>
 			<button class="querystoragein" v-bind:disabled="IsAddStorageIn" v-on:click="QueryStorageIn()">查询</button>
 			
-			<scroll-view class="icmoscrollview" scroll-y="true">
-				<uni-list>
+			<scroll-view class="icmoscrollview" scroll-y="true" show-scrollbar>
+				<uni-list @scrolltolower="ScrollToLower">
 					<uni-list-item v-for="(item,index) in IcmoListData" :key="index" :title="'制单人：'
 				    + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '编号：' + item.FBillNo" clickable
 					:ischecked="item.FIsChecked" :isshowcheckbox="true" @CheckBoxChange="ChangeIsChecked(item)">
@@ -115,7 +115,7 @@
 				IsAddStorageIn: true,
 				StorageBinIsActive: false,
 				SelectWorkShopArray: [0, '请选择交货单位'],
-				SelectWareHouseArray: [0, '请选择汇报仓库'],
+				SelectWareHouseArray: [0, '请扫描汇报仓库'],
 				StatusArray: ['未入库', '已入库'],
 				StorageInAndBinArray: [],
 				InStorageDate: DateFormat({
@@ -153,11 +153,7 @@
 		onNavigationBarButtonTap() {
 			this.SwitchBillHeadVisible();
 		},
-		methods: {
-			//切换扫描模式
-			SwitchScanMode:function(){
-				this.IsScanCartonBarCode = !this.IsScanCartonBarCode;
-			},
+		methods: {			
 			//添加广播监听
 			AddListener: function() {
 				var me = this;
@@ -197,7 +193,11 @@
 			//移除广播监听
 			RemoveListener: function() {
 				this.Main.unregisterReceiver(this.Receiver); //取消监听
-			},			
+			},	
+			//切换扫描模式
+			SwitchScanMode:function(){
+				this.IsScanCartonBarCode = !this.IsScanCartonBarCode;
+			},		
 			//检测汇报单是否选中
 			ChangeIsChecked: function(item) {
 				item.FIsChecked = !item.FIsChecked;
@@ -261,6 +261,12 @@
 				if (TouchEndX - this.TouchStartX >= this.SlidingValue && this.TabSelectedIndex > 0) {
 					this.SlidingPage(false);
 				}
+			},
+			ScrollToUpper: function(e){
+				console.log(e);
+			},
+			ScrollToLower: function(e){
+				console.log(e);
 			},
 			//切换页签
 			SwitchTab: function(TabSelectedIndex) {
@@ -392,7 +398,7 @@
 				this.StorageInterId = 0;
 				this.InStorageDate = '';
 				this.SelectWorkShopArray = [0, '请选择交货单位']
-				this.SelectWareHouseArray = [0, '请选择汇报仓库'];				
+				this.SelectWareHouseArray = [0, '请扫描汇报仓库'];				
 				for (var i = 0; i < this.IcmoListData.length; i++) {
 					let DataModel = this.IcmoListData[i];
 					if (DataModel.FIsChecked) {
@@ -614,8 +620,7 @@
 					return;
 				}
 				this.SwitchTab(1);
-				this.AddStorageInBillNo();
-				this.ShowProReportGroupInfoByAdd();				
+				this.AddStorageInBillNo();								
 			},
 			//新增入库单编号
 			AddStorageInBillNo: function() {
@@ -646,30 +651,32 @@
 							return;
 						}
 						let DataModel = result.data.ResultData.PdaStorageInRpt.dataparam;
-						this.StorageInterId = DataModel.FId;
-						this.StorageInBillNo = DataModel.FBillNo;
-						this.InStorageDate = DateFormat({
-							format: true,
-						});
-						this.StorageInListData = [];
-						this.SelectWareHouseArray = [0, '请选择汇报仓库'];
-						uni.hideLoading();
+						this.ShowStorageInBillHeadInfo(DataModel);
+						this.ShowProReportGroupInfoByAdd();						
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);
-						uni.hideLoading();
-						return;
+						Config.PopAudioContext(false);						
 					},
 					complete: (resultcomp) => {
 						let ResultMsg = resultcomp.data.ResultMsg;
 						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							Config.ShowMessage(ResultMsg);
-							Config.PopAudioContext(false);							
-							uni.hideLoading();
+							Config.PopAudioContext(false);						
 						}
+						uni.hideLoading();
 					}
 				});
+			},
+			//显示入库单单据头信息
+			ShowStorageInBillHeadInfo:function(DataModel){
+				this.StorageInterId = DataModel.FId;
+				this.StorageInBillNo = DataModel.FBillNo;
+				this.InStorageDate = DateFormat({
+					format: true,
+				});
+				this.StorageInListData = [];
+				this.SelectWareHouseArray = [0, '请扫描汇报仓库'];
 			},
 			//显示生产汇报单分组信息
 			ShowProReportGroupInfoByAdd: function() {			
@@ -751,22 +758,19 @@
 							let StorageInAndBinInfo = [DataModel.FStorageId, DataModel.FStorageNumber, DataModel.FStorageName
 							, DataModel.FStorageBinId, DataModel.FStorageBinNumber, DataModel.FStorageBinName];
 							this.StorageInAndBinArray.push(StorageInAndBinInfo);
-						}
-						uni.hideLoading();
+						}						
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext();
-						uni.hideLoading();
-						return;
+						Config.PopAudioContext();						
 					},
 					complete: (resultcomp) => {
 						let ResultMsg = resultcomp.data.ResultMsg;
 						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							Config.ShowMessage(ResultMsg);
-							Config.PopAudioContext(false);							
-							uni.hideLoading();
+							Config.PopAudioContext(false);						
 						}
+						uni.hideLoading();
 					}
 				});
 			},

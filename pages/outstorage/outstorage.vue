@@ -12,22 +12,23 @@
 			<button class="addstorageout" v-bind:disabled="!IsAddStorageOut" v-on:click="AddStorageOut()">新增</button>
 			<button class="querystorageout" v-bind:disabled="IsAddStorageOut" v-on:click="QueryStorageOut()">查询</button>
 			
-			<scroll-view class="poorderscrollview" scroll-y="true" v-show="IsScanSEOrder">
+			<scroll-view class="billscrollview" scroll-y="true" v-show="IsScanSEOrder">
 				<uni-list>
-					<uni-list-item v-for="(item,index) in SEOrderListData" :key="index" :title="'制单人：'
+					<uni-list-item v-for="(item,index) in BillListData" :key="index" :title="'制单人：'
 				    + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '编号：' + item.FBillNo
-					+ '\n' + '发货单编号：' + item.FSEOutStockBillNo + '\n' + '购货单位：' + item.FCustName
-					+ '\n' + '单据状态：' + item.FStatus" clickable :ischecked="item.FIsChecked" 
-					:isshowcheckbox="true" @CheckBoxChange="ChangeIsChecked(item)">
+					+ '\n' + '购货单位：' + item.FCustName + '\n' + '单据状态：' + item.FStatus" 
+					clickable :ischecked="item.FIsChecked"  :isshowcheckbox="true" 
+					@CheckBoxChange="ChangeIsChecked(item)">
 					</uni-list-item>
 				</uni-list>
 			</scroll-view>
 			
-			<scroll-view class="poorderscrollview" scroll-y="true" v-show="!IsScanSEOrder">
+			<scroll-view class="billscrollview" scroll-y="true" v-show="!IsScanSEOrder">
 				<uni-list>
-					<uni-list-item v-for="(item,index) in SEOrderListData" :key="index" :title="'制单人：'
+					<uni-list-item v-for="(item,index) in BillListData" :key="index" :title="'制单人：'
 				    + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '编号：' + item.FBillNo
-					+ '\n' + '购货单位：' + item.FCustName + '\n' + '单据状态：' + item.FStatus" clickable :ischecked="item.FIsChecked" :isshowcheckbox="true"
+					+ '\n' + '购货单位：' + item.FCustName + '\n' + '单据状态：' + item.FStatus" 
+					clickable :ischecked="item.FIsChecked" :isshowcheckbox="true"
 					@CheckBoxChange="ChangeIsChecked(item)">
 					</uni-list-item>
 				</uni-list>
@@ -61,11 +62,12 @@
 			<scroll-view class="selectinfoscrollview" v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}"
 				scroll-y="true">
 				<uni-list>
-					<fill-qty v-for="(item,index) in SEOrderGroupData" :key="index" :title="item.FNumber 
+					<fill-qty v-for="(item,index) in BillGroupData" :key="index" :title="item.FNumber 
 			 		+ '/' + item.FModel + '\n'  + '批号：' + item.FBatchNo + '\n'  + '仓库：' + item.FStockName 
-					+ '\n'  + '应发数量：'+ item.FShouldSendQty + '只/' 
-					+ Math.round(item.FShouldSendQty/item.FOutPackPreQty/item.FInPackPreQty,2)
-					+ '件' + '\n' + '实发数量：'+ item.FRealSendQty" 
+					+ '/' + '库存：' + item.FInventoryQty + '只' + '\n'  + '应发数量：'+ item.FShouldSendQty + '只/' 
+					+ Math.round(item.FShouldSendQty/item.FInPackPreQty,2)
+					+ '件' + '\n' + '实发数量：'+ item.FRealSendQty + '只/' 
+					+ Math.round(item.FRealSendQty/item.FInPackPreQty,2) + '件'" 
 					@ButtonClick="PopupFillQtyWindow()" v-bind:percent="Math.round((item.FRealSendQty 
 					/ item.FShouldSendQty) * 100, 0)" isshowprogress clickable v-on:click="GetBillInfoExpand(item)">
 					</fill-qty>
@@ -104,11 +106,7 @@
 		
 		<uni-popup ref="fillqty" type="center" :mask-click="false">
 			<uni-popup-dialog mode="input" message="成功消息" title="校验物料" placeholder="请输入物料编码" :duration="2000" :before-close="true" @close="ClosePopupWindow" 
-			@confirm="ClosePopupWindow"></uni-popup-dialog>
-			<!-- <view style="display: flex; height:300upx;width:500upx;background:#FFFFFF;border-radius:50upx">
-				<text style="inputsectiontitle">实发数量：</text>
-				<input style="inputsection"></input>
-			</view> -->
+			@confirm="ClosePopupWindow"></uni-popup-dialog>			
 		</uni-popup>
 	</view>
 </template>
@@ -137,8 +135,8 @@
 				}),
 				StartDate: DateFormat('start'),
 				EndDate: DateFormat('end'),
-				SEOrderListData: [],
-				SEOrderGroupData: [],
+				BillListData: [],
+				BillGroupData: [],
 				IsBillHeadVisible: true,
 				SelectCustomerArray: [0, '空'],
 				Main: '',
@@ -399,8 +397,8 @@
 					   		this.ShowBillGroupInfo();											
 					   	},
 					   	fail: () => {
-					   		Config.ShowMessage('请求数据失败！');
-					   		Config.PopAudioContext(false);
+					   		Config.ShowMessage('请求数据失败！');					   	
+							Config.PopAudioContext(false);
 					   		return;
 					   	},
 					   	complete: (resultcomp) => {
@@ -516,7 +514,7 @@
 							uni.hideLoading();
 							return;
 						}
-						this.SEOrderListData = result.data.ResultData.GetPdaSEOrderNoPutInList
+						this.BillListData = result.data.ResultData.GetPdaSEOrderNoPutInList
 							.data0;							
 					},
 					fail: () => {
@@ -559,7 +557,7 @@
 							uni.hideLoading();
 							return;
 						}
-						this.SEOrderListData = result.data.ResultData.GetPdaSEOrderPutInList.data0;						
+						this.BillListData = result.data.ResultData.GetPdaSEOrderPutInList.data0;						
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -602,7 +600,7 @@
 							uni.hideLoading();
 							return;
 						}
-						this.SEOrderListData = result.data.ResultData.GetPdaSEOutStockNoPutInList
+						this.BillListData = result.data.ResultData.GetPdaSEOutStockNoPutInList
 							.data0;							
 					},
 					fail: () => {
@@ -645,7 +643,7 @@
 							uni.hideLoading();
 							return;
 						}
-						this.SEOrderListData = result.data.ResultData.GetPdaSEOutStockPutInList.data0;						
+						this.BillListData = result.data.ResultData.GetPdaSEOutStockPutInList.data0;						
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -686,8 +684,8 @@
 				this.SelectSrcInterId = '';				
 				this.SelectSrcBillNo = '';
 				this.SelectCustomerArray = [0, '空'];				
-				for (var i = 0; i < this.SEOrderListData.length; i++) {
-					let DataModel = this.SEOrderListData[i];
+				for (var i = 0; i < this.BillListData.length; i++) {
+					let DataModel = this.BillListData[i];
 					if (DataModel.FIsChecked) {	
 						this.SelectBillModel = DataModel;						
 						if(this.SelectCustomerArray[0] == 0 && this.SelectCustomerArray[1] == '空'){
@@ -723,8 +721,8 @@
 				this.SelectSrcInterId = '';				
 				this.SelectSrcBillNo = '';
 				this.SelectCustomerArray = [0, '空'];				
-				for (var i = 0; i < this.SEOrderListData.length; i++) {
-					let DataModel = this.SEOrderListData[i];
+				for (var i = 0; i < this.BillListData.length; i++) {
+					let DataModel = this.BillListData[i];
 					if (DataModel.FIsChecked) {	
 						this.SelectBillModel = DataModel;					
 						this.StorageOutInterId = this.SelectBillModel.FStorageOutId;
@@ -784,7 +782,7 @@
 							Config.ShowMessage('账号登录异常，请重新登录！');
 							Config.PopAudioContext(false);							
 						}						
-						this.SEOrderGroupData = result.data.ResultData.GetPdaSEOrderGroupInfoByItemId.data0;	
+						this.BillGroupData = result.data.ResultData.GetPdaSEOrderGroupInfoByItemId.data0;	
 						this.GetBillSelectItem();											
 					},
 					fail: () => {
@@ -824,7 +822,7 @@
 								Config.ShowMessage('账号登录异常，请重新登录！');
 								Config.PopAudioContext(false);							
 							}						
-							this.SEOrderGroupData = result.data.ResultData.GetPdaSEOutStockGroupInfo.data0;	
+							this.BillGroupData = result.data.ResultData.GetPdaSEOutStockGroupInfo.data0;	
 							this.GetBillSelectItem();											
 						},
 						fail: () => {
@@ -846,8 +844,8 @@
 			//获取选中单据的物料信息
 			GetBillSelectItem:function(){
 				this.SelectItems = '';
-				for (var i = 0; i < this.SEOrderGroupData.length; i++) {
-					let DataModel = this.SEOrderGroupData[i];
+				for (var i = 0; i < this.BillGroupData.length; i++) {
+					let DataModel = this.BillGroupData[i];
 					this.SelectItems += DataModel.FItemID + ',';					
 				}
 				this.SelectItems = this.SelectItems.substr(0, this.SelectItems.length - 1);					
@@ -879,9 +877,7 @@
 						   			token: uni.getStorageSync('token'),
 						   			ModuleParam: {
 						   				FId: me.StorageOutInterId,
-						   				Result: 0,
-						   				FStatus: 0,
-						   				FStatusCN: '',
+						   				Result: 0,						   				
 						   				Msg: ''
 						   			}
 						     },
@@ -1050,20 +1046,20 @@
 					Config.PopAudioContext(false);					
 					return 0;
 				}				
-				// for (var i = 0; i < this.SEOrderGroupData.length; i++) {
-				// 	let DataModel = this.SEOrderGroupData[i];	
-				// 	if(DataModel.FRealSendQty == 0)
-				// 	{
-				// 		Config.ShowMessage('型号为 ' + DataModel.FNumber + '/' + DataModel.FModel + '实发数量为0，请重新扫描！');
-				// 		Config.PopAudioContext(false);						
-				// 		return 0;
-				// 	}
-				// 	if(DataModel.FRealSendQty > DataModel.FShouldSendQty){
-				// 		Config.ShowMessage('型号为 ' + DataModel.FNumber + '/' + DataModel.FModel + '实发数量大于应发数量，请重新扫描！');
-				// 		Config.PopAudioContext(false);						
-				// 		return 0;
-				// 	}					
-				// }	
+				for (var i = 0; i < this.BillGroupData.length; i++) {
+					let DataModel = this.BillGroupData[i];	
+					// if(DataModel.FRealSendQty == 0)
+					// {
+					// 	Config.ShowMessage('型号为 ' + DataModel.FNumber + '/' + DataModel.FModel + '实发数量为0，请重新扫描！');
+					// 	Config.PopAudioContext(false);						
+					// 	return 0;
+					// }
+					if(DataModel.FRealSendQty > DataModel.FShouldSendQty){
+					   Config.ShowMessage('型号为 ' + DataModel.FNumber + '/' + DataModel.FModel + '实发数量大于应发数量，请重新扫描！');
+					   Config.PopAudioContext(false);						
+					   return 0;
+					}					
+				}	
 			},
 			//审核销售出库单
 			AuditStorageOut: function() {
@@ -1262,7 +1258,7 @@
 		height: 950upx;
 	}
 	
-	.poorderscrollview {
+	.billscrollview {
 		width: 100%;
 		height: 850upx;
 		margin-top: 20upx;
