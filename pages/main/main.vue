@@ -25,10 +25,20 @@
 			<text class="title">销售出库</text>
 		</view>	
 			
-		<!-- <view class="updatesoftware" @click="UpdateSoftware()">
-			<image src="" mode="aspectFit" class="img"></image>
-			<text class="text1">参数设置</text>
-		</view>	 -->		
+		<view class="transfers" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[5].FIsAllow : true" @click="JumpPage('/pages/transfers/transfers')">
+			<image class="img" src="../../static/transfers.png" mode="aspectFit"></image>
+			<text class="title">仓库调拨</text>
+		</view>	
+				
+		<view class="inventory" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[6].FIsAllow : true" @click="JumpPage('/pages/inventory/inventory')">
+			<image class="img" src="../../static/inventory.png" mode="aspectFit"></image>
+			<text class="title">仓库盘点</text>
+		</view>	
+		
+		<view class="queryinventory" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[7].FIsAllow : true" @click="JumpPage('/pages/inventory/queryinventory')">
+			<image class="img" src="../../static/queryinventory.png" mode="aspectFit"></image>
+			<text class="title">库存查询</text>
+		</view>	
 	</view>	
 </template>
 
@@ -45,7 +55,7 @@
 		},
 		methods: {
 			//获取当前用户权限
-			GetUserPermission:function(){
+			GetUserPermission:function(){				
 				let UserId = uni.getStorageSync('FUserId');
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
@@ -152,6 +162,38 @@
 		margin-top: 460upx;
 	}
 	
+	.transfers{
+		position: absolute;
+		width: 300upx;
+		height: 150upx;
+		background-color: #007AFF;
+		border-radius: 25upx;	
+		text-align: center;
+		margin-left: 190upx;	
+		margin-top: 460upx;
+	}
+	
+	.inventory{
+		position: absolute;
+		width: 300upx;
+		height: 150upx;
+		background-color: #007AFF;
+		border-radius: 25upx;	
+		text-align: center;
+		margin-left: -190upx;	
+		margin-top: 640upx;
+	}
+	
+	.queryinventory{
+		position: absolute;
+		width: 300upx;
+		height: 150upx;
+		background-color: #007AFF;
+		border-radius: 25upx;	
+		text-align: center;
+		margin-left: 190upx;	
+		margin-top: 640upx;
+	}
 	
 	.title{
 		position: absolute;

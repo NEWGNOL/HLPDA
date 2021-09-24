@@ -123,8 +123,8 @@
 				let me = this;
 				if(me.SelectCartonLabel == '')					
 				{
-					Config.PopAudioContext(false);
-					Config.ShowMessage('请选择要删除的内箱标签！');					
+					Config.ShowMessage('请选择要删除的外箱标签！');
+					Config.PopAudioContext(false);										
 					return; 
 				}				
 				uni.showModal({
@@ -149,20 +149,20 @@
 									let ResultMsg = res.data.ResultMsg;
 									if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 									{	
-										Config.PopAudioContext(false);
-										Config.ShowMessage('账号登录异常，请重新登录！');											
+										Config.ShowMessage('账号登录异常，请重新登录！');
+										Config.PopAudioContext(false);																					
 										return;
 									}										
 									let DataParam = res.data.ResultData.DelPdaStockBillRptCartonList.dataparam;	
 									let Result = DataParam.Result;
 									if(Result == 0)
 									{
-										Config.PopAudioContext(false);
-										Config.ShowMessage(DataParam.Msg);										
+										Config.ShowMessage(DataParam.Msg);	
+										Config.PopAudioContext(false);																			
 										return;
 									}
-									Config.PopAudioContext(true);
-									Config.ShowMessage(DataParam.Msg);	
+									Config.ShowMessage(DataParam.Msg);
+									Config.PopAudioContext(true);										
 									me.ShowStorageInDetail();																																												
 								},
 								fail: () => {	
@@ -172,10 +172,9 @@
 								complete: (resultcomp) => {
 					                let ResultMsg = resultcomp.data.ResultMsg;
 					                if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-						            Config.PopAudioContext(false);
-						            Config.ShowMessage(ResultMsg);	
-						            uni.hideLoading();
-								}
+									Config.ShowMessage(ResultMsg);	
+						            Config.PopAudioContext(false);					            	
+						        }
 					        }
 							});	
 						} 

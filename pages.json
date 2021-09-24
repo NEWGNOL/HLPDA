@@ -106,6 +106,17 @@
 			}
 		},
 		{
+			"path": "pages/basic/empquery",
+			"style": {
+				"navigationBarTitleText": "职员查询",
+				"app-plus":{
+					"titleNView":{
+						"titleColor":"FFFFFF"
+					}
+				}
+			}
+		},
+		{
 			"path": "pages/proreportinstorage/proreportinstorage",
 			"style": {
 				"navigationBarTitleText": "汇报入库",
@@ -193,6 +204,96 @@
 				                  "titleColor":"FFFFFF"
 					 }
 			    }
+			}			
+		},
+		{
+			"path": "pages/transfers/transfers",
+			"style": {
+				"navigationBarTitleText": "仓库调拨",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF",
+								  "buttons": [{
+								      "text": "隐藏表头",
+								      "fontSrc": "/static/fonts/icomoon.ttf",
+								      "fontSize": "17px",
+								  	  "color":"#FFFFFF",
+								      "float": "right",
+								      "width": "90px"											
+								  }]							 
+					 }
+				}	
+			}			
+		},
+		{
+			"path": "pages/inventory/inventory",
+			"style": {
+				"navigationBarTitleText": "仓库盘点",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF"		 
+					 }
+				}	
+			}			
+		},
+		{
+			"path": "pages/inventory/addmaterial",
+			"style": {
+				"navigationBarTitleText": "新增物料",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF",
+								  "buttons": [{
+								      "text": "确认完成",
+								      "fontSrc": "/static/fonts/icomoon.ttf",
+								      "fontSize": "17px",
+								  	  "color":"#FFFFFF",
+								      "float": "right",
+								      "width": "90px"											
+								  }]	
+					 }
+			    }
+			}			
+		},
+		{
+			"path": "pages/basic/icitem",
+			"style": {
+				"navigationBarTitleText": "物料查询",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF"		 
+					 }
+				}	
+			}			
+		},
+		{
+			"path": "pages/inventory/queryinventory",
+			"style": {
+				"navigationBarTitleText": "库存查询",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF"		 
+					 }
+				}	
+			}			
+		},
+		{
+			"path": "pages/outstorage/qtycheck",
+			"style": {
+				"navigationBarTitleText": "数量异常检查",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF",
+							      "buttons": [{
+									       "text": "审核单据",
+									       "fontSrc": "/static/fonts/icomoon.ttf",
+									       "fontSize": "17px",
+									   	   "color":"#FFFFFF",
+									       "float": "right",
+									       "width": "90px"											
+									   }]	
+					 }
+				}	
 			}			
 		}
     ],

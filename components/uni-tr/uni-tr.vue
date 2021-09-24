@@ -9,7 +9,7 @@
 	</tr>
 	<!-- #endif -->
 	<!-- #ifndef H5 -->
-	<view class="uni-table-tr">
+	<view class="uni-table-tr" @click="click">
 		<view v-if="selection === 'selection' " class="checkbox" :class="{ 'tr-table--border': border }">
 			<table-checkbox :checked="checked" :indeterminate="indeterminate" :disabled="disabled" @checkboxSelected="checkboxSelected"></table-checkbox>
 		</view>
@@ -97,6 +97,9 @@
 						this.root.check(this, e.detail.value.length > 0 ? true : false)
 					}
 				})
+			},
+			click(e){
+				this.$emit('Click', e);;
 			},
 			/**
 			 * 获取父元素实例

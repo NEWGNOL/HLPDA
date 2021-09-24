@@ -41,22 +41,21 @@
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-							Config.PopAudioContext(false);
 							Config.ShowMessage('账号登录异常，请重新登录！');
+							Config.PopAudioContext(false);							
 							return;
 						}
 						this.TeamList = result.data.ResultData.TeamListInfo.data0;
 					},
 					fail: () => {
-						Config.PopAudioContext(false);
 						Config.ShowMessage('请求数据失败！');
+						Config.PopAudioContext(false);						
 					},
 					complete: (resultcomp) => {
 						let ResultMsg = resultcomp.data.ResultMsg;
 						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-							Config.PopAudioContext(false);
 							Config.ShowMessage(ResultMsg);
-							uni.hideLoading();							
+							Config.PopAudioContext(false);							
 						}
 					}
 				})

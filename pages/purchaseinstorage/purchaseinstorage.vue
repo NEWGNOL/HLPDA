@@ -97,7 +97,7 @@
 				SelectedPOInstockModel: null,
 				SelectStatus: '未入库',
 				StatusArray: ['未入库', '已入库'],
-				TabSelectedIndex: 0,
+				TabSelectedIndex: 1,
 				TouchStartX: 0,
 				InStorageDate: DateFormat({
 					format: true

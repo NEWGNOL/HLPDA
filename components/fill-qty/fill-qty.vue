@@ -25,10 +25,8 @@
 						<text v-if="title" class="uni-list-item__content-title"
 							:class="[ellipsis !== 0 && ellipsis <= 2 ? 'uni-ellipsis-' + ellipsis : '']">{{ title }}</text>
 						<text v-if="note" class="uni-list-item__content-note">{{ note }}</text>
-						<!-- <text class="inputsectiontitle">实发数量：</text>
-						<uni-easyinput class="inputsection" v-model="realsendqty" @input="GetInputSection"></uni-easyinput>
-						<input class="inputsection" v-model="realsendqty" v-bind:/>						
-						<button class="fillqty" v-on:click="buttonclick()">修改</button>	 -->
+						<!-- <text class="inputsectiontitle">实发数量：</text> -->											
+						<button class="fillqty" v-on:click="buttonclick()">修改</button>	
 						<cmd-progress class="progress" v-show="isshowprogress" v-bind:percent="percent"></cmd-progress>						
 					</view>									
 				</slot>
@@ -487,7 +485,7 @@
 	
 	.fillqty{
 		position: absolute;
-		width: 20%;
+		width: 18%;
 		color: #FFFFFF;
 		background-color: #007AFF;
 		border-radius: 50upx;
