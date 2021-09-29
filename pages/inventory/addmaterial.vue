@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<text class="title">盘点方案编号：</text>
+		<!-- <text class="title">盘点方案编号：</text>
 		<text class="data">{{ProcessModel.FProcessID}}</text>
 		
 		<text class="title">盘点仓库：</text>
@@ -10,15 +10,16 @@
 		<navigator url="/pages/basic/icitem" hover-class="navigator-hover">
 			<view class="data">{{MaterialArray[1]}}</view>
 		</navigator>
-		<view class="dataline"></view>
-		
-		<text class="title">盘点数量：</text>
-		<input class="qty" v-model="InventoryQty"/>
-		<!-- <view class="data" @click="OpenPopupWindow">{{InventoryQty}}</view>
 		<view class="dataline"></view> -->
 		
+		<!-- <text class="title">盘点数量：</text>
+		<input class="qty" v-model="InventoryQty"/> -->
 		
-		<!-- <digit-keyboard @confirm="ClosePopupWindow" v-show="IsOpenDigitKeyboard"></digit-keyboard> -->
+		<!-- <text class="title">盘点数量：</text>
+		<view class="data" @click="OpenPopupWindow">{{InventoryQty}}</view>
+		<view class="dataline"></view>	 -->	
+		
+		<digit-keyboard @confirm="ClosePopupWindow" @exit="ClosePopupWindowDirect" v-show="IsOpenDigitKeyboard"></digit-keyboard>
 	</view>
 </template>
 
@@ -31,7 +32,7 @@
 				WareHouseModel: [],						
 				MaterialArray: [0,'请选择物料','',''],				
 				InventoryQty: 0,
-				IsOpenDigitKeyboard: false
+				IsOpenDigitKeyboard: true
 			}
 		},
 		onLoad() {			
@@ -43,12 +44,30 @@
 		methods: {	
 			//打开弹窗
 			OpenPopupWindow: function(){			
-				//this.IsOpenDigitKeyboard = true;
+				this.IsOpenDigitKeyboard = true;
 			},
 			//关闭弹窗
-			ClosePopupWindow: function(e){
+			ClosePopupWindowDirect: function(e){				
+				this.SwitchIsOpenDigitKeyboard(false);			
+			},
+			//关闭弹窗
+			ClosePopupWindow: function(e){				
+				let IsSuccess = this.GetInventoryQty(e);
+				if(IsSuccess == 0){
+					return;
+				}
+				this.SwitchIsOpenDigitKeyboard(false);		
+			},
+			SwitchIsOpenDigitKeyboard: function(IsOpenDigitKeyboard){
+				this.IsOpenDigitKeyboard = IsOpenDigitKeyboard;
+			},
+			GetInventoryQty: function(){
+				if(e == null || e == '' || e == 0){
+				   Config.ShowMessage('请填写要修改的物料数量！');
+				   Config.PopAudioContext(false);					
+				   return 0;
+				}	
 				this.InventoryQty = e;
-				//this.IsOpenDigitKeyboard = false;
 			},
 			//获取上个页面信息
 			GetLastPageInfo:function(){

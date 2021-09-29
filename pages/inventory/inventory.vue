@@ -21,15 +21,15 @@
 		         </uni-table>
 		</scroll-view>
 		
-		<uni-popup ref="fillqty" type="center" :mask-click="false">			
+		<!-- <uni-popup ref="fillqty" type="center" :mask-click="false">			
 			<mod-fty mode="input" message="成功消息" v-bind:title="PopTitle" placeholder="请输入盘点数量" :duration="2000" :before-close="true" @close="ClosePopupWindowDirect" 
 			@confirm="ClosePopupWindow"></mod-fty>			
-		</uni-popup>	
+		</uni-popup> -->	
 		
 		<button class="modifymaterialqty" v-on:click="ModifyMaterialQty()">修改物料数量</button>
 		<button class="addmaterial" v-on:click="AddMaterial()">新增物料</button>	
 		
-		<!-- <digit-keyboard @confirm="ClosePopupWindow" v-show="IsOpenDigitKeyboard"></digit-keyboard> -->
+		<digit-keyboard @confirm="ClosePopupWindow" @exit="ClosePopupWindowDirect" v-show="IsOpenDigitKeyboard"></digit-keyboard>
 	</view>
 </template>
 
@@ -332,31 +332,43 @@
 			},
 			//打开弹窗
 			OpenPopupWindow: function(){				
+				let IsSuccess = this.CheckPopupWindow();
+				if(IsSuccess == 0){
+					return;
+				}
+				//this.$refs.fillqty.open();	
+				this.SwitchIsOpenDigitKeyboard(true);
+			},
+			
+			CheckPopupWindow: function(){
 				if(this.ProcessRecordModel == null){
 				   Config.ShowMessage('请选择要修改数量的物料！');
 				   Config.PopAudioContext(false);
-				   return;				
+				   return 0;				
 				}
 				this.PopTitle = this.ProcessRecordModel.FMaterialNumber + '/' + this.ProcessRecordModel.FModel
-				this.$refs.fillqty.open();	
-				//this.IsOpenDigitKeyboard = true;
 			},
 			//关闭弹窗
 			ClosePopupWindowDirect: function(e){
 				//console.log(this.$refs.fillqty);
-				this.$refs.fillqty.close();
+				//this.$refs.fillqty.close();
+				this.SwitchIsOpenDigitKeyboard(false);
+				this.GetSelectMaterial(null);
 			},
 			//关闭弹窗
 			ClosePopupWindow: function(e){
 				//console.log(e);
-				this.$refs.fillqty.close();				
+				//this.$refs.fillqty.close();				
 				if(e == null || e == '' || e == 0){
 				   Config.ShowMessage('请填写要修改的物料数量！');
 				   Config.PopAudioContext(false);					
 				   return;
 				}	
-							
-				//this.IsOpenDigitKeyboard = false;
+			
+			    uni.showLoading({
+			    	title: 'Loading',
+			    	mask: true
+			    });
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -394,6 +406,8 @@
 						}
 						Config.ShowMessage(ResultData.dataparam.Msg);
 						Config.PopAudioContext(true);
+						this.SwitchIsOpenDigitKeyboard(false);
+						this.GetSelectMaterial(null);
 						this.GenInventoryList();
 					},
 					fail: () => {
@@ -407,9 +421,13 @@
 							Config.ShowMessage(ResultMsg);
 							Config.PopAudioContext(false);							
 						}
+						uni.hideLoading();
 					}
 				});				
-			}		
+			},
+			SwitchIsOpenDigitKeyboard: function(IsOpenDigitKeyboard){
+				this.IsOpenDigitKeyboard = IsOpenDigitKeyboard;
+			}
 		}
 	}
 </script>
