@@ -55,7 +55,7 @@
 				<uni-list>
 					<uni-list-item v-for="(item,index) in InfoListData" :key="index" :title="item.FNumber + '/' + item.FModel
 					 + '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '批号：' + item.FGMPBatchNo + '\n' + '汇总进度：' + item.FSumQty
-					 + '/' + item.FICMOQty" isshowprogress
+					 + '/' + item.FICMOQty + '     ' + item.FSumQty/item.FOutPackPreQty + '件'" isshowprogress
 					 v-bind:percent="Math.round((item.FSumQty / item.FICMOQty) * 100, 0)" clickable
 					 v-on:click="GetProReportInfoExpand(item)">
 					</uni-list-item>
@@ -719,7 +719,7 @@
 			ClearBillHeadData: function(me) {
 				me.ProReportInterId = 0;
 				me.ProReportBillNo = '空';
-				me.ProReportSrcInterId = 0;
+				me.ProReportSrcInterId = 0;				
 				me.SelectWorkShopArray = [0, '请选择车间'];
 				me.SelectTeamArray = [0, '请选择班组'];
 				me.FinishDate = DateFormat({

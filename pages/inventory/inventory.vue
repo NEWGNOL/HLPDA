@@ -21,17 +21,20 @@
 		         </uni-table>
 		</scroll-view>
 		
-		<uni-popup ref="fillqty" type="center" :mask-click="false">
-			<uni-popup-dialog mode="input" message="成功消息" title="修改物料盘点数量" placeholder="请输入盘点数量" :duration="2000" :before-close="true" @close="ClosePopupWindow" 
-			@confirm="ClosePopupWindow"></uni-popup-dialog>			
-		</uni-popup>
+		<uni-popup ref="fillqty" type="center" :mask-click="false">			
+			<mod-fty mode="input" message="成功消息" v-bind:title="PopTitle" placeholder="请输入盘点数量" :duration="2000" :before-close="true" @close="ClosePopupWindowDirect" 
+			@confirm="ClosePopupWindow"></mod-fty>			
+		</uni-popup>	
 		
 		<button class="modifymaterialqty" v-on:click="ModifyMaterialQty()">修改物料数量</button>
 		<button class="addmaterial" v-on:click="AddMaterial()">新增物料</button>	
+		
+		<!-- <digit-keyboard @confirm="ClosePopupWindow" v-show="IsOpenDigitKeyboard"></digit-keyboard> -->
 	</view>
 </template>
 
 <script>
+	
 	import Config from '../../common/config.js';
 	export default {
 		data() {
@@ -44,8 +47,10 @@
 				ProcessModel: [],
 				WareHouseModel: [],
 				ProcessRecordModel: null,
+				PopTitle: '',
 				Main: '',
-				Receiver: ''
+				Receiver: '',
+				IsOpenDigitKeyboard: false
 			}
 		},
 		onLoad() {
@@ -88,7 +93,7 @@
 			//移除广播监听
 			RemoveListener: function() {
 				this.Main.unregisterReceiver(this.Receiver); //取消监听
-			},
+			},			
 			//扫描条码做盘点
 			ScanBarCode: function(Barcode) {
 				let me = this;				
@@ -332,18 +337,26 @@
 				   Config.PopAudioContext(false);
 				   return;				
 				}
-				this.$refs.fillqty.open();
+				this.PopTitle = this.ProcessRecordModel.FMaterialNumber + '/' + this.ProcessRecordModel.FModel
+				this.$refs.fillqty.open();	
+				//this.IsOpenDigitKeyboard = true;
+			},
+			//关闭弹窗
+			ClosePopupWindowDirect: function(e){
+				//console.log(this.$refs.fillqty);
+				this.$refs.fillqty.close();
 			},
 			//关闭弹窗
 			ClosePopupWindow: function(e){
 				//console.log(e);
-				this.$refs.fillqty.close();
+				this.$refs.fillqty.close();				
 				if(e == null || e == '' || e == 0){
 				   Config.ShowMessage('请填写要修改的物料数量！');
 				   Config.PopAudioContext(false);					
 				   return;
-				}				
-				
+				}	
+							
+				//this.IsOpenDigitKeyboard = false;
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -355,8 +368,10 @@
 							FStockId: this.WareHouseModel.FItemID,
 							FStockPlaceId: 0,	
 							FItemId: this.ProcessRecordModel.FItemID,
+							FInventoryQty: this.ProcessRecordModel.FQty,
 							FQty: e,
 							FBillerID: uni.getStorageSync('FUserId'),
+							FIsAddMaterial: false,
 							Result: 0,
 							Msg: ''
 						}

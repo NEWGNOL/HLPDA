@@ -167,7 +167,7 @@
 			this.styles = Object.assign({}, this.styles, this.pattern)
 		},
 		methods: {
-			_onClick() {
+			_onClick() {				
 				this.$emit('fabClick')
 				if (!this.popMenu) {
 					return
@@ -188,6 +188,7 @@
 					index,
 					item
 				})
+				this.close()
 			},
 			/**
 			 * 获取 位置信息
@@ -230,7 +231,7 @@
 
 	.uni-fab--leftBottom {
 		left: 5px;
-		bottom: 20px;
+		bottom: 50px;
 		/* #ifdef H5 */
 		left: calc(5px + var(--window-left));
 		bottom: calc(20px + var(--window-bottom));
@@ -284,7 +285,7 @@
 
 	.uni-fab__circle--leftBottom {
 		left: 15px;
-		bottom: 30px;
+		bottom: 60px;
 		/* #ifdef H5 */
 		left: calc(15px + var(--window-left));
 		bottom: calc(30px + var(--window-bottom));

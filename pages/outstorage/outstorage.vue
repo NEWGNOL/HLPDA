@@ -36,30 +36,42 @@
 		</view>
 		
 		
-		<view class="outstorageview" v-show="TabSelectedIndex == 1" @touchstart='TouchStart' @touchend='TouchEnd'>			
+		<view class="outstorageview" v-show="TabSelectedIndex == 1" @touchstart='TouchStart' @touchend='TouchEnd'>	
+		<!-- 	<view class="pagehead">
+				 <button class="auditstorageout" v-on:click="AuditStorageOut()">审核</button>
+				 <button class="deletestorageout" v-on:click="DeleteStorageOut()">删除</button>
+			     <text class="srcbillno">{{SelectSrcBillNo}}</text>				 
+				 
+				 <text class="scanprogresstitle">扫码进度：</text>
+				 <text class="scanprogress">{{ScanProgress}}</text>
+			</view> -->
 			<button class="auditstorageout" v-on:click="AuditStorageOut()">审核</button>
 			<button class="unauditstorageout" v-on:click="UnAuditStorageOut()">反审</button>
 			<button class="deletestorageout" v-on:click="DeleteStorageOut()">删除</button>
-			<button class="checkitem" v-on:click="OpenMatPopupWindow()">校验</button>
+			<!-- <button class="checkitem" v-on:click="OpenMatPopupWindow()">校验</button> -->
 			
-			      <view class="billhead" v-show="IsBillHeadVisible">
-			      <text class="title">单据编号：</text>
-			      <text class="billnoempty">{{StorageOutBillNo}}</text>
-			      <view class="dataline"></view>
+		    <view class="billhead" v-show="IsBillHeadVisible">
+		    <text class="title">单据编号：</text>
+		    <text class="billnoempty">{{StorageOutBillNo}}</text>
+			<view class="dataline"></view>
 					  
-			      <text class="title">出库日期：</text>
-			      <picker mode="date" :value="OutStorageDate" :start="StartDate" :end="EndDate"
-				  @change="OutStorageDateChange">
-				  <view class="data">{{OutStorageDate}}</view>
-			      </picker>
-			      <view class="dataline"></view>
+		    <text class="title">出库日期：</text>
+			<picker mode="date" :value="OutStorageDate" :start="StartDate" :end="EndDate"
+			@change="OutStorageDateChange">
+			<view class="data">{{OutStorageDate}}</view>
+			</picker>
+			<view class="dataline"></view>
 									
-				  <text class="title">源单编号：</text>
-				  <view class="data">{{SelectSrcBillNo}}</view>
-				  <view class="dataline"></view>				
+			<text class="title">源单编号：</text>
+			<view class="data">{{SelectSrcBillNo}}</view>
+			<view class="dataline"></view>
+								  
+			<text class="title">扫码进度：</text>
+			<view class="data">{{ScanProgress}}</view>
+			<view class="dataline"></view>					  
 			</view>
 			
-			<scroll-view class="selectinfoscrollview" v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}"
+			<!-- <scroll-view class="selectinfoscrollview" v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}"
 				scroll-y="true">
 				<uni-list>
 					<fill-qty v-for="(item,index) in BillGroupData" :key="index" :title="item.FNumber 
@@ -69,10 +81,24 @@
 					+ '件' + '\n' + '实发数量：'+ item.FRealSendQty + '只/' 
 					+ (item.FRealSendQty/item.FInPackPreQty).toFixed(2) + '件'" 
 					v-bind:percent="Math.round((item.FRealSendQty / item.FShouldSendQty) * 100, 0)" 
-					isshowprogress clickable v-on:click="GetBillInfoExpand(item)" @ButtonClick="OpenQtyPopupWindow(index)">
+					isshowprogress clickable v-on:click="GetSelectGroupModel(item)" @ButtonClick="OpenQtyPopupWindow(index)">
 					</fill-qty>
 				</uni-list>
-			</scroll-view>
+			</scroll-view> -->
+			
+			<scroll-view :scroll-top="ScrollTop" class="selectinfoscrollview" v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}"
+				scroll-y="true" @scroll="Scroll">
+				<uni-list>
+					<fill-qty v-for="(item,index) in BillGroupData" :key="index" :title="item.FModel 
+			 		+ '/' + item.FNumber" :note="	+ '\n' + item.FShouldSendQty + '只/'
+			        + (item.FShouldSendQty/item.FInPackPreQty).toFixed(2)
+			        + '件' + '\n' + item.FRealSendQty + '只/' 
+			        + (item.FRealSendQty/item.FInPackPreQty).toFixed(2) + '件'" :rownumber="index + 1"
+					v-bind:percent="Math.round((item.FRealSendQty / item.FShouldSendQty) * 100, 0)" 
+					isshowprogress clickable v-on:click="GetSelectGroupModel(item)" @ButtonClick="OpenQtyPopupWindow(index)">
+					</fill-qty>
+				</uni-list>
+			</scroll-view>					
 		</view>
 		
 		
@@ -105,14 +131,16 @@
 		
 		
 		<uni-popup ref="material" type="center" :mask-click="false">
-			<uni-popup-dialog mode="input" message="成功消息" title="校验物料" placeholder="请输入物料编码" :duration="2000" :before-close="true" @close="CloseMatPopupWindowDirect" 
-			@confirm="CloseMatPopupWindow"></uni-popup-dialog>			
+			<mod-fty mode="input" message="成功消息" title="校验物料" placeholder="请输入物料编码" :duration="2000" :before-close="true" @close="CloseMatPopupWindowDirect" 
+			@confirm="CloseMatPopupWindow"></mod-fty>			
 		</uni-popup>
 		
 		<uni-popup ref="qty" type="center" :mask-click="false">
-			<uni-popup-dialog mode="input" message="成功消息" title="修改数量" placeholder="请输入实发数量" :duration="2000" :before-close="true" @close="CloseQtyPopupWindowDirect" 
-			@confirm="CloseQtyPopupWindow"></uni-popup-dialog>			
+			<mod-fty mode="input" message="成功消息" title="修改数量" placeholder="请输入实发数量" :duration="2000" :before-close="true" @close="CloseQtyPopupWindowDirect" 
+			@confirm="CloseQtyPopupWindow"></mod-fty>			
 		</uni-popup>
+		
+		<!-- <digit-keyboard class="keyboard" @confirm="CloseQtyPopupWindow" v-show="IsOpenDigitKeyboard"></digit-keyboard> -->
 	</view>
 </template>
 
@@ -133,8 +161,10 @@
 				SelectItems: '',
 				TabSelectedIndex: 0,
 				TouchStartX: 0,
+				ScrollTop: 0,
 				IsAddStorageOut: true,
 				IsScanSEOrder: true,
+				IsOpenDigitKeyboard: false,
 				OutStorageDate: DateFormat({
 					format: true
 				}),
@@ -145,16 +175,17 @@
 				QtyExceptionList: [],
 				IsBillHeadVisible: true,
 				SelectCustomerArray: [0, '空'],
+				ScanProgress: '空',
 				Main: '',
 				Receiver: ''
 			}
 		},
 		onShow() {
-			this.ShowBillGroupInfo();			
+			this.ShowBillGroupInfo();				
 		},
 		onLoad() {	
-			this.AddListener();
-			this.ShowBillInfo('');
+			this.AddListener();			
+			this.ShowBillInfo('');			
 		},
 		onUnload() {
 			this.RemoveListener();
@@ -163,6 +194,17 @@
 			this.SwitchBillHeadVisible();
 		},
 		methods:{
+			SwitchLoadingStatus: function(IsOpenLoading){
+				if(IsOpenLoading){
+					uni.showLoading({
+						title: 'Loading',
+						mask: true
+					});
+				}
+				else{
+					uni.hideLoading();
+				}				
+			},
 			//切换扫描模式
 			SwitchScanMode: function(){
 				this.IsScanSEOrder = !this.IsScanSEOrder;
@@ -236,6 +278,7 @@
 			OpenQtyPopupWindow: function(index){
 				//console.log(index);
 				this.SelectGroupModel = this.BillGroupData[index];
+				//this.IsOpenDigitKeyboard = true;
 				this.$refs.qty.open();
 			},
 			CloseQtyPopupWindowDirect: function(e){
@@ -251,6 +294,7 @@
 				   return;
 				}				
 				
+				//this.IsOpenDigitKeyboard = false;
 				if(this.IsScanSEOrder){
 				   uni.request({
 				      	url: uni.getStorageSync('OtherUrl'),
@@ -297,7 +341,7 @@
 				      		}
 				      		Config.ShowMessage(ResultData.dataparam.Msg);
 				      		Config.PopAudioContext(true);	
-				      		this.ShowBillGroupInfo();											
+				      		this.ShowBillGroupInfo();																	
 				      	},
 				      	fail: () => {
 				      		Config.ShowMessage('请求数据失败！');
@@ -359,8 +403,8 @@
 					   		}
 					   		Config.ShowMessage(ResultData.dataparam.Msg);
 					   		Config.PopAudioContext(true);	
-					   		this.ShowBillGroupInfo();											
-					   	},
+					   		this.ShowBillGroupInfo();
+					    },
 					   	fail: () => {
 					   		Config.ShowMessage('请求数据失败！');					   	
 							Config.PopAudioContext(false);
@@ -376,6 +420,13 @@
 					   });  
 				}			
 			},
+			//滚动条滚动
+			Scroll: function(e){
+				// console.log(e);
+				// this.$nextTick(function(){
+				// 	this.ScrollTop = 0;
+				// })				
+			},
 			//获取手指滑动页面的起点
 			TouchStart: function(e) {
 				this.TouchStartX = e.changedTouches[0].clientX;
@@ -389,6 +440,19 @@
 				if (TouchEndX - this.TouchStartX >= this.SlidingValue && this.TabSelectedIndex > 0) {
 					this.SlidingPage(false);
 				}
+			},
+			//清除单据头数据
+			ClearBillHeadData: function(me) {
+				me.StorageOutInterId = 0;
+				me.StorageOutBillNo = '空';
+				me.SelectSrcInterId = 0;
+				me.SelectSrcBillNo = '空';
+				me.SelectCustomerArray = [0, '空'];
+				me.ScanProgress = '空';
+				me.OutStorageDate = DateFormat({
+					format: true
+				});
+				me.BillGroupData = [];
 			},
 			//切换表头是否可见
 			SwitchBillHeadVisible: function() {
@@ -442,6 +506,17 @@
 			RemoveListener: function() {
 				this.Main.unregisterReceiver(this.Receiver); //取消监听
 			},
+			//统计单据数量
+			StatBillQty: function(){
+				let RealSendQty = 0;
+				let ShouldSendQty = 0;				
+				for(let i = 0; i < this.BillGroupData.length; i++){	
+					let DataModel = this.BillGroupData[i];					
+					RealSendQty += parseFloat((DataModel.FRealSendQty/DataModel.FInPackPreQty).toFixed(2));
+					ShouldSendQty += parseFloat((DataModel.FShouldSendQty/DataModel.FInPackPreQty).toFixed(2));						
+				}
+				this.ScanProgress = RealSendQty.toFixed(2) + '/' + ShouldSendQty.toFixed(2) + '     件';
+			},
 			//扫描条码做出库
 			ScanBarCode: function(Barcode) {
 				if (this.StorageOutBillNo == '空') {
@@ -478,7 +553,7 @@
 				      		}
 				      	},
 				      	success: (result) => {
-				      		console.log(result.data);
+				      		//console.log(result.data);
 				      		let ResultCode = result.data.ResultCode;
 				      		let ResultMsg = result.data.ResultMsg;
 				      		if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
@@ -495,7 +570,7 @@
 				      		}
 				      		Config.ShowMessage(ResultData.dataparam.Msg);
 				      		Config.PopAudioContext(true);	
-				      		this.ShowBillGroupInfo();											
+				      		this.ShowBillGroupInfoByScan(Barcode);																	
 				      	},
 				      	fail: () => {
 				      		Config.ShowMessage('请求数据失败！');
@@ -540,7 +615,7 @@
 					   		}
 					   	},
 					   	success: (result) => {
-					   		console.log(result.data);
+					   		//console.log(result.data);
 					   		let ResultCode = result.data.ResultCode;
 					   		let ResultMsg = result.data.ResultMsg;
 					   		if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
@@ -557,7 +632,7 @@
 					   		}
 					   		Config.ShowMessage(ResultData.dataparam.Msg);
 					   		Config.PopAudioContext(true);	
-					   		this.ShowBillGroupInfo();											
+					   		this.ShowBillGroupInfoByScan(Barcode);																
 					   	},
 					   	fail: () => {
 					   		Config.ShowMessage('请求数据失败！');					   	
@@ -582,7 +657,7 @@
 				}				
 				this.SwitchTab(1);
 				this.AddStorageOutBillNo();
-				this.ShowBillGroupInfo();							
+				this.ShowBillGroupInfo();										
 			},
 			//查询销售出库单
 			QueryStorageOut:function(){
@@ -591,7 +666,7 @@
 					return;
 				}
 				this.SwitchTab(1);
-				this.ShowBillGroupInfo();				
+				this.ShowBillGroupInfo();
 			},
 			//新增入库单编号
 			AddStorageOutBillNo: function() {				
@@ -681,7 +756,7 @@
 				});
 			},
 			//根据状态显示对应单据列表
-			ShowSEOrderInfoByNoPutIn:function(BarCode){
+			ShowSEOrderInfoByNoPutIn:function(BarCode){		
 				uni.showLoading({
 					title: 'Loading',
 					mask: true
@@ -708,7 +783,7 @@
 							return;
 						}
 						this.BillListData = result.data.ResultData.GetPdaSEOrderNoPutInList
-							.data0;							
+							.data0;
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -855,8 +930,8 @@
 			//显示对应单据列表
 			ShowBillInfo:function(BarCode){
 				if (this.SelectStatus == '未出库') {
-					if(this.IsScanSEOrder){
-					   this.ShowSEOrderInfoByNoPutIn(BarCode);
+					if(this.IsScanSEOrder){					   
+					   this.ShowSEOrderInfoByNoPutIn(BarCode);					   
 					}
 					else{
 						this.ShowSEOutStockInfoByNoPutIn(BarCode);
@@ -975,8 +1050,9 @@
 							Config.ShowMessage('账号登录异常，请重新登录！');
 							Config.PopAudioContext(false);							
 						}						
-						this.BillGroupData = result.data.ResultData.GetPdaSEOrderGroupInfoByItemId.data0;	
+						this.BillGroupData = result.data.ResultData.GetPdaSEOrderGroupInfoByItemId.data0;						
 						this.GetBillSelectItem();
+						this.StatBillQty();	
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -1015,8 +1091,9 @@
 								Config.ShowMessage('账号登录异常，请重新登录！');
 								Config.PopAudioContext(false);							
 							}						
-							this.BillGroupData = result.data.ResultData.GetPdaSEOutStockGroupInfo.data0;	
-							this.GetBillSelectItem();											
+							this.BillGroupData = result.data.ResultData.GetPdaSEOutStockGroupInfo.data0;							
+							this.GetBillSelectItem();	
+							this.StatBillQty();											
 						},
 						fail: () => {
 							Config.ShowMessage('请求数据失败！');
@@ -1034,6 +1111,95 @@
 				}
 			}
 			},
+			//显示单据分组信息
+			ShowBillGroupInfoByScan: function(Barcode) {	
+				if(this.SelectSrcInterId != ''){
+					if(this.IsScanSEOrder){					
+					uni.showLoading({
+						title: 'Loading',
+						mask: true
+					});
+					uni.request({
+						url: uni.getStorageSync('OtherUrl'),
+						method: 'POST',
+						data: {
+							ModuleCode: 'getPdaSEOrderGroupByItemIdScan',
+							token: uni.getStorageSync('token'),
+							ModuleParam: {
+								FIndexIdList: this.SelectSrcInterId,
+								FPackBarcode: Barcode								
+							}
+						},
+						success: (result) => {
+							//console.log(result.data);
+							let ResultCode = result.data.ResultCode;
+							let ResultMsg = result.data.ResultMsg;
+							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+								Config.ShowMessage('账号登录异常，请重新登录！');
+								Config.PopAudioContext(false);							
+							}						
+							this.BillGroupData = result.data.ResultData.GetPdaSEOrderGroupByItemIdScan.data0;	
+							this.GetBillSelectItem();
+							this.StatBillQty();	
+						},
+						fail: () => {
+							Config.ShowMessage('请求数据失败！');
+							Config.PopAudioContext(false);						
+						},
+						complete: (resultcomp) => {
+							let ResultMsg = resultcomp.data.ResultMsg;
+							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+								Config.ShowMessage(ResultMsg);
+								Config.PopAudioContext(false);						
+							}
+							uni.hideLoading();
+						}
+					});
+					}
+					else{
+						uni.showLoading({
+							title: 'Loading',
+							mask: true
+						});
+						uni.request({
+							url: uni.getStorageSync('OtherUrl'),
+							method: 'POST',
+							data: {
+								ModuleCode: 'getPdaSEOutStockGroupItemScan',
+								token: uni.getStorageSync('token'),
+								ModuleParam: {
+									FIndexIdList: this.SelectSrcInterId,
+									FPackBarcode: Barcode
+								}
+							},
+							success: (result) => {
+								//console.log(result.data);
+								let ResultCode = result.data.ResultCode;
+								let ResultMsg = result.data.ResultMsg;
+								if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+									Config.ShowMessage('账号登录异常，请重新登录！');
+									Config.PopAudioContext(false);							
+								}						
+								this.BillGroupData = result.data.ResultData.GetPdaSEOutStockGroupItemScan.data0;	
+								this.GetBillSelectItem();
+								this.StatBillQty();	
+							},
+							fail: () => {
+								Config.ShowMessage('请求数据失败！');
+								Config.PopAudioContext(false);						
+							},
+							complete: (resultcomp) => {
+								let ResultMsg = resultcomp.data.ResultMsg;
+								if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+									Config.ShowMessage(ResultMsg);
+									Config.PopAudioContext(false);						
+								}
+								uni.hideLoading();
+							}
+						});
+					}
+				}
+			},
 			//获取选中单据的物料信息
 			GetBillSelectItem:function(){
 				this.SelectItems = '';
@@ -1042,11 +1208,7 @@
 					this.SelectItems += DataModel.FItemID + ',';					
 				}
 				this.SelectItems = this.SelectItems.substr(0, this.SelectItems.length - 1);					
-			},
-			//获取单据的扩展信息
-			GetBillInfoExpand:function(item){				
-				this.GetSelectGroupModel(item);
-			},
+			},			
 			//删除销售出库单
 			DeleteStorageOut: function() {
 				let me = this;
@@ -1088,11 +1250,12 @@
 						   				Config.ShowMessage(DataParam.Msg);
 						   				Config.PopAudioContext(false);										
 						   				return;
-						   			}
-						   			//me.ClearBillHeadData(me);
-						   			me.GetBillInfoExpand(null);
+						   			}						   			
 						   			Config.ShowMessage(DataParam.Msg);
-						   			Config.PopAudioContext(true);									
+						   			Config.PopAudioContext(true);	
+									me.ClearBillHeadData(me);
+									me.GetSelectGroupModel(null);	
+									me.SwitchTab(0);								
 						   	},
 						       fail: () => {
 						   		    Config.ShowMessage('请求数据失败！');
@@ -1585,13 +1748,13 @@
 	
 	.selectinfoscrollview {
 		width: 100%;
-		height: 670upx;
+		height: 600upx;
 		margin-top: 50upx;
 	}
 	
 	.unselectinfoscrollview {
 		width: 100%;
-		height: 750upx;
+		height: 900upx;
 		margin-top: 50upx;
 	}
 	
@@ -1634,39 +1797,69 @@
 	}
 	
 	.auditstorageout {
-		width: 20%;
+			width: 20%;
+			color: #FFFFFF;
+			background-color: #007AFF;
+			border-radius: 50upx;
+			margin-left: 10upx;
+			margin-top: 30upx;
+		}
+		
+		.unauditstorageout {
+			width: 20%;
+			color: #FFFFFF;
+			background-color: #007AFF;
+			border-radius: 50upx;
+			margin-left: 210upx;
+			margin-top: -96upx;
+		}
+		
+		.deletestorageout {
+			width: 20%;
+			color: #FFFFFF;
+			background-color: #007AFF;
+			border-radius: 50upx;
+			margin-left: 400upx;
+			margin-top: -96upx;
+		}
+		
+		.checkitem {
+			width: 20%;
+			color: #FFFFFF;
+			background-color: #007AFF;
+			border-radius: 50upx;
+			margin-left: 590upx;
+			margin-top: -96upx;
+		}
+	
+	.pagehead{	     
+		width: 100%;
+		background-color: #007AFF;	
+		margin-top: 10upx;	
+	}
+	
+	.srcbillno{	
+		display: flex;		
 		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 10upx;
+		font-size: 18px;
+		padding-left: 20upx;
+		margin-top: -70upx;
+	}
+	
+	.scanprogresstitle{	
+		display: flex;	
+		color: #FFFFFF;
+		font-size: 18px;
+		padding-left: 20upx;
 		margin-top: 30upx;
 	}
 	
-	.unauditstorageout {
-		width: 20%;
+	.scanprogress{
+		display: flex;	
 		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 210upx;
-		margin-top: -96upx;
-	}
-	
-	.deletestorageout {
-		width: 20%;
-		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 400upx;
-		margin-top: -96upx;
-	}
-	
-	.checkitem {
-		width: 20%;
-		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 590upx;
-		margin-top: -96upx;
+		font-size: 18px;	
+		margin-left: 250upx;
+		margin-top: -55upx;
 	}
 	
 	.billhead {
@@ -1805,5 +1998,9 @@
 		border-color: #888888;
 		margin-left: 170upx;
 		margin-top: -55upx;
+	}
+	
+	.keyboard{
+		display: flex;
 	}
 </style>

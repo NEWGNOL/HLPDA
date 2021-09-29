@@ -15,7 +15,7 @@
 						                  <uni-th align="center">仓库</uni-th>
 										  <uni-th align="center">数量</uni-th>
 								   </uni-tr>
-						           <uni-tr v-for="item in InventoryList" :key="item.FItemID">
+						           <uni-tr v-for="item in InventoryList" :key="item.FIndex">
 								          <uni-td>{{item.FStockName}}</uni-td>	
 										  <uni-td>{{item.FQty + item.FUnitName}}</uni-td>
 								   </uni-tr>			

@@ -14,6 +14,11 @@
 		
 		<text class="title">盘点数量：</text>
 		<input class="qty" v-model="InventoryQty"/>
+		<!-- <view class="data" @click="OpenPopupWindow">{{InventoryQty}}</view>
+		<view class="dataline"></view> -->
+		
+		
+		<!-- <digit-keyboard @confirm="ClosePopupWindow" v-show="IsOpenDigitKeyboard"></digit-keyboard> -->
 	</view>
 </template>
 
@@ -25,7 +30,8 @@
 				ProcessModel: [],
 				WareHouseModel: [],						
 				MaterialArray: [0,'请选择物料','',''],				
-				InventoryQty: 0
+				InventoryQty: 0,
+				IsOpenDigitKeyboard: false
 			}
 		},
 		onLoad() {			
@@ -35,6 +41,15 @@
 			this.AddInventoryList();
 		},
 		methods: {	
+			//打开弹窗
+			OpenPopupWindow: function(){			
+				//this.IsOpenDigitKeyboard = true;
+			},
+			//关闭弹窗
+			ClosePopupWindow: function(e){
+				this.InventoryQty = e;
+				//this.IsOpenDigitKeyboard = false;
+			},
 			//获取上个页面信息
 			GetLastPageInfo:function(){
 				let Pages = getCurrentPages();
@@ -73,8 +88,10 @@
 							FStockId: this.WareHouseModel.FItemID,
 							FStockPlaceId: 0,	
 							FItemId: this.MaterialArray[0],
+							FInventoryQty: 0,
 							FQty: this.InventoryQty,
 							FBillerID: uni.getStorageSync('FUserId'),
+							FIsAddMaterial: true,
 							Result: 0,
 							Msg: ''
 						}

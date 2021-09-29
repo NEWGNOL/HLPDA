@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import App from './App'
+import DigitKeyboard from './components/digit-keyboard/digit-keyboard.vue' 
 
 Vue.config.productionTip = false
+Vue.component('digitKeyboard', DigitKeyboard)  
 
 App.mpType = 'app'
 

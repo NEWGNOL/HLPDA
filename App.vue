@@ -15,7 +15,7 @@
 <style>
 	/*每个页面公共css */
 	/*每个页面的容器样式*/
-	.container {
+	.container {		
 		display: flex;
 		flex-direction: column;
 		align-items: center;

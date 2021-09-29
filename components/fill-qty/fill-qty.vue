@@ -21,14 +21,16 @@
 				</slot>
 				<slot name="body">
 					<view class="uni-list-item__content"
-						:class="{ 'uni-list-item__content--center': thumb || showExtraIcon || showBadge || showSwitch }">						
+						:class="{ 'uni-list-item__content--center': thumb || showExtraIcon || showBadge || showSwitch }">	
+						<view class="uni-list-item_rownumber">
+							<text class="rownumber">{{rownumber}}</text>
+						</view>						
 						<text v-if="title" class="uni-list-item__content-title"
 							:class="[ellipsis !== 0 && ellipsis <= 2 ? 'uni-ellipsis-' + ellipsis : '']">{{ title }}</text>
-						<text v-if="note" class="uni-list-item__content-note">{{ note }}</text>
-						<!-- <text class="inputsectiontitle">实发数量：</text> -->											
-						<button class="fillqty" v-on:click="buttonclick()">修改</button>	
+						<text v-if="note" class="uni-list-item__content-note">{{ note }}</text>															
+						<button class="fillqty" v-on:click="buttonclick()">改</button>	
 						<cmd-progress class="progress" v-show="isshowprogress" v-bind:percent="percent"></cmd-progress>						
-					</view>									
+						</view>									
 				</slot>
 				<slot name="footer">
 					<view v-if="rightText || showBadge || showSwitch" class="uni-list-item__extra"
@@ -183,7 +185,11 @@
 			border: {
 				type: Boolean,
 				default: true
-			}					
+			},
+			rownumber: {
+				type: [Number],
+				default: 0
+			}				
 		},
 		// inject: ['list'],
 		data() {
@@ -344,21 +350,31 @@
 		justify-content: space-between;
 		overflow: hidden;
 	}
+	
+	.uni-list-item_rownumber{
+		padding-right: 8upx;
+		height: 50upx;
+		width: 50upx;
+		background-color: #CCCCCC;		
+	}
 
 	.uni-list-item__content--center {
 		justify-content: center;
 	}
 
 	.uni-list-item__content-title {
-		font-size: 16px;
+		margin-top: -60upx;
+		padding-left: 100upx;
+		font-size: 20px;		
 		color: #3b4144;
 		overflow: hidden;
 	}
 
 	.uni-list-item__content-note {
 		margin-top: 6rpx;
+		padding-left: 100upx;
 		color: #000;
-		font-size: 18px;
+		font-size: 20px;
 		overflow: hidden;
 	}
 
@@ -483,13 +499,18 @@
 		margin-top: 10upx;
 	}
 	
-	.fillqty{
-		position: absolute;
-		width: 18%;
-		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
+	.fillqty{		
+		width: 13%;		
+		font-size: 16px;
+		background-color: #007AFF;		
 		margin-left: 550upx;
-		margin-top: 0upx;
+		margin-top: -80upx;
+	}
+	
+	.rownumber{
+		padding-left: 5upx;
+		font-size: 15px;
+		text-align: center;
+		display: block;		
 	}
 </style>

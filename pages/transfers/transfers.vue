@@ -19,10 +19,10 @@
 
 
 		<view class="transfersview" v-show="TabSelectedIndex == 1">
-			<button class="addtransfers" v-on:click="AddTransfers()">新增</button>
+			<!-- <button class="addtransfers" v-on:click="AddTransfers()">新增</button>
 			<button class="audittransfers" v-on:click="AuditTransfers()">审核</button>
 			<button class="unaudittransfers" v-on:click="UnAuditTransfers()">反审</button>
-			<button class="deletetransfers" v-on:click="DeleteTransfers()">删除</button>
+			<button class="deletetransfers" v-on:click="DeleteTransfers()">删除</button> -->
 			<!-- <button class="scancartonbarcode" v-bind:class="{scanwarehousebarcode : IsScanCartonBarCode}" v-on:click="SwitchScanMode()">{{IsScanCartonBarCode ? '扫外箱' : '扫仓库'}}</button> -->
 
 			<view class="billhead" v-show="IsBillHeadVisible">
@@ -66,12 +66,15 @@
 					</uni-list-item>
 				</uni-list>
 			</scroll-view>
+			
+			<uni-fab horizontal="left" vertical="bottom" direction="vertical" :content="FabArray" @trigger="FabTrigger">
+			</uni-fab>
 		</view>
 
 
 		<view class="transfersview" v-show="TabSelectedIndex == 2">
 			<button class="selectlabel" v-on:click="SelectAllLabel()">全选/反选</button>
-			<button class="deletelabel" v-on:click="DeleteSelectLabel()">删除</button>
+			<button class="deletelabel" v-on:click="SelectLabel()">删除</button>
 
 			<scroll-view class="detailscrollview" scroll-y="true">
 				<uni-list>
@@ -105,6 +108,32 @@
 				SearchValue: '',
 				SelectStatus: '未审核',
 				StatusArray: ['未审核', '已审核', '全部'],
+				FabArray: [
+					{
+						iconPath: '/static/addnew.png',
+						selectedIconPath: '/static/addnewhl.png',
+						text: '新增',
+						active: false
+					},
+					{
+						iconPath: '/static/audit.png',
+						selectedIconPath: '/static/audithl.png',
+						text: '审核',
+						active: false
+					},
+					{
+						iconPath: '/static/unaudit.png',
+						selectedIconPath: '/static/unaudithl.png',
+						text: '反审',
+						active: false
+					},
+					{
+						iconPath: '/static/delete.png',
+						selectedIconPath: '/static/deletehl.png',
+						text: '删除',
+						active: false
+					}
+				],
 				SelectBillModel: null,
 				SelectGroupModel: null,
 				TabSelectedIndex: 1,
@@ -124,8 +153,8 @@
 				DetailListData: [],
 				TransfersFManagerArray: [0,'请选择验收人'],
 				TransfersSManagerArray: [0,'请选择保管人'],
-				DCStockArray: [0,'请选择调入仓库'],
-				SCStockArray: [0,'请选择调出仓库'],
+				DCStockArray: [0,'请扫描调入仓库'],
+				SCStockArray: [0,'请扫描调出仓库'],
 				IsBillHeadVisible: true,
 				IsSearchFManager: true,
 				IsScanCartonBarCode: false,
@@ -145,6 +174,31 @@
 			this.SwitchBillHeadVisible();
 		},
 		methods: {
+			//悬浮按钮触发
+			FabTrigger: function(e){
+				//console.log(e);				
+				for(let i = 0; i < this.FabArray.length; i++){
+					if(e.index == i){
+					   this.FabArray[i].active = true;
+					}
+					else{
+					   this.FabArray[i].active = false;
+					}
+				}
+				
+				if(e.index == 0){
+				   this.AddTransfers();
+				}
+				else if(e.index == 1){
+				   this.AuditTransfers();
+				}
+				else if(e.index == 2){
+				   this.UnAuditTransfers();
+				}
+				else{
+				   this.DeleteTransfers();
+				}
+			},
 			//切换表头是否可见
 			SwitchBillHeadVisible: function() {
 				this.IsBillHeadVisible = !this.IsBillHeadVisible;
@@ -227,7 +281,8 @@
 				});
 				this.TransfersFManagerArray = [0,'请选择验收人'];
 				this.TransfersSManagerArray = [0,'请选择保管人'];
-				this.DCStockArray = [0,'请选择调入仓库'];
+				this.DCStockArray = [0,'请扫描调入仓库'];
+				this.SCStockArray = [0,'请扫描调出仓库'];
 				this.InfoListData = [];
 				this.DetailListData = [];
 			},
@@ -252,19 +307,19 @@
 				}
 							
 				if(this.DCStockArray[0] == 0){
-					Config.ShowMessage('请选择调入仓库！');
+					Config.ShowMessage('请扫描调入仓库！');
 					Config.PopAudioContext(false);
 					return;
 				}
 								
 				if(this.SCStockArray[0] == 0){
-					Config.ShowMessage('请选择调出仓库！');
+					Config.ShowMessage('请扫描调出仓库！');
 					Config.PopAudioContext(false);
 					return;
 				}
 				
 				if(this.DCStockArray[0] != 0 && this.SCStockArray[0] != 0 && this.DCStockArray[0] == this.SCStockArray[0]){
-					Config.ShowMessage('调入仓库和调出仓库不能一致，请重新选择！');
+					Config.ShowMessage('调入仓库和调出仓库不能一致，请重新扫描！');
 					Config.PopAudioContext(false);
 					return;
 				}
@@ -516,7 +571,8 @@
 							this.TransfersDate = item.FDate;
 							this.TransfersFManagerArray = [item.FFManagerID, item.FFManagerName];
 							this.TransfersSManagerArray = [item.FSManagerID, item.FSManagerName];
-							this.DCStockArray = [0,'请选择调入仓库'];
+							this.DCStockArray = [0,'请扫描调入仓库'];
+							this.SCStockArray = [0,'请扫描调出仓库'];
 						}						
 						this.InfoListData = result.data.ResultData.Allot5_5.data0;
 						this.TabSelectedIndex = 1;
@@ -597,7 +653,7 @@
 										return;
 									}
 									me.ClearBillData();
-									me.GetBillInfoExpand(null);
+									me.SwitchTab(0);
 									Config.ShowMessage(DataParam.Msg);
 									Config.PopAudioContext(true);
 								},
@@ -1018,7 +1074,7 @@
 
 	.billhead {
 		width: 100%;
-		margin-top: 50upx;
+		margin-top: 30upx;
 	}
 
 	.billnoempty {

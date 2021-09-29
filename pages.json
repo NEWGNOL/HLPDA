@@ -179,15 +179,15 @@
 		{
 			"path": "pages/outstorage/outstorage",
 			"style": {
-				"navigationBarTitleText": "销售出库",
+				"navigationBarTitleText": "销售出库",				
 				"app-plus":{
 				                  "titleNView":{
-				                  "titleColor":"FFFFFF",
+				                  "titleColor":"#FFFFFF",								  
 								  "buttons": [{
 								      "text": "隐藏表头",
 								      "fontSrc": "/static/fonts/icomoon.ttf",
 								      "fontSize": "17px",
-								  	  "color":"#FFFFFF",
+								  	  "color":"FFFFFF",
 								      "float": "right",
 								      "width": "90px"											
 								  }]							 
