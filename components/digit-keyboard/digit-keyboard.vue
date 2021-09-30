@@ -145,42 +145,52 @@
 	}
 	.input-area {
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		align-items: center;
 		padding: 10upx;
+		height: 70upx;
 		background: #FFFFFF;
-		.iteminput {			
-			font-size: 28upx;
-			&:nth-of-type(2) {  //选择器匹配属于父元素的特定类型的第 N 个子元素的每个元素
-				flex: 1 0 auto;
-				padding-right: 10upx;				
-			}
-			&:nth-of-type(3) {
-				font-size: 0;
-			}
-		}
-		.itembutton{
-			font-size: 28upx;
-			&:nth-of-type(2) {
-				flex: 1 0 auto;
-				padding-right: 10upx;
-			}			
-		}
-		.title{				
-			font-size: 20px;					
-			&:nth-of-type(2) {
-				flex: 1 0 auto;
-				padding-right: 10upx;
-			}			
-		}
-		
-		.input {			
-			background: #eeeeee;
-			text-indent: 10upx;
-			font-size: 20px;
-			height: 60upx;
-		}
 	}
+	
+	.title{
+		font-size: 20px;
+		margin-top: 5upx;
+		margin-left: -580upx;
+		// &:nth-of-type(2) {
+		// 	flex: 1 0 auto;
+		// 	padding-right: 10upx;
+		// }			
+	}
+	
+	.iteminput {
+		width: 60%;		
+		margin-left: -20upx;
+		//nth-of-type(n)代表选择器匹配属于父元素的特定类型的第 N 个子元素的每个元素
+		// &:nth-of-type(2) {  
+		// 	flex: 1 0 auto;
+		// 	padding-right: 10upx;				
+		// }
+		// &:nth-of-type(3) {
+		// 	font-size: 0;
+		// }
+	}
+	
+	.input {
+		background: #eeeeee;
+		text-indent: 10upx;
+		font-size: 20px;
+		height: 60upx;
+	}
+	
+	.itembutton{
+		margin-top: -60upx;
+		margin-left: 600upx;
+		// &:nth-of-type(2) {
+		// 	flex: 1 0 auto;
+		// 	padding-right: 10upx;
+		// }			
+	}
+	
 	.number-area {
 		display: flex;
 		justify-content: space-around;

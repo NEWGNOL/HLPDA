@@ -140,7 +140,7 @@
 			@confirm="CloseQtyPopupWindow"></mod-fty>			
 		</uni-popup>
 		
-		<!-- <digit-keyboard class="keyboard" @confirm="CloseQtyPopupWindow" v-show="IsOpenDigitKeyboard"></digit-keyboard> -->
+		<outstorage-keyboard class="keyboard" @confirm="CloseQtyPopupWindow" v-show="IsOpenDigitKeyboard"></outstorage-keyboard>
 	</view>
 </template>
 
@@ -278,23 +278,24 @@
 			OpenQtyPopupWindow: function(index){
 				//console.log(index);
 				this.SelectGroupModel = this.BillGroupData[index];
-				//this.IsOpenDigitKeyboard = true;
-				this.$refs.qty.open();
+				this.IsOpenDigitKeyboard = true;
+				//this.$refs.qty.open();
 			},
 			CloseQtyPopupWindowDirect: function(e){
-				this.$refs.qty.close();
+				//this.$refs.qty.close();
+				this.IsOpenDigitKeyboard = false;
 			},
 			//关闭数量弹窗
 			CloseQtyPopupWindow: function(e){
 				//console.log(e);
-				this.$refs.qty.close();
+				//this.$refs.qty.close();
 				if(e == null || e == '' || e == 0){
 				   Config.ShowMessage('请填写要修改的实发数量！');
 				   Config.PopAudioContext(false);					
 				   return;
 				}				
 				
-				//this.IsOpenDigitKeyboard = false;
+				this.IsOpenDigitKeyboard = false;
 				if(this.IsScanSEOrder){
 				   uni.request({
 				      	url: uni.getStorageSync('OtherUrl'),

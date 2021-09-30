@@ -29,7 +29,7 @@
 		<button class="modifymaterialqty" v-on:click="ModifyMaterialQty()">修改物料数量</button>
 		<button class="addmaterial" v-on:click="AddMaterial()">新增物料</button>	
 		
-		<digit-keyboard @confirm="ClosePopupWindow" @exit="ClosePopupWindowDirect" v-show="IsOpenDigitKeyboard"></digit-keyboard>
+		<inventory-keyboard @confirm="ClosePopupWindow" @exit="ClosePopupWindowDirect" v-show="IsOpenDigitKeyboard"></inventory-keyboard>
 	</view>
 </template>
 
