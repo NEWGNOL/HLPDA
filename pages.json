@@ -295,6 +295,36 @@
 					 }
 				}	
 			}			
+		},
+		{
+			"path": "pages/outsidetransfers/outsidetransfers",
+			"style": {
+				"navigationBarTitleText": "外部调拨",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF",
+							      "buttons": [{
+									       "text": "隐藏表头",
+									       "fontSrc": "/static/fonts/icomoon.ttf",
+									       "fontSize": "17px",
+									   	   "color":"#FFFFFF",
+									       "float": "right",
+									       "width": "90px"											
+									   }]	
+					 }
+				}	
+			}			
+		},
+		{
+			"path": "pages/outsidetransfers/cartonlabeldetail",
+			"style": {
+				"navigationBarTitleText": "外箱明细",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF"
+					 }
+			    }
+			}			
 		}
     ],
 	"globalStyle": {

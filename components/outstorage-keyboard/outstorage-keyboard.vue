@@ -30,7 +30,7 @@
 				<view class="item" @tap="modifyNum(9)">9</view>
 				<view class="item" @tap="modifyNum('minus')">减1</view>
 				<view class="item" @tap="modifyNum(0)">0</view>								
-				<view class="item" @tap="modifyNum('.')">.</view>
+				<view class="item" @tap="modifyNum('.')"></view>			
 				<view class="item" @tap="modifyNum('del')">删除</view>
 				<view class="item" @tap="modifyNum('clear')">清除</view>
 			</view>
@@ -102,9 +102,9 @@
 						val = '-' + val;
 					}
 				} else if (sign == '.') { //点符号
-					if (val.indexOf('.') == -1 && val.length > 0) {
-						val = val + '.';
-					}
+					// if (val.indexOf('.') == -1 && val.length > 0) {
+					// 	val = val + '.';
+					// }
 				} else {
 					if ((val == '0' && sign == '0') || (val == '-0' && sign == '0') || (val == '0' && sign != '.') || (val == '-0' && sign != '.')) {
 						return;

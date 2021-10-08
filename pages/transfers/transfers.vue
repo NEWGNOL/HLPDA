@@ -19,10 +19,10 @@
 
 
 		<view class="transfersview" v-show="TabSelectedIndex == 1">
-			<!-- <button class="addtransfers" v-on:click="AddTransfers()">新增</button>
+			<button class="addtransfers" v-on:click="AddTransfers()">新增</button>
 			<button class="audittransfers" v-on:click="AuditTransfers()">审核</button>
 			<button class="unaudittransfers" v-on:click="UnAuditTransfers()">反审</button>
-			<button class="deletetransfers" v-on:click="DeleteTransfers()">删除</button> -->
+			<button class="deletetransfers" v-on:click="DeleteTransfers()">删除</button>
 			<!-- <button class="scancartonbarcode" v-bind:class="{scanwarehousebarcode : IsScanCartonBarCode}" v-on:click="SwitchScanMode()">{{IsScanCartonBarCode ? '扫外箱' : '扫仓库'}}</button> -->
 
 			<view class="billhead" v-show="IsBillHeadVisible">
@@ -67,8 +67,8 @@
 				</uni-list>
 			</scroll-view>
 			
-			<uni-fab horizontal="left" vertical="bottom" direction="vertical" :content="FabArray" @trigger="FabTrigger">
-			</uni-fab>
+			<!-- <uni-fab horizontal="left" vertical="bottom" direction="vertical" :content="FabArray" @trigger="FabTrigger">
+			</uni-fab> -->
 		</view>
 
 
@@ -143,11 +143,9 @@
 				SelectItems: '',
 				SelectCartonLabel: '',
 				IsSelectAllLabel: false,
-				TransfersDate: DateFormat({
-					format: true
-				}),
-				StartDate: DateFormat('start'),
-				EndDate: DateFormat('end'),
+				TransfersDate: Config.DateFormat('now'),
+				StartDate: Config.DateFormat('start'),
+				EndDate: Config.DateFormat('end'),
 				TransfersListData: [],
 				InfoListData: [],
 				DetailListData: [],
@@ -276,9 +274,7 @@
 			ClearBillData: function() {
 				this.TransfersInterId = 0
 				this.TransfersBillNo = '空';
-				this.TransfersDate = DateFormat({
-					format: true
-				});
+				this.TransfersDate = Config.DateFormat('now');
 				this.TransfersFManagerArray = [0,'请选择验收人'];
 				this.TransfersSManagerArray = [0,'请选择保管人'];
 				this.DCStockArray = [0,'请扫描调入仓库'];
@@ -342,7 +338,11 @@
 							FDCSPID: 0,
 							FSCStockID: this.SCStockArray[0],
 							FSCSPID: 0,
-							FType: 10,
+							FSrcInterId: 0,
+							FType: 10,							
+							FItemId: 0,
+							FQty: 0,
+							FIsVirtual: false,
 							Result: 0,
 							Msg: ''
 						}
@@ -369,8 +369,7 @@
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);
-						return;
+						Config.PopAudioContext(false);						
 					},
 					complete: (resultcomp) => {
 						let ResultMsg = resultcomp.data.ResultMsg;
@@ -479,9 +478,7 @@
 						let DataModel = result.data.ResultData.Allot5_1.dataparam;
 						this.TransfersInterId = DataModel.FId;
 						this.TransfersBillNo = DataModel.FBillNo;
-						this.TransfersDate = DateFormat({
-							format: true,
-						});
+						this.TransfersDate = Config.DateFormat('now');
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -912,7 +909,7 @@
 									}
 									Config.ShowMessage(DataParam.Msg);
 									Config.PopAudioContext(true);
-									me.GetTransfersCartonDetail();
+									me.GetTransfersCartonDetail(null);
 								},
 								fail: () => {
 									Config.ShowMessage('请求数据失败！');
@@ -940,29 +937,6 @@
 				this.ShowTransfersInfo();
 			}
 		}
-	}
-
-	//获取选中的日期格式化
-	function DateFormat(type) {
-		const CurrentDate = new Date();
-		let Year = CurrentDate.getFullYear();
-		let Month = CurrentDate.getMonth() + 1;
-		let Day = CurrentDate.getDate();
-		let Hour = CurrentDate.getHours();
-		let Minute = CurrentDate.getMinutes();
-		let Second = CurrentDate.getSeconds();
-
-		if (type === 'start') {
-			Year = Year - 60;
-		} else if (type === 'end') {
-			Year = Year + 2;
-		}
-		Month = Month > 9 ? Month : '0' + Month;;
-		Day = Day > 9 ? Day : '0' + Day;
-		if (type != '') {
-			return `${Year}-${Month}-${Day}`;
-		}
-		return `${Year}-${Month}-${Day} ${Hour}:${Minute}:${Second}`;
 	}
 </script>
 
@@ -1010,16 +984,6 @@
 
 	.addtransfers {
 		width: 20%;
-		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 23upx;
-		margin-top: 20upx;
-	}
-
-	.addstorageout {
-		width: 20%;
-		uheight: 90upx;
 		color: #FFFFFF;
 		background-color: #007AFF;
 		border-radius: 50upx;

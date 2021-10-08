@@ -459,12 +459,12 @@
 	
 	.scrollviewinfo {
 		width: 100%;
-		height: 700upx;
+		height: 800upx;
 	}
 	
 	.tablebill{
 		width: 100%;
-		height: 700upx;
+		height: 790upx;
 		margin-top: 50upx;
 	}
 	
@@ -474,7 +474,7 @@
 		background-color: #007AFF;
 		border-radius: 50upx;
 		margin-left: 50upx;
-		margin-top: 150upx;
+		margin-top: 50upx;
 		font-size: 20px;
 	}
 	

@@ -39,8 +39,33 @@ const PopAudioContext=(IsSuccess)=>{
 	  //console.log(result.errMsg);
 	  //console.log(result.errCode);
     });
-};   
+}; 
+  
+//获取选中的日期格式化
+ const DateFormat=(type)=>{
+ 	const CurrentDate = new Date();
+ 	let Year = CurrentDate.getFullYear();
+ 	let Month = CurrentDate.getMonth() + 1;
+ 	let Day = CurrentDate.getDate();
+ 	let Hour = CurrentDate.getHours();
+ 	let Minute = CurrentDate.getMinutes();
+ 	let Second = CurrentDate.getSeconds();
+ 
+ 	if (type === 'start') {
+ 		Year = Year - 60;
+ 	} else if (type === 'end') {
+ 		Year = Year + 2;
+ 	}
+ 	Month = Month > 9 ? Month : '0' + Month;;
+ 	Day = Day > 9 ? Day : '0' + Day;
+ 	if (type != '') {
+ 		return `${Year}-${Month}-${Day}`;
+ 	}
+ 	return `${Year}-${Month}-${Day} ${Hour}:${Minute}:${Second}`;
+ };
+ 
 export default {		
 	ShowMessage,
-	PopAudioContext
+	PopAudioContext,
+	DateFormat
 }

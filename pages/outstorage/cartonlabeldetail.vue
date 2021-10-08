@@ -62,25 +62,23 @@
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
 						{	
 							Config.ShowMessage('账号登录异常，请重新登录！');
-							Config.PopAudioContext(false);							
+							Config.PopAudioContext(false);
+							uni.hideLoading();							
 							return;
 						}
-						this.DetailListData = result.data.ResultData.GetPdaStorageOutRptCartonList.data0;
-						uni.hideLoading();
+						this.DetailListData = result.data.ResultData.GetPdaStorageOutRptCartonList.data0;						
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');	
-						Config.PopAudioContext(false);						
-						uni.hideLoading();
-						return;
+						Config.PopAudioContext(false);					
 					},
 					complete: (resultcomp) => {
 					    let ResultMsg = resultcomp.data.ResultMsg;
 					    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 						Config.ShowMessage(ResultMsg);	
-						Config.PopAudioContext(false);						
-						uni.hideLoading();
+						Config.PopAudioContext(false);					
 					}
+					uni.hideLoading();
 				}
 				});	
 			},
@@ -163,16 +161,14 @@
 								},
 								fail: () => {	
 									Config.ShowMessage('请求数据失败！');	
-									Config.PopAudioContext(false);
-									return;
+									Config.PopAudioContext(false);									
 								},
 								complete: (resultcomp) => {
 					                let ResultMsg = resultcomp.data.ResultMsg;
 					                if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 									Config.ShowMessage(ResultMsg);	
-						            Config.PopAudioContext(false);						            
-						            uni.hideLoading();
-								}
+						            Config.PopAudioContext(false);					            
+						        }
 					        }
 							});	
 						} 
@@ -185,25 +181,25 @@
 
 <style>	
 	.scrollview{	
-		margin-top: 20rpx;
-		height: 1000rpx;		
+		margin-top: 20upx;
+		height: 1000upx;		
 	}
 	
 	.selectlabel{
 		width: 30%;
 		color: #FFFFFF;
 		background-color: #007AFF;		
-		border-radius: 50rpx;
-		margin-left: 150rpx;
-		margin-top: 20rpx;
+		border-radius: 50upx;
+		margin-left: 150upx;
+		margin-top: 20upx;
 	}
 	
 	.deletelabel{	
 		width: 20%;
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50rpx;
-		margin-right: 150rpx;
-		margin-top: -95rpx;
+		border-radius: 50upx;
+		margin-right: 150upx;
+		margin-top: -95upx;
 	}
 </style>

@@ -34,4 +34,8 @@
 		margin-top: -90upx;
 		margin-left: 570upx;
 	}
+	/* 键盘样式 */
+	.keyboard {
+		display: flex;
+	}
 </style>
