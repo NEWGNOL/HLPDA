@@ -50,11 +50,11 @@
 				<view class="dataline"></view>
 				
 				<text class="title">调入仓库：</text>
-				<view class="data" @click="SwitchScanType(1)">{{DCStockArray[1]}}</view>				
+				<view class="data" @click="SwitchScanType(1)" v-bind:class="{selectdata : ScanType == 1}">{{DCStockArray[1]}}</view>				
 				<view class="dataline"></view>
 				
 				<text class="title">调出仓库：</text>
-				<view class="data" @click="SwitchScanType(2)">{{SCStockArray[1]}}</view>				
+				<view class="data" @click="SwitchScanType(2)" v-bind:class="{selectdata : ScanType == 2}">{{SCStockArray[1]}}</view>				
 				<view class="dataline"></view>
 			</view>
 
@@ -78,10 +78,10 @@
 
 			<scroll-view class="detailscrollview" scroll-y="true">
 				<uni-list>
-					<uni-list-item v-for="(item,index) in DetailListData" :key="index" :title="'物料：' + item.FNumber + '/' 
-					+ item.FModel + '\n' + '外箱标签：'+ item.FPackBarcode + '\n' 
-			  		+ '数量：' + item.FQty" :checkboxvalue="item.FPackBarcode" :ischecked="item.FIsChecked" :isshowcheckbox="true"
-						@CheckBoxChange="ChangeIsChecked(item)" clickable></uni-list-item>
+					<uni-list-item v-for="(item,index) in DetailListData" :key="index" :title="item.FNumber + '/' 
+					+ item.FModel + '\n' + item.FPackBarcode + '\n' + item.FQty" 
+					:checkboxvalue="item.FPackBarcode" :ischecked="item.FIsChecked" :isshowcheckbox="true"
+					@CheckBoxChange="ChangeIsChecked(item)" clickable></uni-list-item>
 				</uni-list>
 			</scroll-view>
 		</view>
@@ -206,8 +206,7 @@
 				this.IsScanCartonBarCode = !this.IsScanCartonBarCode;
 			},
 			//切换扫描模式
-			SwitchScanType: function(ScanType){
-				//console.log(ScanType);
+			SwitchScanType: function(ScanType){				
 				this.ScanType = ScanType;
 			},
 			//切换搜索标识
@@ -340,8 +339,11 @@
 							FSCSPID: 0,
 							FSrcInterId: 0,
 							FType: 10,							
-							FItemId: 0,
-							FQty: 0,
+							FICItems: '',
+							FICItemByHand: 0,
+							FQtyByHand: 0,							
+							FShouldSendQty: 0,
+							FRealSendQty: 0,
 							FIsVirtual: false,
 							Result: 0,
 							Msg: ''
@@ -382,8 +384,8 @@
 			},	
 			//扫描仓库
 			ScanWareHouse: function(BarCode) {				
-				if (this.StorageInBillNo == '空') {
-					Config.ShowMessage('请新增或者选择入库单！');
+				if (this.TransfersBillNo == '空') {
+					Config.ShowMessage('请新增或选择调拨单！');
 					Config.PopAudioContext(false);					
 					return;
 				}
@@ -413,8 +415,8 @@
 							return;
 						}
 			
-						let DataModel = result.data.ResultData.getStockByNumberInfo.data0;
-						if(DataModel.FItemID == 0 || DataModel.FName == ''){
+						let DataModel = result.data.ResultData.getStockByNumberInfo.data0;						
+						if(DataModel.FItemID == undefined){
 							Config.ShowMessage('编码不属于仓库仓位！');
 							Config.PopAudioContext(false);
 							uni.hideLoading();
@@ -731,7 +733,7 @@
 			//审核调拨单
 			AuditTransfers: function() {
 				if (this.TransfersBillNo == '空') {
-					Config.ShowMessage('请新增调拨单！');
+					Config.ShowMessage('请新增或选择调拨单！');
 					Config.PopAudioContext(false);
 					return;
 				}
@@ -1068,6 +1070,10 @@
 		height: 5upx;
 		background-color: #4CD964;
 		margin-left: 250upx;
+	}
+	
+	.selectdata{
+		background-color: #007AFF;
 	}
 
 	.selecttab {

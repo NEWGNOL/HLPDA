@@ -52,12 +52,18 @@
 				<view class="dataline"></view>
 
 				<text class="title">调入仓库：</text>
-				<view class="data" @click="SwitchScanType(1)">{{DCStockArray[1]}}</view>
+				<navigator url="/pages/basic/stock" hover-class="navigator-hover">
+				     <view class="data" @click="SwitchScanType(1)">{{DCStockArray[1]}}</view>
+				</navigator>
 				<view class="dataline"></view>
+				<!-- @click="SwitchScanType(1)" v-bind:class="{selectdata : ScanType == 1}">{{DCStockArray[1]}} -->
 
 				<text class="title">调出仓库：</text>
-				<view class="data" @click="SwitchScanType(2)">{{SCStockArray[1]}}</view>
+				<navigator url="/pages/basic/stock" hover-class="navigator-hover">
+				     <view class="data" @click="SwitchScanType(2)">{{SCStockArray[1]}}</view>
+			    </navigator>
 				<view class="dataline"></view>
+				<!-- @click="SwitchScanType(2)" v-bind:class="{selectdata : ScanType == 2}">{{SCStockArray[1]}} -->
 			</view>
 
 			<scroll-view class="selectinfoscrollview" v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}"
@@ -143,6 +149,7 @@
 				TabSelectedIndex: 0,
 				SelectSEOutStockModel: null,
 				SelectGroupModel: null,
+				SelectItems: '',
 				SEOutStockListData: [],
 				GroupListData: [],
 				InfoListData: [],
@@ -155,14 +162,17 @@
 				EndDate: Config.DateFormat('end'),
 				TransfersFManagerArray: [0, '请选择验收人'],
 				TransfersSManagerArray: [0, '请选择保管人'],
-				DCStockArray: [0, '请扫描调入仓库'],
-				SCStockArray: [0, '请扫描调出仓库'],
+				DCStockArray: [0, '请选择调入仓库'],
+				SCStockArray: [0, '请选择调出仓库'],				
 				IsSearchFManager: true,
 				ScanType: 0, //0代表扫外箱，1代表扫调入仓库，2代表扫调出仓库
 				IsOpenDigitKeyboard: false,
 				Main: '',
 				Receiver: ''
 			}
+		},
+		onShow() {
+			this.GetSEOutStockByList();
 		},
 		onLoad() {
 			this.AddListener();
@@ -173,7 +183,7 @@
 		},
 		onNavigationBarButtonTap() {
 			this.SwitchBillHeadVisible();
-		},
+		},		
 		methods: {
 			//添加广播监听
 			AddListener: function() {
@@ -233,7 +243,7 @@
 			//切换搜索标识
 			SwitchSearchFlag: function(IsSearchFManager) {
 				this.IsSearchFManager = IsSearchFManager;
-			},
+			},			
 			GetTransCartonDetail: function(){
 				if(this.TransfersInterId != 0){
 					uni.showLoading({
@@ -266,19 +276,19 @@
 				}
 							
 				if(this.DCStockArray[0] == 0){
-					Config.ShowMessage('请扫描调入仓库！');
+					Config.ShowMessage('请选择调入仓库！');
 					Config.PopAudioContext(false);
 					return;
 				}
 								
 				if(this.SCStockArray[0] == 0){
-					Config.ShowMessage('请扫描调出仓库！');
+					Config.ShowMessage('请选择调出仓库！');
 					Config.PopAudioContext(false);
 					return;
 				}
 				
 				if(this.DCStockArray[0] != 0 && this.SCStockArray[0] != 0 && this.DCStockArray[0] == this.SCStockArray[0]){
-					Config.ShowMessage('调入仓库和调出仓库不能一致，请重新扫描！');
+					Config.ShowMessage('调入仓库和调出仓库不能一致，请重新选择！');
 					Config.PopAudioContext(false);
 					return;
 				}				
@@ -318,8 +328,11 @@
 							FSrcInterId: this.IsAddSEOutStock ? this.SelectSEOutStockModel.FInterID : 
 							this.SelectSEOutStockModel.FSrcInterId,
 							FType: 10,							
-							FItemId: this.SelectGroupModel.FItemID,
-							FQty: e,
+							FICItems: this.SelectItems,
+							FICItemByHand: this.SelectGroupModel.FItemID,
+							FQtyByHand: e,
+							FShouldSendQty: this.SelectGroupModel.FShouldSendQty,
+							FRealSendQty: this.SelectGroupModel.FRealSendQty,
 							FIsVirtual: true,
 							Result: 0,
 							Msg: ''
@@ -359,6 +372,15 @@
 					}
 				});
 			},
+			//获取选中单据的物料信息
+			GetBillSelectItem: function() {
+				this.SelectItems = '';
+				for (var i = 0; i < this.GroupListData.length; i++) {
+					let DataModel = this.GroupListData[i];
+					this.SelectItems += DataModel.FItemID + ',';
+				}
+				this.SelectItems = this.SelectItems.substr(0, this.SelectItems.length - 1);
+			},
 			GetSelectGroupModel: function(item) {
 				this.SelectGroupModel = item;
 			},
@@ -366,12 +388,12 @@
 			GetSelectSEOutStockByAdd: function() {				
 				let CheckCount = this.SEOutStockListData.filter(x => x.FIsChecked == true).length;
 				if (CheckCount == 0) {
-					Config.ShowMessage('请选择源单进行新增！');
+					Config.ShowMessage('请选择收料通知单进行新增！');
 					Config.PopAudioContext(false);
 					return 0;
 				}
 				if (CheckCount > 1) {
-					Config.ShowMessage('只能选择一张源单进行新增！');
+					Config.ShowMessage('只能选择一张收料通知单进行新增！');
 					Config.PopAudioContext(false);
 					return 0;
 				}
@@ -379,7 +401,7 @@
 			},
 			//获取选中的单据
 			GetSelectSEOutStockByQuery: function() {
-				let CheckCount = this.SEOutStockListData.filter(x => x.FIsChecked == true).length;
+				let CheckCount = this.SEOutStockListData.filter(x => x.FIsChecked).length;
 				if (CheckCount == 0) {
 					Config.ShowMessage('请选择调拨单进行查询！');
 					Config.PopAudioContext(false);
@@ -412,106 +434,113 @@
 					this.GroupListData = [];
 					this.SelectGroupModel = null;
 				}
-				this.DCStockArray = [0, '请扫描调入仓库'];
-				this.SCStockArray = [0, '请扫描调出仓库'];
+				this.DCStockArray = [0, '请选择调入仓库'];
+				this.SCStockArray = [0, '请选择调出仓库'];
 			},
 			//扫描条码做调拨
 			ScanBarCode: function(Barcode) {
-				if (this.TransfersBillNo == '空') {
-					Config.ShowMessage('请新增或选择调拨单！');
-					Config.PopAudioContext(false);
-					return;
-				}
-				if (this.TransfersFManagerArray[0] == 0) {
-					Config.ShowMessage('请选择验收人！');
-					Config.PopAudioContext(false);
-					return;
-				}
-				if (this.TransfersSManagerArray[0] == 0) {
-					Config.ShowMessage('请选择保管人！');
-					Config.PopAudioContext(false);
-					return;
-				}
-				if (this.DCStockArray[0] == 0) {
-					Config.ShowMessage('请扫描调入仓库！');
-					Config.PopAudioContext(false);
-					return;
-				}
-				if (this.SCStockArray[0] == 0) {
-					Config.ShowMessage('请扫描调出仓库！');
-					Config.PopAudioContext(false);
-					return;
-				}
-				if (this.DCStockArray[0] != 0 && this.SCStockArray[0] != 0 && this.DCStockArray[0] == this
-					.SCStockArray[0]) {
-					Config.ShowMessage('调入仓库和调出仓库不能一致，请重新扫描！');
-					Config.PopAudioContext(false);
-					return;
-				}
-
-				uni.request({
-					url: uni.getStorageSync('OtherUrl'),
-					method: 'POST',
-					data: {
-						ModuleCode: 'Allot5_2',
-						token: uni.getStorageSync('token'),
-						ModuleParam: {
-							FId: this.TransfersInterId,
-							FBillNo: this.TransfersBillNo,
-							FFManagerID: this.TransfersFManagerArray[0],
-							FSManagerID: this.TransfersSManagerArray[0],
-							FDate: this.TransfersDate,
-							FBillerID: uni.getStorageSync('FUserId'),
-							FPackBarCode: Barcode,
-							FDCStockID: this.DCStockArray[0],
-							FDCSPID: 0,
-							FSCStockID: this.SCStockArray[0],
-							FSCSPID: 0,
-							FSrcInterId: this.IsAddSEOutStock ? this.SelectSEOutStockModel.FInterID : this
-								.SelectSEOutStockModel.FSrcInterId,
-							FType: 10,
-							Result: 0,
-							Msg: ''
-						}
-					},
-					success: (result) => {
-						//console.log(result.data);
-						let ResultCode = result.data.ResultCode;
-						let ResultMsg = result.data.ResultMsg;
-						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-							Config.ShowMessage('账号登录异常，请重新登录！');
-							Config.PopAudioContext(false);
-							return;
-						}
-						let ResultData = result.data.ResultData.Allot5_2;
-						let Result = ResultData.dataparam.Result;
-						if (Result == 0) {
-							Config.ShowMessage(ResultData.dataparam.Msg);
-							Config.PopAudioContext(false);
-							return;
-						}
-						Config.ShowMessage(ResultData.dataparam.Msg);
-						Config.PopAudioContext(true);
-						this.GetSEOutStockByList();
-					},
-					fail: () => {
-						Config.ShowMessage('请求数据失败！');
+				if(this.SelectSEOutStockModel != null){
+					if (this.TransfersBillNo == '空') {
+						Config.ShowMessage('请新增或选择调拨单！');
 						Config.PopAudioContext(false);
 						return;
-					},
-					complete: (resultcomp) => {
-						let ResultMsg = resultcomp.data.ResultMsg;
-						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-							Config.ShowMessage(ResultMsg);
-							Config.PopAudioContext(false);
-						}
 					}
-				});
+					if (this.TransfersFManagerArray[0] == 0) {
+						Config.ShowMessage('请选择验收人！');
+						Config.PopAudioContext(false);
+						return;
+					}
+					if (this.TransfersSManagerArray[0] == 0) {
+						Config.ShowMessage('请选择保管人！');
+						Config.PopAudioContext(false);
+						return;
+					}
+					if (this.DCStockArray[0] == 0) {
+						Config.ShowMessage('请选择调入仓库！');
+						Config.PopAudioContext(false);
+						return;
+					}
+					if (this.SCStockArray[0] == 0) {
+						Config.ShowMessage('请选择调出仓库！');
+						Config.PopAudioContext(false);
+						return;
+					}
+					if (this.DCStockArray[0] != 0 && this.SCStockArray[0] != 0 && this.DCStockArray[0] == this
+						.SCStockArray[0]) {
+						Config.ShowMessage('调入仓库和调出仓库不能一致，请重新选择！');
+						Config.PopAudioContext(false);
+						return;
+					}
+					
+					uni.request({
+						url: uni.getStorageSync('OtherUrl'),
+						method: 'POST',
+						data: {
+							ModuleCode: 'Allot5_2',
+							token: uni.getStorageSync('token'),
+							ModuleParam: {
+								FId: this.TransfersInterId,
+								FBillNo: this.TransfersBillNo,
+								FFManagerID: this.TransfersFManagerArray[0],
+								FSManagerID: this.TransfersSManagerArray[0],
+								FDate: this.TransfersDate,
+								FBillerID: uni.getStorageSync('FUserId'),
+								FPackBarCode: Barcode,
+								FDCStockID: this.DCStockArray[0],
+								FDCSPID: 0,
+								FSCStockID: this.SCStockArray[0],
+								FSCSPID: 0,
+								FSrcInterId: this.IsAddSEOutStock ? this.SelectSEOutStockModel.FInterID : this
+									.SelectSEOutStockModel.FSrcInterId,
+								FType: 10,
+								FICItems: this.SelectItems,									
+								FICItemByHand: 0,
+								FQtyByHand: 0,							
+								FShouldSendQty: 0,
+								FRealSendQty: 0,							
+								Result: 0,
+								Msg: ''
+							}
+						},
+						success: (result) => {
+							//console.log(result.data);
+							let ResultCode = result.data.ResultCode;
+							let ResultMsg = result.data.ResultMsg;
+							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+								Config.ShowMessage('账号登录异常，请重新登录！');
+								Config.PopAudioContext(false);
+								return;
+							}
+							let ResultData = result.data.ResultData.Allot5_2;
+							let Result = ResultData.dataparam.Result;
+							if (Result == 0) {
+								Config.ShowMessage(ResultData.dataparam.Msg);
+								Config.PopAudioContext(false);
+								return;
+							}
+							Config.ShowMessage(ResultData.dataparam.Msg);
+							Config.PopAudioContext(true);
+							this.GetSEOutStockByList();
+						},
+						fail: () => {
+							Config.ShowMessage('请求数据失败！');
+							Config.PopAudioContext(false);
+							return;
+						},
+						complete: (resultcomp) => {
+							let ResultMsg = resultcomp.data.ResultMsg;
+							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+								Config.ShowMessage(ResultMsg);
+								Config.PopAudioContext(false);
+							}
+						}
+					});
+				}				
 			},
 			//扫描仓库
 			ScanWareHouse: function(BarCode) {
-				if (this.StorageInBillNo == '空') {
-					Config.ShowMessage('请新增或者选择入库单！');
+				if (this.TransfersBillNo == '空') {
+					Config.ShowMessage('请新增或者选择调拨单！');
 					Config.PopAudioContext(false);
 					return;
 				}
@@ -542,7 +571,7 @@
 						}
 
 						let DataModel = result.data.ResultData.getStockByNumberInfo.data0;
-						if (DataModel.FItemID == 0 || DataModel.FName == '') {
+						if (DataModel.FItemID == undefined) {
 							Config.ShowMessage('编码不属于仓库仓位！');
 							Config.PopAudioContext(false);
 							uni.hideLoading();
@@ -721,46 +750,49 @@
 				this.IsAddSEOutStock = this.SelectStatus == '未调拨' ? true : false;
 			},
 			GetSEOutStockByList: function() {
-				uni.showLoading({
-					title: 'Loading',
-					mask: true
-				});
-				uni.request({
-					url: uni.getStorageSync('OtherUrl'),
-					method: 'POST',
-					data: {
-						ModuleCode: 'GetPdaSEOutStockGroupByTrans',
-						token: uni.getStorageSync('token'),
-						ModuleParam: {
-							FInterID: this.IsAddSEOutStock ? this.SelectSEOutStockModel.FInterID : this
-								.SelectSEOutStockModel.FSrcInterId
-						}
-					},
-					success: (result) => {
-						//console.log(result.data);
-						let ResultCode = result.data.ResultCode;
-						let ResultMsg = result.data.ResultMsg;
-						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-							Config.ShowMessage('账号登录异常，请重新登录！');
+				if(this.SelectSEOutStockModel != null){
+					uni.showLoading({
+						title: 'Loading',
+						mask: true
+					});
+					uni.request({
+						url: uni.getStorageSync('OtherUrl'),
+						method: 'POST',
+						data: {
+							ModuleCode: 'GetPdaSEOutStockGroupByTrans',
+							token: uni.getStorageSync('token'),
+							ModuleParam: {
+								FInterID: this.IsAddSEOutStock ? this.SelectSEOutStockModel.FInterID : this
+									.SelectSEOutStockModel.FSrcInterId
+							}
+						},
+						success: (result) => {
+							//console.log(result.data);
+							let ResultCode = result.data.ResultCode;
+							let ResultMsg = result.data.ResultMsg;
+							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+								Config.ShowMessage('账号登录异常，请重新登录！');
+								Config.PopAudioContext(false);
+								return;
+							}
+							this.GroupListData = result.data.ResultData.GetPdaSEOutStockGroupByTrans
+								.data0;
+							this.GetBillSelectItem();
+						},
+						fail: () => {
+							Config.ShowMessage('请求数据失败！');
 							Config.PopAudioContext(false);
-							return;
+						},
+						complete: (resultcomp) => {
+							let ResultMsg = resultcomp.data.ResultMsg;
+							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+								Config.ShowMessage(ResultMsg);
+								Config.PopAudioContext(false);
+							}
+							uni.hideLoading();
 						}
-						this.GroupListData = result.data.ResultData.GetPdaSEOutStockGroupByTrans
-							.data0;
-					},
-					fail: () => {
-						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);
-					},
-					complete: (resultcomp) => {
-						let ResultMsg = resultcomp.data.ResultMsg;
-						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-							Config.ShowMessage(ResultMsg);
-							Config.PopAudioContext(false);
-						}
-						uni.hideLoading();
-					}
-				});
+					});
+				}				
 			},
 			//删除调拨单
 			DeleteTransfers: function() {
@@ -886,7 +918,7 @@
 			//审核调拨单
 			AuditTransfers: function() {
 				if (this.TransfersBillNo == '空') {
-					Config.ShowMessage('请新增调拨单！');
+					Config.ShowMessage('请新增或者选择调拨单！');
 					Config.PopAudioContext(false);
 					return;
 				}
@@ -985,7 +1017,7 @@
 		background-color: #007AFF;
 		border-radius: 50upx;
 		margin-left: 450upx;
-		margin-top: -96upx;
+		margin-top: -91upx;
 	}
 
 	.audittransfers {
@@ -1053,6 +1085,10 @@
 		height: 5upx;
 		background-color: #4CD964;
 		margin-left: 250upx;
+	}
+	
+	.selectdata{
+		background-color: #007AFF;
 	}
 
 	.selectinfoscrollview {

@@ -40,9 +40,14 @@
 			<text class="title">库存查询</text>
 		</view>	
 		
-		<view class="outsidetransfers" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[7].FIsAllow : true" @click="JumpPage('/pages/outsidetransfers/outsidetransfers')">
+		<view class="outsidetransfers" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[8].FIsAllow : true" @click="JumpPage('/pages/outsidetransfers/outsidetransfers')">
 			<image class="img" src="../../static/outsidetransfers.png" mode="aspectFit"></image>
 			<text class="title">外部调拨</text>
+		</view>	
+		
+		<view class="outsideinstorage" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[9].FIsAllow : true" @click="JumpPage('/pages/purchaseinstorage/outsideinstorage')">
+			<image class="img" src="../../static/outsideinstorage.png" mode="aspectFit"></image>
+			<text class="title">外购入库</text>
 		</view>	
 	</view>	
 </template>
@@ -208,6 +213,17 @@
 		border-radius: 25upx;	
 		text-align: center;
 		margin-left: -190upx;	
+		margin-top: 820upx;
+	}
+	
+	.outsideinstorage{
+		position: absolute;
+		width: 300upx;
+		height: 150upx;
+		background-color: #007AFF;
+		border-radius: 25upx;	
+		text-align: center;
+		margin-left: 190upx;	
 		margin-top: 820upx;
 	}
 	

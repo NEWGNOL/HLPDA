@@ -1731,7 +1731,7 @@
 	.billscrollview {
 		width: 100%;
 		height: 850upx;
-		margin-top: 20upx;
+		margin-top: 25upx;
 	}
 
 	.selectinfoscrollview {
@@ -1752,7 +1752,7 @@
 		background-color: #F0AD4E;
 		border-radius: 50upx;
 		margin-left: 50upx;
-		margin-top: 30upx;
+		margin-top: 20upx;
 	}
 
 	.scanseoutstockorder {
@@ -1770,8 +1770,8 @@
 		color: #FFFFFF;
 		background-color: #007AFF;
 		border-radius: 50upx;
-		margin-left: 350upx;
-		margin-top: -96upx;
+		margin-left: 340upx;
+		margin-top: -91upx;
 	}
 
 	.querystorageout {
@@ -1781,7 +1781,7 @@
 		background-color: #007AFF;
 		border-radius: 50upx;
 		margin-left: 550upx;
-		margin-top: -96upx;
+		margin-top: -91upx;
 	}
 
 	.auditstorageout {

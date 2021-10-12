@@ -50,16 +50,13 @@
 					},
 					fail: () => {
 						Config.PopAudioContext(false);
-						Config.ShowMessage('请求数据失败！');
-						return;
+						Config.ShowMessage('请求数据失败！');						
 					},
 					complete: (resultcomp) => {
 						let ResultMsg = resultcomp.data.ResultMsg;
 						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							Config.PopAudioContext(false);
-							Config.ShowMessage(ResultMsg);
-							uni.hideLoading();	
-							return;						
+							Config.ShowMessage(ResultMsg);												
 						}
 					}
 				})
@@ -69,12 +66,23 @@
 			},
 			ItemSelected: function(e) {
 				let Pages = getCurrentPages();
-				let PrevPage = Pages[Pages.length - 2]; //上一个页面		
+				let PrevPage = Pages[Pages.length - 2]; //上一个页面					
 				//#ifdef H5
 				PrevPage._data.SelectWareHouseArray = [e.FItemID, e.FName];
 				//#endif				
 				//#ifdef APP-PLUS
-				PrevPage.$vm.SelectWareHouseArray = [e.FItemID, e.FName];
+			    if(PrevPage.$vm.ScanType != 'undefined'){
+					let ScanType = PrevPage.$vm.ScanType;
+					if(ScanType == 1){
+					   PrevPage.$vm.DCStockArray = [e.FItemID, e.FName];
+					}
+					else{
+					   PrevPage.$vm.SCStockArray = [e.FItemID, e.FName];
+					}
+				}
+				else{
+					PrevPage.$vm.SelectWareHouseArray = [e.FItemID, e.FName];
+				}				
 				//#endif
 				uni.navigateBack();
 			}

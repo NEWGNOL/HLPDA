@@ -166,6 +166,25 @@
 			}
 		},
 		{
+			"path": "pages/purchaseinstorage/outsideinstorage",
+			"style": {
+				"navigationBarTitleText": "外购入库",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF",
+								  "buttons": [{
+								      "text": "隐藏表头",
+								      "fontSrc": "/static/fonts/icomoon.ttf",
+								      "fontSize": "17px",
+								  	  "color":"#FFFFFF",
+								      "float": "right",
+								      "width": "90px"											
+								  }]	
+					 }
+			    }
+			}			
+		},
+		{
 			"path": "pages/purchaseinstorage/cartonlabeldetail",
 			"style": {
 				"navigationBarTitleText": "外箱明细",
@@ -325,7 +344,7 @@
 					 }
 			    }
 			}			
-		}
+		}		
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
