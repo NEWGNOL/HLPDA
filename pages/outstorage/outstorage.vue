@@ -69,21 +69,6 @@
 				<view class="dataline"></view>
 			</view>
 
-			<!-- <scroll-view class="selectinfoscrollview" v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}"
-				scroll-y="true">
-				<uni-list>
-					<fill-qty v-for="(item,index) in BillGroupData" :key="index" :title="item.FNumber 
-			 		+ '/' + item.FModel + '\n'  + '批号：' + item.FBatchNo + '\n'  + '仓库：' + item.FStockName 
-					+ '/' + '库存：' + item.FInventoryQty + '只' + '\n'  + '应发数量：'+ item.FShouldSendQty + '只/' 
-					+ (item.FShouldSendQty/item.FInPackPreQty).toFixed(2)
-					+ '件' + '\n' + '实发数量：'+ item.FRealSendQty + '只/' 
-					+ (item.FRealSendQty/item.FInPackPreQty).toFixed(2) + '件'" 
-					v-bind:percent="Math.round((item.FRealSendQty / item.FShouldSendQty) * 100, 0)" 
-					isshowprogress clickable v-on:click="GetSelectGroupModel(item)" @ButtonClick="OpenQtyPopupWindow(index)">
-					</fill-qty>
-				</uni-list>
-			</scroll-view> -->
-
 			<scroll-view :scroll-top="ScrollTop" class="selectinfoscrollview"
 				v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}" scroll-y="true" @scroll="Scroll">
 				<uni-list>
@@ -148,6 +133,7 @@
 	import BillStatus from '../../components/billstatus/billstatus.vue';
 	export default {
 		components: {
+			Config,
 			FillQty,
 			OutStorageKeyboard,
 			BillStatus

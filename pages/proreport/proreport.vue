@@ -51,7 +51,19 @@
 			</view>
 
 			<scroll-view class="unselectinfoscrollview" v-bind:class="{selectinfoscrollview : !IsBillHeadVisible}"
-				scroll-y="true">
+				scroll-y="true" v-show="IsMotorDepartment">
+				<uni-list>
+					<FillQty v-for="(item,index) in InfoListData" :key="index" :title="item.FNumber + '/' + item.FModel
+					 + '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '批号：' + item.FGMPBatchNo + '\n' + '汇总进度：' + item.FSumQty
+					 + '/' + item.FICMOQty + '     ' + item.FSumQty/item.FOutPackPreQty + '件'" :rownumber="index + 1"
+					 isshowprogress v-bind:percent="Math.round((item.FSumQty / item.FICMOQty) * 100, 0)" clickable
+					 v-on:click="GetProReportInfoExpandByFillQty(item)" @ButtonClick="OpenQtyPopupWindow()">
+					</FillQty>
+				</uni-list>
+			</scroll-view>
+			
+			<scroll-view class="unselectinfoscrollview" v-bind:class="{selectinfoscrollview : !IsBillHeadVisible}"
+				scroll-y="true" v-show="!IsMotorDepartment">
 				<uni-list>
 					<uni-list-item v-for="(item,index) in InfoListData" :key="index" :title="item.FNumber + '/' + item.FModel
 					 + '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '批号：' + item.FGMPBatchNo + '\n' + '汇总进度：' + item.FSumQty
@@ -120,13 +132,23 @@
 				v-on:click="SwitchTab(2)">明细</text>
 			<view class="tabrightline" v-bind:class="{selecttabline : TabSelectedIndex == 2}"></view>
 		</view>
+		
+		<OutStorageKeyboard class="keyboard" @confirm="CloseQtyPopupWindow" @exit="CloseQtyPopupWindowDirect"
+			v-show="IsOpenDigitKeyboard"></OutStorageKeyboard>
 	</view>
 </template>
 
 
 <script>
 	import Config from '../../common/config.js';
+	import FillQty from '../../components/fill-qty/fill-qty.vue';
+	import OutStorageKeyboard from '../../components/outstorage-keyboard/outstorage-keyboard.vue';
 	export default {
+		components: {
+			Config,
+			FillQty,
+			OutStorageKeyboard			
+		},
 		data() {
 			return {
 				TabSelectedIndex: 1,
@@ -157,6 +179,9 @@
 				Animation: null,
 				AnimationData: [],
 				IsStopAnimation: false,
+				IsMotorDepartment: false,
+				IsOpenDigitKeyboard: false,
+				UserDepartment: '',
 				Main: '',
 				Receiver: ''
 			}
@@ -164,6 +189,8 @@
 		onLoad() {
 			//this.InitAnimation();
 			this.AddListener();
+			this.GetDepartmentByUserId();
+			this.GetGblSettingBySignalKey();
 		},
 		onUnload() {
 			this.RemoveListener();
@@ -328,10 +355,10 @@
 							        let ResultMsg = resultcomp.data.ResultMsg;
 							        if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 								        Config.PopAudioContext(false);
-								        Config.ShowMessage(ResultMsg);
-								        uni.hideLoading();
-								        this.SetRequestingFlag(false);
+								        Config.ShowMessage(ResultMsg);								        
 							        }
+									uni.hideLoading();
+									this.SetRequestingFlag(false);
 						        }
 								});
 							}
@@ -355,7 +382,12 @@
 				} else if (this.TabSelectedIndex == 1) {
 					this.ShowProReportInfo()
 				} else {
-					this.GetProReportInfoExpand(null);
+					if(this.IsMotorDepartment){
+						//this.GetProReportInfoExpandByFillQty(null);
+					}
+					else{
+						this.GetProReportInfoExpand(null);
+					}					
 				}
 			},
 			//滑动页面
@@ -377,6 +409,143 @@
 			//设置请求标志
 			SetRequestingFlag: function(IsRequesting) {
 				this.IsRequesting = IsRequesting;
+			},
+			//打开数量弹窗
+			OpenQtyPopupWindow: function() {				
+				this.IsOpenDigitKeyboard = true;
+			},
+			CloseQtyPopupWindowDirect: function(e) {
+				this.IsOpenDigitKeyboard = false;
+			},
+			//关闭数量弹窗
+			CloseQtyPopupWindow: function(e) {
+				if (e == null || e == '' || e == 0) {
+					Config.ShowMessage('请填写要修改的散件数量！');
+					Config.PopAudioContext(false);
+					return;
+				}
+			
+				this.IsOpenDigitKeyboard = false;
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'addPdaICMORptByHand',
+						token: uni.getStorageSync('token'),
+						ModuleParam: {
+							FId: this.ProReportInterId,							
+							FBillerID: uni.getStorageSync('FUserId'),			
+							FICItemByHand: this.ProreportInfoItem.FItemId,
+							FQtyByHand: e,
+							FShouldSendQty: this.ProreportInfoItem.FICMOQty,
+							FRealSendQty: this.ProreportInfoItem.FSumQty,							
+							Result: 0,
+							Msg: ''
+						}
+					},
+					success: (result) => {
+						//console.log(result.data);
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.ShowMessage('账号登录异常，请重新登录！');
+							Config.PopAudioContext(false);
+							return;
+						}
+						let ResultData = result.data.ResultData.AddPdaICMORptByHand;
+						let Result = ResultData.dataparam.Result;
+						if (Result == 0) {
+							Config.ShowMessage(ResultData.dataparam.Msg);
+							Config.PopAudioContext(false);
+							return;
+						}
+						Config.ShowMessage(ResultData.dataparam.Msg);
+						Config.PopAudioContext(true);
+						this.GetProReportByScan();
+					},
+					fail: () => {
+						Config.ShowMessage('请求数据失败！');
+						Config.PopAudioContext(false);						
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.ShowMessage(ResultMsg);
+							Config.PopAudioContext(false);
+						}
+					}
+				});
+			},
+			//根据系统参数键获取对应的值
+			GetGblSettingBySignalKey: function(){
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'GetGblSettingBySignalKey',
+						token: uni.getStorageSync('token'),						
+						ModuleParam: {
+							FSignalKey: 'DepartByProFillQty'							
+						}
+					},
+					success: (result) => {
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.PopAudioContext(false);
+							Config.ShowMessage('账号登录异常，请重新登录！');
+							return;
+						}			
+						let FValue = result.data.ResultData.GetGblSettingBySignalKey.data0.FValue;
+						this.IsMotorDepartment = (this.UserDepartment.indexOf(FValue) != -1 ? true : false);
+					},
+					fail: () => {
+						Config.PopAudioContext(false);
+						Config.ShowMessage('请求数据失败！');						
+					},
+					complete: (resultcomp) => {
+					    let ResultMsg = resultcomp.data.ResultMsg;
+					    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+						    Config.PopAudioContext(false);
+							Config.ShowMessage(ResultMsg);														
+					    }						
+					}
+				});
+			},
+			//根据用户内码查询部门信息
+			GetDepartmentByUserId: function(){
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'getDepartmentByUserId',
+						token: uni.getStorageSync('token'),						
+						ModuleParam: {
+							FUserId: uni.getStorageSync('FUserId')							
+						}
+					},
+					success: (result) => {
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.PopAudioContext(false);
+							Config.ShowMessage('账号登录异常，请重新登录！');
+							return;
+						}						
+						this.UserDepartment = result.data.ResultData.GetDepartmentByUserId.data0.FName;
+					},
+					fail: () => {
+						Config.PopAudioContext(false);
+						Config.ShowMessage('请求数据失败！');						
+					},
+					complete: (resultcomp) => {
+					    let ResultMsg = resultcomp.data.ResultMsg;
+					    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+						    Config.PopAudioContext(false);
+							Config.ShowMessage(ResultMsg);														
+					    }						
+					}
+				});
 			},
 			//显示生产汇报汇总
 			ShowProReportSum: function() {
@@ -406,23 +575,20 @@
 							Config.PopAudioContext(false);
 							Config.ShowMessage('账号登录异常，请重新登录！');
 							return;
-						}
-						uni.hideLoading();
+						}						
 						this.SummaryListData = result.data.ResultData.PdaICMORptListInfo.data0;
 					},
 					fail: () => {
 						Config.PopAudioContext(false);
-						Config.ShowMessage('请求数据失败！');
-						uni.hideLoading();
-						return;
+						Config.ShowMessage('请求数据失败！');						
 					},
 					complete: (resultcomp) => {
 					    let ResultMsg = resultcomp.data.ResultMsg;
 					    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 						    Config.PopAudioContext(false);
-							Config.ShowMessage(ResultMsg);
-							uni.hideLoading();							
+							Config.ShowMessage(ResultMsg);														
 					    }
+						uni.hideLoading();
 					}
 				});
 			},			
@@ -578,6 +744,15 @@
 					Config.ShowMessage('汇报单无扫描数据！');
 					Config.PopAudioContext(false);					
 					return;
+				}
+				
+				for(let i = 0; i < this.InfoListData.length; i++){
+					let DataModel = this.InfoListData[i];					
+					if(DataModel.FSumQty > DataModel.FICMOQty){
+					   Config.ShowMessage('物料编码为' + DataModel.FNumber + '扫描数量大于订单数量，请检查！');
+					   Config.PopAudioContext(false);
+					   return;
+					}
 				}
 
 				if (!this.IsRequesting) {
@@ -768,7 +943,12 @@
 										return;
 									}
 									me.ClearBillHeadData(me);
-									me.GetProReportInfoExpand(null);
+									if(me.IsMotorDepartment){
+										me.GetProReportInfoExpandByFillQty(null);
+									}
+									else{
+										me.GetProReportInfoExpand(null);
+									}									
 									Config.PopAudioContext(true);
 									Config.ShowMessage(DataParam.Msg);
 								},
@@ -911,25 +1091,23 @@
 									uni.hideLoading();
 									this.SetRequestingFlag(false);
 									return;
-								}
-								uni.hideLoading();
+								}								
 								this.SetRequestingFlag(false);
 								this.InfoListData = result.data.ResultData.PdaICMORptSumInfo.data0;
 							},
 							fail: () => {
 								Config.PopAudioContext(false);
-								Config.ShowMessage('请求数据失败！');
-								uni.hideLoading();
+								Config.ShowMessage('请求数据失败！');								
 								this.SetRequestingFlag(false);
 							},
 							complete: (resultcomp) => {
 							    let ResultMsg = resultcomp.data.ResultMsg;
 							    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 									Config.PopAudioContext(false);
-									Config.ShowMessage(ResultMsg);
-									uni.hideLoading();
-									this.SetRequestingFlag(false);
+									Config.ShowMessage(ResultMsg);									
 							    }
+								uni.hideLoading();
+								this.SetRequestingFlag(false);
 							}
 						});
 					}
@@ -946,6 +1124,15 @@
 				});
 				uni.hideLoading();
 			},
+			//根据汇报单信息获取扩展信息
+			GetProReportInfoExpandByFillQty: function(item) {
+				if (item != null) {					
+					this.ProreportInfoItem = item;
+					this.ProReportSrcInterId = item.FSrcInterId;
+				} else {
+					this.ProreportInfoItem = null;
+				}
+			},			
 			//根据汇报单信息获取扩展信息
 			GetProReportInfoExpand: function(item) {
 				if (item != null) {					

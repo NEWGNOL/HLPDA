@@ -137,6 +137,7 @@
 	import BillStatus from '../../components/billstatus/billstatus.vue';
 	export default {
 		components: {
+			Config,
 			FillQty,
 			OutStorageKeyboard,
 			BillStatus

@@ -26,6 +26,9 @@
 <script>
 	import Config from '../../common/config.js';
 	export default {
+		components: {
+			Config
+		},
 		data() {
 			return {	
 				ProcessModel: [],

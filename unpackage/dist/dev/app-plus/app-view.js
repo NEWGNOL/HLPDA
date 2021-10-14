@@ -1563,8 +1563,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -1572,7 +1572,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 29 */
@@ -3584,8 +3585,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -3593,7 +3594,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 77 */
@@ -4038,6 +4040,14 @@ var render = function() {
           _c(
             "v-uni-scroll-view",
             {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm._$g(28, "v-show"),
+                  expression: "_$g(28,'v-show')"
+                }
+              ],
               staticClass: _vm._$g(28, "sc"),
               class: _vm._$g(28, "c"),
               attrs: { "scroll-y": "true", _i: 28 }
@@ -4047,9 +4057,47 @@ var render = function() {
                 "uni-list",
                 { attrs: { _i: 29 } },
                 _vm._l(_vm._$g(30, "f"), function(item, index, $21, $31) {
-                  return _c("uni-list-item", {
+                  return _c("FillQty", {
                     key: item,
                     attrs: { _i: "30-" + $31 },
+                    on: {
+                      click: function($event) {
+                        return _vm.$handleViewEvent($event)
+                      },
+                      ButtonClick: function($event) {
+                        return _vm.$handleViewEvent($event)
+                      }
+                    }
+                  })
+                }),
+                1
+              )
+            ],
+            1
+          ),
+          _c(
+            "v-uni-scroll-view",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm._$g(31, "v-show"),
+                  expression: "_$g(31,'v-show')"
+                }
+              ],
+              staticClass: _vm._$g(31, "sc"),
+              class: _vm._$g(31, "c"),
+              attrs: { "scroll-y": "true", _i: 31 }
+            },
+            [
+              _c(
+                "uni-list",
+                { attrs: { _i: 32 } },
+                _vm._l(_vm._$g(33, "f"), function(item, index, $22, $32) {
+                  return _c("uni-list-item", {
+                    key: item,
+                    attrs: { _i: "33-" + $32 },
                     on: {
                       click: function($event) {
                         return _vm.$handleViewEvent($event)
@@ -4072,12 +4120,12 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm._$g(31, "v-show"),
-              expression: "_$g(31,'v-show')"
+              value: _vm._$g(34, "v-show"),
+              expression: "_$g(34,'v-show')"
             }
           ],
-          staticClass: _vm._$g(31, "sc"),
-          attrs: { _i: 31 },
+          staticClass: _vm._$g(34, "sc"),
+          attrs: { _i: 34 },
           on: {
             touchstart: function($event) {
               return _vm.$handleViewEvent($event)
@@ -4090,14 +4138,14 @@ var render = function() {
         [
           _c(
             "v-uni-text",
-            { staticClass: _vm._$g(32, "sc"), attrs: { _i: 32 } },
+            { staticClass: _vm._$g(35, "sc"), attrs: { _i: 35 } },
             [_vm._v("已扫描条码：")]
           ),
           _c(
             "v-uni-text",
             {
-              staticClass: _vm._$g(33, "sc"),
-              attrs: { clickable: true, _i: 33 },
+              staticClass: _vm._$g(36, "sc"),
+              attrs: { clickable: true, _i: 36 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -4109,179 +4157,179 @@ var render = function() {
           _c(
             "v-uni-scroll-view",
             {
-              staticClass: _vm._$g(34, "sc"),
-              attrs: { "scroll-y": "true", _i: 34 }
+              staticClass: _vm._$g(37, "sc"),
+              attrs: { "scroll-y": "true", _i: 37 }
             },
             [
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(35, "sc"), attrs: { _i: 35 } },
+                { staticClass: _vm._$g(38, "sc"), attrs: { _i: 38 } },
                 [_vm._v("物料编码：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(36, "sc"), attrs: { _i: 36 } },
-                [_vm._v(_vm._$g(36, "t0-0"))]
-              ),
-              _c(
-                "v-uni-text",
-                { staticClass: _vm._$g(37, "sc"), attrs: { _i: 37 } },
-                [_vm._v("物料名称：")]
-              ),
-              _c(
-                "v-uni-text",
-                { staticClass: _vm._$g(38, "sc"), attrs: { _i: 38 } },
-                [_vm._v(_vm._$g(38, "t0-0"))]
-              ),
-              _c(
-                "v-uni-text",
                 { staticClass: _vm._$g(39, "sc"), attrs: { _i: 39 } },
-                [_vm._v("标签类型：")]
+                [_vm._v(_vm._$g(39, "t0-0"))]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(40, "sc"), attrs: { _i: 40 } },
-                [_vm._v(_vm._$g(40, "t0-0"))]
+                [_vm._v("物料名称：")]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(41, "sc"), attrs: { _i: 41 } },
-                [_vm._v("订单号：")]
+                [_vm._v(_vm._$g(41, "t0-0"))]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(42, "sc"), attrs: { _i: 42 } },
-                [_vm._v(_vm._$g(42, "t0-0"))]
+                [_vm._v("标签类型：")]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(43, "sc"), attrs: { _i: 43 } },
-                [_vm._v("批号：")]
+                [_vm._v(_vm._$g(43, "t0-0"))]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(44, "sc"), attrs: { _i: 44 } },
-                [_vm._v(_vm._$g(44, "t0-0"))]
+                [_vm._v("订单号：")]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(45, "sc"), attrs: { _i: 45 } },
-                [_vm._v("计划生产数量：")]
+                [_vm._v(_vm._$g(45, "t0-0"))]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(46, "sc"), attrs: { _i: 46 } },
-                [_vm._v(_vm._$g(46, "t0-0"))]
+                [_vm._v("批号：")]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(47, "sc"), attrs: { _i: 47 } },
-                [_vm._v("计划开工日期：")]
+                [_vm._v(_vm._$g(47, "t0-0"))]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(48, "sc"), attrs: { _i: 48 } },
-                [_vm._v(_vm._$g(48, "t0-0"))]
+                [_vm._v("计划生产数量：")]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(49, "sc"), attrs: { _i: 49 } },
-                [_vm._v("实际完工日期：")]
+                [_vm._v(_vm._$g(49, "t0-0"))]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(50, "sc"), attrs: { _i: 50 } },
-                [_vm._v(_vm._$g(50, "t0-0"))]
+                [_vm._v("计划开工日期：")]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(51, "sc"), attrs: { _i: 51 } },
-                [_vm._v("生产预测单号：")]
+                [_vm._v(_vm._$g(51, "t0-0"))]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(52, "sc"), attrs: { _i: 52 } },
-                [_vm._v(_vm._$g(52, "t0-0"))]
+                [_vm._v("实际完工日期：")]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(53, "sc"), attrs: { _i: 53 } },
-                [_vm._v("班组代码：")]
+                [_vm._v(_vm._$g(53, "t0-0"))]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(54, "sc"), attrs: { _i: 54 } },
-                [_vm._v(_vm._$g(54, "t0-0"))]
+                [_vm._v("生产预测单号：")]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(55, "sc"), attrs: { _i: 55 } },
-                [_vm._v("班组名称：")]
+                [_vm._v(_vm._$g(55, "t0-0"))]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(56, "sc"), attrs: { _i: 56 } },
-                [_vm._v(_vm._$g(56, "t0-0"))]
+                [_vm._v("班组代码：")]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(57, "sc"), attrs: { _i: 57 } },
-                [_vm._v("车间代码：")]
+                [_vm._v(_vm._$g(57, "t0-0"))]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(58, "sc"), attrs: { _i: 58 } },
-                [_vm._v(_vm._$g(58, "t0-0"))]
+                [_vm._v("班组名称：")]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(59, "sc"), attrs: { _i: 59 } },
-                [_vm._v("车间名称：")]
+                [_vm._v(_vm._$g(59, "t0-0"))]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(60, "sc"), attrs: { _i: 60 } },
-                [_vm._v(_vm._$g(60, "t0-0"))]
+                [_vm._v("车间代码：")]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(61, "sc"), attrs: { _i: 61 } },
-                [_vm._v("计量单位代码：")]
+                [_vm._v(_vm._$g(61, "t0-0"))]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(62, "sc"), attrs: { _i: 62 } },
-                [_vm._v(_vm._$g(62, "t0-0"))]
+                [_vm._v("车间名称：")]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(63, "sc"), attrs: { _i: 63 } },
-                [_vm._v("计量单位名称：")]
+                [_vm._v(_vm._$g(63, "t0-0"))]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(64, "sc"), attrs: { _i: 64 } },
-                [_vm._v(_vm._$g(64, "t0-0"))]
+                [_vm._v("计量单位代码：")]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(65, "sc"), attrs: { _i: 65 } },
-                [_vm._v("箱数：")]
+                [_vm._v(_vm._$g(65, "t0-0"))]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(66, "sc"), attrs: { _i: 66 } },
-                [_vm._v(_vm._$g(66, "t0-0"))]
+                [_vm._v("计量单位名称：")]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(67, "sc"), attrs: { _i: 67 } },
-                [_vm._v("每箱数量：")]
+                [_vm._v(_vm._$g(67, "t0-0"))]
               ),
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(68, "sc"), attrs: { _i: 68 } },
-                [_vm._v(_vm._$g(68, "t0-0"))]
+                [_vm._v("箱数：")]
+              ),
+              _c(
+                "v-uni-text",
+                { staticClass: _vm._$g(69, "sc"), attrs: { _i: 69 } },
+                [_vm._v(_vm._$g(69, "t0-0"))]
+              ),
+              _c(
+                "v-uni-text",
+                { staticClass: _vm._$g(70, "sc"), attrs: { _i: 70 } },
+                [_vm._v("每箱数量：")]
+              ),
+              _c(
+                "v-uni-text",
+                { staticClass: _vm._$g(71, "sc"), attrs: { _i: 71 } },
+                [_vm._v(_vm._$g(71, "t0-0"))]
               )
             ],
             1
@@ -4291,14 +4339,14 @@ var render = function() {
       ),
       _c(
         "v-uni-view",
-        { staticClass: _vm._$g(69, "sc"), attrs: { _i: 69 } },
+        { staticClass: _vm._$g(72, "sc"), attrs: { _i: 72 } },
         [
           _c(
             "v-uni-text",
             {
-              staticClass: _vm._$g(70, "sc"),
-              class: _vm._$g(70, "c"),
-              attrs: { _i: 70 },
+              staticClass: _vm._$g(73, "sc"),
+              class: _vm._$g(73, "c"),
+              attrs: { _i: 73 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -4308,16 +4356,16 @@ var render = function() {
             [_vm._v("汇总")]
           ),
           _c("v-uni-view", {
-            staticClass: _vm._$g(71, "sc"),
-            class: _vm._$g(71, "c"),
-            attrs: { _i: 71 }
+            staticClass: _vm._$g(74, "sc"),
+            class: _vm._$g(74, "c"),
+            attrs: { _i: 74 }
           }),
           _c(
             "v-uni-text",
             {
-              staticClass: _vm._$g(72, "sc"),
-              class: _vm._$g(72, "c"),
-              attrs: { _i: 72 },
+              staticClass: _vm._$g(75, "sc"),
+              class: _vm._$g(75, "c"),
+              attrs: { _i: 75 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -4327,16 +4375,16 @@ var render = function() {
             [_vm._v("单据")]
           ),
           _c("v-uni-view", {
-            staticClass: _vm._$g(73, "sc"),
-            class: _vm._$g(73, "c"),
-            attrs: { _i: 73 }
+            staticClass: _vm._$g(76, "sc"),
+            class: _vm._$g(76, "c"),
+            attrs: { _i: 76 }
           }),
           _c(
             "v-uni-text",
             {
-              staticClass: _vm._$g(74, "sc"),
-              class: _vm._$g(74, "c"),
-              attrs: { _i: 74 },
+              staticClass: _vm._$g(77, "sc"),
+              class: _vm._$g(77, "c"),
+              attrs: { _i: 77 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -4346,13 +4394,33 @@ var render = function() {
             [_vm._v("明细")]
           ),
           _c("v-uni-view", {
-            staticClass: _vm._$g(75, "sc"),
-            class: _vm._$g(75, "c"),
-            attrs: { _i: 75 }
+            staticClass: _vm._$g(78, "sc"),
+            class: _vm._$g(78, "c"),
+            attrs: { _i: 78 }
           })
         ],
         1
-      )
+      ),
+      _c("OutStorageKeyboard", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm._$g(79, "v-show"),
+            expression: "_$g(79,'v-show')"
+          }
+        ],
+        staticClass: _vm._$g(79, "sc"),
+        attrs: { _i: 79 },
+        on: {
+          confirm: function($event) {
+            return _vm.$handleViewEvent($event)
+          },
+          exit: function($event) {
+            return _vm.$handleViewEvent($event)
+          }
+        }
+      })
     ],
     1
   )
@@ -4996,8 +5064,10 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));
+var _fillQty = _interopRequireDefault(__webpack_require__(/*! ../../components/fill-qty/fill-qty.vue */ 210));
+var _outstorageKeyboard = _interopRequireDefault(__webpack_require__(/*! ../../components/outstorage-keyboard/outstorage-keyboard.vue */ 218));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -5005,7 +5075,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default,
+    'FillQty': _fillQty.default,
+    'OutStorageKeyboard': _outstorageKeyboard.default } };exports.default = _default;
 
 /***/ }),
 /* 101 */
@@ -5248,8 +5321,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -5257,7 +5330,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 109 */
@@ -5490,8 +5564,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -5499,7 +5573,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 117 */
@@ -5732,8 +5807,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -5741,7 +5816,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 125 */
@@ -5974,8 +6050,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -5983,7 +6059,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 133 */
@@ -6216,8 +6293,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -6225,7 +6302,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 141 */
@@ -6898,8 +6976,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -6907,7 +6985,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 149 */
@@ -7150,8 +7229,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -7159,7 +7238,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 157 */
@@ -7830,8 +7910,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -7839,7 +7919,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 165 */
@@ -8471,8 +8552,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -8480,7 +8561,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 173 */
@@ -8723,8 +8805,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -8732,7 +8814,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 181 */
@@ -10186,6 +10269,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));
 var _fillQty = _interopRequireDefault(__webpack_require__(/*! ../../components/fill-qty/fill-qty.vue */ 210));
 var _outstorageKeyboard = _interopRequireDefault(__webpack_require__(/*! ../../components/outstorage-keyboard/outstorage-keyboard.vue */ 218));
 var _billstatus = _interopRequireDefault(__webpack_require__(/*! ../../components/billstatus/billstatus.vue */ 91));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
@@ -10197,6 +10281,7 @@ var _billstatus = _interopRequireDefault(__webpack_require__(/*! ../../component
 
   },
   components: {
+    'Config': _config.default,
     'FillQty': _fillQty.default,
     'OutStorageKeyboard': _outstorageKeyboard.default,
     'BillStatus': _billstatus.default } };exports.default = _default;
@@ -11288,8 +11373,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -11297,7 +11382,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 234 */
@@ -11974,8 +12060,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -11983,7 +12069,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 242 */
@@ -14421,8 +14508,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -14430,7 +14517,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 314 */
@@ -15155,8 +15243,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -15164,7 +15252,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 330 */
@@ -15397,8 +15486,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -15406,7 +15495,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 338 */
@@ -15658,8 +15748,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -15667,7 +15757,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 346 */
@@ -15879,8 +15970,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -15888,7 +15979,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 354 */
@@ -16684,6 +16776,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));
 var _fillQty = _interopRequireDefault(__webpack_require__(/*! ../../components/fill-qty/fill-qty.vue */ 210));
 var _outstorageKeyboard = _interopRequireDefault(__webpack_require__(/*! ../../components/outstorage-keyboard/outstorage-keyboard.vue */ 218));
 var _billstatus = _interopRequireDefault(__webpack_require__(/*! ../../components/billstatus/billstatus.vue */ 91));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
@@ -16695,6 +16788,7 @@ var _billstatus = _interopRequireDefault(__webpack_require__(/*! ../../component
 
   },
   components: {
+    'Config': _config.default,
     'FillQty': _fillQty.default,
     'OutStorageKeyboard': _outstorageKeyboard.default,
     'BillStatus': _billstatus.default } };exports.default = _default;
@@ -16940,8 +17034,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -16949,7 +17043,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       wxsProps: {} };
 
   },
-  components: {} };exports.default = _default;
+  components: {
+    'Config': _config.default } };exports.default = _default;
 
 /***/ }),
 /* 370 */
@@ -17519,6 +17614,86 @@ exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置
 // Exports
 module.exports = exports;
 
+
+/***/ }),
+/* 384 */
+/*!********************************************************!*\
+  !*** D:/所有公司工作资料/金蝶/开发项目/KDPDA/KDPDA/common/config.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //弹出消息提示框
+var ShowMessage = function ShowMessage(Message) {
+  uni.showToast({
+    title: Message,
+    icon: 'none',
+    duration: 3000 });
+
+};
+//播放操作提示音 
+var PopAudioContext = function PopAudioContext(IsSuccess) {
+  var AudioContext = uni.createInnerAudioContext();
+  AudioContext.autoplay = true;
+  if (IsSuccess)
+  {
+    AudioContext.src = '/static/success.mp3';
+  } else
+
+  {
+    AudioContext.src = '/static/warning.wav';
+  }
+  AudioContext.onPlay(function () {
+    //console.log('开始播放');
+  });
+  AudioContext.onPause(function () {
+    //console.log('播放暂停');
+  });
+  AudioContext.onStop(function () {
+    //console.log('播放停止');
+  });
+  AudioContext.onEnded(function () {
+    AudioContext.destroy();
+    //console.log('播放结束');
+  });
+  AudioContext.onWaiting(function () {
+    //console.log('播放加载中');
+  });
+  AudioContext.onError(function (result) {
+    AudioContext.destroy();
+    //console.log(result.errMsg);
+    //console.log(result.errCode);
+  });
+};
+
+//获取选中的日期格式化
+var DateFormat = function DateFormat(type) {
+  var CurrentDate = new Date();
+  var Year = CurrentDate.getFullYear();
+  var Month = CurrentDate.getMonth() + 1;
+  var Day = CurrentDate.getDate();
+  var Hour = CurrentDate.getHours();
+  var Minute = CurrentDate.getMinutes();
+  var Second = CurrentDate.getSeconds();
+
+  if (type === 'start') {
+    Year = Year - 60;
+  } else if (type === 'end') {
+    Year = Year + 2;
+  }
+  Month = Month > 9 ? Month : '0' + Month;;
+  Day = Day > 9 ? Day : '0' + Day;
+  if (type != '') {
+    return "".concat(Year, "-").concat(Month, "-").concat(Day);
+  }
+  return "".concat(Year, "-").concat(Month, "-").concat(Day, " ").concat(Hour, ":").concat(Minute, ":").concat(Second);
+};var _default =
+
+{
+  ShowMessage: ShowMessage,
+  PopAudioContext: PopAudioContext,
+  DateFormat: DateFormat };exports.default = _default;
 
 /***/ })
 /******/ ]);

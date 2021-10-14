@@ -16,6 +16,9 @@
 <script>
 	import Config from '../../common/config.js';
 	export default {
+		components: {
+			Config
+		},
 		data() {
 			return {
 				StorageInterId: 0,
@@ -65,22 +68,20 @@
 							Config.ShowMessage('账号登录异常，请重新登录！');
 							return;
 						}
-						this.DetailListData = result.data.ResultData.getPdaStorageInRptCartonListInfo.data0;
-						uni.hideLoading();
+						this.DetailListData = result.data.ResultData.getPdaStorageInRptCartonListInfo.data0;						
 					},
 					fail: () => {
 						Config.PopAudioContext(false);
-						Config.ShowMessage('请求数据失败！');	
-						uni.hideLoading();
-						return;
+						Config.ShowMessage('请求数据失败！');
+						
 					},
 					complete: (resultcomp) => {
 					    let ResultMsg = resultcomp.data.ResultMsg;
 					    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 						Config.PopAudioContext(false);
-						Config.ShowMessage(ResultMsg);	
-						uni.hideLoading();
+						Config.ShowMessage(ResultMsg);							
 					}
+					uni.hideLoading();
 				}
 				});	
 			},

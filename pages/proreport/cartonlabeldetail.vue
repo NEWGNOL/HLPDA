@@ -16,6 +16,9 @@
 <script>
 	import Config from '../../common/config.js';
 	export default {
+		components: {
+			Config
+		},
 		data() {
 			return {
 				ProReportInterId: 0,
@@ -65,22 +68,20 @@
 							uni.hideLoading();						
 							return;
 						}						
-						this.DetailListData = result.data.ResultData.PdaICMORptInfo.data0;
-						uni.hideLoading();
+						this.DetailListData = result.data.ResultData.PdaICMORptInfo.data0;						
 					},
 					fail: () => {						
 						Config.PopAudioContext(false);
 						Config.ShowMessage('请求数据失败！');	
-						uni.hideLoading();
-						return;
+						
 					},
 					complete: (resultcomp) => {
 					    let ResultMsg = resultcomp.data.ResultMsg;
 					    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							Config.PopAudioContext(false);
-							Config.ShowMessage(ResultMsg);
-							uni.hideLoading();							
+							Config.ShowMessage(ResultMsg);													
 					    }
+						uni.hideLoading();	
 					}
 				});				
 			},
@@ -166,22 +167,19 @@
 									}										
 									Config.PopAudioContext(true);	
 									Config.ShowMessage(DataModel.Msg);
-									me.ShowProReportDetail();
-									uni.hideLoading();																																																		
+									me.ShowProReportDetail();																																																										
 								},
 								fail: () => {
 									Config.PopAudioContext(false);
-									Config.ShowMessage('请求数据失败！');
-									uni.hideLoading();		
-									return;															
+									Config.ShowMessage('请求数据失败！');																							
 								},
 								complete: (resultcomp) => {
 								    let ResultMsg = resultcomp.data.ResultMsg;
 								    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 										Config.PopAudioContext(false);
-										Config.ShowMessage(ResultMsg);
-										uni.hideLoading();										
+										Config.ShowMessage(ResultMsg);																			
 								    }
+									uni.hideLoading();	
 								}
 							});	
 						} 
