@@ -34,24 +34,23 @@
 		</view>
 
 
-		<view class="outstorageview" v-show="TabSelectedIndex == 1" @touchstart='TouchStart' @touchend='TouchEnd'>
-			<!-- 	<view class="pagehead">
-				 <button class="auditstorageout" v-on:click="AuditStorageOut()">审核</button>
-				 <button class="deletestorageout" v-on:click="DeleteStorageOut()">删除</button>
-			     <text class="srcbillno">{{SelectSrcBillNo}}</text>				 
-				 
-				 <text class="scanprogresstitle">扫码进度：</text>
-				 <text class="scanprogress">{{ScanProgress}}</text>
-			</view> -->
-			<button class="auditstorageout" v-on:click="AuditStorageOut()">审核</button>
+		<view class="outstorageview" v-show="TabSelectedIndex == 1" @touchstart='TouchStart' @touchend='TouchEnd'>	
+		    <view class="pagehead">
+			    <text class="srcbillno">{{SelectSrcBillNo}}</text>	
+			    <button class="auditstorageout" v-on:click="AuditStorageOut()" v-show="IsAuditStorageOut">审核</button>
+				<button class="unauditstorageout" v-on:click="UnAuditStorageOut()" v-show="!IsAuditStorageOut">反审</button>
+			    <button class="deletestorageout" v-on:click="DeleteStorageOut()">删除</button>
+			</view>
+			
+			<!-- <button class="auditstorageout" v-on:click="AuditStorageOut()">审核</button>
 			<button class="unauditstorageout" v-on:click="UnAuditStorageOut()">反审</button>
-			<button class="deletestorageout" v-on:click="DeleteStorageOut()">删除</button>
+			<button class="deletestorageout" v-on:click="DeleteStorageOut()">删除</button> -->
 			<!-- <button class="checkitem" v-on:click="OpenMatPopupWindow()">校验</button> -->
 
 			<view class="billhead" v-show="IsBillHeadVisible">
-				<text class="title">单据编号：</text>
+				<!-- <text class="title">单据编号：</text>
 				<text class="billnoempty">{{StorageOutBillNo}}</text>
-				<view class="dataline"></view>
+				<view class="dataline"></view> -->
 
 				<text class="title">出库日期：</text>
 				<picker mode="date" :value="OutStorageDate" :start="StartDate" :end="EndDate"
@@ -60,9 +59,9 @@
 				</picker>
 				<view class="dataline"></view>
 
-				<text class="title">源单编号：</text>
+				<!-- <text class="title">源单编号：</text>
 				<view class="data">{{SelectSrcBillNo}}</view>
-				<view class="dataline"></view>
+				<view class="dataline"></view> -->
 
 				<text class="title">扫码进度：</text>
 				<view class="data">{{ScanProgress}}</view>
@@ -73,12 +72,13 @@
 				v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}" scroll-y="true" @scroll="Scroll">
 				<uni-list>
 					<FillQty v-for="(item,index) in BillGroupData" :key="index" :title="item.FModel 
-			 		+ '/' + item.FNumber" :note="	+ '\n' + item.FShouldSendQty + '只/'
-			        + (item.FShouldSendQty/item.FInPackPreQty).toFixed(2)
-			        + '件' + '\n' + item.FRealSendQty + '只/' 
-			        + (item.FRealSendQty/item.FInPackPreQty).toFixed(2) + '件'" :rownumber="index + 1"
-						v-bind:percent="Math.round((item.FRealSendQty / item.FShouldSendQty) * 100, 0)" isshowprogress
-						clickable v-on:click="GetSelectGroupModel(item)" @ButtonClick="OpenQtyPopupWindow(index)">
+			 		+ '/' + item.FNumber" :note="'应发:' + item.FShouldSendQty + '只/'
+			        + (item.FShouldSendQty/item.FInPackPreQty).toFixed(1)
+			        + '件' + '\n' + '实发:'+ item.FRealSendQty + '只/' 
+			        + (item.FRealSendQty/item.FInPackPreQty).toFixed(1) + '件'" :rownumber="index + 1"
+					v-bind:percent="Math.round((item.FRealSendQty / item.FShouldSendQty) * 100, 0)" isshowprogress
+					:ishighlight="item.FHighLight" clickable v-on:click="GetSelectGroupModel(item)" 
+					@ButtonClick="OpenQtyPopupWindow(index)">
 					</FillQty>
 				</uni-list>
 			</scroll-view>
@@ -86,15 +86,18 @@
 
 
 		<view class="outstorageview" v-show="TabSelectedIndex == 2" @touchstart='TouchStart' @touchend='TouchEnd'>
-			<text class="scanned">已扫描条码：</text>
-			<text class="queryall" clickable v-on:click="GetStorageOutCartonDetail()">查看全部</text>
-
-			<scroll-view class="detailscrollview" scroll-y="true">
-				<text class="detailtitle">物料编码：</text>
-				<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FNumber : '空'}}</text>
-				<text class="detailtitle">物料名称：</text>
-				<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FItemName : '空'}}</text>				
-			</scroll-view>
+			<view class="pagehead">
+			    <text class="scanned">已扫描条码：</text>
+			    <text class="queryall" clickable v-on:click="GetStorageOutCartonDetail()">查看全部</text>
+			</view>
+			
+		    <text class="detailtitle">物料编码：</text>
+			<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FNumber : '空'}}</text>
+			<view class="listline"></view>
+			
+			<text class="detailtitle">物料名称：</text>
+			<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FItemName : '空'}}</text>				
+		    <view class="listline"></view>
 		</view>
 
 
@@ -165,6 +168,7 @@
 				BillGroupData: [],
 				QtyExceptionList: [],
 				IsBillHeadVisible: true,
+				IsAuditStorageOut: true,
 				SelectCustomerArray: [0, '空'],
 				ScanProgress: '空',
 				Main: '',
@@ -199,6 +203,10 @@
 			SwitchScanMode: function() {
 				this.IsScanSEOrder = !this.IsScanSEOrder;
 				this.ShowBillInfo('');
+			},
+			//切换审核标志
+			SwitchAuditFlag: function(IsAuditStorageOut){
+				this.IsAuditStorageOut = IsAuditStorageOut;
 			},
 			//打开物料弹窗
 			OpenMatPopupWindow: function() {
@@ -637,6 +645,7 @@
 					return;
 				}
 				this.SwitchTab(1);
+				this.SwitchAuditFlag(true);
 				this.AddStorageOutBillNo();
 				this.ShowBillGroupInfo();
 			},
@@ -647,6 +656,12 @@
 					return;
 				}
 				this.SwitchTab(1);
+				if(this.SelectBillModel.FStatus == '未审核'){
+				   this.SwitchAuditFlag(true);
+				}
+				else{
+				   this.SwitchAuditFlag(false);
+				}
 				this.ShowBillGroupInfo();
 			},
 			//新增入库单编号
@@ -1304,6 +1319,7 @@
 							} else {
 								Config.ShowMessage(DataParam.Msg);
 								Config.PopAudioContext(true);
+								this.SwitchAuditFlag(true);
 							}
 						},
 						fail: () => {
@@ -1357,6 +1373,7 @@
 							} else {
 								Config.ShowMessage(DataParam.Msg);
 								Config.PopAudioContext(true);
+								this.SwitchAuditFlag(true);
 							}
 						},
 						fail: () => {
@@ -1433,6 +1450,7 @@
 							} else {
 								Config.ShowMessage(DataParam.Msg);
 								Config.PopAudioContext(true);
+								this.SwitchAuditFlag(false);
 							}
 						},
 						fail: () => {
@@ -1498,6 +1516,7 @@
 							} else {
 								Config.ShowMessage(DataParam.Msg);
 								Config.PopAudioContext(true);
+								this.SwitchAuditFlag(false);
 							}
 						},
 						fail: () => {
@@ -1722,7 +1741,7 @@
 
 	.selectinfoscrollview {
 		width: 100%;
-		height: 600upx;
+		height: 750upx;
 		margin-top: 50upx;
 	}
 
@@ -1770,31 +1789,35 @@
 		margin-top: -91upx;
 	}
 
-	.auditstorageout {
+	.auditstorageout {		
 		width: 20%;
-		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 10upx;
-		margin-top: 30upx;
+		color: #FFFFFF;	
+		font-size: 15px;
+		border: 1px solid #FFFFFF;
+		background-color: #1AAD19;		
+		margin-left: 420upx;
+		margin-top: -70upx;
 	}
 
 	.unauditstorageout {
 		width: 20%;
 		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 210upx;
-		margin-top: -96upx;
+		font-size: 15px;
+		border: 1px solid #FFFFFF;
+		background-color: #1AAD19;		
+		margin-left: 420upx;
+		margin-top: -70upx;
 	}
 
-	.deletestorageout {
-		width: 20%;
+	.deletestorageout {		
+		width: 20%;		
 		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 400upx;
-		margin-top: -96upx;
+		font-size: 15px;
+		border: 1px solid #FFFFFF;
+		background-color: #1AAD19;
+		text-align: center;
+		margin-left: 590upx;
+		margin-top: -85upx;
 	}
 
 	.checkitem {
@@ -1802,43 +1825,27 @@
 		color: #FFFFFF;
 		background-color: #007AFF;
 		border-radius: 50upx;
-		margin-left: 590upx;
+		margin-left: 580upx;
 		margin-top: -96upx;
 	}
-
-	.pagehead {
+	
+	.pagehead{
 		width: 100%;
-		background-color: #007AFF;
-		margin-top: 10upx;
+		height: 130upx;
+		background-color: #1AAD19;
 	}
 
 	.srcbillno {
-		display: flex;
+		display: inline-block;
 		color: #FFFFFF;
-		font-size: 18px;
-		padding-left: 20upx;
-		margin-top: -70upx;
-	}
-
-	.scanprogresstitle {
-		display: flex;
-		color: #FFFFFF;
-		font-size: 18px;
-		padding-left: 20upx;
+		font-size: 19px;
+		margin-left: 20upx;
 		margin-top: 30upx;
-	}
-
-	.scanprogress {
-		display: flex;
-		color: #FFFFFF;
-		font-size: 18px;
-		margin-left: 250upx;
-		margin-top: -55upx;
 	}
 
 	.billhead {
 		width: 100%;
-		margin-top: 50upx;
+		margin-top: 30upx;
 	}
 
 	.billnoempty {
@@ -1879,14 +1886,16 @@
 	}
 
 	.scanned {
-		display: flex;
+		display: inline-block;
+		color: #FFFFFF;
 		font-size: 40upx;
 		margin-left: 30upx;
-		margin-top: 20upx;
+		margin-top: 30upx;
 	}
 
-	.queryall {
+	.queryall {		
 		display: flex;
+		flex-direction: column;
 		font-size: 40upx;
 		color: #007AFF;
 		margin-left: 570upx;
@@ -1912,6 +1921,13 @@
 		margin-top: -50upx;
 		margin-left: 270upx;
 		text-align: center;
+	}
+	
+	.listline {
+		width: 100%;
+		height: 3upx;
+		background-color: #000000;	
+		margin-top: 20upx;
 	}
 
 	.tabbackground {

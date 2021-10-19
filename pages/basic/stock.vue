@@ -71,10 +71,19 @@
 				let Pages = getCurrentPages();
 				let PrevPage = Pages[Pages.length - 2]; //上一个页面					
 				//#ifdef H5
+				if(PrevPage._data.ScanType != 'undefined'){
+					let ScanType = PrevPage.$vm.ScanType;
+					if(ScanType == 1){
+					   PrevPage._data.DCStockArray = [e.FItemID, e.FName];
+					}
+					else{
+					   PrevPage._data.SCStockArray = [e.FItemID, e.FName];
+					}
+				}
 				PrevPage._data.SelectWareHouseArray = [e.FItemID, e.FName];
 				//#endif				
-				//#ifdef APP-PLUS
-			    if(PrevPage.$vm.ScanType != 'undefined'){
+				//#ifdef APP-PLUS				
+			    if(PrevPage.$vm.ScanType != undefined){
 					let ScanType = PrevPage.$vm.ScanType;
 					if(ScanType == 1){
 					   PrevPage.$vm.DCStockArray = [e.FItemID, e.FName];
@@ -83,7 +92,7 @@
 					   PrevPage.$vm.SCStockArray = [e.FItemID, e.FName];
 					}
 				}
-				else{
+				else{					
 					PrevPage.$vm.SelectWareHouseArray = [e.FItemID, e.FName];
 				}				
 				//#endif

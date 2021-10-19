@@ -54,7 +54,7 @@
 				scroll-y="true" v-show="IsMotorDepartment">
 				<uni-list>
 					<FillQty v-for="(item,index) in InfoListData" :key="index" :title="item.FNumber + '/' + item.FModel
-					 + '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '批号：' + item.FGMPBatchNo + '\n' + '汇总进度：' + item.FSumQty
+					 + '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '批号：' + item.FGMPBatchNo + '\n' + '进度：' + item.FSumQty
 					 + '/' + item.FICMOQty + '     ' + item.FSumQty/item.FOutPackPreQty + '件'" :rownumber="index + 1"
 					 isshowprogress v-bind:percent="Math.round((item.FSumQty / item.FICMOQty) * 100, 0)" clickable
 					 v-on:click="GetProReportInfoExpandByFillQty(item)" @ButtonClick="OpenQtyPopupWindow()">
@@ -66,7 +66,7 @@
 				scroll-y="true" v-show="!IsMotorDepartment">
 				<uni-list>
 					<uni-list-item v-for="(item,index) in InfoListData" :key="index" :title="item.FNumber + '/' + item.FModel
-					 + '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '批号：' + item.FGMPBatchNo + '\n' + '汇总进度：' + item.FSumQty
+					 + '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '批号：' + item.FGMPBatchNo + '\n' + '进度：' + item.FSumQty
 					 + '/' + item.FICMOQty + '     ' + item.FSumQty/item.FOutPackPreQty + '件'" isshowprogress
 					 v-bind:percent="Math.round((item.FSumQty / item.FICMOQty) * 100, 0)" clickable
 					 v-on:click="GetProReportInfoExpand(item)">
@@ -568,12 +568,13 @@
 								'0')
 						}
 					},
-					success: (result) => {
+					success: (result) => {						
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 							Config.PopAudioContext(false);
 							Config.ShowMessage('账号登录异常，请重新登录！');
+							uni.hideLoading();
 							return;
 						}						
 						this.SummaryListData = result.data.ResultData.PdaICMORptListInfo.data0;
@@ -721,9 +722,7 @@
 						let ResultMsg = resultcomp.data.ResultMsg;
 						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							Config.PopAudioContext(false);
-							Config.ShowMessage(ResultMsg);
-							uni.hideLoading();
-							this.SetRequestingFlag(false);
+							Config.ShowMessage(ResultMsg);							
 						}
 					}
 				});
@@ -908,6 +907,7 @@
 					Config.ShowMessage('请选择要删除的汇报单！');
 					return;
 				}
+				
 				let me = this;
 				uni.showModal({
 					title: '提示',
@@ -954,15 +954,13 @@
 								},
 								fail: () => {
 									Config.PopAudioContext(false);
-									Config.ShowMessage('请求数据失败！');
-									return;
+									Config.ShowMessage('请求数据失败！');									
 								},
 					            complete: (resultcomp) => {
 						        let ResultMsg = resultcomp.data.ResultMsg;
 						        if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							        Config.PopAudioContext(false);
-							        Config.ShowMessage(ResultMsg);
-							        uni.hideLoading();							        
+							        Config.ShowMessage(ResultMsg);							       						        
 						        }
 					        }
 							});
@@ -994,15 +992,13 @@
 					},
 					fail: () => {
 						Config.PopAudioContext(false);
-						Config.ShowMessage('请求数据失败！');
-						return;
+						Config.ShowMessage('请求数据失败！');						
 					},
 					complete: (resultcomp) => {
 					    let ResultMsg = resultcomp.data.ResultMsg;
 					    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							Config.PopAudioContext(false);
-							Config.ShowMessage(ResultMsg);
-							uni.hideLoading();													
+							Config.ShowMessage(ResultMsg);																		
 					    }
 				    }
 				});
@@ -1026,6 +1022,7 @@
 							}
 						},
 						success: (result) => {
+							//console.log(result.data);
 							let ResultCode = result.data.ResultCode;
 							let ResultMsg = result.data.ResultMsg;
 							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {

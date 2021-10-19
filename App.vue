@@ -38,4 +38,10 @@
 	.keyboard {
 		display: flex;
 	}
+	/* 页面单据头样式 */
+	.pagehead{
+		width: 100%;
+		height: 130upx;
+		background-color: #1AAD19;
+	}
 </style>

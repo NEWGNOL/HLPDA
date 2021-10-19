@@ -387,7 +387,7 @@
 			},
 			//获取选中的单据
 			GetSelectSEOutStockByAdd: function() {				
-				let CheckCount = this.SEOutStockListData.filter(x => x.FIsChecked == true).length;
+				let CheckCount = this.SEOutStockListData.filter(x => x.FIsChecked).length;
 				if (CheckCount == 0) {
 					Config.ShowMessage('请选择收料通知单进行新增！');
 					Config.PopAudioContext(false);

@@ -66,9 +66,11 @@
 
 
 		<view class="instorageview" v-show="TabSelectedIndex == 2" @touchstart='TouchStart' @touchend='TouchEnd'>
-			<text class="scanned">已扫描条码：</text>
-			<text class="queryall" clickable v-on:click="GetStorageInCartonDetail()">查看全部</text>
-			<view class="listline"></view>
+			<view class="pagehead">
+			      <text class="scanned">已扫描条码：</text>
+			      <text class="queryall" clickable v-on:click="GetStorageInCartonDetail()">查看全部</text>
+			</view>
+			
 			
 			<text class="detailtitle">物料编码：</text>
 			<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FNumber : '空'}}</text>
@@ -119,6 +121,7 @@
 				StorageInterId: 0,
 				StorageInBillNo: '空',
 				StorageInSrcInterId: 0,
+				StorageInSrcBillNo: '',
 				SelectedPOInstock: '0',
 				SelectSupplierArray: [0, '请选择供应商'],
 				SelectWareHouseArray: [0, '请选择收料仓库'],
@@ -251,39 +254,39 @@
 			},			
 			//获取系统参数
 			GetGblSetting: function() {
-				uni.request({
-					url: uni.getStorageSync('OtherUrl'),
-					method: 'POST',
-					data: {
-						ModuleCode: 'getStorageBinIsActive',
-						token: uni.getStorageSync('token'),
-						ModuleParam: {
-							FSignalKey: 'StorageBinIsActive'
-						}
-					},
-					success: (result) => {
-						let ResultCode = result.data.ResultCode;
-						let ResultMsg = result.data.ResultMsg;
-						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-							Config.ShowMessage('账号登录异常，请重新登录！');
-							Config.PopAudioContext(false);
-							return;
-						}
-						this.StorageBinIsActive = result.data.ResultData.getStorageBinIsActiveInfo.data0
-							.FValue;
-					},
-					fail: () => {
-						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);
-					},
-					complete: (resultcomp) => {
-						let ResultMsg = resultcomp.data.ResultMsg;
-						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-							Config.PopAudioContext(false);
-							Config.ShowMessage(ResultMsg);
-						}
-					}
-				});
+				// uni.request({
+				// 	url: uni.getStorageSync('OtherUrl'),
+				// 	method: 'POST',
+				// 	data: {
+				// 		ModuleCode: 'getStorageBinIsActive',
+				// 		token: uni.getStorageSync('token'),
+				// 		ModuleParam: {
+				// 			FSignalKey: 'StorageBinIsActive'
+				// 		}
+				// 	},
+				// 	success: (result) => {
+				// 		let ResultCode = result.data.ResultCode;
+				// 		let ResultMsg = result.data.ResultMsg;
+				// 		if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+				// 			Config.ShowMessage('账号登录异常，请重新登录！');
+				// 			Config.PopAudioContext(false);
+				// 			return;
+				// 		}
+				// 		this.StorageBinIsActive = result.data.ResultData.getStorageBinIsActiveInfo.data0
+				// 			.FValue;
+				// 	},
+				// 	fail: () => {
+				// 		Config.ShowMessage('请求数据失败！');
+				// 		Config.PopAudioContext(false);
+				// 	},
+				// 	complete: (resultcomp) => {
+				// 		let ResultMsg = resultcomp.data.ResultMsg;
+				// 		if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+				// 			Config.PopAudioContext(false);
+				// 			Config.ShowMessage(ResultMsg);
+				// 		}
+				// 	}
+				// });
 			},
 			//显示收料通知单信息
 			ShowPOInstockInfo: function(Barcode) {
@@ -1063,14 +1066,16 @@
 	}
 
 	.scanned {
-		display: flex;
+		display: inline-block;
+		color: #FFFFFF;
 		font-size: 40upx;
 		margin-left: 30upx;
-		margin-top: 20upx;
+		margin-top: 30upx;
 	}
 
 	.queryall {
 		display: flex;
+		flex-direction: column;
 		font-size: 40upx;
 		color: #007AFF;
 		margin-left: 570upx;
