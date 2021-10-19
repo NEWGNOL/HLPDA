@@ -24,15 +24,19 @@
 
 
 
-		<view class="instorageview" v-show="TabSelectedIndex == 1" @touchstart='TouchStart' @touchend='TouchEnd'>			
-			<button class="auditstoragein" v-on:click="AuditStorageIn()">审核</button>
-			<button class="unauditstoragein" v-on:click="UnAuditStorageIn()">反审</button>
-			<button class="deletestoragein" v-on:click="DeleteStorageIn()">删除</button>
+		<view class="instorageview" v-show="TabSelectedIndex == 1" @touchstart='TouchStart' @touchend='TouchEnd'>
+			<view class="pagehead">
+				  <text class="srcbillno">{{StorageInSrcBillNo}}</text>
+				  <button class="auditstoragein" v-on:click="AuditStorageIn()" v-show="IsAuditStorageIn">审核</button>
+				  <button class="unauditstoragein" v-on:click="UnAuditStorageIn()" v-show="!IsAuditStorageIn">反审</button>
+				  <button class="deletestoragein" v-on:click="DeleteStorageIn()">删除</button>
+			</view>
+			
 
 			<view class="billhead" v-show="IsBillHeadVisible">
-				<text class="title">单据编号：</text>
+				<!-- <text class="title">单据编号：</text>
 				<text class="billnoempty">{{StorageInBillNo}}</text>
-				<view class="dataline"></view>
+				<view class="dataline"></view> -->
 
 				<text class="title">供应商：</text>
 				<view class="data">{{SelectSupplierArray[1]}}</view>
@@ -121,7 +125,7 @@
 				StorageInterId: 0,
 				StorageInBillNo: '空',
 				StorageInSrcInterId: 0,
-				StorageInSrcBillNo: '',
+				StorageInSrcBillNo: '空',
 				SelectedPOInstock: '0',
 				SelectSupplierArray: [0, '请选择供应商'],
 				SelectWareHouseArray: [0, '请选择收料仓库'],
@@ -141,6 +145,7 @@
 				POInstockGroupData: [],
 				IsBillHeadVisible: true,
 				IsAddStorageIn: true,
+				IsAuditStorageIn: true,
 				StorageBinIsActive: true,
 				Main: '',
 				Receiver: ''
@@ -219,6 +224,10 @@
 					this.TabSelectedIndex = TabSelectedIndex;					
 				}
 			},
+			//切换审核标志
+			SwitchAuditFlag: function(IsAuditStorageIn){
+				this.IsAuditStorageIn = IsAuditStorageIn;
+			},
 			//滑动页面
 			SlidingPage: function(IsSlidingLeftPage) {
 				if (IsSlidingLeftPage) {
@@ -240,6 +249,7 @@
 				me.StorageInterId = 0;
 				me.StorageInBillNo = '空';
 				me.StorageInSrcInterId = 0;
+				me.StorageInSrcBillNo = '空';
 				me.SelectSupplierArray = [0, '请选择供应商'];
 				me.SelectWareHouseArray = [0, '请选择收料仓库'];				
 				me.InStorageDate = Config.DateFormat({
@@ -383,6 +393,7 @@
 					return;
 				}
 				this.SwitchTab(1);
+				this.SwitchAuditFlag(true);
 				this.AddStorageInBillNo();					
 			},			
 			//新增入库单编号
@@ -434,6 +445,12 @@
 					return;
 				}
 				this.SwitchTab(1);
+				if(this.ProreportStatus == '未审核'){
+					this.SwitchAuditFlag(true);
+				}
+				else{
+					this.SwitchAuditFlag(false);
+				}
 				this.ShowPOInStockGroupInfoByQuery();
 			},
 			//审核入库单验证
@@ -496,7 +513,8 @@
 							return;
 						}
 						Config.ShowMessage(DataParam.Msg);
-						Config.PopAudioContext(true);											
+						Config.PopAudioContext(true);
+						this.SwitchAuditFlag(false);											
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -555,7 +573,8 @@
 							return;
 						}
 						Config.ShowMessage(DataParam.Msg);
-						Config.PopAudioContext(true);						
+						Config.PopAudioContext(true);
+						this.SwitchAuditFlag(true);						
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -573,8 +592,7 @@
 			},
 			//获取选中的收料通知单
 			GetSelectPOInStockByAdd: function() {
-				this.SelectedPOInstock = '';
-				this.StorageInSrcInterId = 0;
+				this.SelectedPOInstock = '';				
 				this.SelectSupplierArray = [0, '请选择供应商'];
 				this.SelectWareHouseArray = [0, '请选择收料仓库']
 				for (var i = 0; i < this.POInstockListData.length; i++) {
@@ -583,6 +601,7 @@
 						this.SelectedPOInstockModel = DataModel;
 						this.SelectedPOInstock += DataModel.FInterID + ',';
 						this.StorageInSrcInterId = DataModel.FInterID;
+						this.StorageInSrcBillNo = DataModel.FBillNo;
 						this.SelectSupplierArray = [DataModel.FSupplyID, DataModel.FSupplyName];
 						this.SelectWareHouseArray = [DataModel.FStorageId, DataModel.FStorageName];
 						break;
@@ -605,8 +624,7 @@
 				this.SelectedPOInstock = '';
 				this.StorageInterId = 0;
 				this.StorageInBillNo = '空';
-				this.InStorageDate = '';
-				this.StorageInSrcInterId = 0;
+				this.InStorageDate = '';				
 				this.SelectSupplierArray = [0, '请选择供应商'];
 				this.SelectWareHouseArray = [0, '请选择收料仓库']
 				for (var i = 0; i < this.POInstockListData.length; i++) {
@@ -618,6 +636,7 @@
 						this.StorageInBillNo = DataModel.FStockBillNo;
 						this.InStorageDate = DataModel.FStockBillDate;
 						this.StorageInSrcInterId = DataModel.FPOOrderInterId;
+						this.StorageInSrcBillNo = DataModel.FBillNo;
 						this.SelectSupplierArray = [DataModel.FSupplyID, DataModel.FSupplyName];
 						this.SelectWareHouseArray = [DataModel.FStorageId, DataModel.FStorageName];
 						break;
@@ -916,13 +935,13 @@
 
 	.selectinfoscrollview {
 		width: 100%;
-		height: 620upx;
+		height: 670upx;
 		margin-top: 50upx;
 	}
 
 	.unselectinfoscrollview {
 		width: 100%;
-		height: 900upx;
+		height: 950upx;
 		margin-top: 50upx;
 	}
 
@@ -982,30 +1001,43 @@
 
 	.auditstoragein {
 		width: 20%;
-		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 50upx;
-		margin-top: 20upx;		
+		color: #FFFFFF;	
+		font-size: 15px;
+		border: 1px solid #FFFFFF;
+		background-color: #1AAD19;		
+		margin-left: 420upx;
+		margin-top: -70upx;	
 	}
 
 	.unauditstoragein {
 		width: 20%;
 		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 300upx;
-		margin-top: -96upx;
+		font-size: 15px;
+		border: 1px solid #FFFFFF;
+		background-color: #1AAD19;		
+		margin-left: 420upx;
+		margin-top: -70upx;
 	}
 
 	.deletestoragein {
 		width: 20%;
 		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 550upx;
-		margin-top: -96upx;
+		font-size: 15px;
+		border: 1px solid #FFFFFF;
+		background-color: #1AAD19;
+		text-align: center;
+		margin-left: 590upx;
+		margin-top: -85upx;
 	}
+	
+	.srcbillno {
+		display: inline-block;
+		color: #FFFFFF;
+		font-size: 19px;
+		margin-left: 20upx;
+		margin-top: 30upx;
+	}
+	
 
 	.instorageview {
 		width: 100%;

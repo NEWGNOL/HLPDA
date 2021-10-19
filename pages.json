@@ -36,9 +36,13 @@
 											"color":"#FFFFFF",
 				                            "float": "right",
 				                            "width": "90px"											
-				                        }]
-				                    },
-									"bounce":"none"
+				                        }],
+										"backButton": {
+											  "title": "返回",
+											  "ftitleWeight": "bold",
+											  "fontSize": "26px"							  
+										}	
+				                    }									
 				                }		
 			}			
 		},	
@@ -56,7 +60,12 @@
 								  	  "color":"#FFFFFF",
 								      "float": "right",
 								      "width": "90px"											
-								  }]
+								  }],
+								  "backButton": {
+								  	  "title": "返回",
+								  	  "ftitleWeight": "bold",
+								  	  "fontSize": "26px"							  
+								  }	
 					 }
 			    }
 			}			
@@ -129,9 +138,14 @@
 								      "fontSize": "17px",
 								  	  "color":"#FFFFFF",
 								      "float": "right",
-								      "width": "90px"											
-								  }]							 
-					 }
+								      "width": "90px"									  																			
+								  }],
+							      "backButton": {									 
+									  "title": "返回",
+									  "ftitleWeight": "bold",
+									  "fontSize": "26px"
+								  }
+							      }								  
 				}			
 			}
 		},
@@ -160,7 +174,12 @@
 								  	  "color":"#FFFFFF",
 								      "float": "right",
 								      "width": "90px"											
-								  }]							 
+								  }],
+								  "backButton": {
+								  	  "title": "返回",
+								  	  "ftitleWeight": "bold",
+								  	  "fontSize": "26px"							  
+								  }						   
 					 }
 				}			
 			}
@@ -179,7 +198,12 @@
 								  	  "color":"#FFFFFF",
 								      "float": "right",
 								      "width": "90px"											
-								  }]	
+								  }],
+								  "backButton": {
+								  	  "title": "返回",
+								  	  "ftitleWeight": "bold",
+								  	  "fontSize": "26px"							  
+								  }	
 					 }
 			    }
 			}			
@@ -209,7 +233,12 @@
 								  	  "color":"FFFFFF",
 								      "float": "right",
 								      "width": "90px"											
-								  }]							 
+								  }],
+								  "backButton": {
+								  	  "title": "返回",
+								  	  "ftitleWeight": "bold",
+								  	  "fontSize": "26px"							  
+								  }	
 					 }
 				}				
 			}
@@ -239,7 +268,12 @@
 								  	  "color":"#FFFFFF",
 								      "float": "right",
 								      "width": "90px"											
-								  }]							 
+								  }],
+								  "backButton": {
+								  	  "title": "返回",
+								  	  "ftitleWeight": "bold",
+								  	  "fontSize": "26px"							  
+								  }	
 					 }
 				}	
 			}			
@@ -250,7 +284,12 @@
 				"navigationBarTitleText": "仓库盘点",
 				"app-plus":{
 				                  "titleNView":{
-				                  "titleColor":"FFFFFF"		 
+				                  "titleColor":"FFFFFF",
+								  "backButton": {
+								  	  "title": "返回",
+								  	  "ftitleWeight": "bold",
+								  	  "fontSize": "26px"							  
+								  }	
 					 }
 				}	
 			}			
@@ -329,7 +368,12 @@
 									   	   "color":"#FFFFFF",
 									       "float": "right",
 									       "width": "90px"											
-									   }]	
+									   }]	,
+								  "backButton": {
+								  	  "title": "返回",
+								  	  "ftitleWeight": "bold",
+								  	  "fontSize": "26px"							  
+								  }	   
 					 }
 				}	
 			}			

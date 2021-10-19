@@ -13,7 +13,7 @@
 				<uni-list @scrolltolower="ScrollToLower">
 					<uni-list-item v-for="(item,index) in IcmoListData" :key="index" :title="'制单人：'
 				    + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '编号：' + item.FBillNo" clickable
-					:ischecked="item.FIsChecked" :isshowcheckbox="true" @CheckBoxChange="ChangeIsChecked(item)">
+					:ischecked="item.FIsChecked" :isshowcheckbox="true" @CheckBoxChange="RefreshIcomListInfoByChecked(item)">
 					</uni-list-item>
 				</uni-list>
 			</scroll-view>
@@ -45,7 +45,7 @@
 
 				<text class="title">入库日期：</text>
 				<picker mode="date" :value="InStorageDate" :start="StartDate" :end="EndDate"
-					@change="InStorageDateChange">
+					@change="InStorageDateChange" :disabled="!IsAuditStorageIn">
 					<view class="data">{{InStorageDate}}</view>
 				</picker>
 				<view class="dataline"></view>
@@ -96,6 +96,10 @@
 				
 				<text class="detailtitle">订单号：</text>
 				<text class="detaildata">{{(this.ProreportInfoItem != null && this.ProreportInfoItem.FSOBillNo != null) ? this.ProreportInfoItem.FSOBillNo : '空'}}</text>	
+				<view class="listline"></view>
+				
+				<text class="detailtitle">源单编号：</text>
+				<text class="detaildata">{{(this.ProreportInfoItem != null && this.ProreportInfoItem.FSrcBillNo != null) ? this.ProreportInfoItem.FSrcBillNo : '空'}}</text>	
 				<view class="listline"></view>
 			</scroll-view>
 		</view>
@@ -223,10 +227,12 @@
 			SwitchAuditFlag: function(IsAuditStorageIn){
 				this.IsAuditStorageIn = IsAuditStorageIn;
 			},
-			//检测汇报单是否选中
-			ChangeIsChecked: function(item) {
-				item.FIsChecked = !item.FIsChecked;
-			},			
+			RefreshIcomListInfoByChecked: function(item){
+			   for(let i = 0; i < this.IcmoListData.length; i++){
+				   let DataModel = this.IcmoListData[i];
+				   DataModel.FIsChecked = (DataModel.FBillNo == item.FBillNo) ? true : false;				   
+			   }
+			},						
 			//获取系统参数
 			GetGblSetting: function() {
 				// uni.request({
@@ -299,7 +305,7 @@
 				}					
 			},
 			//显示汇报单
-			ShowPdaIcmoInfo: function(BarCode) {				
+			ShowPdaIcmoInfo: function(Barcode) {				
 				if (this.SelectStatus == '未入库') {					
 					uni.showLoading({
 						title: 'Loading',
@@ -312,7 +318,7 @@
 							ModuleCode: 'getPdaIcmoRptNoPutInList',
 							token: uni.getStorageSync('token'),
 							ModuleParam: {
-								FBillNoList: BarCode,
+								FBillNoList: Barcode,
 								FBillNo: this.SearchValue								
 							}
 						},
@@ -325,7 +331,11 @@
 								Config.PopAudioContext(false);
 								uni.hideLoading();
 								return;
-							}							
+							}
+							
+							if(Barcode != ''){
+							   Config.PopAudioContext(true);
+							}													
 							this.IcmoListData = result.data.ResultData.getPdaIcmoRptNoPutInListInfo.data0;							
 						},
 						fail: () => {
@@ -354,7 +364,8 @@
 							ModuleCode: 'getPdaIcmoRptPutInList',
 							token: uni.getStorageSync('token'),
 							ModuleParam: {
-								FBillNo: this.SearchValue							
+								FScanBillNo: Barcode,
+								FSearchBillNo: this.SearchValue							
 							}
 						},
 						success: (result) => {
@@ -366,6 +377,10 @@
 								Config.PopAudioContext(false);
 								uni.hideLoading();
 								return;
+							}	
+														
+							if(Barcode != ''){
+							   Config.PopAudioContext(true);
 							}							
 							this.IcmoListData = result.data.ResultData.getPdaIcmoRptPutInListInfo.data0;							
 						},
@@ -771,7 +786,7 @@
 				}
 				for (var i = 0; i < this.StorageInListData.length; i++) {
 					let DataModel = this.StorageInListData[i];	
-					if(DataModel.FStorageInCount < DataModel.FSumQty)
+					if(DataModel.FStorageInCount < (DataModel.FSumQty / DataModel.FInPackPreQty))
 					{
 						Config.ShowMessage('汇报单编号为' + DataModel.FBillNo + '汇报没有完成，不允许审核单据！');
 						Config.PopAudioContext(false);						
@@ -824,7 +839,7 @@
 						Config.ShowMessage(DataParam.Msg);
 						Config.PopAudioContext(true);						
 					    this.SwitchAuditFlag(false);
-						this.ShowPdaIcmoInfo('');
+						//this.ShowPdaIcmoInfo('');
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -886,7 +901,7 @@
 						Config.ShowMessage(DataParam.Msg);
 						Config.PopAudioContext(true);						
 						this.SwitchAuditFlag(true);
-						this.ShowPdaIcmoInfo('');
+						//this.ShowPdaIcmoInfo('');
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -948,7 +963,7 @@
 									Config.PopAudioContext(true);	
 									me.ClearBillHeadData(me);
 									me.GetProReportInfoExpand(null);
-									me.ShowPdaIcmoInfo('');																	
+									//me.ShowPdaIcmoInfo('');																	
 							},
 						    fail: () => {
 								    Config.ShowMessage('请求数据失败！');
@@ -1153,14 +1168,8 @@
 		border-radius: 50upx;
 		margin-left: 560upx;
 		margin-top: -96upx;
-	}
+	}	
 	
-	.pagehead{
-		width: 100%;
-		height: 130upx;
-		background-color: #1AAD19;
-	}
-
 	.billhead {
 		width: 100%;
 		margin-top: 50upx;

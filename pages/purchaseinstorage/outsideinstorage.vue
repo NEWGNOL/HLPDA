@@ -24,14 +24,17 @@
 		</view>
 		
 		<view class="instorageview" v-show="TabSelectedIndex == 1">
-			<button class="auditstoragein" v-on:click="AuditStorageIn()">审核</button>
-			<button class="unauditstoragein" v-on:click="UnAuditStorageIn()">反审</button>
-			<button class="deletestoragein" v-on:click="DeleteStorageIn()">删除</button>
+			<view class="pagehead">
+				<text class="srcbillno">{{StorageInSrcBillNo}}</text>
+				<button class="auditstoragein" v-on:click="AuditStorageIn()" v-show="IsAuditStorageIn">审核</button>
+				<button class="unauditstoragein" v-on:click="UnAuditStorageIn()" v-show="!IsAuditStorageIn">反审</button>
+				<button class="deletestoragein" v-on:click="DeleteStorageIn()">删除</button>
+			</view>			
 			
 			<view class="billhead" v-show="IsBillHeadVisible">
-				<text class="title">单据编号：</text>
+				<!-- <text class="title">单据编号：</text>
 				<text class="billnoempty">{{StorageInBillNo}}</text>
-				<view class="dataline"></view>
+				<view class="dataline"></view> -->
 			
 				<text class="title">供应商：</text>
 				<view class="data">{{SelectSupplierArray[1]}}</view>
@@ -65,9 +68,10 @@
 		</view>
 		
 		<view class="instorageview" v-show="TabSelectedIndex == 2">
-			<text class="scanned">已扫描条码：</text>
-			<text class="queryall" clickable v-on:click="GetStorageInCartonDetail()">查看全部</text>
-			<view class="listline"></view>
+			<view class="pagehead">
+				 <text class="scanned">已扫描条码：</text>
+				 <text class="queryall" clickable v-on:click="GetStorageInCartonDetail()">查看全部</text>
+			</view>			
 			
 			<text class="detailtitle">物料编码：</text>
 			<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FNumber : '空'}}</text>
@@ -107,6 +111,7 @@
 				StorageInterId: 0,
 				StorageInBillNo: '空',
 				StorageInSrcInterId: 0,
+				StorageInSrcBillNo: '空',
 				SelectPOOrderModel: null,
 				SelectGroupModel: null,
 				SelectItems: '',
@@ -125,6 +130,7 @@
 				StatusArray: ['未入库', '已入库'],
 				IsBillHeadVisible: true,
 				IsAddStorageIn: true,
+				IsAuditStorageIn: true,
 				Main: '',
 				Receiver: ''
 			}
@@ -182,6 +188,7 @@
 				me.StorageInterId = 0;
 				me.StorageInBillNo = '空';
 				me.StorageInSrcInterId = 0;
+				me.StorageInSrcBillNo = '空';
 				me.SelectSupplierArray = [0, '请选择供应商'];
 				me.SelectWareHouseArray = [0, '请选择收料仓库'];				
 				me.InStorageDate = Config.DateFormat({
@@ -199,6 +206,10 @@
 			//切换表头是否可见
 			SwitchBillHeadVisible: function() {
 				this.IsBillHeadVisible = !this.IsBillHeadVisible;
+			},
+			//切换审核标志
+			SwitchAuditFlag: function(IsAuditStorageIn){
+				this.IsAuditStorageIn = IsAuditStorageIn;
 			},
 			//扫描条码做入库
 			ScanBarCode: function(Barcode) {
@@ -369,6 +380,7 @@
 					return;
 				}
 				this.SwitchTab(1);
+				this.SwitchAuditFlag(true);
 				this.AddStorageInBillNo();
 				this.ShowPOOrderGroupInfo();					
 			},			
@@ -420,6 +432,12 @@
 					return;
 				}
 				this.SwitchTab(1);
+				if(this.ProreportStatus == '未审核'){
+					this.SwitchAuditFlag(true);
+				}
+				else{
+					this.SwitchAuditFlag(false);
+				}
 				this.ShowPOOrderGroupInfo();
 			},
 			//获取选中的采购订单
@@ -438,6 +456,7 @@
 							
 				this.SelectPOOrderModel = this.POOrderListData.find(x => x.FIsChecked);				
 				this.StorageInSrcInterId = this.SelectPOOrderModel.FInterID;
+				this.StorageInSrcBillNo = this.SelectPOOrderModel.FBillNo;
 				this.SelectSupplierArray = [this.SelectPOOrderModel.FSupplyID, this.SelectPOOrderModel.FSupplyName];
 				this.SelectWareHouseArray = [this.SelectPOOrderModel.FStorageId, this.SelectPOOrderModel.FStorageName];				
 			},
@@ -459,6 +478,7 @@
 				this.StorageInBillNo = this.SelectPOOrderModel.FBillNo;
 				this.InStorageDate = this.SelectPOOrderModel.FDate;
 				this.StorageInSrcInterId = this.SelectPOOrderModel.FSrcInterId;
+				this.StorageInSrcBillNo = this.SelectPOOrderModel.FBillNo;
 				this.SelectSupplierArray = [this.SelectPOOrderModel.FSupplyID, this.SelectPOOrderModel.FSupplyName];
 				this.SelectWareHouseArray = [this.SelectPOOrderModel.FStorageId, this.SelectPOOrderModel.FStorageName];					
 			},
@@ -604,7 +624,8 @@
 							return;
 						}
 						Config.ShowMessage(DataParam.Msg);
-						Config.PopAudioContext(true);											
+						Config.PopAudioContext(true);
+						this.SwitchAuditFlag(false);												
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -663,7 +684,8 @@
 							return;
 						}
 						Config.ShowMessage(DataParam.Msg);
-						Config.PopAudioContext(true);						
+						Config.PopAudioContext(true);
+						this.SwitchAuditFlag(true);						
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -774,13 +796,13 @@
 	
 	.selectinfoscrollview {
 		width: 100%;
-		height: 570upx;
+		height: 670upx;
 		margin-top: 50upx;
 	}
 	
 	.unselectinfoscrollview {
 		width: 100%;
-		height: 850upx;
+		height: 950upx;
 		margin-top: 50upx;
 	}
 	
@@ -806,29 +828,41 @@
 	
 	.auditstoragein {
 		width: 20%;
-		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 50upx;
-		margin-top: 20upx;		
+		color: #FFFFFF;	
+		font-size: 15px;
+		border: 1px solid #FFFFFF;
+		background-color: #1AAD19;		
+		margin-left: 420upx;
+		margin-top: -70upx;	
 	}
 	
 	.unauditstoragein {
 		width: 20%;
 		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 300upx;
-		margin-top: -96upx;
+		font-size: 15px;
+		border: 1px solid #FFFFFF;
+		background-color: #1AAD19;		
+		margin-left: 420upx;
+		margin-top: -70upx;
 	}
 	
 	.deletestoragein {
 		width: 20%;
 		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 550upx;
-		margin-top: -96upx;
+		font-size: 15px;
+		border: 1px solid #FFFFFF;
+		background-color: #1AAD19;
+		text-align: center;
+		margin-left: 590upx;
+		margin-top: -85upx;
+	}
+	
+	.srcbillno {
+		display: inline-block;
+		color: #FFFFFF;
+		font-size: 19px;
+		margin-left: 20upx;
+		margin-top: 30upx;
 	}
 	
 	.billhead {
@@ -919,14 +953,16 @@
 	}
 	
 	.scanned {
-		display: flex;
+		display: inline-block;
+		color: #FFFFFF;
 		font-size: 40upx;
 		margin-left: 30upx;
-		margin-top: 20upx;
+		margin-top: 30upx;
 	}
 	
 	.queryall {
 		display: flex;
+		flex-direction: column;
 		font-size: 40upx;
 		color: #007AFF;
 		margin-left: 570upx;
