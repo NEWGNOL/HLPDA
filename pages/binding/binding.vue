@@ -447,95 +447,94 @@
 <style>	
 	.cartonlabeltitle {
 		display: flex;
-		font-size: 40rpx;
-		margin-left: 90rpx;
-		margin-top: 40rpx;
+		font-size: 40upx;
+		margin-left: 90upx;
+		margin-top: 40upx;
 	}
 
 	.cartonlabelcode {
 		display: flex;
-		width: 500rpx;
-		font-size: 45rpx;
-		margin-left: 350rpx;
-		margin-top: -63rpx;
+		width: 500upx;
+		font-size: 45upx;
+		margin-left: 350upx;
+		margin-top: -63upx;
 	}
 
 	.otherscantitle {
 		display: flex;
-		font-size: 40rpx;
-		margin-left: 90rpx;
-		margin-top: 50rpx;
+		font-size: 40upx;
+		margin-left: 90upx;
+		margin-top: 50upx;
 	}
 
 	.otherscandata {
 		display: flex;
-		width: 500rpx;
-		font-size: 45rpx;
-		margin-left: 350rpx;
-		margin-top: -63rpx;
+		width: 500upx;
+		font-size: 45upx;
+		margin-left: 350upx;
+		margin-top: -63upx;
 	}
 
 	.scannedcount {
 		display: flex;
-		width: 500rpx;
-		font-size: 50rpx;
-		margin-left: 350rpx;
-		margin-top: -70rpx;
+		width: 500upx;
+		font-size: 50upx;
+		margin-left: 350upx;
+		margin-top: -70upx;
 		color: #1AAD19;
 	}
 	
 	.tabbackground {
 		width: 100%;
-		height: 100rpx;
-		margin-top: 1090rpx;
+		height: 100upx;
+		margin-top: 1090upx;
 		background-color: #F4F4F4;
 	}
 
 	.tableftline {
 		width: 15%;
-		height: 5rpx;
-		margin-top: 5rpx;
-		margin-left: 145rpx;
+		height: 5upx;
+		margin-top: 5upx;
+		margin-left: 145upx;
 	}
 
 	.tabrightline {
 		width: 15%;
-		height: 5rpx;
-		margin-top: 5rpx;
-		margin-left: 495rpx;
+		height: 5upx;
+		margin-top: 5upx;
+		margin-left: 495upx;
 	}
 
 	.tableft {
 		display: flex;
-		font-size: 50rpx;
-		margin-top: 5rpx;
-		margin-left: 150rpx;
+		font-size: 50upx;
+		margin-top: 5upx;
+		margin-left: 150upx;
 	}
 
 	.tabright {
 		display: flex;
-		font-size: 50rpx;
-		margin-top: -86rpx;
-		margin-left: 500rpx;
+		font-size: 50upx;
+		margin-top: -86upx;
+		margin-left: 500upx;
 	}
 
 	.summary {
-		height: 650rpx;
-		margin-top: -1100rpx;
+		height: 650upx;
+		margin-top: -1100upx;
 		display: grid;
 		flex-direction: row;
 	}
 
 	.summarytitle {
-		font-size: 40rpx;
-		margin-left: 0rpx;
-		margin-top: -80rpx;
+		font-size: 40px;	
+		margin-top: -80upx;
 	}
 
 	.summarydata {
-		font-size: 40rpx;
-		margin-left: 50rpx;
-		margin-top: -50rpx;
+		font-size: 40upx;
+		margin-left: 50upx;
+		margin-top: -50upx;
 	}
 
 	.selecttab {
@@ -559,17 +558,17 @@
 	}
 
 	.scrollview {
-		height: 870rpx;
-		margin-top: 30rpx;
+		height: 870upx;
+		margin-top: 30upx;
 	}
 
 	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
+		height: 200upx;
+		width: 200upx;
+		margin-top: 200upx;
 		margin-left: auto;
 		margin-right: auto;
-		margin-bottom: 50rpx;
+		margin-bottom: 50upx;
 	}
 
 	.text-area {
@@ -578,23 +577,23 @@
 	}
 
 	.title {
-		font-size: 36rpx;
+		font-size: 36upx;
 		color: #8f8f94;
 	}
 
 	.selectlabel {
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50rpx;
-		margin-top: -1170rpx;
-		margin-left: 200rpx;
+		border-radius: 50upx;
+		margin-top: -1170upx;
+		margin-left: 200upx;
 	}
 
 	.deletelabel {
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50rpx;
-		margin-top: -95rpx;
-		margin-right: 150rpx;
+		border-radius: 50upx;
+		margin-top: -95upx;
+		margin-right: 150upx;
 	}	
 </style>
