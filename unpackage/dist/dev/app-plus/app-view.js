@@ -16240,48 +16240,63 @@ var render = function() {
       _c("v-uni-text", { staticClass: _vm._$g(1, "sc"), attrs: { _i: 1 } }, [
         _vm._v("物料编码：")
       ]),
-      _c("v-uni-text", { staticClass: _vm._$g(2, "sc"), attrs: { _i: 2 } }, [
-        _vm._v(_vm._$g(2, "t0-0"))
-      ]),
-      _c("v-uni-text", { staticClass: _vm._$g(3, "sc"), attrs: { _i: 3 } }, [
+      _c(
+        "v-uni-navigator",
+        {
+          attrs: {
+            url: "/pages/basic/icitem",
+            "hover-class": "navigator-hover",
+            _i: 2
+          }
+        },
+        [
+          _c(
+            "v-uni-text",
+            { staticClass: _vm._$g(3, "sc"), attrs: { _i: 3 } },
+            [_vm._v(_vm._$g(3, "t0-0"))]
+          )
+        ],
+        1
+      ),
+      _c("v-uni-text", { staticClass: _vm._$g(4, "sc"), attrs: { _i: 4 } }, [
         _vm._v("物料型号：")
       ]),
-      _c("v-uni-text", { staticClass: _vm._$g(4, "sc"), attrs: { _i: 4 } }, [
-        _vm._v(_vm._$g(4, "t0-0"))
-      ]),
       _c("v-uni-text", { staticClass: _vm._$g(5, "sc"), attrs: { _i: 5 } }, [
-        _vm._v("物料名称：")
+        _vm._v(_vm._$g(5, "t0-0"))
       ]),
       _c("v-uni-text", { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } }, [
-        _vm._v(_vm._$g(6, "t0-0"))
+        _vm._v("物料名称：")
+      ]),
+      _c("v-uni-text", { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } }, [
+        _vm._v(_vm._$g(7, "t0-0"))
       ]),
       _c(
         "v-uni-scroll-view",
-        { staticClass: _vm._$g(7, "sc"), attrs: { "scroll-y": "true", _i: 7 } },
+        { staticClass: _vm._$g(8, "sc"), attrs: { "scroll-y": "true", _i: 8 } },
         [
           _c(
             "uni-table",
-            { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
+            { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
             [
               _c(
                 "uni-tr",
-                { attrs: { _i: 9 } },
+                { attrs: { _i: 10 } },
                 [
-                  _c("uni-th", { attrs: { _i: 10 } }, [_vm._v("仓库")]),
-                  _c("uni-th", { attrs: { _i: 11 } }, [_vm._v("数量")])
+                  _c("uni-th", { attrs: { _i: 11 } }, [_vm._v("仓库")]),
+                  _c("uni-th", { attrs: { _i: 12 } }, [_vm._v("数量")])
                 ],
                 1
               ),
-              _vm._l(_vm._$g(12, "f"), function(item, $10, $20, $30) {
+              _vm._l(_vm._$g(13, "f"), function(item, $10, $20, $30) {
                 return _c(
                   "uni-tr",
-                  { key: item, attrs: { _i: "12-" + $30 } },
+                  { key: item, attrs: { _i: "13-" + $30 } },
                   [
-                    _c("uni-td", { attrs: { _i: "13-" + $30 } }, [
-                      _vm._v(_vm._$g("13-" + $30, "t0-0"))
-                    ]),
                     _c("uni-td", { attrs: { _i: "14-" + $30 } }, [
                       _vm._v(_vm._$g("14-" + $30, "t0-0"))
+                    ]),
+                    _c("uni-td", { attrs: { _i: "15-" + $30 } }, [
+                      _vm._v(_vm._$g("15-" + $30, "t0-0"))
                     ])
                   ],
                   1

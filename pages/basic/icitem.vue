@@ -70,10 +70,23 @@
 				let Pages = getCurrentPages();
 				let PrevPage = Pages[Pages.length - 2]; //上一个页面		
 				//#ifdef H5
-				PrevPage._data.MaterialArray = [e.FItemID, e.FName, e.FNumber, e.FModel];								
-				//#endif				
-				//#ifdef APP-PLUS
-				PrevPage.$vm.MaterialArray = [e.FItemID, e.FName, e.FNumber, e.FModel];				
+				if(PrevPage._data.MaterialModel != undefined){
+					
+				}
+				else{
+					PrevPage._data.MaterialArray = [e.FItemID, e.FName, e.FNumber, e.FModel];	
+				}											
+				//#endif	
+							
+				//#ifdef APP-PLUS	
+				 if(PrevPage.$vm.IsQueryInventory != undefined){					
+				   let Barcode = e.FNumber;				 
+				   PrevPage.$vm.ScanBarCode(Barcode);
+				  // console.log(Barcode);									 
+				}
+				else{					
+					PrevPage.$vm.MaterialArray = [e.FItemID, e.FName, e.FNumber, e.FModel];
+				}								
 				//#endif
 				uni.navigateBack();
 			}

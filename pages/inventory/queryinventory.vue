@@ -1,7 +1,9 @@
 <template>
 	<view class="container">
 		<text class="title">物料编码：</text>
-		<text class="data">{{MaterialModel != null ? MaterialModel.FMaterialNumber : '物料编码'}}</text>
+		<navigator url="/pages/basic/icitem" hover-class="navigator-hover">
+		    <text class="data">{{MaterialModel != null ? MaterialModel.FMaterialNumber : '物料编码'}}</text>
+		</navigator>
 		
 	    <text class="title">物料型号：</text>
 		<text class="data">{{MaterialModel != null ? MaterialModel.FModel : '物料型号'}}</text>
@@ -34,6 +36,7 @@
 			return {
 				MaterialModel: null,				
 				InventoryList: [],
+				IsQueryInventory: true,
 				Main: '',
 				Receiver: ''
 			}
