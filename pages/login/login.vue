@@ -52,11 +52,20 @@
 		onReady() {
 			this.CreateGraphic();
 		},
-		onLoad() {
+		onLoad() {			
 			this.LoadLoginData();
-			this.AutoCheckUpdate();
+			this.AutoCheckUpdate();		
+			//this.GetScreenHeight();	
 		},
 		methods: {
+			GetScreenHeight: function(){
+				uni.getSystemInfo({
+				                success: (res)=> {
+				                    let height=res.screenHeight; //获取系统信息，可使用窗口的高度
+				                    console.log(height);
+				                }
+				            });
+			},
 			//输入搜索
 			SearchInput: function(e) {
 				let OldUserName = uni.getStorageSync('FUserName');
@@ -213,46 +222,47 @@
 <style>	
 	.tableftline {
 		width: 15%;
-		height: 5rpx;
-		margin-right: 500rpx;
+		height: 5upx;
+		margin-right: 500upx;
 	}
 
 	.tabrightline {
 		width: 29%;
-		height: 5rpx;
-		margin-left: 400rpx;
+		height: 5upx;
+		margin-left: 400upx;
 	}
 
 	.img {
-		width: 400rpx;
-		height: 200rpx;
-		margin-top: 50rpx;
+		width: 400upx;
+		height: 200upx;
+		margin-top: 50upx;
 	}
 
 	.tableft {
-		font-size: 50rpx;
-		margin-top: 100rpx;
-		margin-left: -500rpx;
+		font-size: 50upx;
+		margin-top: 100upx;
+		margin-left: -500upx;
 	}
 
 	.tabright {
-		font-size: 50rpx;
-		margin-top: -80rpx;
-		margin-left: 400rpx;
+		font-size: 50upx;
+		margin-top: -80upx;
+		margin-left: 400upx;
 	}
 
 	.button {
-		margin-top: 100rpx;
-		width: 250rpx;
+		margin-top: 100upx;
+		width: 250upx;
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50rpx;
+		border-radius: 50upx;
+		text-align: center;
 	}
 
 	.usernametext {
-		font-size: 40rpx;
-		margin-left: 30rpx;
-		margin-top: 50rpx;
+		font-size: 40upx;
+		margin-left: 30upx;
+		margin-top: 50upx;
 	}
 
 	.passwordtext {
@@ -262,16 +272,16 @@
 	}
 
 	.cla {
-		width: 400rpx;
-		border: 5rpx solid;
+		width: 400upx;
+		border: 5upx solid;
 		border-color: #888888;
-		margin-left: 220rpx;
-		margin-top: -55rpx;
+		margin-left: 220upx;
+		margin-top: -55upx;
 	}
 
 	.summary {
-		height: 500rpx;
-		margin-top: 50rpx;
+		height: 500upx;
+		margin-top: 50upx;
 		display: grid;
 		flex-direction: row;
 	}
@@ -285,7 +295,7 @@
 	}
 
 	.loginpagecanvas {
-		height: 250px;
-		width: 350px;
+		height: 250upx;
+		width: 350upx;
 	}
 </style>

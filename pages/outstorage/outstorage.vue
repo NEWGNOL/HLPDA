@@ -42,26 +42,13 @@
 			    <button class="deletestorageout" v-on:click="DeleteStorageOut()">删除</button>
 			</view>
 			
-			<!-- <button class="auditstorageout" v-on:click="AuditStorageOut()">审核</button>
-			<button class="unauditstorageout" v-on:click="UnAuditStorageOut()">反审</button>
-			<button class="deletestorageout" v-on:click="DeleteStorageOut()">删除</button> -->
-			<!-- <button class="checkitem" v-on:click="OpenMatPopupWindow()">校验</button> -->
-
-			<view class="billhead" v-show="IsBillHeadVisible">
-				<!-- <text class="title">单据编号：</text>
-				<text class="billnoempty">{{StorageOutBillNo}}</text>
-				<view class="dataline"></view> -->
-
+			<view class="billhead" v-show="IsBillHeadVisible">				
 				<text class="title">出库日期：</text>
 				<picker mode="date" :value="OutStorageDate" :start="StartDate" :end="EndDate"
 					@change="OutStorageDateChange">
 					<view class="data">{{OutStorageDate}}</view>
 				</picker>
 				<view class="dataline"></view>
-
-				<!-- <text class="title">源单编号：</text>
-				<view class="data">{{SelectSrcBillNo}}</view>
-				<view class="dataline"></view> -->
 
 				<text class="title">扫码进度：</text>
 				<view class="data">{{ScanProgress}}</view>

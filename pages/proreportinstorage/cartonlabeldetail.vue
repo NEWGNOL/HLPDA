@@ -25,12 +25,18 @@
 				ProReportSrcInterId: 0,
 				DetailListData: [],
 				SelectCartonLabel: '',
-				IsSelectAllLabel: false
+				IsSelectAllLabel: false,
+				PrevPage: null
 			}
 		},		
 		onLoad() {	
 			this.GetStorageInterId();
 			this.ShowStorageInDetail();
+		},
+		onUnload() {
+			//#ifdef APP-PLUS
+			this.PrevPage.$vm.ShowBillGroupInfo();
+			//#endif
 		},
 		methods: {
 			GetStorageInterId:function(){
@@ -40,6 +46,7 @@
 				this.StorageInterId = PrevPage.$vm.StorageInterId;
 				this.ProReportSrcInterId = PrevPage.$vm.ProReportSrcInterId;					
 				//#endif
+				this.PrevPage = PrevPage;
 			},
 			//显示入库的汇报单外箱明细
 			ShowStorageInDetail:function(){	

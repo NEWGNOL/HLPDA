@@ -28,17 +28,9 @@
 				 <button class="unauditstoragein" v-on:click="UnAuditStorageIn()" v-show="!IsAuditStorageIn">反审</button>
 				 <button class="deletestoragein" v-on:click="DeleteStorageIn()">删除</button>
 			</view>
-			<!-- <button class="auditstoragein" v-on:click="AuditStorageIn()">审核</button>
-			<button class="unauditstoragein" v-on:click="UnAuditStorageIn()">反审</button>
-			<button class="deletestoragein" v-on:click="DeleteStorageIn()">删除</button>	 -->		
-			<!-- <button class="scancartonbarcode" v-bind:class="{scanwarehousebarcode : IsScanCartonBarCode}" v-on:click="SwitchScanMode()">{{IsScanCartonBarCode ? '扫外箱' : '扫仓库'}}</button> -->
-
+			
 			<view class="billhead" v-show="IsBillHeadVisible">
-				<!-- <text class="title">源单编号：</text>
-				<text class="billnoempty"
-					v-bind:class="{billnofull : ProReportBillNo != '空'}">{{ProReportBillNo}}</text>
-				<view class="dataline"></view> -->
-
+				
 				<text class="title">交货单位：</text>				
 					<view class="data">{{SelectWorkShopArray[1]}}</view>				
 				<view class="dataline"></view>
@@ -50,11 +42,11 @@
 				</picker>
 				<view class="dataline"></view>
 				
-				<text class="title">汇报仓库：</text>	
+				<!-- <text class="title">汇报仓库：</text>	
 				<navigator url="/pages/basic/stock" hover-class="navigator-hover">		
 				    <view class="data">{{SelectWareHouseArray[1]}}</view>	
                 </navigator>									 
-				<view class="dataline"></view>
+				<view class="dataline"></view> -->
 				
 				<text class="title">扫码进度：</text>
 				<view class="data">{{ScanProgress}}</view>
@@ -62,15 +54,16 @@
 			</view>
 
 			<scroll-view class="selectinfoscrollview" v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}"
-							scroll-y="true">
+						scroll-y="true">
 						<uni-list>
-								<uni-list-item v-for="(item,index) in StorageInListData" :key="index" :title="item.FNumber 
+								<FillStock v-for="(item,index) in StorageInListData" :key="index" :title="item.FNumber 
 								+ '/' + item.FModel + '\n' + '入库进度：' + item.FStorageInCount + '件' + '/' + (item.FSumQty
-								/item.FInPackPreQty) + '件'"  isshowprogress v-bind:percent="Math.round(((item.FStorageInCount * item.FInPackPreQty) / item.FSumQty) 
-								* 100, 0)" clickable v-on:click="GetProReportInfoExpand(item)">
-								</uni-list-item>
+								/item.FInPackPreQty) + '件' + '\n' + '仓库：' + item.FStorageName" :rownumber="index + 1"
+								  isshowprogress v-bind:percent="Math.round(((item.FStorageInCount * item.FInPackPreQty) / item.FSumQty) 
+								* 100, 0)" @ButtonClick="OpenStockPage(item)" clickable v-on:click="GetProReportInfoExpand(item)">
+								</FillStock>
 						</uni-list>
-			</scroll-view>
+			</scroll-view>			
 		</view>
 
 
@@ -101,6 +94,14 @@
 				<text class="detailtitle">源单编号：</text>
 				<text class="detaildata">{{(this.ProreportInfoItem != null && this.ProreportInfoItem.FSrcBillNo != null) ? this.ProreportInfoItem.FSrcBillNo : '空'}}</text>	
 				<view class="listline"></view>
+				
+				<text class="detailtitle">条码类型：</text>
+				<text class="detaildata">{{(this.ProreportInfoItem != null && this.ProreportInfoItem.FBarCodeType != null) ? this.ProreportInfoItem.FBarCodeType : '空'}}</text>	
+				<view class="listline"></view>
+				
+				<text class="detailtitle">基本单位：</text>
+				<text class="detaildata">{{(this.ProreportInfoItem != null && this.ProreportInfoItem.FUnitName != null) ? this.ProreportInfoItem.FUnitName : '空'}}</text>	
+				<view class="listline"></view>
 			</scroll-view>
 		</view>
 
@@ -122,9 +123,11 @@
 
 <script>
 	import Config from '../../common/config.js';
+	import FillStock from '../../components/fill-stock/fill-stock.vue'; 
 	export default {
 		components: {
-			Config
+			Config,
+			FillStock
 		},
 		data() {
 			return {
@@ -141,7 +144,7 @@
 				IsScanCartonBarCode: true,
 				IsBillHeadVisible: true,
 				IsAddStorageIn: true,
-				IsAuditStorageIn: true,
+				IsAuditStorageIn: true,				
 				StorageBinIsActive: false,				
 				SelectWorkShopArray: [0, '请选择交货单位'],
 				SelectWareHouseArray: [0, '请扫描汇报仓库'],
@@ -154,6 +157,7 @@
 				EndDate: DateFormat('end'),
 				IcmoListData: [],
 				StorageInListData: [],
+				GroupStockArray: [],
 				SelectedProreport: '0',
 				SelectedIcmo: '',
 				ProreportInfoItem: null,
@@ -164,9 +168,9 @@
 				Receiver: ''
 			}
 		},
-		onShow() {			
-			this.ShowBillGroupInfo();			
-		},
+		// onShow() {			
+		// 	this.ShowBillGroupInfo();			
+		// },
 		onLoad() {
 			this.AddListener();
 			this.GetGblSetting();
@@ -207,7 +211,7 @@
 					} 
 					else if (me.TabSelectedIndex == 1) {
 						if(me.IsScanCartonBarCode){
-							me.ScanBarCode(Barcode);
+							me.GetStorageInItemByBarcode(Barcode);
 						}
 						else{
 							me.ScanWareHouse(Barcode);
@@ -221,9 +225,9 @@
 			},	
 			//切换扫描模式
 			SwitchScanMode:function(){
-				this.IsScanCartonBarCode = !this.IsScanCartonBarCode;
-			},	
-			//切换审核标志
+				this.IsScanCartonBarCode = !this.IsScanCartonBarCode;				
+			},				
+			//切换审核标识
 			SwitchAuditFlag: function(IsAuditStorageIn){
 				this.IsAuditStorageIn = IsAuditStorageIn;
 			},
@@ -444,24 +448,84 @@
 				this.SelectedIcmo = DataModel.FSrcInterId;
 				this.ProReportBillNo = DataModel.FBillNo;
 				this.SelectWorkShopArray = [DataModel.FDeptId, DataModel.FDeptName];
-			},			
-			//扫描条码做入库
-			ScanBarCode: function(Barcode) {
+			},	
+			GetStorageInItemByBarcode: function(Barcode){
 				if (this.StorageInBillNo == '空') {
 					Config.ShowMessage('请新增入库单！');
 					Config.PopAudioContext(false);					
 					return;
 				}
+				
 				if (this.SelectWorkShopArray[0] == 0) {
 					Config.ShowMessage('请填写交货单位！');
 					Config.PopAudioContext(false);					
 					return;
-				}	
-				if(this.SelectWareHouseArray[0] == 0){
-					Config.ShowMessage('请填写汇报仓库！');
-					Config.PopAudioContext(false);					
-					return;
-				}							
+				}
+				
+				// if(this.SelectWareHouseArray[0] == 0){
+				// 	Config.ShowMessage('请填写汇报仓库！');
+				// 	Config.PopAudioContext(false);					
+				// 	return;
+				// }
+				
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'getStorageInItemByBarcode',
+						token: uni.getStorageSync('token'),
+						ModuleParam: {						
+							FPackBarCode: Barcode,							
+							FIcmoId: 0,
+							FItemId: 0,
+							Result: 0,
+							Msg: ''
+						}
+					},
+					success: (result) => {
+						//console.log(result.data);
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.ShowMessage('账号登录异常，请重新登录！');
+							Config.PopAudioContext(false);
+							return;
+						}
+						let ResultData = result.data.ResultData.GetStorageInItemByBarcode;
+						let Result = ResultData.dataparam.Result;
+						if (Result == 0) {
+							Config.ShowMessage(ResultData.dataparam.Msg);
+							Config.PopAudioContext(false);
+							return;
+						}		
+										
+						let FIcmoId = ResultData.dataparam.FIcmoId;
+					    let FItemId = ResultData.dataparam.FItemId;
+						this.ScanBarCode(Barcode, FIcmoId, FItemId);
+					},
+					fail: () => {
+						Config.ShowMessage('请求数据失败！');
+						Config.PopAudioContext(false);						
+					},
+					complete: (resultcomp) => {						
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.ShowMessage(ResultMsg);
+							Config.PopAudioContext(false);														
+						}
+					}
+				});
+			},
+			//扫描条码做入库
+			ScanBarCode: function(Barcode, FIcmoId, FItemId) {
+				let ItemCount = this.StorageInListData.filter(x => x.FSrcInterId == FIcmoId && x.FItemId == FItemId).length;
+				if(ItemCount == 0){
+				   Config.ShowMessage('该外箱不属于选中的汇报单，请重新扫描外箱！');
+				   Config.PopAudioContext(false);					
+				   return;
+				}
+				
+				let DataModel = this.StorageInListData.find(x => x.FSrcInterId == FIcmoId && x.FItemId == FItemId);				
 			    uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -474,10 +538,9 @@
 							FWorkShopId: this.SelectWorkShopArray[0],
 							FDate: this.InStorageDate,
 							FBillerID: uni.getStorageSync('FUserId'),
-							FPackBarCode: Barcode,							
-							FIcmoRptIds: this.SelectedProreport,
-							FIcmoRptId: '',
-							FStorageId: this.SelectWareHouseArray[0],
+							FPackBarCode: Barcode,						
+						    FIcmoRptId: '',
+							FStorageId: DataModel.FStorageId,
 							Result: 0,
 							Msg: ''
 						}
@@ -505,8 +568,7 @@
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);
-						return;
+						Config.PopAudioContext(false);						
 					},
 					complete: (resultcomp) => {						
 						let ResultMsg = resultcomp.data.ResultMsg;
@@ -565,22 +627,19 @@
 							//console.log(me.StorageInAndBinArray);
 						}
 						Config.ShowMessage('扫描仓库仓位成功！');
-						Config.PopAudioContext(true);
-						uni.hideLoading();
+						Config.PopAudioContext(true);						
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);
-						uni.hideLoading();
-						return;
+						Config.PopAudioContext(false);						
 					},
 					complete: (resultcomp) => {
 						let ResultMsg = resultcomp.data.ResultMsg;
 						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							Config.ShowMessage(ResultMsg);
-							Config.PopAudioContext(false);							
-							uni.hideLoading();
+							Config.PopAudioContext(false);						
 						}
+						uni.hideLoading();
 					}
 				});
 			},
@@ -591,15 +650,11 @@
 					return;
 				}
 				this.SwitchTab(1);
-				this.SwitchAuditFlag(true);
-				this.AddStorageInBillNo();								
+				this.SwitchAuditFlag(true);				
+				this.AddStorageInBillNo();
 			},
 			//新增入库单编号
-			AddStorageInBillNo: function() {
-				uni.showLoading({
-					title: 'Loading',
-					mask: true
-				});
+			AddStorageInBillNo: function() {				
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -624,7 +679,7 @@
 						}
 						let DataModel = result.data.ResultData.PdaStorageInRpt.dataparam;
 						this.ShowStorageInBillHeadInfo(DataModel);
-						this.ShowBillGroupInfo();						
+						this.ShowBillGroupInfo();
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -635,10 +690,24 @@
 						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							Config.ShowMessage(ResultMsg);
 							Config.PopAudioContext(false);						
-						}
-						uni.hideLoading();
+						}						
 					}
 				});
+			},
+			//填充汇报仓库
+			FillGroupStock: function(){				
+				// if(this.IsChooseBillToAdd){
+				//    this.GroupStockArray = [];
+				//    for(let i = 0; i < this.StorageInListData.length * 2; i++){
+				//    	if(i % 2 == 0){
+				//    	  this.GroupStockArray[i] = 0;
+				//    	}
+				//    	else{					   
+				//    	  this.GroupStockArray[i] = '空';
+				//    	}					
+				//    }	
+				// }							
+				//console.log(this.GroupStockArray);
 			},
 			//显示入库单单据头信息
 			ShowStorageInBillHeadInfo:function(DataModel){
@@ -649,7 +718,7 @@
 				});
 				this.StorageInListData = [];
 				this.SelectWareHouseArray = [0, '请扫描汇报仓库'];
-			},
+			},			
 			//显示生产汇报单分组信息
 			ShowBillGroupInfoByScan: function(Barcode){
 				uni.showLoading({
@@ -677,12 +746,7 @@
 								uni.hideLoading();
 								return;
 							}					
-							this.StorageInListData = result.data.ResultData.GetPdaICMORptSumInfoByScan.data0;							
-							// this.StorageInAndBinArray = [];						
-							// for (let i = 0; i < this.StorageInListData.length; i++) {
-							// 	let StorageInAndBinInfo = [0, '空', '空', 0, '空', '空'];
-							// 	this.StorageInAndBinArray.push(StorageInAndBinInfo);
-							// }	
+							this.StorageInListData = result.data.ResultData.GetPdaICMORptSumInfoByScan.data0;						
 							this.StatBillQty();														
 						},
 						fail: () => {
@@ -725,23 +789,9 @@
 								uni.hideLoading();
 								return;
 							}					
-							this.StorageInListData = result.data.ResultData.PdaICMORptGroupInfo.data0;							
-							this.StorageInAndBinArray = [];		
-					        if(this.IsAddStorageIn){
-							   // for (let i = 0; i < this.StorageInListData.length; i++) {
-							   // 	let StorageInAndBinInfo = [0, '空', '空', 0, '空', '空'];
-							   // 	this.StorageInAndBinArray.push(StorageInAndBinInfo);
-							   // }	
-							}
-							else{
-							   // for (let i = 0; i < this.StorageInListData.length; i++) {
-							   // 	let DataModel = this.StorageInListData[i];
-							   // 	let StorageInAndBinInfo = [DataModel.FStorageId, DataModel.FStorageNumber, DataModel.FStorageName
-							   // 	, DataModel.FStorageBinId, DataModel.FStorageBinNumber, DataModel.FStorageBinName];
-							   // 	this.StorageInAndBinArray.push(StorageInAndBinInfo);
-							   // }
-							}							
-							this.StatBillQty();														
+							this.StorageInListData = result.data.ResultData.PdaICMORptGroupInfo.data0;						
+							this.StatBillQty();	
+							//this.FillGroupStock();																			
 						},
 						fail: () => {
 							Config.ShowMessage('请求数据失败！');
@@ -985,6 +1035,20 @@
 			SwitchBillHeadVisible: function() {
 				this.IsBillHeadVisible = !this.IsBillHeadVisible;
 			},
+			//打开仓库页面
+			OpenStockPage: function(item){
+				//console.log(this.ProreportInfoItem);
+				if(item != null){
+				   this.ProreportInfoItem = item;
+				}			
+				uni.showLoading({
+					title: 'Loading'
+				});
+				uni.navigateTo({
+					url: '/pages/basic/stock',
+				});
+				uni.hideLoading();				
+			},
 			//清除单据头数据
 			ClearBillHeadData: function(me) {
 				me.StorageInterId = 0;
@@ -1012,7 +1076,7 @@
 			//根据汇报单信息获取扩展信息
 			GetProReportInfoExpand: function(item) {
 				if (item != null) {						
-					this.TabSelectedIndex = 2;
+					//this.TabSelectedIndex = 2;
 					this.ProReportSelectIndex = item.FIndex;
 					this.ProreportInfoItem = item;
 					this.ProReportInterId = item.FId;
@@ -1261,13 +1325,13 @@
 
 	.selectinfoscrollview {		
 		width: 100%;
-		height: 620upx;
+		height: 670upx;
 		margin-top: 50upx;
 	}
 
 	.unselectinfoscrollview {		
 		width: 100%;
-		height: 900upx;
+		height: 950upx;
 		margin-top: 50upx;
 	}
 

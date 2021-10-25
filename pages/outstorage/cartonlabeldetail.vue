@@ -25,13 +25,13 @@
 				ItemId: 0,
 				DetailListData: [],
 				SelectCartonLabel: '',
-				IsSelectAllLabel: false
+				IsSelectAllLabel: false				
 			}
 		},		
 		onLoad() {	
 			this.GetStorageOutInterId();
 			this.ShowStorageOutDetail();
-		},
+		},				
 		methods: {
 			GetStorageOutInterId:function(){
 				let Pages = getCurrentPages();
@@ -39,7 +39,7 @@
 				//#ifdef APP-PLUS
 				this.StorageOutInterId = PrevPage.$vm.StorageOutInterId;				
 				this.ItemId = PrevPage.$vm.SelectGroupModel.FItemID;					
-				//#endif
+				//#endif				
 			},
 			//显示出库单外箱明细
 			ShowStorageOutDetail:function(){	

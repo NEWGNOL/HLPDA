@@ -21,13 +21,13 @@
 		data() {
 			return {
 				SearchValue: '',
-				StockList: []
+				StockList: []				
 			}
 		},
-		onLoad() {
+		onLoad() {			
 			this.LoadStockData();
 		},
-		methods: {
+		methods: {			
 			LoadStockData: function() {
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
@@ -80,7 +80,14 @@
 					   PrevPage._data.SCStockArray = [e.FItemID, e.FName];
 					}
 				}
-				PrevPage._data.SelectWareHouseArray = [e.FItemID, e.FName];
+				else if(PrevPage._data.GroupStockArray != undefined){
+					 let ProreportInfoItem = PrevPage._data.ProreportInfoItem;
+					 PrevPage._data.StorageInListData[ProreportInfoItem.index] = e.FItemID;
+					 PrevPage._data.StorageInListData[ProreportInfoItem.index + 1] = e.FName;
+				}
+				else{
+					PrevPage._data.SelectWareHouseArray = [e.FItemID, e.FName];
+				}				
 				//#endif				
 				//#ifdef APP-PLUS				
 			    if(PrevPage.$vm.ScanType != undefined){
@@ -91,6 +98,11 @@
 					else{
 					   PrevPage.$vm.SCStockArray = [e.FItemID, e.FName];
 					}
+				}
+				else if(PrevPage.$vm.GroupStockArray != undefined){
+					let ProreportInfoItem = PrevPage.$vm.ProreportInfoItem;					
+					PrevPage.$vm.StorageInListData[ProreportInfoItem.FIndex].FStorageId = e.FItemID;
+					PrevPage.$vm.StorageInListData[ProreportInfoItem.FIndex].FStorageName = e.FName; 				
 				}
 				else{					
 					PrevPage.$vm.SelectWareHouseArray = [e.FItemID, e.FName];
@@ -108,6 +120,6 @@
 	}
 
 	.scrollview {
-		height: 1080rpx;
+		height: 1080upx;
 	}
 </style>
