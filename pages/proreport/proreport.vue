@@ -1190,126 +1190,126 @@
 		width: 20%;
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50rpx;
-		margin-left: 23rpx;
-		margin-top: 20rpx;
+		border-radius: 50upx;
+		margin-left: 23upx;
+		margin-top: 20upx;
 	}
 
 	.deletebill {
 		width: 20%;
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50rpx;
-		margin-left: 206rpx;
-		margin-top: -96rpx;
+		border-radius: 50upx;
+		margin-left: 206upx;
+		margin-top: -96upx;
 	}
 
 	.auditproreport {
 		width: 20%;
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50rpx;
-		margin-left: 389rpx;
-		margin-top: -96rpx;
+		border-radius: 50upx;
+		margin-left: 389upx;
+		margin-top: -96upx;
 	}
 
 	.unauditproreport {
 		width: 20%;
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50rpx;
-		margin-left: 572rpx;
-		margin-top: -96rpx;
+		border-radius: 50upx;
+		margin-left: 572upx;
+		margin-top: -96upx;
 	}
 
 	.billhead {
 		width: 100%;
-		margin-top: 50rpx;
+		margin-top: 50upx;
 	}
 
 	.title {
 		display: flex;
-		margin-left: 50rpx;
-		font-size: 40rpx;
+		margin-left: 50upx;
+		font-size: 40upx;
 	}
 
 	.billnoempty {
 		display: flex;
-		width: 200rpx;
-		font-size: 40rpx;
-		margin-top: -60rpx;
-		margin-left: 300rpx;
+		width: 200upx;
+		font-size: 40upx;
+		margin-top: -60upx;
+		margin-left: 300upx;
 		text-align: center;
 		color: #777777;
 	}
 
 	.billnofull {
 		display: flex;
-		width: 200rpx;
-		font-size: 40rpx;
-		margin-top: -60rpx;
-		margin-left: 300rpx;
+		width: 200upx;
+		font-size: 40upx;
+		margin-top: -60upx;
+		margin-left: 300upx;
 		text-align: center;
 		color: #000000;
 	}
 
 	.detailtitle {
 		display: flex;
-		font-size: 35rpx;
-		margin-top: 30rpx;
-		margin-left: 30rpx;
+		font-size: 35upx;
+		margin-top: 30upx;
+		margin-left: 30upx;
 	}
 
 	.detaildata {
 		display: flex;
 		text-align: center;
-		font-size: 35rpx;
-		margin-top: -50rpx;
-		margin-left: 270rpx;
+		font-size: 35upx;
+		margin-top: -50upx;
+		margin-left: 270upx;
 	}
 
 	.data {
 		display: flex;
-		width: 250rpx;
-		font-size: 40rpx;
-		margin-top: -60rpx;
-		margin-left: 370rpx;
+		width: 250upx;
+		font-size: 40upx;
+		margin-top: -60upx;
+		margin-left: 370upx;
 		text-align: center;
 	}
 
 	.dataline {
 		width: 60%;
-		height: 5rpx;
+		height: 5upx;
 		background-color: #4CD964;
-		margin-left: 250rpx;
+		margin-left: 250upx;
 	}
 
 	.proreportview {
 		width: 100%;
-		height: 950rpx;
+		height: 950upx;
 	}
 
 	.sumscrollview {
 		width: 100%;
-		height: 950rpx;
+		height: 950upx;
 	}
 
 	.unselectinfoscrollview {
 		width: 100%;
-		height: 550rpx;
-		margin-top: 50rpx;
+		height: 550upx;
+		margin-top: 50upx;
 	}
 
 	.selectinfoscrollview {
 		width: 100%;
-		height: 850rpx;
-		margin-top: 50rpx;
+		height: 850upx;
+		margin-top: 50upx;
 	}
 
 	.detailscrollview {
 		width: 100%;
-		height: 950rpx;
-		margin-top: 20rpx;
+		height: 950upx;
+		margin-top: 20upx;
 	}
 
 	.selecttab {
@@ -1323,80 +1323,80 @@
 	.tabbackground {
 		position: absolute;
 		width: 100%;
-		height: 100rpx;
-		margin-top: 660rpx;
+		height: 100upx;
+		margin-top: 660upx;
 		background-color: #F4F4F4;
 	}
 
 	.tableft {
 		position: absolute;
-		font-size: 45rpx;
-		margin-top: 20rpx;
-		margin-left: 40rpx;
+		font-size: 45upx;
+		margin-top: 20upx;
+		margin-left: 40upx;
 	}
 
 	.tabmiddle {
 		position: absolute;
-		font-size: 45rpx;
-		margin-top: 20rpx;
-		margin-left: 330rpx;
+		font-size: 45upx;
+		margin-top: 20upx;
+		margin-left: 330upx;
 	}
 
 	.tabright {
 		position: absolute;
-		font-size: 45rpx;
-		margin-top: 20rpx;
-		margin-left: 630rpx;
+		font-size: 45upx;
+		margin-top: 20upx;
+		margin-left: 630upx;
 	}
 
 	.tableftline {
 		position: absolute;
 		width: 15%;
-		height: 5rpx;
-		margin-top: 80rpx;
-		margin-left: 30rpx;
+		height: 5upx;
+		margin-top: 80upx;
+		margin-left: 30upx;
 	}
 
 	.tabmiddleline {
 		position: absolute;
 		width: 15%;
-		height: 5rpx;
-		margin-top: 80rpx;
-		margin-left: 320rpx;
+		height: 5upx;
+		margin-top: 80upx;
+		margin-left: 320upx;
 	}
 
 	.tabrightline {
 		position: absolute;
 		width: 15%;
-		height: 5rpx;
-		margin-top: 80rpx;
-		margin-left: 620rpx;
+		height: 5upx;
+		margin-top: 80upx;
+		margin-left: 620upx;
 	}
 
 	.search {
 		position: absolute;
 		width: 70%;
-		margin-left: 5rpx;
+		margin-left: 5upx;
 	}
 
 	.billstatus {
 		position: absolute;
-		margin-top: -90rpx;
-		margin-left: 570rpx;
+		margin-top: -90upx;
+		margin-left: 570upx;
 	}
 
 	.scanned {
 		display: flex;
-		font-size: 40rpx;
-		margin-left: 30rpx;
-		margin-top: 20rpx;
+		font-size: 40upx;
+		margin-left: 30upx;
+		margin-top: 20upx;
 	}
 
 	.queryall {
 		display: flex;
-		font-size: 40rpx;
+		font-size: 40upx;
 		color: #007AFF;
-		margin-left: 570rpx;
-		margin-top: -60rpx;
+		margin-left: 570upx;
+		margin-top: -60upx;
 	}
 </style>
