@@ -9,17 +9,15 @@
 			v-on:click="ClickTabTitle(false)">网络配置</text>
 		<view class="tabrightline" v-bind:class="{selecttabline : !IsShowLoginView}"></view>
 
-		<view class="summary" v-show="IsShowLoginView">
-			<!-- <canvas class="loginpagecanvas" canvas-id="logincanvas" id="logincanvas" v-show="IsShowLoginView"> -->
+		<view class="summary" v-show="IsShowLoginView">			
 			<view class="usernametext">用户名：</view>
 			<usernamesearch class="cla" :candidates="UserNameArray" placeholder="请输入用户名" v-model="UserName"
 				@input="SearchInput"></usernamesearch>
-			<!-- <input v-model="username" placeholder="请输入用户名" class="cla" :focus="focus1" @confirm="tabEnter1" /> -->
+		
 			<view class="passwordtext">密码：</view>
 			<input password="true" placeholder="请输入密码" v-model="Password" class="cla" :focus="focus2"
 				@confirm="tabEnter2" />
-			<button class="button" @click="Request()">确认</button>
-			<!-- 	</canvas> -->
+			<button class="button" @click="Request()">确认</button>		
 		</view>
 
 		<view class="summary" v-show="!IsShowLoginView">			
