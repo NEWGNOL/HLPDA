@@ -1,0 +1,35 @@
+
+.title {
+	display: flex;
+	margin-left: -400rpx;
+	margin-top: 50rpx;
+	font-size: 20px;
+}
+.data {	
+	display: flex;
+	width: 400rpx;
+	font-size: 20px;
+	margin-top: -60rpx;
+	margin-left: 400rpx;
+	text-align: center;
+}
+.dataline {
+	width: 50%;
+	height: 5rpx;
+	background-color: #4CD964;
+	margin-left: 250rpx;
+}
+.material {
+	margin-left: 250rpx;
+	margin-top: -65rpx;
+	font-size: 20px;
+}
+.qty {
+	width: 400rpx;
+	border: 5rpx solid;
+	font-size: 20px;
+	border-color: #888888;
+	margin-left: 250rpx;
+	margin-top: -60rpx;
+}
+

@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/main/main",
+    "pages/binding/binding",
+    "pages/proreport/proreport",
+    "pages/proreport/cartonlabeldetail",
+    "pages/basic/teamquery",
+    "pages/basic/stock",
+    "pages/basic/workshopquery",
+    "pages/basic/empquery",
+    "pages/proreportinstorage/proreportinstorage",
+    "pages/proreportinstorage/cartonlabeldetail",
+    "pages/purchaseinstorage/purchaseinstorage",
+    "pages/purchaseinstorage/outsideinstorage",
+    "pages/purchaseinstorage/cartonlabeldetail",
+    "pages/outstorage/outstorage",
+    "pages/outstorage/cartonlabeldetail",
+    "pages/transfers/transfers",
+    "pages/inventory/inventory",
+    "pages/inventory/addmaterial",
+    "pages/basic/icitem",
+    "pages/inventory/queryinventory",
+    "pages/outstorage/qtycheck",
+    "pages/outsidetransfers/outsidetransfers",
+    "pages/outsidetransfers/cartonlabeldetail"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#007AFF",
+    "backgroundColor": "#007AFF"
+  },
+  "usingComponents": {
+    "digit-keyboard": "/components/digit-keyboard/digit-keyboard"
+  }
+}

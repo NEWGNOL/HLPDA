@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "cmd-progress": "/components/cmd-progress/cmd-progress",
+    "uni-badge": "/components/uni-badge/uni-badge"
+  },
+  "component": true
+}

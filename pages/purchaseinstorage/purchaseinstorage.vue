@@ -16,7 +16,7 @@
 				    + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '单据编号：' + item.FBillNo
 					+ '\n' + '单据状态：' + item.FStatus" 
 					clickable :ischecked="item.FIsChecked" :isshowcheckbox="true"
-					@CheckBoxChange="ChangeIsChecked(item)">
+					@CheckBoxChange="RefreshListByChecked(item)">
 					</uni-list-item>
 				</uni-list>
 			</scroll-view>
@@ -258,10 +258,12 @@
 				me.GroupListData = [];
 				me.SelectGroupModel = null;
 			},
-			//检测单据项是否选中
-			ChangeIsChecked: function(item) {
-				item.FIsChecked = !item.FIsChecked;
-			},			
+			RefreshListByChecked: function(item){
+			   for(let i = 0; i < this.POInstockListData.length; i++){
+				   let DataModel = this.POInstockListData[i];
+				   DataModel.FIsChecked = (DataModel.FBillNo == item.FBillNo) ? true : false;				   
+			   }
+			},
 			//获取系统参数
 			GetGblSetting: function() {
 				// uni.request({
@@ -355,7 +357,8 @@
 							ModuleCode: 'getPdaPOInstockPutInList',
 							token: uni.getStorageSync('token'),
 							ModuleParam: {
-								FBillNo: this.SearchValue
+								FScanBillNo: Barcode,
+								FSearchBillNo: this.SearchValue	
 							}
 						},
 						success: (result) => {

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "装箱绑定",
+  "usingComponents": {
+    "cmd-progress": "/components/cmd-progress/cmd-progress",
+    "uni-list": "/components/uni-list/uni-list",
+    "uni-list-item": "/components/uni-list-item/uni-list-item",
+    "config": "/common/config"
+  }
+}

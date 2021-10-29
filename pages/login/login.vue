@@ -53,14 +53,14 @@
 		onLoad() {			
 			this.LoadLoginData();
 			this.AutoCheckUpdate();		
-			//this.GetScreenHeight();	
+			this.GetScreenHeight();	
 		},
 		methods: {
 			GetScreenHeight: function(){
 				uni.getSystemInfo({
 				                success: (res)=> {
 				                    let height=res.screenHeight; //获取系统信息，可使用窗口的高度
-				                    console.log(height);
+				                    console.log(res);
 				                }
 				            });
 			},

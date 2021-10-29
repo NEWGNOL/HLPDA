@@ -15,7 +15,7 @@
 					<uni-list-item v-for="(item,index) in SEOutStockListData" :key="index" :title="'制单人：'
 				    + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '编号：' + item.FBillNo
 					+ '\n' + '单据状态：' + item.FStatus" clickable :ischecked="item.FIsChecked" :isshowcheckbox="true"
-						@CheckBoxChange="ChangeIsChecked(item)">
+						@CheckBoxChange="RefreshListByChecked(item)">
 					</uni-list-item>
 				</uni-list>
 			</scroll-view>
@@ -23,14 +23,17 @@
 
 
 		<view class="transfersview" v-show="TabSelectedIndex == 1">
-			<button class="audittransfers" v-on:click="AuditTransfers()">审核</button>
-			<button class="unaudittransfers" v-on:click="UnAuditTransfers()">反审</button>
-			<button class="deletetransfers" v-on:click="DeleteTransfers()">删除</button>
+			<view class="pagehead">
+				  <text class="srcbillno">{{SelectSEOutStockModel != null ? SelectSEOutStockModel.FBillNo : '空'}}</text>
+			      <button class="audittransfers" v-show="IsAuditTransfers" v-on:click="AuditTransfers()">审核</button>
+			      <button class="unaudittransfers" v-show="!IsAuditTransfers" v-on:click="UnAuditTransfers()">反审</button>
+			      <button class="deletetransfers" v-on:click="DeleteTransfers()">删除</button>
+			</view>
 
 			<view class="billhead" v-show="IsBillHeadVisible">
-				<text class="title">单据编号：</text>
+				<!-- <text class="title">单据编号：</text>
 				<text class="billnoempty">{{TransfersBillNo}}</text>
-				<view class="dataline"></view>
+				<view class="dataline"></view> -->
 
 				<text class="title">出库日期：</text>
 				<picker mode="date" :value="TransfersDate" :start="StartDate" :end="EndDate"
@@ -83,9 +86,10 @@
 
 
 		<view class="transfersview" v-show="TabSelectedIndex == 2">
-			<text class="scanned">已扫描条码：</text>
-			<text class="queryall" clickable v-on:click="GetTransCartonDetail()">查看全部</text>
-			<view class="listline"></view>
+			<view class="pagehead">
+			     <text class="scanned">已扫描条码：</text>
+			     <text class="queryall" clickable v-on:click="GetTransCartonDetail()">查看全部</text>
+			</view>	 
 			
 			<text class="detailtitle">物料编码：</text>
 			<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FNumber : '空'}}</text>
@@ -156,6 +160,7 @@
 				InfoListData: [],
 				IsBillHeadVisible: true,
 				IsAddSEOutStock: true,
+				IsAuditTransfers: true,
 				TransfersInterId: 0,
 				TransfersBillNo: '空',
 				TransfersDate: Config.DateFormat('now'),
@@ -224,8 +229,11 @@
 			RemoveListener: function() {
 				this.Main.unregisterReceiver(this.Receiver); //取消监听
 			},
-			ChangeIsChecked: function(item) {
-				item.FIsChecked = !item.FIsChecked;
+			RefreshListByChecked: function(item){
+			   for(let i = 0; i < this.SEOutStockListData.length; i++){
+				   let DataModel = this.SEOutStockListData[i];
+				   DataModel.FIsChecked = (DataModel.FBillNo == item.FBillNo) ? true : false;				   
+			   }
 			},
 			//切换表头是否可见
 			SwitchBillHeadVisible: function() {
@@ -244,7 +252,11 @@
 			//切换搜索标识
 			SwitchSearchFlag: function(IsSearchFManager) {
 				this.IsSearchFManager = IsSearchFManager;
-			},			
+			},	
+			//切换审核标志
+			SwitchAuditFlag: function(IsAuditTransfers){
+				this.IsAuditTransfers = IsAuditTransfers;
+			},		
 			GetTransCartonDetail: function(){
 				if(this.TransfersInterId != 0){
 					uni.showLoading({
@@ -417,9 +429,9 @@
 			},
 			DealBillHeadData: function(IsLoad) {
 				if (IsLoad) {
-					this.TransfersInterId = this.SelectSEOutStockModel.FId;
-					this.TransfersBillNo = this.SelectSEOutStockModel.FBillNo;
-					this.TransfersDate = this.SelectSEOutStockModel.FDate;
+					this.TransfersInterId = this.SelectSEOutStockModel.FTransfersInterId;
+					this.TransfersBillNo = this.SelectSEOutStockModel.FTransfersBillNo;
+					this.TransfersDate = this.SelectSEOutStockModel.FTransfersDate;
 					this.TransfersFManagerArray = [this.SelectSEOutStockModel.FFManagerID, this.SelectSEOutStockModel
 						.FFManagerName
 					];
@@ -651,6 +663,7 @@
 					return;
 				}
 				this.SwitchTab(1);
+				this.SwitchAuditFlag(true);
 				this.AddTransfersBillNo();
 				this.GetSEOutStockByList();
 			},
@@ -660,6 +673,12 @@
 					return;
 				}
 				this.SwitchTab(1);
+				if(this.SelectSEOutStockModel.FStatus == '未审核'){
+				   this.SwitchAuditFlag(true);
+				}
+				else{
+				   this.SwitchAuditFlag(false);
+				}
 				this.DealBillHeadData(true);
 				this.GetSEOutStockByList();
 			},
@@ -718,11 +737,12 @@
 							ModuleCode: 'GetPdaSEOutTransPutInList',
 							token: uni.getStorageSync('token'),
 							ModuleParam: {
-								FBillNo: this.SearchValue
+								FScanBillNo: Barcode,
+								FSearchBillNo: this.SearchValue
 							}
 						},
 						success: (result) => {
-							//console.log(result.data);
+							console.log(result.data);
 							let ResultCode = result.data.ResultCode;
 							let ResultMsg = result.data.ResultMsg;
 							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
@@ -763,8 +783,7 @@
 							ModuleCode: 'GetPdaSEOutStockGroupByTrans',
 							token: uni.getStorageSync('token'),
 							ModuleParam: {
-								FInterID: this.IsAddSEOutStock ? this.SelectSEOutStockModel.FInterID : this
-									.SelectSEOutStockModel.FSrcInterId
+								FInterID: this.SelectSEOutStockModel.FInterID
 							}
 						},
 						success: (result) => {
@@ -900,6 +919,7 @@
 						} else {
 							Config.ShowMessage(DataParam.Msg);
 							Config.PopAudioContext(true);
+							this.SwitchAuditFlag(true);
 						}
 					},
 					fail: () => {
@@ -967,6 +987,7 @@
 						} else {
 							Config.ShowMessage(DataParam.Msg);
 							Config.PopAudioContext(true);
+							this.SwitchAuditFlag(false);
 						}
 					},
 					fail: () => {
@@ -1023,29 +1044,41 @@
 
 	.audittransfers {
 		width: 20%;
-		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 23upx;
-		margin-top: 20upx;
+		color: #FFFFFF;	
+		font-size: 15px;
+		border: 1px solid #FFFFFF;
+		background-color: #1AAD19;		
+		margin-left: 420upx;
+		margin-top: -70upx;
 	}
 
 	.unaudittransfers {
 		width: 20%;
 		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 206upx;
-		margin-top: -96upx;
+		font-size: 15px;
+		border: 1px solid #FFFFFF;
+		background-color: #1AAD19;		
+		margin-left: 420upx;
+		margin-top: -70upx;
 	}
 
 	.deletetransfers {
 		width: 20%;
 		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 389upx;
-		margin-top: -96upx;
+		font-size: 15px;
+		border: 1px solid #FFFFFF;
+		background-color: #1AAD19;
+		text-align: center;
+		margin-left: 590upx;
+		margin-top: -85upx;
+	}
+	
+	.srcbillno {
+		display: inline-block;
+		color: #FFFFFF;
+		font-size: 19px;
+		margin-left: 20upx;
+		margin-top: 30upx;
 	}
 
 	.seoutstockscrollview {
@@ -1105,14 +1138,16 @@
 	}
 	
 	.scanned {
-		display: flex;
+		display: inline-block;
+		color: #FFFFFF;
 		font-size: 40upx;
 		margin-left: 30upx;
-		margin-top: 20upx;
+		margin-top: 30upx;
 	}
 	
 	.queryall {
 		display: flex;
+		flex-direction: column;
 		font-size: 40upx;
 		color: #007AFF;
 		margin-left: 570upx;

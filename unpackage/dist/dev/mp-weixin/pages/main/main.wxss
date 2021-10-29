@@ -1,0 +1,115 @@
+
+.binding{
+	position: absolute;
+	width: 300rpx;
+	height: 150rpx;
+	background-color: #007AFF;
+	border-radius: 25rpx;	
+	text-align: center;
+	margin-left: -190rpx;	
+	margin-top: 100rpx;
+}
+.proreport{
+	position: absolute;
+	width: 300rpx;
+	height: 150rpx;
+	background-color: #007AFF;
+	border-radius: 25rpx;
+	text-align: center;	
+	margin-left: 190rpx;
+	margin-top: 100rpx;
+}
+.proreportinstorage{
+	position: absolute;
+	width: 300rpx;
+	height: 150rpx;
+	background-color: #007AFF;
+	border-radius: 25rpx;	
+	text-align: center;
+	margin-left: -190rpx;	
+	margin-top: 280rpx;
+}
+.purchaseinstorage{
+	position: absolute;
+	width: 300rpx;
+	height: 150rpx;
+	background-color: #007AFF;
+	border-radius: 25rpx;
+	text-align: center;	
+	margin-left: 190rpx;
+	margin-top: 280rpx;
+}
+.outstorage{
+	position: absolute;
+	width: 300rpx;
+	height: 150rpx;
+	background-color: #007AFF;
+	border-radius: 25rpx;	
+	text-align: center;
+	margin-left: -190rpx;	
+	margin-top: 460rpx;
+}
+.transfers{
+	position: absolute;
+	width: 300rpx;
+	height: 150rpx;
+	background-color: #007AFF;
+	border-radius: 25rpx;	
+	text-align: center;
+	margin-left: 190rpx;	
+	margin-top: 460rpx;
+}
+.inventory{
+	position: absolute;
+	width: 300rpx;
+	height: 150rpx;
+	background-color: #007AFF;
+	border-radius: 25rpx;	
+	text-align: center;
+	margin-left: -190rpx;	
+	margin-top: 640rpx;
+}
+.queryinventory{
+	position: absolute;
+	width: 300rpx;
+	height: 150rpx;
+	background-color: #007AFF;
+	border-radius: 25rpx;	
+	text-align: center;
+	margin-left: 190rpx;	
+	margin-top: 640rpx;
+}
+.outsidetransfers{
+	position: absolute;
+	width: 300rpx;
+	height: 150rpx;
+	background-color: #007AFF;
+	border-radius: 25rpx;	
+	text-align: center;
+	margin-left: -190rpx;	
+	margin-top: 820rpx;
+}
+.outsideinstorage{
+	position: absolute;
+	width: 300rpx;
+	height: 150rpx;
+	background-color: #007AFF;
+	border-radius: 25rpx;	
+	text-align: center;
+	margin-left: 190rpx;	
+	margin-top: 820rpx;
+}
+.title{
+	position: absolute;
+	color: #FFFFFF;
+	margin-left: -60rpx;
+	margin-top: 100rpx;
+}
+.img{	
+	position: absolute;
+	width: 80rpx;
+	height: 80rpx;
+	margin-left: -35rpx;
+	margin-top: 15rpx;
+}
+

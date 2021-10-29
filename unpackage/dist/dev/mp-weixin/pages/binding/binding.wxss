@@ -1,0 +1,130 @@
+
+.cartonlabeltitle {
+	display: flex;
+	font-size: 40rpx;
+	margin-left: 90rpx;
+	margin-top: 40rpx;
+}
+.cartonlabelcode {
+	display: flex;
+	width: 500rpx;
+	font-size: 45rpx;
+	margin-left: 350rpx;
+	margin-top: -63rpx;
+}
+.otherscantitle {
+	display: flex;
+	font-size: 40rpx;
+	margin-left: 90rpx;
+	margin-top: 50rpx;
+}
+.otherscandata {
+	display: flex;
+	width: 500rpx;
+	font-size: 45rpx;
+	margin-left: 350rpx;
+	margin-top: -63rpx;
+}
+.scannedcount {
+	display: flex;
+	width: 500rpx;
+	font-size: 50rpx;
+	margin-left: 350rpx;
+	margin-top: -70rpx;
+	color: #1AAD19;
+}
+.tabbackground {
+	width: 100%;
+	height: 100rpx;
+	margin-top: 1090rpx;
+	background-color: #F4F4F4;
+}
+.tableftline {
+	width: 15%;
+	height: 5rpx;
+	margin-top: 5rpx;
+	margin-left: 145rpx;
+}
+.tabrightline {
+	width: 15%;
+	height: 5rpx;
+	margin-top: 5rpx;
+	margin-left: 495rpx;
+}
+.tableft {
+	display: flex;
+	font-size: 50rpx;
+	margin-top: 5rpx;
+	margin-left: 150rpx;
+}
+.tabright {
+	display: flex;
+	font-size: 50rpx;
+	margin-top: -86rpx;
+	margin-left: 500rpx;
+}
+.summary {
+	height: 650rpx;
+	margin-top: -1100rpx;
+	display: grid;
+	flex-direction: row;
+}
+.summarytitle {
+	font-size: 40px;	
+	margin-top: -80rpx;
+}
+.summarydata {
+	font-size: 40rpx;
+	margin-left: 50rpx;
+	margin-top: -50rpx;
+}
+.selecttab {
+	color: #007AFF;
+}
+.selecttabline {
+	background-color: #007AFF;
+}
+.unselectitem {
+	color: #FFFFFF;
+}
+.selectitem {
+	background-color: #808080;
+}
+.detaillist {
+	width: 100%;
+}
+.scrollview {
+	height: 870rpx;
+	margin-top: 30rpx;
+}
+.logo {
+	height: 200rpx;
+	width: 200rpx;
+	margin-top: 200rpx;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 50rpx;
+}
+.text-area {
+	display: flex;
+	justify-content: center;
+}
+.title {
+	font-size: 36rpx;
+	color: #8f8f94;
+}
+.selectlabel {
+	color: #FFFFFF;
+	background-color: #007AFF;
+	border-radius: 50rpx;
+	margin-top: -1170rpx;
+	margin-left: 200rpx;
+}
+.deletelabel {
+	color: #FFFFFF;
+	background-color: #007AFF;
+	border-radius: 50rpx;
+	margin-top: -95rpx;
+	margin-right: 150rpx;
+}	
+

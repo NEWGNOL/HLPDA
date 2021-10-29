@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "新增物料",
+  "usingComponents": {
+    "addmaterial-keyboard": "/components/addmaterial-keyboard/addmaterial-keyboard",
+    "config": "/common/config"
+  }
+}

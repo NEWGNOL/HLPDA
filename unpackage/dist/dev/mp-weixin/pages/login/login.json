@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "登录界面",
+  "usingComponents": {
+    "usernamesearch": "/components/usernamesearch/usernamesearch",
+    "config": "/common/config"
+  }
+}

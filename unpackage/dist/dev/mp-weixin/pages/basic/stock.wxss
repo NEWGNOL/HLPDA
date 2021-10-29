@@ -1,0 +1,8 @@
+
+.search {
+	width: 90%;
+}
+.scrollview {
+	height: 1080rpx;
+}
+

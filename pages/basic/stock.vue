@@ -99,10 +99,21 @@
 					   PrevPage.$vm.SCStockArray = [e.FItemID, e.FName];
 					}
 				}
-				else if(PrevPage.$vm.GroupStockArray != undefined){
-					let ProreportInfoItem = PrevPage.$vm.ProreportInfoItem;					
-					PrevPage.$vm.StorageInListData[ProreportInfoItem.FIndex].FStorageId = e.FItemID;
-					PrevPage.$vm.StorageInListData[ProreportInfoItem.FIndex].FStorageName = e.FName; 				
+				// 针对汇报入库单据头或者单据体都可能选择仓库所添加的判断分支
+				else if(PrevPage.$vm.GroupStockArray != undefined){ 
+					let IsBillHeadChooseStock = PrevPage.$vm.IsBillHeadChooseStock;					
+					if(IsBillHeadChooseStock){	
+						PrevPage.$vm.SelectWareHouseArray = [e.FItemID, e.FName];
+						for(let i = 0; i < PrevPage.$vm.StorageInListData.length; i++){
+							PrevPage.$vm.StorageInListData[i].FStorageId = e.FItemID;
+							PrevPage.$vm.StorageInListData[i].FStorageName = e.FName; 
+						} 						
+					}
+					else{
+						let ProreportInfoItem = PrevPage.$vm.ProreportInfoItem;
+						PrevPage.$vm.StorageInListData[ProreportInfoItem.FIndex].FStorageId = e.FItemID;
+						PrevPage.$vm.StorageInListData[ProreportInfoItem.FIndex].FStorageName = e.FName;
+					}					 				
 				}
 				else{					
 					PrevPage.$vm.SelectWareHouseArray = [e.FItemID, e.FName];

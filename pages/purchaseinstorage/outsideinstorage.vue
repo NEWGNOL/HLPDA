@@ -17,7 +17,7 @@
 					<uni-list-item v-for="(item,index) in POOrderListData" :key="index" :title="'制单人：'
 				    + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '单据编号：' + item.FBillNo
 					+ '\n' + '单据状态：' + item.FStatus" clickable :ischecked="item.FIsChecked" 
-					:isshowcheckbox="true" @CheckBoxChange="ChangeIsChecked(item)">
+					:isshowcheckbox="true" @CheckBoxChange="RefreshListByChecked(item)">
 					</uni-list-item>
 				</uni-list>
 			</scroll-view>
@@ -197,6 +197,12 @@
 				me.GroupListData = [];
 				me.SelectGroupModel = null;
 			},
+			RefreshListByChecked: function(item){
+			   for(let i = 0; i < this.POOrderListData.length; i++){
+				   let DataModel = this.POOrderListData[i];
+				   DataModel.FIsChecked = (DataModel.FBillNo == item.FBillNo) ? true : false;				   
+			   }
+			},
 			//切换页签
 			SwitchTab: function(TabSelectedIndex) {
 				if (this.TabSelectedIndex != TabSelectedIndex) {
@@ -342,7 +348,8 @@
 							ModuleCode: 'Purch6_7',
 							token: uni.getStorageSync('token'),
 							ModuleParam: {
-								FBillNo: this.SearchValue
+								FScanBillNo: Barcode,
+								FSearchBillNo: this.SearchValue
 							}
 						},
 						success: (result) => {
@@ -474,10 +481,10 @@
 					return 0;
 				}
 				this.SelectPOOrderModel = this.POOrderListData.find(x => x.FIsChecked);	
-				this.StorageInterId = this.SelectPOOrderModel.FId;
-				this.StorageInBillNo = this.SelectPOOrderModel.FBillNo;
-				this.InStorageDate = this.SelectPOOrderModel.FDate;
-				this.StorageInSrcInterId = this.SelectPOOrderModel.FSrcInterId;
+				this.StorageInterId = this.SelectPOOrderModel.FStorageInId;
+				this.StorageInBillNo = this.SelectPOOrderModel.FStorageInBillNo;
+				this.InStorageDate = this.SelectPOOrderModel.FStorageInDate;
+				this.StorageInSrcInterId = this.SelectPOOrderModel.FInterID;
 				this.StorageInSrcBillNo = this.SelectPOOrderModel.FBillNo;
 				this.SelectSupplierArray = [this.SelectPOOrderModel.FSupplyID, this.SelectPOOrderModel.FSupplyName];
 				this.SelectWareHouseArray = [this.SelectPOOrderModel.FStorageId, this.SelectPOOrderModel.FStorageName];					
@@ -765,11 +772,7 @@
 					}
 					}
 					});
-			},	
-			//检测单据项是否选中
-			ChangeIsChecked: function(item) {
-				item.FIsChecked = !item.FIsChecked;
-			},	
+			},				
 			//选择入库日期
 			InStorageDateChange(e) {
 				this.InStorageDate = e.detail.value
@@ -796,13 +799,13 @@
 	
 	.selectinfoscrollview {
 		width: 100%;
-		height: 670upx;
+		height: 620upx;
 		margin-top: 50upx;
 	}
 	
 	.unselectinfoscrollview {
 		width: 100%;
-		height: 950upx;
+		height: 900upx;
 		margin-top: 50upx;
 	}
 	
@@ -877,7 +880,7 @@
 	
 	.billnoempty {
 		width: 200upx;
-		font-size: 40upx;
+		font-size: 38upx;
 		margin-top: -60upx;
 		margin-left: 100upx;
 		text-align: center;
@@ -885,7 +888,7 @@
 	}
 	
 	.data {
-		width: 350upx;
+		width: 400upx;
 		font-size: 40upx;
 		margin-top: -60upx;
 		margin-left: 300upx;

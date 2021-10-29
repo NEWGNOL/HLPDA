@@ -7666,16 +7666,51 @@ var render = function() {
               _c(
                 "v-uni-text",
                 { staticClass: _vm._$g(23, "sc"), attrs: { _i: 23 } },
+                [_vm._v("汇报仓库：")]
+              ),
+              _c(
+                "v-uni-navigator",
+                {
+                  attrs: {
+                    url: "/pages/basic/stock",
+                    "hover-class": "navigator-hover",
+                    _i: 24
+                  }
+                },
+                [
+                  _c(
+                    "v-uni-view",
+                    {
+                      staticClass: _vm._$g(25, "sc"),
+                      attrs: { _i: 25 },
+                      on: {
+                        click: function($event) {
+                          return _vm.$handleViewEvent($event)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._$g(25, "t0-0"))]
+                  )
+                ],
+                1
+              ),
+              _c("v-uni-view", {
+                staticClass: _vm._$g(26, "sc"),
+                attrs: { _i: 26 }
+              }),
+              _c(
+                "v-uni-text",
+                { staticClass: _vm._$g(27, "sc"), attrs: { _i: 27 } },
                 [_vm._v("扫码进度：")]
               ),
               _c(
                 "v-uni-view",
-                { staticClass: _vm._$g(24, "sc"), attrs: { _i: 24 } },
-                [_vm._v(_vm._$g(24, "t0-0"))]
+                { staticClass: _vm._$g(28, "sc"), attrs: { _i: 28 } },
+                [_vm._v(_vm._$g(28, "t0-0"))]
               ),
               _c("v-uni-view", {
-                staticClass: _vm._$g(25, "sc"),
-                attrs: { _i: 25 }
+                staticClass: _vm._$g(29, "sc"),
+                attrs: { _i: 29 }
               })
             ],
             1
@@ -7683,18 +7718,18 @@ var render = function() {
           _c(
             "v-uni-scroll-view",
             {
-              staticClass: _vm._$g(26, "sc"),
-              class: _vm._$g(26, "c"),
-              attrs: { "scroll-y": "true", _i: 26 }
+              staticClass: _vm._$g(30, "sc"),
+              class: _vm._$g(30, "c"),
+              attrs: { "scroll-y": "true", _i: 30 }
             },
             [
               _c(
                 "uni-list",
-                { attrs: { _i: 27 } },
-                _vm._l(_vm._$g(28, "f"), function(item, index, $21, $31) {
+                { attrs: { _i: 31 } },
+                _vm._l(_vm._$g(32, "f"), function(item, index, $21, $31) {
                   return _c("FillStock", {
                     key: item,
-                    attrs: { _i: "28-" + $31 },
+                    attrs: { _i: "32-" + $31 },
                     on: {
                       ButtonClick: function($event) {
                         return _vm.$handleViewEvent($event)
@@ -7720,12 +7755,12 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm._$g(29, "v-show"),
-              expression: "_$g(29,'v-show')"
+              value: _vm._$g(33, "v-show"),
+              expression: "_$g(33,'v-show')"
             }
           ],
-          staticClass: _vm._$g(29, "sc"),
-          attrs: { _i: 29 },
+          staticClass: _vm._$g(33, "sc"),
+          attrs: { _i: 33 },
           on: {
             touchstart: function($event) {
               return _vm.$handleViewEvent($event)
@@ -7738,18 +7773,18 @@ var render = function() {
         [
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(30, "sc"), attrs: { _i: 30 } },
+            { staticClass: _vm._$g(34, "sc"), attrs: { _i: 34 } },
             [
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(31, "sc"), attrs: { _i: 31 } },
+                { staticClass: _vm._$g(35, "sc"), attrs: { _i: 35 } },
                 [_vm._v("已扫描条码：")]
               ),
               _c(
                 "v-uni-text",
                 {
-                  staticClass: _vm._$g(32, "sc"),
-                  attrs: { clickable: true, _i: 32 },
+                  staticClass: _vm._$g(36, "sc"),
+                  attrs: { clickable: true, _i: 36 },
                   on: {
                     click: function($event) {
                       return _vm.$handleViewEvent($event)
@@ -7764,107 +7799,107 @@ var render = function() {
           _c(
             "v-uni-scroll-view",
             {
-              staticClass: _vm._$g(33, "sc"),
-              attrs: { "scroll-y": "true", _i: 33 }
+              staticClass: _vm._$g(37, "sc"),
+              attrs: { "scroll-y": "true", _i: 37 }
             },
             [
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(34, "sc"), attrs: { _i: 34 } },
+                { staticClass: _vm._$g(38, "sc"), attrs: { _i: 38 } },
                 [_vm._v("物料编码：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(35, "sc"), attrs: { _i: 35 } },
-                [_vm._v(_vm._$g(35, "t0-0"))]
+                { staticClass: _vm._$g(39, "sc"), attrs: { _i: 39 } },
+                [_vm._v(_vm._$g(39, "t0-0"))]
               ),
               _c("v-uni-view", {
-                staticClass: _vm._$g(36, "sc"),
-                attrs: { _i: 36 }
+                staticClass: _vm._$g(40, "sc"),
+                attrs: { _i: 40 }
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(37, "sc"), attrs: { _i: 37 } },
+                { staticClass: _vm._$g(41, "sc"), attrs: { _i: 41 } },
                 [_vm._v("物料名称：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(38, "sc"), attrs: { _i: 38 } },
-                [_vm._v(_vm._$g(38, "t0-0"))]
+                { staticClass: _vm._$g(42, "sc"), attrs: { _i: 42 } },
+                [_vm._v(_vm._$g(42, "t0-0"))]
               ),
               _c("v-uni-view", {
-                staticClass: _vm._$g(39, "sc"),
-                attrs: { _i: 39 }
+                staticClass: _vm._$g(43, "sc"),
+                attrs: { _i: 43 }
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(40, "sc"), attrs: { _i: 40 } },
+                { staticClass: _vm._$g(44, "sc"), attrs: { _i: 44 } },
                 [_vm._v("标签类型：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(41, "sc"), attrs: { _i: 41 } },
-                [_vm._v(_vm._$g(41, "t0-0"))]
+                { staticClass: _vm._$g(45, "sc"), attrs: { _i: 45 } },
+                [_vm._v(_vm._$g(45, "t0-0"))]
               ),
               _c("v-uni-view", {
-                staticClass: _vm._$g(42, "sc"),
-                attrs: { _i: 42 }
+                staticClass: _vm._$g(46, "sc"),
+                attrs: { _i: 46 }
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(43, "sc"), attrs: { _i: 43 } },
+                { staticClass: _vm._$g(47, "sc"), attrs: { _i: 47 } },
                 [_vm._v("订单号：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(44, "sc"), attrs: { _i: 44 } },
-                [_vm._v(_vm._$g(44, "t0-0"))]
+                { staticClass: _vm._$g(48, "sc"), attrs: { _i: 48 } },
+                [_vm._v(_vm._$g(48, "t0-0"))]
               ),
               _c("v-uni-view", {
-                staticClass: _vm._$g(45, "sc"),
-                attrs: { _i: 45 }
+                staticClass: _vm._$g(49, "sc"),
+                attrs: { _i: 49 }
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(46, "sc"), attrs: { _i: 46 } },
+                { staticClass: _vm._$g(50, "sc"), attrs: { _i: 50 } },
                 [_vm._v("源单编号：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(47, "sc"), attrs: { _i: 47 } },
-                [_vm._v(_vm._$g(47, "t0-0"))]
+                { staticClass: _vm._$g(51, "sc"), attrs: { _i: 51 } },
+                [_vm._v(_vm._$g(51, "t0-0"))]
               ),
               _c("v-uni-view", {
-                staticClass: _vm._$g(48, "sc"),
-                attrs: { _i: 48 }
+                staticClass: _vm._$g(52, "sc"),
+                attrs: { _i: 52 }
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(49, "sc"), attrs: { _i: 49 } },
+                { staticClass: _vm._$g(53, "sc"), attrs: { _i: 53 } },
                 [_vm._v("条码类型：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(50, "sc"), attrs: { _i: 50 } },
-                [_vm._v(_vm._$g(50, "t0-0"))]
+                { staticClass: _vm._$g(54, "sc"), attrs: { _i: 54 } },
+                [_vm._v(_vm._$g(54, "t0-0"))]
               ),
               _c("v-uni-view", {
-                staticClass: _vm._$g(51, "sc"),
-                attrs: { _i: 51 }
+                staticClass: _vm._$g(55, "sc"),
+                attrs: { _i: 55 }
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(52, "sc"), attrs: { _i: 52 } },
+                { staticClass: _vm._$g(56, "sc"), attrs: { _i: 56 } },
                 [_vm._v("基本单位：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(53, "sc"), attrs: { _i: 53 } },
-                [_vm._v(_vm._$g(53, "t0-0"))]
+                { staticClass: _vm._$g(57, "sc"), attrs: { _i: 57 } },
+                [_vm._v(_vm._$g(57, "t0-0"))]
               ),
               _c("v-uni-view", {
-                staticClass: _vm._$g(54, "sc"),
-                attrs: { _i: 54 }
+                staticClass: _vm._$g(58, "sc"),
+                attrs: { _i: 58 }
               })
             ],
             1
@@ -7875,46 +7910,8 @@ var render = function() {
       _vm._v("·"),
       _c(
         "v-uni-view",
-        { staticClass: _vm._$g(55, "sc"), attrs: { _i: 55 } },
+        { staticClass: _vm._$g(59, "sc"), attrs: { _i: 59 } },
         [
-          _c(
-            "v-uni-text",
-            {
-              staticClass: _vm._$g(56, "sc"),
-              class: _vm._$g(56, "c"),
-              attrs: { _i: 56 },
-              on: {
-                click: function($event) {
-                  return _vm.$handleViewEvent($event)
-                }
-              }
-            },
-            [_vm._v("汇报单")]
-          ),
-          _c("v-uni-view", {
-            staticClass: _vm._$g(57, "sc"),
-            class: _vm._$g(57, "c"),
-            attrs: { _i: 57 }
-          }),
-          _c(
-            "v-uni-text",
-            {
-              staticClass: _vm._$g(58, "sc"),
-              class: _vm._$g(58, "c"),
-              attrs: { _i: 58 },
-              on: {
-                click: function($event) {
-                  return _vm.$handleViewEvent($event)
-                }
-              }
-            },
-            [_vm._v("入库单")]
-          ),
-          _c("v-uni-view", {
-            staticClass: _vm._$g(59, "sc"),
-            class: _vm._$g(59, "c"),
-            attrs: { _i: 59 }
-          }),
           _c(
             "v-uni-text",
             {
@@ -7927,12 +7924,50 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("明细")]
+            [_vm._v("汇报单")]
           ),
           _c("v-uni-view", {
             staticClass: _vm._$g(61, "sc"),
             class: _vm._$g(61, "c"),
             attrs: { _i: 61 }
+          }),
+          _c(
+            "v-uni-text",
+            {
+              staticClass: _vm._$g(62, "sc"),
+              class: _vm._$g(62, "c"),
+              attrs: { _i: 62 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [_vm._v("入库单")]
+          ),
+          _c("v-uni-view", {
+            staticClass: _vm._$g(63, "sc"),
+            class: _vm._$g(63, "c"),
+            attrs: { _i: 63 }
+          }),
+          _c(
+            "v-uni-text",
+            {
+              staticClass: _vm._$g(64, "sc"),
+              class: _vm._$g(64, "c"),
+              attrs: { _i: 64 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [_vm._v("明细")]
+          ),
+          _c("v-uni-view", {
+            staticClass: _vm._$g(65, "sc"),
+            class: _vm._$g(65, "c"),
+            attrs: { _i: 65 }
           })
         ],
         1
@@ -8421,7 +8456,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.addstoragein {\n\twidth: 20%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.querystoragein {\n\twidth: 20%;\n\theight: 90rpx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 450upx;\n\tmargin-top: -90upx;\n}\n.icmoscrollview {\n\twidth: 100%;\n\theight: 850upx;\n\tmargin-top: 20upx;\n}\n.auditstoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\t\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\t\t\n\tmargin-left: 420upx;\n\tmargin-top: -70upx;\n}\n.unauditstoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\t\t\n\tmargin-left: 420upx;\n\tmargin-top: -70upx;\n}\n.deletestoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\ttext-align: center;\n\tmargin-left: 590upx;\n\tmargin-top: -85upx;\n}\n.srcbillno {\n\tdisplay: inline-block;\n\tcolor: #FFFFFF;\n\tfont-size: 19px;\n\tmargin-left: 20upx;\n\tmargin-top: 30upx;\n}\n.scancartonbarcode {\n\twidth: 25%;\n\tcolor: #FFFFFF;\n\tbackground-color: #F0AD4E;\n\tborder-radius: 50upx;\n\tmargin-left: 560upx;\n\tmargin-top: -96upx;\n}\n.scanwarehousebarcode{\n\twidth: 25%;\n\tcolor: #FFFFFF;\n\tbackground-color: #1AAD19;\n\tborder-radius: 50upx;\n\tmargin-left: 560upx;\n\tmargin-top: -96upx;\n}\n.billhead {\n\twidth: 100%;\n\tmargin-top: 50upx;\n}\n.title {\n\tdisplay: flex;\n\tmargin-left: 50upx;\n\tfont-size: 40upx;\n}\n.billnoempty {\t\n\tdisplay: flex;\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 300upx;\n\ttext-align: center;\n\tcolor: #777777;\n}\n.billnofull {\t\t\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 300upx;\n\ttext-align: center;\n\tcolor: #000000;\n}\n.detailtitle {\t\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: 30upx;\n\tmargin-left: 30upx;\n}\n.detaildata {\t\n\tdisplay: flex;\t\t\n\tfont-size: 35upx;\n\tmargin-top: -50upx;\n\tmargin-left: 270upx;\n\ttext-align: center;\n}\n.listline {\n\twidth: 100%;\n\theight: 3upx;\n\tbackground-color: #000000;\t\n\tmargin-top: 20upx;\n}\n.data {\n\tdisplay: flex;\n\twidth: 300upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 320upx;\n\ttext-align: center;\n}\n.selectdata{\n\tbackground-color: #007AFF;\n}\n.dataline {\n\twidth: 60%;\n\theight: 5upx;\n\tbackground-color: #4CD964;\n\tmargin-left: 250upx;\n}\n.proreportview {\n\twidth: 100%;\n\theight: 950upx;\n}\n.sumscrollview {\n\twidth: 100%;\n\theight: 920upx;\n\tmargin-top: 30upx;\n}\n.cartonlabelscrollview {\n\twidth: 100%;\n\theight: 550upx;\n\tmargin-top: 20upx;\n}\n.selectinfoscrollview {\t\t\n\twidth: 100%;\n\theight: 670upx;\n\tmargin-top: 50upx;\n}\n.unselectinfoscrollview {\t\t\n\twidth: 100%;\n\theight: 950upx;\n\tmargin-top: 50upx;\n}\n.detailscrollview {\n\twidth: 100%;\n\theight: 950upx;\n\tmargin-top: 20upx;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline {\n\tbackground-color: #007AFF;\n}\n.tabbackground {\t\t\t\n\twidth: 100%;\n\theight: 90upx;\n\tmargin-top: 100upx;\n\tbackground-color: #F4F4F4;\n}\n.tableft {\t\t\n\tfont-size: 45upx;\n\tmargin-top: 30upx;\n\tmargin-left: 40upx;\n}\n.tabmiddle {\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 330upx;\n}\n.tabright {\t\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 630upx;\n}\n.tableftline {\t\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 40upx;\n}\n.tabmiddleline {\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 330upx;\n}\n.tabrightline {\t\t\n\twidth: 15%;\n\theight: 5upx;\t\t\n\tmargin-left: 620upx;\n}\n.productdetail {\t\t\n\tmargin-top: 50upx;\n}\n.scanned {\t\n\tdisplay: inline-block;\n\tcolor: #FFFFFF;\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 30upx;\n}\n.queryall {\n\tdisplay: flex;\n\tflex-direction: column;\n\tfont-size: 40upx;\n\tcolor: #007AFF;\n\tmargin-left: 570upx;\n\tmargin-top: -60upx;\n}\n.modeltitle {\t\t\n\tfont-size: 40upx;\n\tmargin-left: 50upx;\n\tmargin-top: 180upx;\n}\n.modeldata {\t\t\n\twidth: 500upx;\n\tfont-size: 45upx;\n\tmargin-left: 300upx;\n\tmargin-top: 180upx;\n}\n.numbertitle {\t\t\n\tfont-size: 40upx;\n\tmargin-left: 50upx;\n\tmargin-top: 280upx;\n}\n.numberdata {\t\t\n\twidth: 500upx;\n\tfont-size: 45upx;\n\tmargin-left: 300upx;\n\tmargin-top: 280upx;\n}\n.nametitle {\t\t\n\tfont-size: 40upx;\n\tmargin-left: 50upx;\n\tmargin-top: 380upx;\n}\n.namedata {\t\t\n\twidth: 500upx;\n\tfont-size: 45upx;\n\tmargin-left: 300upx;\n\tmargin-top: 380upx;\n}\n.labelcounttitle {\t\t\n\tfont-size: 40upx;\n\tmargin-left: 50upx;\n\tmargin-top: 480upx;\n}\n.labelcountdata {\t\t\n\twidth: 500upx;\n\tfont-size: 45upx;\n\tmargin-left: 300upx;\n\tmargin-top: 480upx;\n}\n.selectlabel {\n\twidth: 30%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.deletelabel {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-right: 150upx;\n\tmargin-top: -95upx;\n}\t\n", ""]);
+exports.push([module.i, "\n.addstoragein {\n\twidth: 20%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.querystoragein {\n\twidth: 20%;\n\theight: 90rpx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 450upx;\n\tmargin-top: -90upx;\n}\n.icmoscrollview {\n\twidth: 100%;\n\theight: 850upx;\n\tmargin-top: 20upx;\n}\n.auditstoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\t\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\t\t\n\tmargin-left: 420upx;\n\tmargin-top: -70upx;\n}\n.unauditstoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\t\t\n\tmargin-left: 420upx;\n\tmargin-top: -70upx;\n}\n.deletestoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\ttext-align: center;\n\tmargin-left: 590upx;\n\tmargin-top: -85upx;\n}\n.srcbillno {\n\tdisplay: inline-block;\n\tcolor: #FFFFFF;\n\tfont-size: 19px;\n\tmargin-left: 20upx;\n\tmargin-top: 30upx;\n}\n.scancartonbarcode {\n\twidth: 25%;\n\tcolor: #FFFFFF;\n\tbackground-color: #F0AD4E;\n\tborder-radius: 50upx;\n\tmargin-left: 560upx;\n\tmargin-top: -96upx;\n}\n.scanwarehousebarcode{\n\twidth: 25%;\n\tcolor: #FFFFFF;\n\tbackground-color: #1AAD19;\n\tborder-radius: 50upx;\n\tmargin-left: 560upx;\n\tmargin-top: -96upx;\n}\n.billhead {\n\twidth: 100%;\n\tmargin-top: 50upx;\n}\n.title {\n\tdisplay: flex;\n\tmargin-left: 50upx;\n\tfont-size: 40upx;\n}\n.billnoempty {\t\n\tdisplay: flex;\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 300upx;\n\ttext-align: center;\n\tcolor: #777777;\n}\n.billnofull {\t\t\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 300upx;\n\ttext-align: center;\n\tcolor: #000000;\n}\n.detailtitle {\t\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: 30upx;\n\tmargin-left: 30upx;\n}\n.detaildata {\t\n\tdisplay: flex;\t\t\n\tfont-size: 35upx;\n\tmargin-top: -50upx;\n\tmargin-left: 270upx;\n\ttext-align: center;\n}\n.listline {\n\twidth: 100%;\n\theight: 3upx;\n\tbackground-color: #000000;\t\n\tmargin-top: 20upx;\n}\n.data {\n\tdisplay: flex;\n\twidth: 300upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 320upx;\n\ttext-align: center;\n}\n.selectdata{\n\tbackground-color: #007AFF;\n}\n.dataline {\n\twidth: 60%;\n\theight: 5upx;\n\tbackground-color: #4CD964;\n\tmargin-left: 250upx;\n}\n.proreportview {\n\twidth: 100%;\n\theight: 950upx;\n}\n.sumscrollview {\n\twidth: 100%;\n\theight: 920upx;\n\tmargin-top: 30upx;\n}\n.cartonlabelscrollview {\n\twidth: 100%;\n\theight: 550upx;\n\tmargin-top: 20upx;\n}\n.selectinfoscrollview {\t\t\n\twidth: 100%;\n\theight: 630upx;\n\tmargin-top: 50upx;\n}\n.unselectinfoscrollview {\t\t\n\twidth: 100%;\n\theight: 950upx;\n\tmargin-top: 50upx;\n}\n.detailscrollview {\n\twidth: 100%;\n\theight: 950upx;\n\tmargin-top: 20upx;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline {\n\tbackground-color: #007AFF;\n}\n.tabbackground {\t\t\t\n\twidth: 100%;\n\theight: 90upx;\n\tmargin-top: 100upx;\n\tbackground-color: #F4F4F4;\n}\n.tableft {\t\t\n\tfont-size: 45upx;\n\tmargin-top: 30upx;\n\tmargin-left: 40upx;\n}\n.tabmiddle {\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 330upx;\n}\n.tabright {\t\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 630upx;\n}\n.tableftline {\t\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 40upx;\n}\n.tabmiddleline {\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 330upx;\n}\n.tabrightline {\t\t\n\twidth: 15%;\n\theight: 5upx;\t\t\n\tmargin-left: 620upx;\n}\n.productdetail {\t\t\n\tmargin-top: 50upx;\n}\n.scanned {\t\n\tdisplay: inline-block;\n\tcolor: #FFFFFF;\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 30upx;\n}\n.queryall {\n\tdisplay: flex;\n\tflex-direction: column;\n\tfont-size: 40upx;\n\tcolor: #007AFF;\n\tmargin-left: 570upx;\n\tmargin-top: -60upx;\n}\n.modeltitle {\t\t\n\tfont-size: 40upx;\n\tmargin-left: 50upx;\n\tmargin-top: 180upx;\n}\n.modeldata {\t\t\n\twidth: 500upx;\n\tfont-size: 45upx;\n\tmargin-left: 300upx;\n\tmargin-top: 180upx;\n}\n.numbertitle {\t\t\n\tfont-size: 40upx;\n\tmargin-left: 50upx;\n\tmargin-top: 280upx;\n}\n.numberdata {\t\t\n\twidth: 500upx;\n\tfont-size: 45upx;\n\tmargin-left: 300upx;\n\tmargin-top: 280upx;\n}\n.nametitle {\t\t\n\tfont-size: 40upx;\n\tmargin-left: 50upx;\n\tmargin-top: 380upx;\n}\n.namedata {\t\t\n\twidth: 500upx;\n\tfont-size: 45upx;\n\tmargin-left: 300upx;\n\tmargin-top: 380upx;\n}\n.labelcounttitle {\t\t\n\tfont-size: 40upx;\n\tmargin-left: 50upx;\n\tmargin-top: 480upx;\n}\n.labelcountdata {\t\t\n\twidth: 500upx;\n\tfont-size: 45upx;\n\tmargin-left: 300upx;\n\tmargin-top: 480upx;\n}\n.selectlabel {\n\twidth: 30%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.deletelabel {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-right: 150upx;\n\tmargin-top: -95upx;\n}\t\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -10031,7 +10066,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.instorageview {\n\twidth: 100%;\n\theight: 950upx;\n}\n.poorderscrollview {\n\twidth: 100%;\n\theight: 850upx;\n\tmargin-top: 20upx;\n}\n.selectinfoscrollview {\n\twidth: 100%;\n\theight: 670upx;\n\tmargin-top: 50upx;\n}\n.unselectinfoscrollview {\n\twidth: 100%;\n\theight: 950upx;\n\tmargin-top: 50upx;\n}\n.addstoragein {\n\twidth: 20%;\n\tuheight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.querystoragein {\n\twidth: 20%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 450upx;\n\tmargin-top: -95upx;\n}\n.auditstoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\t\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\t\t\n\tmargin-left: 420upx;\n\tmargin-top: -70upx;\n}\n.unauditstoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\t\t\n\tmargin-left: 420upx;\n\tmargin-top: -70upx;\n}\n.deletestoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\ttext-align: center;\n\tmargin-left: 590upx;\n\tmargin-top: -85upx;\n}\n.srcbillno {\n\tdisplay: inline-block;\n\tcolor: #FFFFFF;\n\tfont-size: 19px;\n\tmargin-left: 20upx;\n\tmargin-top: 30upx;\n}\n.billhead {\n\twidth: 100%;\n\tmargin-top: 50upx;\n}\n.title {\n\tmargin-left: 50upx;\n\tfont-size: 40upx;\n}\n.billnoempty {\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 100upx;\n\ttext-align: center;\n\tcolor: #777777;\n}\n.data {\n\twidth: 350upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 300upx;\n\ttext-align: center;\n}\n.dataline {\n\twidth: 60%;\n\theight: 5upx;\n\tbackground-color: #4CD964;\n\tmargin-left: 250upx;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline {\n\tbackground-color: #007AFF;\n}\n.tabbackground {\n\twidth: 100%;\n\theight: 90upx;\n\tmargin-top: 150upx;\n\tbackground-color: #F4F4F4;\n}\n.tableft {\t\t\n\tfont-size: 45upx;\n\tmargin-top: 20upx;\n\tmargin-left: 40upx;\n}\n.tabmiddle {\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 330upx;\n}\n.tabright {\t\t\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 630upx;\n}\n.tableftline {\t\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 40upx;\n}\n.tabmiddleline {\t\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 330upx;\n}\n.tabrightline {\t\t\n\twidth: 15%;\n\theight: 5upx;\t\t\n\tmargin-left: 620upx;\n}\n.scanned {\n\tdisplay: inline-block;\n\tcolor: #FFFFFF;\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 30upx;\n}\n.queryall {\n\tdisplay: flex;\n\tflex-direction: column;\n\tfont-size: 40upx;\n\tcolor: #007AFF;\n\tmargin-left: 570upx;\n\tmargin-top: -60upx;\n}\n.detailtitle {\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: 30upx;\n\tmargin-left: 30upx;\n}\n.detaildata {\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: -50upx;\n\tmargin-left: 270upx;\n\ttext-align: center;\n}\n.listline {\n\twidth: 100%;\n\theight: 3upx;\n\tbackground-color: #000000;\t\n\tmargin-top: 20upx;\n}\n", ""]);
+exports.push([module.i, "\n.instorageview {\n\twidth: 100%;\n\theight: 950upx;\n}\n.poorderscrollview {\n\twidth: 100%;\n\theight: 850upx;\n\tmargin-top: 20upx;\n}\n.selectinfoscrollview {\n\twidth: 100%;\n\theight: 620upx;\n\tmargin-top: 50upx;\n}\n.unselectinfoscrollview {\n\twidth: 100%;\n\theight: 900upx;\n\tmargin-top: 50upx;\n}\n.addstoragein {\n\twidth: 20%;\n\tuheight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.querystoragein {\n\twidth: 20%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 450upx;\n\tmargin-top: -95upx;\n}\n.auditstoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\t\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\t\t\n\tmargin-left: 420upx;\n\tmargin-top: -70upx;\n}\n.unauditstoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\t\t\n\tmargin-left: 420upx;\n\tmargin-top: -70upx;\n}\n.deletestoragein {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\ttext-align: center;\n\tmargin-left: 590upx;\n\tmargin-top: -85upx;\n}\n.srcbillno {\n\tdisplay: inline-block;\n\tcolor: #FFFFFF;\n\tfont-size: 19px;\n\tmargin-left: 20upx;\n\tmargin-top: 30upx;\n}\n.billhead {\n\twidth: 100%;\n\tmargin-top: 50upx;\n}\n.title {\n\tmargin-left: 50upx;\n\tfont-size: 40upx;\n}\n.billnoempty {\n\twidth: 200upx;\n\tfont-size: 38upx;\n\tmargin-top: -60upx;\n\tmargin-left: 100upx;\n\ttext-align: center;\n\tcolor: #777777;\n}\n.data {\n\twidth: 400upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 300upx;\n\ttext-align: center;\n}\n.dataline {\n\twidth: 60%;\n\theight: 5upx;\n\tbackground-color: #4CD964;\n\tmargin-left: 250upx;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline {\n\tbackground-color: #007AFF;\n}\n.tabbackground {\n\twidth: 100%;\n\theight: 90upx;\n\tmargin-top: 150upx;\n\tbackground-color: #F4F4F4;\n}\n.tableft {\t\t\n\tfont-size: 45upx;\n\tmargin-top: 20upx;\n\tmargin-left: 40upx;\n}\n.tabmiddle {\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 330upx;\n}\n.tabright {\t\t\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 630upx;\n}\n.tableftline {\t\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 40upx;\n}\n.tabmiddleline {\t\t\n\twidth: 18%;\n\theight: 5upx;\t\t\n\tmargin-left: 330upx;\n}\n.tabrightline {\t\t\n\twidth: 15%;\n\theight: 5upx;\t\t\n\tmargin-left: 620upx;\n}\n.scanned {\n\tdisplay: inline-block;\n\tcolor: #FFFFFF;\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 30upx;\n}\n.queryall {\n\tdisplay: flex;\n\tflex-direction: column;\n\tfont-size: 40upx;\n\tcolor: #007AFF;\n\tmargin-left: 570upx;\n\tmargin-top: -60upx;\n}\n.detailtitle {\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: 30upx;\n\tmargin-left: 30upx;\n}\n.detaildata {\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: -50upx;\n\tmargin-left: 270upx;\n\ttext-align: center;\n}\n.listline {\n\twidth: 100%;\n\theight: 3upx;\n\tbackground-color: #000000;\t\n\tmargin-top: 20upx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -16850,43 +16885,71 @@ var render = function() {
         },
         [
           _c(
-            "v-uni-button",
-            {
-              staticClass: _vm._$g(10, "sc"),
-              attrs: { _i: 10 },
-              on: {
-                click: function($event) {
-                  return _vm.$handleViewEvent($event)
-                }
-              }
-            },
-            [_vm._v("审核")]
-          ),
-          _c(
-            "v-uni-button",
-            {
-              staticClass: _vm._$g(11, "sc"),
-              attrs: { _i: 11 },
-              on: {
-                click: function($event) {
-                  return _vm.$handleViewEvent($event)
-                }
-              }
-            },
-            [_vm._v("反审")]
-          ),
-          _c(
-            "v-uni-button",
-            {
-              staticClass: _vm._$g(12, "sc"),
-              attrs: { _i: 12 },
-              on: {
-                click: function($event) {
-                  return _vm.$handleViewEvent($event)
-                }
-              }
-            },
-            [_vm._v("删除")]
+            "v-uni-view",
+            { staticClass: _vm._$g(10, "sc"), attrs: { _i: 10 } },
+            [
+              _c(
+                "v-uni-text",
+                { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
+                [_vm._v(_vm._$g(11, "t0-0"))]
+              ),
+              _c(
+                "v-uni-button",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm._$g(12, "v-show"),
+                      expression: "_$g(12,'v-show')"
+                    }
+                  ],
+                  staticClass: _vm._$g(12, "sc"),
+                  attrs: { _i: 12 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("审核")]
+              ),
+              _c(
+                "v-uni-button",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm._$g(13, "v-show"),
+                      expression: "_$g(13,'v-show')"
+                    }
+                  ],
+                  staticClass: _vm._$g(13, "sc"),
+                  attrs: { _i: 13 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("反审")]
+              ),
+              _c(
+                "v-uni-button",
+                {
+                  staticClass: _vm._$g(14, "sc"),
+                  attrs: { _i: 14 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("删除")]
+              )
+            ],
+            1
           ),
           _c(
             "v-uni-view",
@@ -16895,31 +16958,17 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm._$g(13, "v-show"),
-                  expression: "_$g(13,'v-show')"
+                  value: _vm._$g(15, "v-show"),
+                  expression: "_$g(15,'v-show')"
                 }
               ],
-              staticClass: _vm._$g(13, "sc"),
-              attrs: { _i: 13 }
+              staticClass: _vm._$g(15, "sc"),
+              attrs: { _i: 15 }
             },
             [
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
-                [_vm._v("单据编号：")]
-              ),
-              _c(
-                "v-uni-text",
-                { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
-                [_vm._v(_vm._$g(15, "t0-0"))]
-              ),
-              _c("v-uni-view", {
-                staticClass: _vm._$g(16, "sc"),
-                attrs: { _i: 16 }
-              }),
-              _c(
-                "v-uni-text",
-                { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
+                { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
                 [_vm._v("出库日期：")]
               ),
               _c(
@@ -16927,10 +16976,10 @@ var render = function() {
                 {
                   attrs: {
                     mode: "date",
-                    value: _vm._$g(18, "a-value"),
-                    start: _vm._$g(18, "a-start"),
-                    end: _vm._$g(18, "a-end"),
-                    _i: 18
+                    value: _vm._$g(17, "a-value"),
+                    start: _vm._$g(17, "a-start"),
+                    end: _vm._$g(17, "a-end"),
+                    _i: 17
                   },
                   on: {
                     change: function($event) {
@@ -16941,19 +16990,19 @@ var render = function() {
                 [
                   _c(
                     "v-uni-view",
-                    { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
-                    [_vm._v(_vm._$g(19, "t0-0"))]
+                    { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
+                    [_vm._v(_vm._$g(18, "t0-0"))]
                   )
                 ],
                 1
               ),
               _c("v-uni-view", {
-                staticClass: _vm._$g(20, "sc"),
-                attrs: { _i: 20 }
+                staticClass: _vm._$g(19, "sc"),
+                attrs: { _i: 19 }
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(21, "sc"), attrs: { _i: 21 } },
+                { staticClass: _vm._$g(20, "sc"), attrs: { _i: 20 } },
                 [_vm._v("验收人：")]
               ),
               _c(
@@ -16962,33 +17011,33 @@ var render = function() {
                   attrs: {
                     url: "/pages/basic/empquery",
                     "hover-class": "navigator-hover",
-                    _i: 22
+                    _i: 21
                   }
                 },
                 [
                   _c(
                     "v-uni-view",
                     {
-                      staticClass: _vm._$g(23, "sc"),
-                      attrs: { _i: 23 },
+                      staticClass: _vm._$g(22, "sc"),
+                      attrs: { _i: 22 },
                       on: {
                         click: function($event) {
                           return _vm.$handleViewEvent($event)
                         }
                       }
                     },
-                    [_vm._v(_vm._$g(23, "t0-0"))]
+                    [_vm._v(_vm._$g(22, "t0-0"))]
                   )
                 ],
                 1
               ),
               _c("v-uni-view", {
-                staticClass: _vm._$g(24, "sc"),
-                attrs: { _i: 24 }
+                staticClass: _vm._$g(23, "sc"),
+                attrs: { _i: 23 }
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(25, "sc"), attrs: { _i: 25 } },
+                { staticClass: _vm._$g(24, "sc"), attrs: { _i: 24 } },
                 [_vm._v("保管人：")]
               ),
               _c(
@@ -16997,33 +17046,33 @@ var render = function() {
                   attrs: {
                     url: "/pages/basic/empquery",
                     "hover-class": "navigator-hover",
-                    _i: 26
+                    _i: 25
                   }
                 },
                 [
                   _c(
                     "v-uni-view",
                     {
-                      staticClass: _vm._$g(27, "sc"),
-                      attrs: { _i: 27 },
+                      staticClass: _vm._$g(26, "sc"),
+                      attrs: { _i: 26 },
                       on: {
                         click: function($event) {
                           return _vm.$handleViewEvent($event)
                         }
                       }
                     },
-                    [_vm._v(_vm._$g(27, "t0-0"))]
+                    [_vm._v(_vm._$g(26, "t0-0"))]
                   )
                 ],
                 1
               ),
               _c("v-uni-view", {
-                staticClass: _vm._$g(28, "sc"),
-                attrs: { _i: 28 }
+                staticClass: _vm._$g(27, "sc"),
+                attrs: { _i: 27 }
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(29, "sc"), attrs: { _i: 29 } },
+                { staticClass: _vm._$g(28, "sc"), attrs: { _i: 28 } },
                 [_vm._v("调入仓库：")]
               ),
               _c(
@@ -17032,33 +17081,33 @@ var render = function() {
                   attrs: {
                     url: "/pages/basic/stock",
                     "hover-class": "navigator-hover",
-                    _i: 30
+                    _i: 29
                   }
                 },
                 [
                   _c(
                     "v-uni-view",
                     {
-                      staticClass: _vm._$g(31, "sc"),
-                      attrs: { _i: 31 },
+                      staticClass: _vm._$g(30, "sc"),
+                      attrs: { _i: 30 },
                       on: {
                         click: function($event) {
                           return _vm.$handleViewEvent($event)
                         }
                       }
                     },
-                    [_vm._v(_vm._$g(31, "t0-0"))]
+                    [_vm._v(_vm._$g(30, "t0-0"))]
                   )
                 ],
                 1
               ),
               _c("v-uni-view", {
-                staticClass: _vm._$g(32, "sc"),
-                attrs: { _i: 32 }
+                staticClass: _vm._$g(31, "sc"),
+                attrs: { _i: 31 }
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(33, "sc"), attrs: { _i: 33 } },
+                { staticClass: _vm._$g(32, "sc"), attrs: { _i: 32 } },
                 [_vm._v("调出仓库：")]
               ),
               _c(
@@ -17067,29 +17116,29 @@ var render = function() {
                   attrs: {
                     url: "/pages/basic/stock",
                     "hover-class": "navigator-hover",
-                    _i: 34
+                    _i: 33
                   }
                 },
                 [
                   _c(
                     "v-uni-view",
                     {
-                      staticClass: _vm._$g(35, "sc"),
-                      attrs: { _i: 35 },
+                      staticClass: _vm._$g(34, "sc"),
+                      attrs: { _i: 34 },
                       on: {
                         click: function($event) {
                           return _vm.$handleViewEvent($event)
                         }
                       }
                     },
-                    [_vm._v(_vm._$g(35, "t0-0"))]
+                    [_vm._v(_vm._$g(34, "t0-0"))]
                   )
                 ],
                 1
               ),
               _c("v-uni-view", {
-                staticClass: _vm._$g(36, "sc"),
-                attrs: { _i: 36 }
+                staticClass: _vm._$g(35, "sc"),
+                attrs: { _i: 35 }
               })
             ],
             1
@@ -17097,18 +17146,18 @@ var render = function() {
           _c(
             "v-uni-scroll-view",
             {
-              staticClass: _vm._$g(37, "sc"),
-              class: _vm._$g(37, "c"),
-              attrs: { "scroll-y": "true", _i: 37 }
+              staticClass: _vm._$g(36, "sc"),
+              class: _vm._$g(36, "c"),
+              attrs: { "scroll-y": "true", _i: 36 }
             },
             [
               _c(
                 "uni-list",
-                { attrs: { _i: 38 } },
-                _vm._l(_vm._$g(39, "f"), function(item, index, $21, $31) {
+                { attrs: { _i: 37 } },
+                _vm._l(_vm._$g(38, "f"), function(item, index, $21, $31) {
                   return _c("FillQty", {
                     key: item,
-                    attrs: { _i: "39-" + $31 },
+                    attrs: { _i: "38-" + $31 },
                     on: {
                       click: function($event) {
                         return _vm.$handleViewEvent($event)
@@ -17134,133 +17183,136 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm._$g(40, "v-show"),
-              expression: "_$g(40,'v-show')"
+              value: _vm._$g(39, "v-show"),
+              expression: "_$g(39,'v-show')"
             }
           ],
-          staticClass: _vm._$g(40, "sc"),
-          attrs: { _i: 40 }
+          staticClass: _vm._$g(39, "sc"),
+          attrs: { _i: 39 }
         },
         [
           _c(
-            "v-uni-text",
-            { staticClass: _vm._$g(41, "sc"), attrs: { _i: 41 } },
-            [_vm._v("已扫描条码：")]
+            "v-uni-view",
+            { staticClass: _vm._$g(40, "sc"), attrs: { _i: 40 } },
+            [
+              _c(
+                "v-uni-text",
+                { staticClass: _vm._$g(41, "sc"), attrs: { _i: 41 } },
+                [_vm._v("已扫描条码：")]
+              ),
+              _c(
+                "v-uni-text",
+                {
+                  staticClass: _vm._$g(42, "sc"),
+                  attrs: { clickable: true, _i: 42 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("查看全部")]
+              )
+            ],
+            1
           ),
           _c(
             "v-uni-text",
-            {
-              staticClass: _vm._$g(42, "sc"),
-              attrs: { clickable: true, _i: 42 },
-              on: {
-                click: function($event) {
-                  return _vm.$handleViewEvent($event)
-                }
-              }
-            },
-            [_vm._v("查看全部")]
-          ),
-          _c("v-uni-view", {
-            staticClass: _vm._$g(43, "sc"),
-            attrs: { _i: 43 }
-          }),
-          _c(
-            "v-uni-text",
-            { staticClass: _vm._$g(44, "sc"), attrs: { _i: 44 } },
+            { staticClass: _vm._$g(43, "sc"), attrs: { _i: 43 } },
             [_vm._v("物料编码：")]
           ),
           _c(
             "v-uni-text",
-            { staticClass: _vm._$g(45, "sc"), attrs: { _i: 45 } },
-            [_vm._v(_vm._$g(45, "t0-0"))]
+            { staticClass: _vm._$g(44, "sc"), attrs: { _i: 44 } },
+            [_vm._v(_vm._$g(44, "t0-0"))]
           ),
           _c("v-uni-view", {
-            staticClass: _vm._$g(46, "sc"),
-            attrs: { _i: 46 }
+            staticClass: _vm._$g(45, "sc"),
+            attrs: { _i: 45 }
           }),
           _c(
             "v-uni-text",
-            { staticClass: _vm._$g(47, "sc"), attrs: { _i: 47 } },
+            { staticClass: _vm._$g(46, "sc"), attrs: { _i: 46 } },
             [_vm._v("物料型号：")]
           ),
           _c(
             "v-uni-text",
-            { staticClass: _vm._$g(48, "sc"), attrs: { _i: 48 } },
-            [_vm._v(_vm._$g(48, "t0-0"))]
+            { staticClass: _vm._$g(47, "sc"), attrs: { _i: 47 } },
+            [_vm._v(_vm._$g(47, "t0-0"))]
           ),
           _c("v-uni-view", {
-            staticClass: _vm._$g(49, "sc"),
-            attrs: { _i: 49 }
+            staticClass: _vm._$g(48, "sc"),
+            attrs: { _i: 48 }
           }),
           _c(
             "v-uni-text",
-            { staticClass: _vm._$g(50, "sc"), attrs: { _i: 50 } },
+            { staticClass: _vm._$g(49, "sc"), attrs: { _i: 49 } },
             [_vm._v("物料名称：")]
           ),
           _c(
             "v-uni-text",
-            { staticClass: _vm._$g(51, "sc"), attrs: { _i: 51 } },
-            [_vm._v(_vm._$g(51, "t0-0"))]
+            { staticClass: _vm._$g(50, "sc"), attrs: { _i: 50 } },
+            [_vm._v(_vm._$g(50, "t0-0"))]
           ),
           _c("v-uni-view", {
-            staticClass: _vm._$g(52, "sc"),
-            attrs: { _i: 52 }
+            staticClass: _vm._$g(51, "sc"),
+            attrs: { _i: 51 }
           }),
           _c(
             "v-uni-text",
-            { staticClass: _vm._$g(53, "sc"), attrs: { _i: 53 } },
+            { staticClass: _vm._$g(52, "sc"), attrs: { _i: 52 } },
             [_vm._v("批号：")]
           ),
           _c(
             "v-uni-text",
-            { staticClass: _vm._$g(54, "sc"), attrs: { _i: 54 } },
-            [_vm._v(_vm._$g(54, "t0-0"))]
+            { staticClass: _vm._$g(53, "sc"), attrs: { _i: 53 } },
+            [_vm._v(_vm._$g(53, "t0-0"))]
           ),
           _c("v-uni-view", {
-            staticClass: _vm._$g(55, "sc"),
-            attrs: { _i: 55 }
+            staticClass: _vm._$g(54, "sc"),
+            attrs: { _i: 54 }
           }),
           _c(
             "v-uni-text",
-            { staticClass: _vm._$g(56, "sc"), attrs: { _i: 56 } },
+            { staticClass: _vm._$g(55, "sc"), attrs: { _i: 55 } },
             [_vm._v("发货仓库：")]
           ),
           _c(
             "v-uni-text",
-            { staticClass: _vm._$g(57, "sc"), attrs: { _i: 57 } },
-            [_vm._v(_vm._$g(57, "t0-0"))]
+            { staticClass: _vm._$g(56, "sc"), attrs: { _i: 56 } },
+            [_vm._v(_vm._$g(56, "t0-0"))]
           ),
           _c("v-uni-view", {
-            staticClass: _vm._$g(58, "sc"),
-            attrs: { _i: 58 }
+            staticClass: _vm._$g(57, "sc"),
+            attrs: { _i: 57 }
           }),
           _c(
             "v-uni-text",
-            { staticClass: _vm._$g(59, "sc"), attrs: { _i: 59 } },
+            { staticClass: _vm._$g(58, "sc"), attrs: { _i: 58 } },
             [_vm._v("即时库存：")]
           ),
           _c(
             "v-uni-text",
-            { staticClass: _vm._$g(60, "sc"), attrs: { _i: 60 } },
-            [_vm._v(_vm._$g(60, "t0-0"))]
+            { staticClass: _vm._$g(59, "sc"), attrs: { _i: 59 } },
+            [_vm._v(_vm._$g(59, "t0-0"))]
           ),
           _c("v-uni-view", {
-            staticClass: _vm._$g(61, "sc"),
-            attrs: { _i: 61 }
+            staticClass: _vm._$g(60, "sc"),
+            attrs: { _i: 60 }
           })
         ],
         1
       ),
       _c(
         "v-uni-view",
-        { staticClass: _vm._$g(62, "sc"), attrs: { _i: 62 } },
+        { staticClass: _vm._$g(61, "sc"), attrs: { _i: 61 } },
         [
           _c(
             "v-uni-text",
             {
-              staticClass: _vm._$g(63, "sc"),
-              class: _vm._$g(63, "c"),
-              attrs: { _i: 63 },
+              staticClass: _vm._$g(62, "sc"),
+              class: _vm._$g(62, "c"),
+              attrs: { _i: 62 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -17270,16 +17322,16 @@ var render = function() {
             [_vm._v("汇总")]
           ),
           _c("v-uni-view", {
-            staticClass: _vm._$g(64, "sc"),
-            class: _vm._$g(64, "c"),
-            attrs: { _i: 64 }
+            staticClass: _vm._$g(63, "sc"),
+            class: _vm._$g(63, "c"),
+            attrs: { _i: 63 }
           }),
           _c(
             "v-uni-text",
             {
-              staticClass: _vm._$g(65, "sc"),
-              class: _vm._$g(65, "c"),
-              attrs: { _i: 65 },
+              staticClass: _vm._$g(64, "sc"),
+              class: _vm._$g(64, "c"),
+              attrs: { _i: 64 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -17289,16 +17341,16 @@ var render = function() {
             [_vm._v("单据")]
           ),
           _c("v-uni-view", {
-            staticClass: _vm._$g(66, "sc"),
-            class: _vm._$g(66, "c"),
-            attrs: { _i: 66 }
+            staticClass: _vm._$g(65, "sc"),
+            class: _vm._$g(65, "c"),
+            attrs: { _i: 65 }
           }),
           _c(
             "v-uni-text",
             {
-              staticClass: _vm._$g(67, "sc"),
-              class: _vm._$g(67, "c"),
-              attrs: { _i: 67 },
+              staticClass: _vm._$g(66, "sc"),
+              class: _vm._$g(66, "c"),
+              attrs: { _i: 66 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -17308,9 +17360,9 @@ var render = function() {
             [_vm._v("明细")]
           ),
           _c("v-uni-view", {
-            staticClass: _vm._$g(68, "sc"),
-            class: _vm._$g(68, "c"),
-            attrs: { _i: 68 }
+            staticClass: _vm._$g(67, "sc"),
+            class: _vm._$g(67, "c"),
+            attrs: { _i: 67 }
           })
         ],
         1
@@ -17320,12 +17372,12 @@ var render = function() {
           {
             name: "show",
             rawName: "v-show",
-            value: _vm._$g(69, "v-show"),
-            expression: "_$g(69,'v-show')"
+            value: _vm._$g(68, "v-show"),
+            expression: "_$g(68,'v-show')"
           }
         ],
-        staticClass: _vm._$g(69, "sc"),
-        attrs: { _i: 69 },
+        staticClass: _vm._$g(68, "sc"),
+        attrs: { _i: 68 },
         on: {
           confirm: function($event) {
             return _vm.$handleViewEvent($event)
@@ -17434,7 +17486,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.transfersview {\n\twidth: 100%;\n\theight: 950upx;\n}\n.addseoutstock {\n\twidth: 20%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 30upx;\n}\n.queryseoutstock {\n\twidth: 20%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 450upx;\n\tmargin-top: -91upx;\n}\n.audittransfers {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 23upx;\n\tmargin-top: 20upx;\n}\n.unaudittransfers {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 206upx;\n\tmargin-top: -96upx;\n}\n.deletetransfers {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 389upx;\n\tmargin-top: -96upx;\n}\n.seoutstockscrollview {\n\twidth: 100%;\n\theight: 850upx;\n\tmargin-top: 20upx;\n}\n.billhead {\n\twidth: 100%;\n\tmargin-top: 30upx;\n}\n.billnoempty {\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 50upx;\n\ttext-align: center;\n\tcolor: #777777;\n}\n.title {\n\tmargin-left: 50upx;\n\tfont-size: 40upx;\n}\n.data {\n\twidth: 450upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 250upx;\n\ttext-align: center;\n}\n.dataline {\n\twidth: 60%;\n\theight: 5upx;\n\tbackground-color: #4CD964;\n\tmargin-left: 250upx;\n}\n.selectdata{\n\tbackground-color: #007AFF;\n}\n.selectinfoscrollview {\n\twidth: 100%;\n\theight: 500upx;\n\tmargin-top: 50upx;\n}\n.unselectinfoscrollview {\n\twidth: 100%;\n\theight: 800upx;\n\tmargin-top: 50upx;\n}\n.scanned {\n\tdisplay: flex;\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 20upx;\n}\n.queryall {\n\tdisplay: flex;\n\tfont-size: 40upx;\n\tcolor: #007AFF;\n\tmargin-left: 570upx;\n\tmargin-top: -60upx;\n}\n.detailtitle {\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: 30upx;\n\tmargin-left: 30upx;\n}\n.detaildata {\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: -50upx;\n\tmargin-left: 270upx;\n\ttext-align: center;\n}\n.listline {\n\twidth: 100%;\n\theight: 3upx;\n\tbackground-color: #000000;\t\n\tmargin-top: 20upx;\n}\n.tabbackground {\n\twidth: 100%;\n\theight: 90upx;\n\tmargin-top: 150upx;\n\tbackground-color: #F4F4F4;\n}\n.tableft {\n\tfont-size: 45upx;\n\tmargin-top: 20upx;\n\tmargin-left: 40upx;\n}\n.tabmiddle {\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 330upx;\n}\n.tabright {\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 630upx;\n}\n.tableftline {\n\twidth: 12%;\n\theight: 5upx;\n\tmargin-left: 40upx;\n}\n.tabmiddleline {\n\twidth: 12%;\n\theight: 5upx;\n\tmargin-left: 330upx;\n}\n.tabrightline {\n\twidth: 12%;\n\theight: 5upx;\n\tmargin-left: 630upx;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline {\n\tbackground-color: #007AFF;\n}\n", ""]);
+exports.push([module.i, "\n.transfersview {\n\twidth: 100%;\n\theight: 950upx;\n}\n.addseoutstock {\n\twidth: 20%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 30upx;\n}\n.queryseoutstock {\n\twidth: 20%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 450upx;\n\tmargin-top: -91upx;\n}\n.audittransfers {\n\twidth: 20%;\n\tcolor: #FFFFFF;\t\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\t\t\n\tmargin-left: 420upx;\n\tmargin-top: -70upx;\n}\n.unaudittransfers {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\t\t\n\tmargin-left: 420upx;\n\tmargin-top: -70upx;\n}\n.deletetransfers {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\ttext-align: center;\n\tmargin-left: 590upx;\n\tmargin-top: -85upx;\n}\n.srcbillno {\n\tdisplay: inline-block;\n\tcolor: #FFFFFF;\n\tfont-size: 19px;\n\tmargin-left: 20upx;\n\tmargin-top: 30upx;\n}\n.seoutstockscrollview {\n\twidth: 100%;\n\theight: 850upx;\n\tmargin-top: 20upx;\n}\n.billhead {\n\twidth: 100%;\n\tmargin-top: 30upx;\n}\n.billnoempty {\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 50upx;\n\ttext-align: center;\n\tcolor: #777777;\n}\n.title {\n\tmargin-left: 50upx;\n\tfont-size: 40upx;\n}\n.data {\n\twidth: 450upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 250upx;\n\ttext-align: center;\n}\n.dataline {\n\twidth: 60%;\n\theight: 5upx;\n\tbackground-color: #4CD964;\n\tmargin-left: 250upx;\n}\n.selectdata{\n\tbackground-color: #007AFF;\n}\n.selectinfoscrollview {\n\twidth: 100%;\n\theight: 500upx;\n\tmargin-top: 50upx;\n}\n.unselectinfoscrollview {\n\twidth: 100%;\n\theight: 800upx;\n\tmargin-top: 50upx;\n}\n.scanned {\n\tdisplay: inline-block;\n\tcolor: #FFFFFF;\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 30upx;\n}\n.queryall {\n\tdisplay: flex;\n\tflex-direction: column;\n\tfont-size: 40upx;\n\tcolor: #007AFF;\n\tmargin-left: 570upx;\n\tmargin-top: -60upx;\n}\n.detailtitle {\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: 30upx;\n\tmargin-left: 30upx;\n}\n.detaildata {\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: -50upx;\n\tmargin-left: 270upx;\n\ttext-align: center;\n}\n.listline {\n\twidth: 100%;\n\theight: 3upx;\n\tbackground-color: #000000;\t\n\tmargin-top: 20upx;\n}\n.tabbackground {\n\twidth: 100%;\n\theight: 90upx;\n\tmargin-top: 150upx;\n\tbackground-color: #F4F4F4;\n}\n.tableft {\n\tfont-size: 45upx;\n\tmargin-top: 20upx;\n\tmargin-left: 40upx;\n}\n.tabmiddle {\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 330upx;\n}\n.tabright {\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 630upx;\n}\n.tableftline {\n\twidth: 12%;\n\theight: 5upx;\n\tmargin-left: 40upx;\n}\n.tabmiddleline {\n\twidth: 12%;\n\theight: 5upx;\n\tmargin-left: 330upx;\n}\n.tabrightline {\n\twidth: 12%;\n\theight: 5upx;\n\tmargin-left: 630upx;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline {\n\tbackground-color: #007AFF;\n}\n", ""]);
 // Exports
 module.exports = exports;
 

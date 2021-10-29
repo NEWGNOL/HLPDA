@@ -1,0 +1,186 @@
+
+.addproreport {
+	width: 20%;
+	color: #FFFFFF;
+	background-color: #007AFF;
+	border-radius: 50rpx;
+	margin-left: 23rpx;
+	margin-top: 20rpx;
+}
+.deletebill {
+	width: 20%;
+	color: #FFFFFF;
+	background-color: #007AFF;
+	border-radius: 50rpx;
+	margin-left: 206rpx;
+	margin-top: -96rpx;
+}
+.auditproreport {
+	width: 20%;
+	color: #FFFFFF;
+	background-color: #007AFF;
+	border-radius: 50rpx;
+	margin-left: 389rpx;
+	margin-top: -96rpx;
+}
+.unauditproreport {
+	width: 20%;
+	color: #FFFFFF;
+	background-color: #007AFF;
+	border-radius: 50rpx;
+	margin-left: 572rpx;
+	margin-top: -96rpx;
+}
+.billhead {
+	width: 100%;
+	margin-top: 50rpx;
+}
+.title {
+	display: flex;
+	margin-left: 50rpx;
+	font-size: 40rpx;
+}
+.billnoempty {
+	display: flex;
+	width: 200rpx;
+	font-size: 40rpx;
+	margin-top: -60rpx;
+	margin-left: 300rpx;
+	text-align: center;
+	color: #777777;
+}
+.billnofull {
+	display: flex;
+	width: 200rpx;
+	font-size: 40rpx;
+	margin-top: -60rpx;
+	margin-left: 300rpx;
+	text-align: center;
+	color: #000000;
+}
+.detailtitle {
+	display: flex;
+	font-size: 35rpx;
+	margin-top: 30rpx;
+	margin-left: 30rpx;
+}
+.detaildata {
+	display: flex;
+	text-align: center;
+	font-size: 35rpx;
+	margin-top: -50rpx;
+	margin-left: 270rpx;
+}
+.data {
+	display: flex;
+	width: 250rpx;
+	font-size: 40rpx;
+	margin-top: -60rpx;
+	margin-left: 370rpx;
+	text-align: center;
+}
+.dataline {
+	width: 60%;
+	height: 5rpx;
+	background-color: #4CD964;
+	margin-left: 250rpx;
+}
+.proreportview {
+	width: 100%;
+	height: 950rpx;
+}
+.sumscrollview {
+	width: 100%;
+	height: 950rpx;
+}
+.unselectinfoscrollview {
+	width: 100%;
+	height: 550rpx;
+	margin-top: 50rpx;
+}
+.selectinfoscrollview {
+	width: 100%;
+	height: 850rpx;
+	margin-top: 50rpx;
+}
+.detailscrollview {
+	width: 100%;
+	height: 950rpx;
+	margin-top: 20rpx;
+}
+.selecttab {
+	color: #007AFF;
+}
+.selecttabline {
+	background-color: #007AFF;
+}
+.tabbackground {
+	position: absolute;
+	width: 100%;
+	height: 100rpx;
+	margin-top: 660rpx;
+	background-color: #F4F4F4;
+}
+.tableft {
+	position: absolute;
+	font-size: 45rpx;
+	margin-top: 20rpx;
+	margin-left: 40rpx;
+}
+.tabmiddle {
+	position: absolute;
+	font-size: 45rpx;
+	margin-top: 20rpx;
+	margin-left: 330rpx;
+}
+.tabright {
+	position: absolute;
+	font-size: 45rpx;
+	margin-top: 20rpx;
+	margin-left: 630rpx;
+}
+.tableftline {
+	position: absolute;
+	width: 15%;
+	height: 5rpx;
+	margin-top: 80rpx;
+	margin-left: 30rpx;
+}
+.tabmiddleline {
+	position: absolute;
+	width: 15%;
+	height: 5rpx;
+	margin-top: 80rpx;
+	margin-left: 320rpx;
+}
+.tabrightline {
+	position: absolute;
+	width: 15%;
+	height: 5rpx;
+	margin-top: 80rpx;
+	margin-left: 620rpx;
+}
+.search {
+	position: absolute;
+	width: 70%;
+	margin-left: 5rpx;
+}
+.billstatus {
+	position: absolute;
+	margin-top: -90rpx;
+	margin-left: 570rpx;
+}
+.scanned {
+	display: flex;
+	font-size: 40rpx;
+	margin-left: 30rpx;
+	margin-top: 20rpx;
+}
+.queryall {
+	display: flex;
+	font-size: 40rpx;
+	color: #007AFF;
+	margin-left: 570rpx;
+	margin-top: -60rpx;
+}
+

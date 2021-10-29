@@ -1,0 +1,181 @@
+
+.poinstockscrollview {
+	width: 100%;
+	height: 850rpx;
+	margin-top: 20rpx;
+}
+.selectinfoscrollview {
+	width: 100%;
+	height: 670rpx;
+	margin-top: 50rpx;
+}
+.unselectinfoscrollview {
+	width: 100%;
+	height: 950rpx;
+	margin-top: 50rpx;
+}
+.addstoragein {
+	width: 20%;
+	uheight: 90rpx;
+	color: #FFFFFF;
+	background-color: #007AFF;
+	border-radius: 50rpx;
+	margin-left: 150rpx;
+	margin-top: 20rpx;
+}
+.querystoragein {
+	width: 20%;
+	height: 90rpx;
+	color: #FFFFFF;
+	background-color: #007AFF;
+	border-radius: 50rpx;
+	margin-left: 450rpx;
+	margin-top: -95rpx;
+}
+.billhead {
+	width: 100%;
+	margin-top: 50rpx;
+}
+.title {
+	margin-left: 50rpx;
+	font-size: 40rpx;
+}
+.billnoempty {
+	width: 200rpx;
+	font-size: 40rpx;
+	margin-top: -60rpx;
+	margin-left: 100rpx;
+	text-align: center;
+	color: #777777;
+}
+.data {
+	width: 300rpx;
+	font-size: 40rpx;
+	margin-top: -60rpx;
+	margin-left: 320rpx;
+	text-align: center;
+}
+.dataline {
+	width: 60%;
+	height: 5rpx;
+	background-color: #4CD964;
+	margin-left: 250rpx;
+}
+.auditstoragein {
+	width: 20%;
+	color: #FFFFFF;	
+	font-size: 15px;
+	border: 1px solid #FFFFFF;
+	background-color: #1AAD19;		
+	margin-left: 420rpx;
+	margin-top: -70rpx;
+}
+.unauditstoragein {
+	width: 20%;
+	color: #FFFFFF;
+	font-size: 15px;
+	border: 1px solid #FFFFFF;
+	background-color: #1AAD19;		
+	margin-left: 420rpx;
+	margin-top: -70rpx;
+}
+.deletestoragein {
+	width: 20%;
+	color: #FFFFFF;
+	font-size: 15px;
+	border: 1px solid #FFFFFF;
+	background-color: #1AAD19;
+	text-align: center;
+	margin-left: 590rpx;
+	margin-top: -85rpx;
+}
+.srcbillno {
+	display: inline-block;
+	color: #FFFFFF;
+	font-size: 19px;
+	margin-left: 20rpx;
+	margin-top: 30rpx;
+}
+.instorageview {
+	width: 100%;
+	height: 950rpx;
+}
+.selecttab {
+	color: #007AFF;
+}
+.selecttabline {
+	background-color: #007AFF;
+}
+.tabbackground {		
+	width: 100%;
+	height: 90rpx;
+	margin-top: 150rpx;
+	background-color: #F4F4F4;
+}
+.tableft {		
+	font-size: 45rpx;
+	margin-top: 20rpx;
+	margin-left: 40rpx;
+}
+.tabmiddle {
+	display: flex;
+	font-size: 45rpx;
+	margin-top: -68rpx;
+	margin-left: 330rpx;
+}
+.tabright {		
+	display: flex;
+	font-size: 45rpx;
+	margin-top: -68rpx;
+	margin-left: 630rpx;
+}
+.tableftline {		
+	width: 18%;
+	height: 5rpx;		
+	margin-left: 40rpx;
+}
+.tabmiddleline {		
+	width: 18%;
+	height: 5rpx;		
+	margin-left: 330rpx;
+}
+.tabrightline {		
+	width: 15%;
+	height: 5rpx;		
+	margin-left: 620rpx;
+}
+.scanned {
+	display: inline-block;
+	color: #FFFFFF;
+	font-size: 40rpx;
+	margin-left: 30rpx;
+	margin-top: 30rpx;
+}
+.queryall {
+	display: flex;
+	flex-direction: column;
+	font-size: 40rpx;
+	color: #007AFF;
+	margin-left: 570rpx;
+	margin-top: -60rpx;
+}
+.detailtitle {
+	display: flex;
+	font-size: 35rpx;
+	margin-top: 30rpx;
+	margin-left: 30rpx;
+}
+.detaildata {
+	display: flex;
+	font-size: 35rpx;
+	margin-top: -50rpx;
+	margin-left: 270rpx;
+	text-align: center;
+}
+.listline {
+	width: 100%;
+	height: 3rpx;
+	background-color: #000000;	
+	margin-top: 20rpx;
+}
+

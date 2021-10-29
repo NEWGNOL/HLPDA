@@ -17,7 +17,7 @@
 					<uni-list-item v-for="(item,index) in BillListData" :key="index" :title="'制单人：'
 				    + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '编号：' + item.FBillNo
 					+ '\n' + '购货单位：' + item.FCustName + '\n' + '单据状态：' + item.FStatus" clickable :ischecked="item.FIsChecked"
-						:isshowcheckbox="true" @CheckBoxChange="ChangeIsChecked(item)">
+						:isshowcheckbox="true" @CheckBoxChange="RefreshListByChecked(item)">
 					</uni-list-item>
 				</uni-list>
 			</scroll-view>
@@ -27,7 +27,7 @@
 					<uni-list-item v-for="(item,index) in BillListData" :key="index" :title="'制单人：'
 				    + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '编号：' + item.FBillNo
 					+ '\n' + '购货单位：' + item.FCustName + '\n' + '单据状态：' + item.FStatus" clickable :ischecked="item.FIsChecked"
-						:isshowcheckbox="true" @CheckBoxChange="ChangeIsChecked(item)">
+						:isshowcheckbox="true" @CheckBoxChange="RefreshListByChecked(item)">
 					</uni-list-item>
 				</uni-list>
 			</scroll-view>
@@ -195,6 +195,12 @@
 			SwitchAuditFlag: function(IsAuditStorageOut){
 				this.IsAuditStorageOut = IsAuditStorageOut;
 			},
+			RefreshListByChecked: function(item){
+			   for(let i = 0; i < this.BillListData.length; i++){
+				   let DataModel = this.BillListData[i];
+				   DataModel.FIsChecked = (DataModel.FBillNo == item.FBillNo) ? true : false;				   
+			   }
+			},	
 			//打开物料弹窗
 			OpenMatPopupWindow: function() {
 				this.$refs.material.open();
@@ -739,7 +745,7 @@
 				});
 			},
 			//根据状态显示对应单据列表
-			ShowSEOrderInfoByNoPutIn: function(BarCode) {
+			ShowSEOrderInfoByNoPutIn: function(Barcode) {
 				uni.showLoading({
 					title: 'Loading',
 					mask: true
@@ -751,7 +757,7 @@
 						ModuleCode: 'getPdaSEOrderNoPutInList',
 						token: uni.getStorageSync('token'),
 						ModuleParam: {
-							FBillNoList: BarCode,
+							FBillNoList: Barcode,
 							FBillNo: this.SearchValue
 						}
 					},
@@ -783,7 +789,7 @@
 				});
 			},
 			//根据状态显示对应单据列表
-			ShowSEOrderInfoByPutIn: function(BarCode) {
+			ShowSEOrderInfoByPutIn: function(Barcode) {
 				uni.showLoading({
 					title: 'Loading',
 					mask: true
@@ -795,6 +801,7 @@
 						ModuleCode: 'getPdaSEOrderPutInList',
 						token: uni.getStorageSync('token'),
 						ModuleParam: {
+							FScanBillNo: Barcode,
 							FBillNo: this.SearchValue
 						}
 					},
@@ -825,7 +832,7 @@
 				});
 			},
 			//根据状态显示对应单据列表
-			ShowSEOutStockInfoByNoPutIn: function(BarCode) {
+			ShowSEOutStockInfoByNoPutIn: function(Barcode) {
 				uni.showLoading({
 					title: 'Loading',
 					mask: true
@@ -837,7 +844,7 @@
 						ModuleCode: 'getPdaSEOutStockNoPutInList',
 						token: uni.getStorageSync('token'),
 						ModuleParam: {
-							FBillNoList: BarCode,
+							FBillNoList: Barcode,
 							FBillNo: this.SearchValue
 						}
 					},
@@ -869,7 +876,7 @@
 				});
 			},
 			//根据状态显示对应单据列表
-			ShowSEOutStockInfoByPutIn: function(BarCode) {
+			ShowSEOutStockInfoByPutIn: function(Barcode) {
 				uni.showLoading({
 					title: 'Loading',
 					mask: true
@@ -881,6 +888,7 @@
 						ModuleCode: 'getPdaSEOutStockPutInList',
 						token: uni.getStorageSync('token'),
 						ModuleParam: {
+							FScanBillNo: Barcode,
 							FBillNo: this.SearchValue
 						}
 					},
@@ -1674,11 +1682,7 @@
 				uni.navigateTo({
 					url: '/pages/outstorage/qtycheck?StorageOutInterId=' + this.StorageOutInterId
 				});
-			},
-			//检测销售订单（发货通知单）是否选中
-			ChangeIsChecked: function(item) {
-				item.FIsChecked = !item.FIsChecked;
-			},
+			},			
 			//选择出库日期
 			OutStorageDateChange(e) {
 				this.OutStorageDate = e.detail.value
