@@ -281,10 +281,34 @@
 		{
 			"path": "pages/inventory/inventory",
 			"style": {
+				"navigationBarTitleText": "选择盘点方案",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF",								  
+								  "backButton": {
+								  	  "title": "返回",
+								  	  "ftitleWeight": "bold",
+								  	  "fontSize": "26px"							  
+								  }	
+					 }
+				}	
+			}			
+		},
+		{
+			"path": "pages/inventory/scaninventory",
+			"style": {
 				"navigationBarTitleText": "仓库盘点",
 				"app-plus":{
 				                  "titleNView":{
 				                  "titleColor":"FFFFFF",
+								  "buttons": [{
+								      "text": "盘点确认",
+								      "fontSrc": "/static/fonts/icomoon.ttf",
+								      "fontSize": "17px",
+								  	  "color":"#FFFFFF",
+								      "float": "right",
+								      "width": "90px"											
+								  }],
 								  "backButton": {
 								  	  "title": "返回",
 								  	  "ftitleWeight": "bold",
@@ -388,7 +412,18 @@
 					 }
 			    }
 			}			
-		}		
+		},
+		{
+			"path": "pages/inventory/cartonlabeldetail",
+			"style": {
+				"navigationBarTitleText": "外箱明细",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF"
+					 }
+			    }
+			}			
+		}	
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

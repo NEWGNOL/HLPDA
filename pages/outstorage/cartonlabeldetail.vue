@@ -120,7 +120,7 @@
 				let me = this;
 				if(me.SelectCartonLabel == '')					
 				{
-					Config.ShowMessage('请选择要删除的内箱标签！');	
+					Config.ShowMessage('请选择要删除的外箱标签！');	
 					Config.PopAudioContext(false);									
 					return; 
 				}				

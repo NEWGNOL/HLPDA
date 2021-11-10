@@ -32,7 +32,8 @@
 		data() {
 			return {	
 				ProcessModel: [],
-				WareHouseModel: [],						
+				WareHouseModel: [],	
+				InventoryAreaModel: [],					
 				MaterialArray: [0,'请选择物料','',''],				
 				InventoryQty: 0,
 				IsOpenDigitKeyboard: false
@@ -78,7 +79,8 @@
 				let PrevPage = Pages[Pages.length - 2];  //上一个页面	
 				//#ifdef APP-PLUS			
 				this.ProcessModel = PrevPage.$vm.ProcessModel;				
-				this.WareHouseModel = PrevPage.$vm.WareHouseModel;					
+				this.WareHouseModel = PrevPage.$vm.WareHouseModel;
+				this.InventoryAreaModel = PrevPage.$vm.InventoryAreaModel;
 				//#endif
 			},					
 			//新增盘点清单
@@ -87,8 +89,7 @@
 					Config.ShowMessage('请选择物料！');
 					Config.PopAudioContext(false);
 					return;
-				}	
-				
+				}					
 				if(this.InventoryQty == 0){
 					Config.ShowMessage('请填写盘点数量！');
 					Config.PopAudioContext(false);
@@ -109,6 +110,7 @@
 							FId: this.ProcessModel.FID,							
 							FStockId: this.WareHouseModel.FItemID,
 							FStockPlaceId: 0,	
+							FInventoryAreaId: this.InventoryAreaModel.FId,
 							FItemId: this.MaterialArray[0],
 							FInventoryQty: 0,
 							FQty: this.InventoryQty,

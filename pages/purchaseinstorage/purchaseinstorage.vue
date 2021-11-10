@@ -3,9 +3,9 @@
 		<view class="instorageview" v-show="TabSelectedIndex == 0" @touchstart='TouchStart' @touchend='TouchEnd'>
 			<uni-search-bar class="search" cancelButton="none" v-model="SearchValue" @input="ValueChanged">
 			</uni-search-bar>
-			<billstatus class="billstatus" :candidates="StatusArray" v-model="SelectStatus"
+			<BillStatus class="billstatus" :candidates="StatusArray" v-model="SelectStatus"
 				@input="ShowPOInstockInfo('')">
-			</billstatus>
+			</BillStatus>
 			
 			<button class="addstoragein" v-bind:disabled="!IsAddStorageIn" v-on:click="AddStorageIn()">新增</button>
 			<button class="querystoragein" v-bind:disabled="IsAddStorageIn" v-on:click="QueryStorageIn()">查询</button>
@@ -33,11 +33,7 @@
 			</view>
 			
 
-			<view class="billhead" v-show="IsBillHeadVisible">
-				<!-- <text class="title">单据编号：</text>
-				<text class="billnoempty">{{StorageInBillNo}}</text>
-				<view class="dataline"></view> -->
-
+			<view class="billhead" v-show="IsBillHeadVisible">				
 				<text class="title">供应商：</text>
 				<view class="data">{{SelectSupplierArray[1]}}</view>
 				<view class="dataline"></view>
@@ -57,12 +53,13 @@
 			<scroll-view class="selectinfoscrollview" v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}"
 				scroll-y="true">
 				<uni-list>
-					<uni-list-item v-for="(item,index) in POInstockGroupData" :key="index" :title="item.FModel
+					<FillQty v-for="(item,index) in POInstockGroupData" :key="index" :title="item.FModel
 			 		+ '/' + item.FNumber  + '\n' + item.FSumQty + '只/' + (item.FSumQty/item.FInPackPreQty)
 					.toFixed(2)+ '件' + '\n' + item.FScannedQty + '只/' + (item.FScannedQty/item.FInPackPreQty)
-					.toFixed(2) + '件'" isshowprogress v-bind:percent="Math.round((item.FScannedQty / item.FSumQty) * 100, 0)"
+					.toFixed(2) + '件'" :rownumber="index + 1" isshowprogress 
+					v-bind:percent="Math.round((item.FScannedQty / item.FSumQty) * 100, 0)"
 					clickable v-on:click="GetPOInstockInfoExpand(item)">
-					</uni-list-item>
+					</FillQty>
 				</uni-list>
 			</scroll-view>
 		</view>
@@ -116,9 +113,15 @@
 
 <script>
 	import Config from '../../common/config.js';
+	import FillQty from '../../components/fill-qty/fill-qty.vue';
+	import OutStorageKeyboard from '../../components/outstorage-keyboard/outstorage-keyboard.vue';
+	import BillStatus from '../../components/billstatus/billstatus.vue';
 	export default {
 		components: {
-			Config
+			Config,
+			FillQty,
+			OutStorageKeyboard,
+			BillStatus
 		},
 		data() {
 			return {
@@ -163,11 +166,7 @@
 			this.RemoveListener();
 		},
 		onShow() {
-			if (this.IsAddStorageIn) {
-				this.ShowPOInStockGroupInfoByAdd();
-			} else {
-				this.ShowPOInStockGroupInfoByQuery();
-			}
+			this.ShowPOInStockGroupInfo();
 		},
 		methods: {
 			//添加广播监听
@@ -362,7 +361,7 @@
 							}
 						},
 						success: (result) => {
-							//console.log(result.data);
+							console.log(result.data);
 							let ResultCode = result.data.ResultCode;
 							let ResultMsg = result.data.ResultMsg;
 							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
@@ -425,7 +424,7 @@
 						}
 						let DataModel = result.data.ResultData.PdaStorageInRpt.dataparam;
 						this.ShowStorageInBillHeadInfo(DataModel);
-						this.ShowPOInStockGroupInfoByAdd();						
+						this.ShowPOInStockGroupInfo();						
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -454,7 +453,7 @@
 				else{
 					this.SwitchAuditFlag(false);
 				}
-				this.ShowPOInStockGroupInfoByQuery();
+				this.ShowPOInStockGroupInfo();
 			},
 			//审核入库单验证
 			CheckAuditStorageIn:function(){
@@ -667,7 +666,7 @@
 				this.StorageInListData = [];
 			},
 			//显示收料通知单分组信息
-			ShowPOInStockGroupInfoByAdd: function() {
+			ShowPOInStockGroupInfo: function() {
 				uni.showLoading({
 					title: 'Loading',
 					mask: true
@@ -708,49 +707,17 @@
 						uni.hideLoading();
 					}
 				});
-			},
-			//显示收料通知单分组信息
-			ShowPOInStockGroupInfoByQuery: function() {
-				uni.showLoading({
-					title: 'Loading',
-					mask: true
-				});
-				uni.request({
-					url: uni.getStorageSync('OtherUrl'),
-					method: 'POST',
-					data: {
-						ModuleCode: 'getPdaPOInStockGroupInfo',
-						token: uni.getStorageSync('token'),
-						ModuleParam: {
-							FIndexIdList: this.SelectedPOInstock
-						}
-					},
-					success: (result) => {
-						//console.log(result.data);
-						let ResultCode = result.data.ResultCode;
-						let ResultMsg = result.data.ResultMsg;
-						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-							Config.ShowMessage('账号登录异常，请重新登录！');
-							Config.PopAudioContext();
-							uni.hideLoading();
-							return;
-						}
-						this.POInstockGroupData = result.data.ResultData.PdaPOInStockGroupInfo.data0;
-						this.GetBillSelectItem();						
-					},
-					fail: () => {
-						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext();						
-					},
-					complete: (resultcomp) => {
-						let ResultMsg = resultcomp.data.ResultMsg;
-						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-							Config.PopAudioContext(false);
-							Config.ShowMessage(ResultMsg);							
-						}
-						uni.hideLoading();
+			},	
+			ShowPOInStockGroupInfoByCache: function(FItemId){
+				for(let i = 0; i< this.POInstockGroupData.length; i++){
+					if(this.POInstockGroupData[i].FItemId == FItemId){						
+						this.POInstockGroupData[i].FHighLight = -1;
 					}
-				});
+					else{
+						this.POInstockGroupData[i].FHighLight = 0;
+					}					
+				}				
+				this.POInstockGroupData.sort(x => x.FHighLight);
 			},
 			//根据收料通知单信息获取扩展信息
 			GetPOInstockInfoExpand: function(item) {
@@ -833,11 +800,7 @@
 						}
 						Config.ShowMessage(ResultData.dataparam.Msg);
 						Config.PopAudioContext(true);
-						if (this.IsAddStorageIn) {
-							this.ShowPOInStockGroupInfoByAdd();
-						} else {
-							this.ShowPOInStockGroupInfoByQuery();
-						}
+						this.ShowPOInStockGroupInfoByCache(ResultData.dataparam.FItemId);
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -851,7 +814,7 @@
 							Config.ShowMessage(ResultMsg);
 						}
 					}
-				});
+				});				
 			},
 			//删除外购入库单
 			DeleteStorageIn: function() {

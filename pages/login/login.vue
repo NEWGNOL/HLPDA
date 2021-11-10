@@ -17,7 +17,7 @@
 			<view class="passwordtext">密码：</view>
 			<input password="true" placeholder="请输入密码" v-model="Password" class="cla" :focus="focus2"
 				@confirm="tabEnter2" />
-			<button class="button" @click="Request()">确认</button>		
+			<button class="button" :style="{width: FixedScale * 100 / FWindowWidth + 'upx'}" @click="Request()">确认</button>		
 		</view>
 
 		<view class="summary" v-show="!IsShowLoginView">			
@@ -36,6 +36,9 @@
 		},
 		data() {
 			return {
+				FWindowHeight: 0,
+				FWindowWidth: 0,
+				FixedScale: 750,
 				UserName: '',
 				UserNameSearch: '',
 				UserNameArray: [],
@@ -50,19 +53,28 @@
 		onReady() {
 			this.CreateGraphic();
 		},
-		onLoad() {			
+		onLoad() {	
+			this.SetScreenScale();	
+			this.GetScreenScale();
 			this.LoadLoginData();
-			this.AutoCheckUpdate();		
-			this.GetScreenHeight();	
+			this.AutoCheckUpdate();	
 		},
 		methods: {
-			GetScreenHeight: function(){
+			//设置屏幕尺寸
+			SetScreenScale: function(){
 				uni.getSystemInfo({
 				                success: (res)=> {
-				                    let height=res.screenHeight; //获取系统信息，可使用窗口的高度
-				                    console.log(res);
+									//获取系统信息，获取窗口的高度和宽度				                    ,
+									uni.setStorageSync("FWindowHeight", res.windowHeight);
+									uni.setStorageSync("FWindowWidth", res.windowWidth);
+				                    console.log(res);									
 				                }
 				            });
+			},
+			//获取屏幕尺寸
+			GetScreenScale: function(){
+				this.FWindowHeight = uni.getStorageSync('FWindowHeight');
+				this.FWindowWidth = uni.getStorageSync('FWindowWidth');
 			},
 			//输入搜索
 			SearchInput: function(e) {
@@ -249,10 +261,15 @@
 	}
 
 	.button {
-		margin-top: 100upx;
-		width: 250upx;
+		height: 50px;
+		width: 100px;
+		font-size: 20px;
+		/* height: 3.3rem;
+		width: 6.6rem;
+		font-size: 1.25rem; */
 		color: #FFFFFF;
 		background-color: #007AFF;
+		margin-top: 100upx;
 		border-radius: 50upx;
 		text-align: center;
 	}
