@@ -376,7 +376,6 @@ var render = function() {
             "v-uni-button",
             {
               staticClass: _vm._$g(11, "sc"),
-              style: _vm._$g(11, "s"),
               attrs: { _i: 11 },
               on: {
                 click: function($event) {
@@ -1705,7 +1704,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.tableftline {\n\twidth: 15%;\n\theight: 5upx;\n\tmargin-right: 500upx;\n}\n.tabrightline {\n\twidth: 29%;\n\theight: 5upx;\n\tmargin-left: 400upx;\n}\n.img {\n\twidth: 400upx;\n\theight: 200upx;\n\tmargin-top: 50upx;\n}\n.tableft {\n\tfont-size: 50upx;\n\tmargin-top: 100upx;\n\tmargin-left: -500upx;\n}\n.tabright {\n\tfont-size: 50upx;\n\tmargin-top: -80upx;\n\tmargin-left: 400upx;\n}\n.button {\n\theight: 50px;\n\twidth: 100px;\n\tfont-size: 20px;\n\t/* height: 3.3rem;\n\twidth: 6.6rem;\n\tfont-size: 1.25rem; */\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tmargin-top: 100upx;\n\tborder-radius: 50upx;\n\ttext-align: center;\n}\n.usernametext {\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 50upx;\n}\n.passwordtext {\n\tfont-size: 40rpx;\n\tmargin-left: 30rpx;\n\tmargin-top: 100rpx;\n}\n.cla {\n\twidth: 400upx;\n\tborder: 5upx solid;\n\tborder-color: #888888;\n\tmargin-left: 220upx;\n\tmargin-top: -55upx;\n}\n.summary {\n\theight: 500upx;\n\tmargin-top: 50upx;\n\tdisplay: grid;\n\tflex-direction: row;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline {\n\tbackground-color: #007AFF;\n}\n.loginpagecanvas {\n\theight: 250upx;\n\twidth: 350upx;\n}\n", ""]);
+exports.push([module.i, "\n.tableftline {\n\twidth: 15%;\n\theight: 5upx;\n\tmargin-right: 500upx;\n}\n.tabrightline {\n\twidth: 29%;\n\theight: 5upx;\n\tmargin-left: 400upx;\n}\n.img {\n\twidth: 400upx;\n\theight: 200upx;\n\tmargin-top: 50upx;\n}\n.tableft {\n\tfont-size: 50upx;\n\tmargin-top: 100upx;\n\tmargin-left: -500upx;\n}\n.tabright {\n\tfont-size: 50upx;\n\tmargin-top: -80upx;\n\tmargin-left: 400upx;\n}\n.button {\n\tmargin-top: 100upx;\n\twidth: 250upx;\n\theight: 100upx;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\ttext-align: center;\n}\n.usernametext {\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 50upx;\n}\n.passwordtext {\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 100upx;\n}\n.cla {\n\twidth: 400upx;\n\tborder: 5upx solid;\n\tborder-color: #888888;\n\tmargin-left: 220upx;\n\tmargin-top: -55upx;\n}\n.summary {\n\theight: 500upx;\n\tmargin-top: 50upx;\n\tdisplay: grid;\n\tflex-direction: row;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline {\n\tbackground-color: #007AFF;\n}\n.loginpagecanvas {\n\theight: 250upx;\n\twidth: 350upx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 

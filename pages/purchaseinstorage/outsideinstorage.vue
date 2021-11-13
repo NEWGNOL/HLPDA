@@ -235,52 +235,6 @@
 					Config.ShowMessage('请选择收料仓库！');
 					return;
 				}	
-							
-				uni.request({
-					url: uni.getStorageSync('OtherUrl'),
-					method: 'POST',
-					data: {
-						ModuleCode: 'GetPOOrderByBarCode',
-						token: uni.getStorageSync('token'),
-						ModuleParam: {
-							FBarCode: Barcode,							
-							FPOOrderID: 0						
-						}
-					},
-					success: (result) => {
-						//console.log(result.data);
-						let ResultCode = result.data.ResultCode;
-						let ResultMsg = result.data.ResultMsg;
-						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-							Config.ShowMessage('账号登录异常，请重新登录！');
-							Config.PopAudioContext(false);
-							return;
-						}
-						let ResultData = result.data.ResultData.GetPOOrderByBarCode;
-						let POOrderID = ResultData.dataparam.FPOOrderID;
-						if (POOrderID == 0) {
-							Config.ShowMessage('扫描条码不属于该采购订单，请重新扫描！');
-							Config.PopAudioContext(false);
-							return;
-						}						
-						this.GenerInStorageRecord(Barcode);
-					},
-					fail: () => {
-						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);
-						return;
-					},
-					complete: (resultcomp) => {
-						let ResultMsg = resultcomp.data.ResultMsg;
-						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-							Config.PopAudioContext(false);
-							Config.ShowMessage(ResultMsg);
-						}
-					}
-				});			
-			},
-			//生成入库记录
-			GenerInStorageRecord: function(Barcode){
 				uni.showLoading({
 					title: 'Loading',
 					mask: true
@@ -350,8 +304,8 @@
 						}
 						uni.hideLoading();
 					}
-				});
-			},
+				});					
+			},			
 			//显示采购订单信息
 			ShowPOOrderInfo: function(Barcode) {
 				if (this.SelectStatus == '未入库') {
