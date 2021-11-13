@@ -38,19 +38,15 @@
 				let PrevPage = Pages[Pages.length - 2];  //上一个页面	
 				//#ifdef H5
 				this.StorageInterId = PrevPage._data.StorageInterId;
-				this.StorageInSrcInterId = PrevPage._data.StorageInSrcInterId;			
+				this.FItemId = PrevPage._data.SelectGroupModel.FItemId;			
 				//#endif				
 				//#ifdef APP-PLUS				
 				this.StorageInterId = PrevPage.$vm.StorageInterId;
-				this.StorageInSrcInterId = PrevPage.$vm.StorageInSrcInterId;					
+				this.FItemId = PrevPage.$vm.SelectGroupModel.FItemID;
 				//#endif								
 			},
 			//显示入库的汇报单外箱明细
-			ShowStorageInDetail:function(){	
-				uni.showLoading({
-					title: 'Loading',
-					mask: true
-				});
+			ShowStorageInDetail:function(){					
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -59,7 +55,7 @@
 						token: uni.getStorageSync('token'),					
 						ModuleParam:  {
 							FId: this.StorageInterId,
-							FSrcInterId: this.StorageInSrcInterId
+							FItemId: this.FItemId
 						}
 					},
 					success: (result) => {	
@@ -72,21 +68,17 @@
 							Config.ShowMessage('账号登录异常，请重新登录！');
 							return;
 						}
-						this.DetailListData = result.data.ResultData.GetPdaStockBillRptCartonList.data0;
-						uni.hideLoading();
+						this.DetailListData = result.data.ResultData.GetPdaStockBillRptCartonList.data0;						
 					},
 					fail: () => {
 						Config.PopAudioContext(false);
-						Config.ShowMessage('请求数据失败！');	
-						uni.hideLoading();
-						return;
+						Config.ShowMessage('请求数据失败！');							
 					},
 					complete: (resultcomp) => {
 					    let ResultMsg = resultcomp.data.ResultMsg;
 					    if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 						Config.PopAudioContext(false);
-						Config.ShowMessage(ResultMsg);	
-						uni.hideLoading();
+						Config.ShowMessage(ResultMsg);							
 					}
 				}
 				});	

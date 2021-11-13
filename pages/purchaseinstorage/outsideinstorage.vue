@@ -6,39 +6,37 @@
 		<view class="instorageview" v-show="TabSelectedIndex == 0">	
 			<uni-search-bar class="search" cancelButton="none" v-model="SearchValue" @input="ValueChanged">
 			</uni-search-bar>
-			<billstatus class="billstatus" :candidates="StatusArray" v-model="SelectStatus"
+			<BillStatus class="billstatus" :candidates="StatusArray" v-model="SelectStatus"
 				@input="ShowPOOrderInfo('')">
-			</billstatus>
-			<button class="addstoragein" v-bind:disabled="!IsAddStorageIn" v-on:click="AddStorageIn()">新增</button>
-			<button class="querystoragein" v-bind:disabled="IsAddStorageIn" v-on:click="QueryStorageIn()">查询</button>
+			</BillStatus>
 			
-			<scroll-view class="poorderscrollview" scroll-y="true">
+			<scroll-view class="instoragelistview" scroll-y="true">
 				<uni-list>
-					<uni-list-item v-for="(item,index) in POOrderListData" :key="index" :title="'制单人：'
+					<uni-list-item v-for="(item,index) in InstorageListData" :key="index" :title="'制单人：'
 				    + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '单据编号：' + item.FBillNo
-					+ '\n' + '单据状态：' + item.FStatus" clickable :ischecked="item.FIsChecked" 
-					:isshowcheckbox="true" @CheckBoxChange="RefreshListByChecked(item)">
+					+ '\n' + '供应商：' + item.FSupplyName+ '\n' + '单据状态：' + item.FStatus" clickable 
+					:ischecked="item.FIsChecked" :isshowcheckbox="true">
 					</uni-list-item>
 				</uni-list>
-			</scroll-view>
+			</scroll-view>			
 		</view>
 		
 		<view class="instorageview" v-show="TabSelectedIndex == 1">
-			<view class="pagehead">
-				<text class="srcbillno">{{StorageInSrcBillNo}}</text>
+			<view class="pagehead">				
+				<button class="addstoragein" v-on:click="AddStorageInBillNo()">新增</button>
 				<button class="auditstoragein" v-on:click="AuditStorageIn()" v-show="IsAuditStorageIn">审核</button>
 				<button class="unauditstoragein" v-on:click="UnAuditStorageIn()" v-show="!IsAuditStorageIn">反审</button>
 				<button class="deletestoragein" v-on:click="DeleteStorageIn()">删除</button>
 			</view>			
 			
-			<view class="billhead" v-show="IsBillHeadVisible">
-				<!-- <text class="title">单据编号：</text>
-				<text class="billnoempty">{{StorageInBillNo}}</text>
-				<view class="dataline"></view> -->
-			
-				<text class="title">供应商：</text>
+			<view class="billhead" v-show="IsBillHeadVisible">		
+				<text class="title">单据编号：</text>
+				<view class="data">{{StorageInBillNo}}</view>
+				<view class="dataline"></view>	
+					
+				<!-- <text class="title">供应商：</text>
 				<view class="data">{{SelectSupplierArray[1]}}</view>
-				<view class="dataline"></view>
+				<view class="dataline"></view> -->
 			
 				<text class="title">入库日期：</text>
 				<picker mode="date" :value="InStorageDate" :start="StartDate" :end="EndDate"
@@ -57,12 +55,13 @@
 			<scroll-view class="selectinfoscrollview" v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}"
 				scroll-y="true">
 				<uni-list>
-					<uni-list-item v-for="(item,index) in POOrderGroupData" :key="index" :title="item.FModel 
+					<FillQty v-for="(item,index) in POOrderGroupData" :key="index" :title="item.FModel 
 			 		+ '/' + item.FNumber + '\n' + item.FShouldSendQty + '只/' + (item.FShouldSendQty/item.FInPackPreQty)
 					.toFixed(2)+ '件' + '\n' + item.FRealSendQty + '只/' + (item.FRealSendQty/item.FInPackPreQty)
-					.toFixed(2) + '件'" isshowprogress v-bind:percent="Math.round((item.FRealSendQty / item.FShouldSendQty) * 100, 0)"
+					.toFixed(2) + '件'" :rownumber="index + 1" :ishighlight="item.FHighLight" isshowprogress 
+					v-bind:percent="Math.round((item.FRealSendQty / item.FShouldSendQty) * 100, 0)"
 					clickable v-on:click="GetPOOrderInfoExpand(item)">
-					</uni-list-item>
+					</FillQty>
 				</uni-list>
 			</scroll-view>
 		</view>
@@ -88,10 +87,10 @@
 		
 		<view class="tabbackground">
 			<text class="tableft" v-bind:class="{selecttab : TabSelectedIndex == 0}"
-				v-on:click="SwitchTab(0)">采购单</text>
+				v-on:click="SwitchTab(0)">汇总</text>
 			<view class="tableftline" v-bind:class="{selecttabline : TabSelectedIndex == 0}"></view>
 			<text class="tabmiddle" v-bind:class="{selecttab : TabSelectedIndex == 1}"
-				v-on:click="SwitchTab(1)">入库单</text>
+				v-on:click="SwitchTab(1)">单据</text>
 			<view class="tabmiddleline" v-bind:class="{selecttabline : TabSelectedIndex == 1}"></view>
 			<text class="tabright" v-bind:class="{selecttab : TabSelectedIndex == 2}"
 				v-on:click="SwitchTab(2)">明细</text>
@@ -102,9 +101,15 @@
 
 <script>
 	import Config from '../../common/config.js';
+	import FillQty from '../../components/fill-qty/fill-qty.vue';
+	import InStorageKeyboard from '../../components/instorage-keyboard/instorage-keyboard.vue';
+	import BillStatus from '../../components/billstatus/billstatus.vue';
 	export default {
 		components: {
-			Config
+			Config,
+			FillQty,
+			InStorageKeyboard,
+			BillStatus
 		},
 		data() {
 			return {
@@ -118,13 +123,14 @@
 				SelectSupplierArray: [0, '请选择供应商'],
 				SelectWareHouseArray: [0, '请选择收料仓库'],
 				SearchValue: '',
-				TabSelectedIndex: 0,
+				TabSelectedIndex: 1,
 				InStorageDate: Config.DateFormat({
 					format: true
 				}),
 				StartDate: Config.DateFormat('start'),
 				EndDate: Config.DateFormat('end'),
 				POOrderListData: [],
+				InstorageListData: [],
 				POOrderGroupData: [],
 				SelectStatus: '未入库',
 				StatusArray: ['未入库', '已入库'],
@@ -223,14 +229,62 @@
 					Config.PopAudioContext(false);
 					Config.ShowMessage('请新增入库单！');
 					return;
-				}
-				
+				}				
 				if (this.SelectWareHouseArray[0] == 0) {
 					Config.PopAudioContext(false);
 					Config.ShowMessage('请选择收料仓库！');
 					return;
-				}
-				
+				}	
+							
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'GetPOOrderByBarCode',
+						token: uni.getStorageSync('token'),
+						ModuleParam: {
+							FBarCode: Barcode,							
+							FPOOrderID: 0						
+						}
+					},
+					success: (result) => {
+						//console.log(result.data);
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.ShowMessage('账号登录异常，请重新登录！');
+							Config.PopAudioContext(false);
+							return;
+						}
+						let ResultData = result.data.ResultData.GetPOOrderByBarCode;
+						let POOrderID = ResultData.dataparam.FPOOrderID;
+						if (POOrderID == 0) {
+							Config.ShowMessage('扫描条码不属于该采购订单，请重新扫描！');
+							Config.PopAudioContext(false);
+							return;
+						}						
+						this.GenerInStorageRecord(Barcode);
+					},
+					fail: () => {
+						Config.ShowMessage('请求数据失败！');
+						Config.PopAudioContext(false);
+						return;
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.PopAudioContext(false);
+							Config.ShowMessage(ResultMsg);
+						}
+					}
+				});			
+			},
+			//生成入库记录
+			GenerInStorageRecord: function(Barcode){
+				uni.showLoading({
+					title: 'Loading',
+					mask: true
+				});
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -253,6 +307,12 @@
 							FStorageId: this.SelectWareHouseArray[0],
 							FStorageBinId: this.SelectPOOrderModel.FStorageBinId,	
 							FICItems: this.SelectItems,
+							FICItemByHand: 0,
+							FQtyByHand: 0,
+							FShouldSendQty: 0,
+							FRealSendQty: 0,
+							FIsVirtual: false,
+							FItemId: 0,
 							Result: 0,
 							Msg: ''
 						}
@@ -264,6 +324,7 @@
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 							Config.ShowMessage('账号登录异常，请重新登录！');
 							Config.PopAudioContext(false);
+							uni.hideLoading();
 							return;
 						}
 						let ResultData = result.data.ResultData.AddPdaStockBillRpt;
@@ -274,13 +335,12 @@
 							return;
 						}
 						Config.ShowMessage(ResultData.dataparam.Msg);
-						Config.PopAudioContext(true);
-						this.ShowPOOrderGroupInfo();
+						Config.PopAudioContext(true);						
+						this.ShowPOOrderGroupInfoByCache(ResultData.dataparam.FItemId);
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);
-						return;
+						Config.PopAudioContext(false);						
 					},
 					complete: (resultcomp) => {
 						let ResultMsg = resultcomp.data.ResultMsg;
@@ -288,6 +348,7 @@
 							Config.PopAudioContext(false);
 							Config.ShowMessage(ResultMsg);
 						}
+						uni.hideLoading();
 					}
 				});
 			},
@@ -379,18 +440,7 @@
 					});
 				}
 				this.IsAddStorageIn = this.SelectStatus == '未入库' ? true : false;
-			},
-			//新增入库单
-			AddStorageIn: function() {
-				let IsSucess = this.GetSelectPOOrderByAdd();
-				if (IsSucess == 0) {
-					return;
-				}
-				this.SwitchTab(1);
-				this.SwitchAuditFlag(true);
-				this.AddStorageInBillNo();
-				this.ShowPOOrderGroupInfo();					
-			},			
+			},						
 			//新增入库单编号
 			AddStorageInBillNo: function() {
 				uni.request({
@@ -416,7 +466,7 @@
 							return;
 						}
 						let DataModel = result.data.ResultData.PdaStorageInRpt.dataparam;
-						this.ShowStorageInBillHeadInfo(DataModel);						
+						this.ShowStorageInBillHeadInfo(DataModel);
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -439,7 +489,7 @@
 					return;
 				}
 				this.SwitchTab(1);
-				if(this.ProreportStatus == '未审核'){
+				if(this.SelectPOOrderModel.FStatus == '未审核'){
 					this.SwitchAuditFlag(true);
 				}
 				else{
@@ -543,6 +593,19 @@
 					});
 				}				
 			},
+			//显示采购订单分组信息
+			ShowPOOrderGroupInfoByCache: function(FItemId){
+				for(let i = 0; i< this.POOrderGroupData.length; i++){
+					if(this.POOrderGroupData[i].FItemID == FItemId){						
+						this.POOrderGroupData[i].FHighLight = -1;
+						this.POOrderGroupData[i].FShouldSendQty += this.POOrderGroupData[i].FInPackPreQty;						
+					}
+					else{
+						this.POOrderGroupData[i].FHighLight = 0;
+					}					
+				}				
+				this.POOrderGroupData.sort(x => x.FHighLight);
+			},
 			//显示入库单单据头信息
 			ShowStorageInBillHeadInfo: function(DataModel){
 				this.StorageInterId = DataModel.FId;
@@ -553,12 +616,7 @@
 				this.StorageInListData = [];
 			},
 			GetPOOrderInfoExpand: function(item){
-				if (item != null) {
-					this.SelectGroupModel = item;
-					this.TabSelectedIndex = 2;
-				} else {
-				
-				}
+				this.SelectGroupModel = item;
 			},
 			//获取入库单外箱明细信息
 			GetStorageInCartonDetail: function() {
@@ -791,7 +849,7 @@
 		height: 950upx;
 	}
 	
-	.poorderscrollview {
+	.instoragelistview {
 		width: 100%;
 		height: 850upx;
 		margin-top: 20upx;
@@ -810,23 +868,14 @@
 	}
 	
 	.addstoragein {
+		display: inline-block;
 		width: 20%;
-		uheight: 90upx;
-		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 150upx;
-		margin-top: 20upx;
-	}
-	
-	.querystoragein {
-		width: 20%;
-		height: 90upx;
-		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 450upx;
-		margin-top: -95upx;
+		color: #FFFFFF;	
+		font-size: 15px;
+		border: 1px solid #FFFFFF;
+		background-color: #1AAD19;		
+		margin-left: 30upx;
+		margin-top: 20upx;	
 	}
 	
 	.auditstoragein {
@@ -835,8 +884,8 @@
 		font-size: 15px;
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;		
-		margin-left: 420upx;
-		margin-top: -70upx;	
+		margin-left: 310upx;
+		margin-top: -97upx;	
 	}
 	
 	.unauditstoragein {
@@ -845,8 +894,8 @@
 		font-size: 15px;
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;		
-		margin-left: 420upx;
-		margin-top: -70upx;
+		margin-left: 310upx;
+		margin-top: -97upx;
 	}
 	
 	.deletestoragein {
@@ -856,21 +905,13 @@
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;
 		text-align: center;
-		margin-left: 590upx;
+		margin-left: 580upx;
 		margin-top: -85upx;
-	}
-	
-	.srcbillno {
-		display: inline-block;
-		color: #FFFFFF;
-		font-size: 19px;
-		margin-left: 20upx;
-		margin-top: 30upx;
-	}
+	}	
 	
 	.billhead {
 		width: 100%;
-		margin-top: 50upx;
+		margin-top: 20upx;
 	}
 	
 	.title {
@@ -920,14 +961,14 @@
 	.tableft {		
 		font-size: 45upx;
 		margin-top: 20upx;
-		margin-left: 40upx;
+		margin-left: 50upx;
 	}
 	
 	.tabmiddle {
 		display: flex;
 		font-size: 45upx;
 		margin-top: -68upx;
-		margin-left: 330upx;
+		margin-left: 340upx;
 	}
 	
 	.tabright {		
@@ -938,13 +979,13 @@
 	}
 	
 	.tableftline {		
-		width: 18%;
+		width: 15%;
 		height: 5upx;		
 		margin-left: 40upx;
 	}
 	
 	.tabmiddleline {		
-		width: 18%;
+		width: 15%;
 		height: 5upx;		
 		margin-left: 330upx;
 	}

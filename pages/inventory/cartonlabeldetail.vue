@@ -23,9 +23,11 @@
 			return {
 				ProcessID: 0,				
 				ItemId: 0,
+				InventoryAreaId: 0,
 				DetailListData: [],
 				SelectCartonLabel: '',
-				IsSelectAllLabel: false				
+				IsSelectAllLabel: false,
+				PrevPage: null
 			}
 		},		
 		onLoad() {	
@@ -35,10 +37,12 @@
 		methods: {
 			GetProcessID:function(){
 				let Pages = getCurrentPages();
-				let PrevPage = Pages[Pages.length - 2];  //上一个页面	
+				let PrevPage = Pages[Pages.length - 2];  //上一个页面					
 				//#ifdef APP-PLUS
+				this.PrevPage = PrevPage;
 				this.ProcessID = PrevPage.$vm.ProcessModel.FID;				
-				this.ItemId = PrevPage.$vm.ProcessRecordModel.FItemID;					
+				this.ItemId = PrevPage.$vm.ProcessRecordModel.FItemID;	
+				this.InventoryAreaId = PrevPage.$vm.InventoryAreaModel.FId;
 				//#endif				
 			},
 			//显示盘点外箱明细
@@ -55,7 +59,8 @@
 						token: uni.getStorageSync('token'),					
 						ModuleParam:  {
 							FProcessID: this.ProcessID,							
-							FItemId: this.ItemId 
+							FItemId: this.ItemId,
+							FInventoryAreaId: this.InventoryAreaId
 						}
 					},
 					success: (result) => {	
@@ -160,7 +165,8 @@
 									}
 									Config.ShowMessage(DataParam.Msg);	
 									Config.PopAudioContext(true);									
-									me.ShowInventoryDetail();																																												
+									me.ShowInventoryDetail();	
+									me.PrevPage.$vm.GenInventoryList();																																											
 								},
 								fail: () => {	
 									Config.ShowMessage('请求数据失败！');	

@@ -111,7 +111,7 @@
 				:before-close="true" @close="CloseQtyPopupWindowDirect" @confirm="CloseQtyPopupWindow"></mod-fty>
 		</uni-popup>
 
-		<OutStorageKeyboard class="keyboard" @confirm="CloseQtyPopupWindow" @exit="CloseQtyPopupWindowDirect"
+		<OutStorageKeyboard @confirm="CloseQtyPopupWindow" @exit="CloseQtyPopupWindowDirect"
 			v-show="IsOpenDigitKeyboard"></OutStorageKeyboard>
 	</view>
 </template>
@@ -410,14 +410,7 @@
 						}
 					});
 				}
-			},
-			//滚动条滚动
-			Scroll: function(e) {
-				// console.log(e);
-				// this.$nextTick(function(){
-				// 	this.ScrollTop = 0;
-				// })				
-			},
+			},			
 			//获取手指滑动页面的起点
 			TouchStart: function(e) {
 				this.TouchStartX = e.changedTouches[0].clientX;

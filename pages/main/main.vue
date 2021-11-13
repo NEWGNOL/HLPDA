@@ -15,10 +15,15 @@
 			<text class="title">汇报入库</text>
 		</view>	
 		
-		<view class="purchaseinstorage" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[3].FIsAllow : true" @click="JumpPage('/pages/purchaseinstorage/purchaseinstorage')">
+		<view class="outsideinstorage" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[9].FIsAllow : true" @click="JumpPage('/pages/purchaseinstorage/outsideinstorage')">
+			<image class="img" src="../../static/outsideinstorage.png" mode="aspectFit"></image>
+			<text class="title">外购入库</text>
+		</view>	
+		
+		<!-- <view class="purchaseinstorage" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[3].FIsAllow : true" @click="JumpPage('/pages/purchaseinstorage/purchaseinstorage')">
 			<image class="img" src="../../static/purchaseinstorage.png" mode="aspectFit"></image>
 			<text class="title">采购入库</text>
-		</view>	
+		</view>	 -->
 		
 		<view class="outstorage" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[4].FIsAllow : true" @click="JumpPage('/pages/outstorage/outstorage')">
 			<image class="img" src="../../static/outstorage.png" mode="aspectFit"></image>
@@ -43,12 +48,7 @@
 		<view class="outsidetransfers" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[8].FIsAllow : true" @click="JumpPage('/pages/outsidetransfers/outsidetransfers')">
 			<image class="img" src="../../static/outsidetransfers.png" mode="aspectFit"></image>
 			<text class="title">外部调拨</text>
-		</view>	
-		
-		<view class="outsideinstorage" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[9].FIsAllow : true" @click="JumpPage('/pages/purchaseinstorage/outsideinstorage')">
-			<image class="img" src="../../static/outsideinstorage.png" mode="aspectFit"></image>
-			<text class="title">外购入库</text>
-		</view>	
+		</view>			
 	</view>	
 </template>
 
@@ -221,10 +221,10 @@
 		width: 300upx;
 		height: 150upx;
 		background-color: #007AFF;
-		border-radius: 25upx;	
-		text-align: center;
-		margin-left: 190upx;	
-		margin-top: 820upx;
+		border-radius: 25upx;
+		text-align: center;	
+		margin-left: 190upx;
+		margin-top: 280upx;
 	}
 	
 	.title{

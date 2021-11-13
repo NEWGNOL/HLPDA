@@ -44,10 +44,6 @@
 					<view class="data">{{InStorageDate}}</view>
 				</picker>
 				<view class="dataline"></view>
-
-				<text class="title">收料仓库：</text>
-				<view class="data">{{SelectWareHouseArray[1]}}</view>
-				<view class="dataline"></view>
 			</view>
 
 			<scroll-view class="selectinfoscrollview" v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}"
@@ -55,10 +51,11 @@
 				<uni-list>
 					<FillQty v-for="(item,index) in POInstockGroupData" :key="index" :title="item.FModel
 			 		+ '/' + item.FNumber  + '\n' + item.FSumQty + '只/' + (item.FSumQty/item.FInPackPreQty)
-					.toFixed(2)+ '件' + '\n' + item.FScannedQty + '只/' + (item.FScannedQty/item.FInPackPreQty)
-					.toFixed(2) + '件'" :rownumber="index + 1" isshowprogress 
+					.toFixed(2) + '件' + '\n' + item.FScannedQty + '只/' + (item.FScannedQty/item.FInPackPreQty)
+					.toFixed(2) + '件' + '\n' + '仓库：' + item.FStockName" :rownumber="index + 1" 
+					:ishighlight="item.FHighLight" isshowprogress 
 					v-bind:percent="Math.round((item.FScannedQty / item.FSumQty) * 100, 0)"
-					clickable v-on:click="GetPOInstockInfoExpand(item)">
+					clickable v-on:click="GetPOInstockInfoExpand(item)" @ButtonClick="OpenQtyPopupWindow(index)">
 					</FillQty>
 				</uni-list>
 			</scroll-view>
@@ -108,19 +105,22 @@
 				v-on:click="SwitchTab(2)">明细</text>
 			<view class="tabrightline" v-bind:class="{selecttabline : TabSelectedIndex == 2}"></view>
 		</view>
+		
+		<InStorageKeyboard @confirm="CloseQtyPopupWindow" @exit="CloseQtyPopupWindowDirect"
+			v-show="IsOpenDigitKeyboard"></InStorageKeyboard>
 	</view>
 </template>
 
 <script>
 	import Config from '../../common/config.js';
 	import FillQty from '../../components/fill-qty/fill-qty.vue';
-	import OutStorageKeyboard from '../../components/outstorage-keyboard/outstorage-keyboard.vue';
+	import InStorageKeyboard from '../../components/instorage-keyboard/instorage-keyboard.vue';
 	import BillStatus from '../../components/billstatus/billstatus.vue';
 	export default {
 		components: {
 			Config,
 			FillQty,
-			OutStorageKeyboard,
+			InStorageKeyboard,
 			BillStatus
 		},
 		data() {
@@ -130,8 +130,7 @@
 				StorageInSrcInterId: 0,
 				StorageInSrcBillNo: '空',
 				SelectedPOInstock: '0',
-				SelectSupplierArray: [0, '请选择供应商'],
-				SelectWareHouseArray: [0, '请选择收料仓库'],
+				SelectSupplierArray: [0, '请选择供应商'],				
 				SearchValue: '',
 				SelectedPOInstockModel: null,
 				SelectGroupModel: null,
@@ -149,6 +148,7 @@
 				IsBillHeadVisible: true,
 				IsAddStorageIn: true,
 				IsAuditStorageIn: true,
+				IsOpenDigitKeyboard: false,
 				StorageBinIsActive: true,
 				Main: '',
 				Receiver: ''
@@ -217,6 +217,89 @@
 					this.SlidingPage(false);
 				}
 			},
+			//打开数量弹窗
+			OpenQtyPopupWindow: function(index) {				
+				this.SelectGroupModel = this.POInstockGroupData[index];
+				this.IsOpenDigitKeyboard = true;				
+			},
+			CloseQtyPopupWindowDirect: function(e) {				
+				this.IsOpenDigitKeyboard = false;
+			},
+			//关闭数量弹窗
+			CloseQtyPopupWindow: function(e) {				
+				if (e == null || e == '' || e == 0) {
+					Config.ShowMessage('请填写要修改的入库数量！');
+					Config.PopAudioContext(false);
+					return;
+				}
+			
+				this.IsOpenDigitKeyboard = false;
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'addPdaStockBillRpt',
+						token: uni.getStorageSync('token'),
+						ModuleParam: {
+							FId: this.StorageInterId,
+							FDate: this.InStorageDate,
+							FFManagerID: this.SelectedPOInstockModel.FFManagerID,
+							FSManagerID: this.SelectedPOInstockModel.FSManagerID,
+							FBillerID: uni.getStorageSync('FUserId'),
+							FBillNo: this.StorageInBillNo,
+							FDeptID: this.SelectedPOInstockModel.FDeptID,
+							FManagerID: this.SelectedPOInstockModel.FManagerID,
+							FEmpID: this.SelectedPOInstockModel.FEmpID,
+							FSupplyID: this.SelectedPOInstockModel.FSupplyID,							
+							FPackBarCode: '',
+							FSrcInterId: this.SelectedPOInstockModel.FInterID,
+							FStorageId: this.SelectedPOInstockModel.FStorageId,
+							FStorageBinId: this.SelectedPOInstockModel.FStorageBinId,	
+							FICItems: this.SelectItems,
+							FICItemByHand: this.SelectGroupModel.FItemID,
+							FQtyByHand: e,
+							FShouldSendQty: this.SelectGroupModel.FSumQty,
+							FRealSendQty: this.SelectGroupModel.FScannedQty,
+							FIsVirtual: true,
+							FItemId: 0,
+							Result: 0,
+							Msg: ''
+						}
+					},
+					success: (result) => {
+						//console.log(result.data);
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.ShowMessage('账号登录异常，请重新登录！');
+							Config.PopAudioContext(false);
+							return;
+						}
+						let ResultData = result.data.ResultData.AddPdaStockBillRpt;
+						let Result = ResultData.dataparam.Result;
+						if (Result == 0) {
+							Config.ShowMessage(ResultData.dataparam.Msg);
+							Config.PopAudioContext(false);
+							return;
+						}
+						Config.ShowMessage(ResultData.dataparam.Msg);
+						Config.PopAudioContext(true);
+						this.ShowPOInStockGroupInfo();
+					},
+					fail: () => {
+						Config.ShowMessage('请求数据失败！');
+						Config.PopAudioContext(false);
+						return;
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.PopAudioContext(false);
+							Config.ShowMessage(ResultMsg);
+						}
+					}
+				});
+			},
 			//切换页签
 			SwitchTab: function(TabSelectedIndex) {
 				if (this.TabSelectedIndex != TabSelectedIndex) {
@@ -249,8 +332,7 @@
 				me.StorageInBillNo = '空';
 				me.StorageInSrcInterId = 0;
 				me.StorageInSrcBillNo = '空';
-				me.SelectSupplierArray = [0, '请选择供应商'];
-				me.SelectWareHouseArray = [0, '请选择收料仓库'];				
+				me.SelectSupplierArray = [0, '请选择供应商'];							
 				me.InStorageDate = Config.DateFormat({
 					format: true
 				});
@@ -361,7 +443,7 @@
 							}
 						},
 						success: (result) => {
-							console.log(result.data);
+							//console.log(result.data);
 							let ResultCode = result.data.ResultCode;
 							let ResultMsg = result.data.ResultMsg;
 							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
@@ -447,7 +529,7 @@
 					return;
 				}
 				this.SwitchTab(1);
-				if(this.ProreportStatus == '未审核'){
+				if(this.SelectedPOInstockModel.FStatus == '未审核'){
 					this.SwitchAuditFlag(true);
 				}
 				else{
@@ -595,8 +677,7 @@
 			//获取选中的收料通知单
 			GetSelectPOInStockByAdd: function() {
 				this.SelectedPOInstock = '';				
-				this.SelectSupplierArray = [0, '请选择供应商'];
-				this.SelectWareHouseArray = [0, '请选择收料仓库']
+				this.SelectSupplierArray = [0, '请选择供应商'];				
 				for (var i = 0; i < this.POInstockListData.length; i++) {
 					let DataModel = this.POInstockListData[i];
 					if (DataModel.FIsChecked) {
@@ -604,8 +685,7 @@
 						this.SelectedPOInstock += DataModel.FInterID + ',';
 						this.StorageInSrcInterId = DataModel.FInterID;
 						this.StorageInSrcBillNo = DataModel.FBillNo;
-						this.SelectSupplierArray = [DataModel.FSupplyID, DataModel.FSupplyName];
-						this.SelectWareHouseArray = [DataModel.FStorageId, DataModel.FStorageName];
+						this.SelectSupplierArray = [DataModel.FSupplyID, DataModel.FSupplyName];						
 						break;
 					}
 				}
@@ -627,8 +707,7 @@
 				this.StorageInterId = 0;
 				this.StorageInBillNo = '空';
 				this.InStorageDate = '';				
-				this.SelectSupplierArray = [0, '请选择供应商'];
-				this.SelectWareHouseArray = [0, '请选择收料仓库']
+				this.SelectSupplierArray = [0, '请选择供应商'];				
 				for (var i = 0; i < this.POInstockListData.length; i++) {
 					let DataModel = this.POInstockListData[i];
 					if (DataModel.FIsChecked) {
@@ -639,8 +718,7 @@
 						this.InStorageDate = DataModel.FStockBillDate;
 						this.StorageInSrcInterId = DataModel.FPOOrderInterId;
 						this.StorageInSrcBillNo = DataModel.FBillNo;
-						this.SelectSupplierArray = [DataModel.FSupplyID, DataModel.FSupplyName];
-						this.SelectWareHouseArray = [DataModel.FStorageId, DataModel.FStorageName];
+						this.SelectSupplierArray = [DataModel.FSupplyID, DataModel.FSupplyName];						
 						break;
 					}
 				}
@@ -710,8 +788,9 @@
 			},	
 			ShowPOInStockGroupInfoByCache: function(FItemId){
 				for(let i = 0; i< this.POInstockGroupData.length; i++){
-					if(this.POInstockGroupData[i].FItemId == FItemId){						
+					if(this.POInstockGroupData[i].FItemID == FItemId){						
 						this.POInstockGroupData[i].FHighLight = -1;
+						this.POInstockGroupData[i].FScannedQty += this.POInstockGroupData[i].FInPackPreQty;						
 					}
 					else{
 						this.POInstockGroupData[i].FHighLight = 0;
@@ -721,23 +800,16 @@
 			},
 			//根据收料通知单信息获取扩展信息
 			GetPOInstockInfoExpand: function(item) {
-				if (item != null) {
-					this.SelectGroupModel = item;
-					this.TabSelectedIndex = 2;
-				} else {
-
-				}
+				this.SelectGroupModel = item;
 			},
 			//获取入库单外箱明细信息
-			GetStorageInCartonDetail: function() {
-				uni.showLoading({
-					title: 'Loading'
-				});
-				uni.navigateTo({
-					url: '/pages/purchaseinstorage/cartonlabeldetail?StorageInterId=' + this.StorageInterId +
-						'&StorageInSrcInterId=' + this.StorageInSrcInterId
-				});
-				uni.hideLoading();
+			GetStorageInCartonDetail: function() {	
+				if(this.SelectGroupModel != null){
+				   uni.navigateTo({
+				   	url: '/pages/purchaseinstorage/cartonlabeldetail?StorageInterId=' + this.StorageInterId +
+				   		'&FItemId=' + this.SelectGroupModel.FItemId
+				   });	
+				}							
 			},
 			//获取选中单据的物料信息
 			GetBillSelectItem: function() {
@@ -752,10 +824,9 @@
 			ScanBarCode: function(Barcode) {
 				if (this.StorageInBillNo == '空') {
 					Config.PopAudioContext(false);
-					Config.ShowMessage('请新增入库单！');
+					Config.ShowMessage('请新增或选择入库单！');
 					return;
-				}
-				
+				}				
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -778,6 +849,12 @@
 							FStorageId: this.SelectedPOInstockModel.FStorageId,
 							FStorageBinId: this.SelectedPOInstockModel.FStorageBinId,	
 							FICItems: this.SelectItems,
+							FICItemByHand: 0,
+							FQtyByHand: 0,
+							FShouldSendQty: 0,
+							FRealSendQty: 0,
+							FIsVirtual: false,
+							FItemId: 0,
 							Result: 0,
 							Msg: ''
 						}
@@ -901,13 +978,13 @@
 
 	.selectinfoscrollview {
 		width: 100%;
-		height: 670upx;
+		height: 700upx;
 		margin-top: 50upx;
 	}
 
 	.unselectinfoscrollview {
 		width: 100%;
-		height: 950upx;
+		height: 980upx;
 		margin-top: 50upx;
 	}
 

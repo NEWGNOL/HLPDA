@@ -8,15 +8,23 @@
 		<view>
 			<text class="matierialnumber">物料编码</text>
 			<text class="matierialmodel">物料型号</text>
-			<text class="matierialqty">数量</text>			
+			<text class="matierialcartonqty">件</text>
+			<text class="matierialbasicqty">只</text>			
 		</view>
 		
 		<scroll-view class="scrollviewinfo" scroll-y="true">
 		       <uni-table class="tablebill" border v-bind:data="ProcessRecordList">
+				    <uni-tr v-show="false">
+				           <uni-td>物料编码</uni-td>											  	
+				    	   <uni-td>物料型号</uni-td>
+				    	   <uni-td>件</uni-td>	
+						   <uni-td>只</uni-td>										 
+				    </uni-tr>
 					<uni-tr v-for="item in ProcessRecordList" :key="item.FItemID" @Click="GetSelectMaterial(item)">
 					       <uni-td>{{item.FMaterialNumber}}</uni-td>											  	
 						   <uni-td>{{item.FModel}}</uni-td>
-						   <uni-td>{{item.FQty + item.FUnitName + '/' + (item.FQty / item.FInPackPreQty) + '件'}}</uni-td>										  
+						   <uni-td>{{(item.FQty / item.FInPackPreQty).toFixed(2) + '件'}}</uni-td>
+						   <uni-td>{{item.FQty + item.FUnitName}}</uni-td>										 
 					</uni-tr>	          						  
 				</uni-table>	
 		</scroll-view>  
@@ -61,10 +69,7 @@
 			this.AddListener();	
 			this.GetLastPageInfo();
 			this.GenInventoryList();
-		},
-		onshow(){
-			this.GenInventoryList();
-		},
+		},		
 		onUnload() {
 			this.RemoveListener();
 		},	
@@ -218,8 +223,7 @@
 				});
 			},
 			//获取选中的物料
-			GetSelectMaterial(item){	
-				//console.log(item);
+			GetSelectMaterial(item){
 				this.ProcessRecordModel = item;				
 			},
 			//获取盘点物料
@@ -254,7 +258,7 @@
 					BasicQty += parseFloat(DataModel.FQty.toFixed(2));
 					CartonQty += parseFloat((DataModel.FQty / DataModel.FInPackPreQty).toFixed(2));
 				}
-				this.TotalText = BasicQty.toFixed(2) + '只' + '/' + CartonQty.toFixed(2) + '件';
+				this.TotalText = CartonQty.toFixed(2) + '件' + '/'  + BasicQty.toFixed(2) + '只';
 			},
 			QueryDetail: function(){
 				if (this.ProcessRecordModel == null) {
@@ -269,7 +273,7 @@
 				});
 				uni.navigateTo({
 					url: '/pages/inventory/cartonlabeldetail?ProcessID=' + this.ProcessModel.FProcessID +
-					'&ItemId=' + this.ProcessRecordModel.ItemID
+					'&ItemId=' + this.ProcessRecordModel.ItemID + '&InventoryAreaId=' + this.InventoryAreaModel.FId
 				});
 				uni.hideLoading();
 			},
@@ -287,7 +291,8 @@
 						token: uni.getStorageSync('token'),
 						ModuleParam: {
 							FProcessID: this.ProcessModel.FProcessID,
-							FStockName: this.WareHouseModel.FName
+							FStockName: this.WareHouseModel.FName,
+							FInventoryAreaId: this.InventoryAreaModel.FId
 						}
 					},
 					success: (result) => {
@@ -415,43 +420,50 @@
 <style>
 	.pagehead{
 		width: 100%;
-		height: 130upx;
+		height: 100upx;
 		background-color: #1AAD19;
 	}
 	
-	.matierialnumber {	
-		font-size: 40upx;
-		margin-top: 30upx;
+	.matierialnumber {			
+		margin-left: 30upx;
+		font-size: 38upx;
+		margin-top: 10upx;
 	}
 	
 	.matierialmodel {		
-		margin-left: 100upx;
-		font-size: 40upx;
-		margin-top: 30upx;
+		margin-left: 120upx;
+		font-size: 38upx;
+		margin-top: 10upx;
 	}
 	
-	.matierialqty {	
-		margin-left: 200upx;
-		font-size: 40upx;
-		margin-top: 30upx;
+	.matierialcartonqty {	
+		margin-left: 100upx;
+		font-size: 38upx;
+		margin-top: 10upx;
+	}
+	
+	.matierialbasicqty {
+		margin-left: 100upx;
+		font-size: 38upx;
+		margin-top: 10upx;
 	}
 	
 	.entrycounttitle{
 		margin-left: 10upx;
 		font-size: 40upx;
-		margin-top: 30upx;
+		margin-top: 60upx;
 	}
 	
 	.entrycount{
 		margin-left: 30upx;
 		font-size: 40upx;
-		margin-top: 30upx;
+		margin-top: 60upx;
 	}
 	
 	.totaltext{
 		margin-left: 70upx;
 		font-size: 40upx;
-		margin-top: 30upx;
+		margin-top: 60upx;
 	}
 	
 	.title {
@@ -473,12 +485,12 @@
 	
 	.scrollviewinfo {
 		width: 100%;
-		height: 800upx;		
+		height: 850upx;		
 	}
 	
 	.tablebill{
 		width: 100%;
-		height: 800upx;		
+		height: 850upx;		
 	}
 	
 	.querydetail{

@@ -8,7 +8,7 @@
 		
 		<text class="title">仓库物料：</text>
 		<navigator url="/pages/basic/icitem" hover-class="navigator-hover">
-			<view class="data">{{MaterialArray[1]}}</view>
+			<view class="data">{{MaterialArray[3]}}</view>
 		</navigator>
 		<view class="dataline"></view>
 		
@@ -34,7 +34,7 @@
 				ProcessModel: [],
 				WareHouseModel: [],	
 				InventoryAreaModel: [],					
-				MaterialArray: [0,'请选择物料','',''],				
+				MaterialArray: [0,'请选择物料','空','空'],				
 				InventoryQty: 0,
 				IsOpenDigitKeyboard: false
 			}
