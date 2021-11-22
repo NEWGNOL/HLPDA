@@ -20,7 +20,7 @@
 		},
 		data() {
 			return {
-				SearchValue: '',
+				SearchValue: '08.',
 				ItemList: []				
 			}
 		},
@@ -35,8 +35,7 @@
 					data: {
 						ModuleCode: 'GetMaterialListInfo',
 						token: uni.getStorageSync('token'),
-						ModuleParam: {
-							FName: this.SearchValue,
+						ModuleParam: {							
 							FNumber: this.SearchValue
 						}
 					},

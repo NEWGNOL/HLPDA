@@ -56,7 +56,7 @@
 			</view>
 
 			<scroll-view :scroll-top="ScrollTop" class="selectinfoscrollview"
-				v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}" scroll-y="true" @scroll="Scroll">
+				v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}" scroll-y="true">
 				<uni-list>
 					<FillQty v-for="(item,index) in BillGroupData" :key="index" :title="item.FModel 
 			 		+ '/' + item.FNumber" :note="'应发:' + item.FShouldSendQty + '只/'

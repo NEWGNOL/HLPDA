@@ -11188,11 +11188,6 @@ var render = function() {
                 "scroll-top": _vm._$g(27, "a-scroll-top"),
                 "scroll-y": "true",
                 _i: 27
-              },
-              on: {
-                scroll: function($event) {
-                  return _vm.$handleViewEvent($event)
-                }
               }
             },
             [
