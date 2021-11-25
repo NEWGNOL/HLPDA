@@ -1,33 +1,29 @@
 <template>
 	<view class="container">
 		<view class="outstorageview" v-show="TabSelectedIndex == 0" @touchstart='TouchStart' @touchend='TouchEnd'>
-			<uni-search-bar class="search" cancelButton="none" v-model="SearchValue" @input="ValueChanged">
-			</uni-search-bar>
-			<BillStatus class="billstatus" :candidates="StatusArray" v-model="SelectStatus" @input="ShowBillInfo('')">
-			</BillStatus>
+			<view class="pagehead">
+			      <button class="addstorageout" v-bind:disabled="!IsAddStorageOut" v-on:click="AddSOutGroup()">新增</button>
+			      <button class="confirmsoutgroup" v-bind:disabled="!IsAddStorageOut" v-on:click="ConfirmSOutGroup()">确认</button>		
+			      <BillStatus class="billstatus" :candidates="StatusArray" v-model="SelectStatus" @input="ShowBillInfo('')">
+			      </BillStatus>
+			</view>
 
-			<button class="scanseorder" v-bind:class="{scanseoutstockorder : !IsScanSEOrder}"
-				v-on:click="SwitchScanMode()">
-				{{IsScanSEOrder ? '销售订单' : '发货通知'}}</button>
-			<button class="addstorageout" v-bind:disabled="!IsAddStorageOut" v-on:click="AddStorageOut()">新增</button>
-			<button class="querystorageout" v-bind:disabled="IsAddStorageOut" v-on:click="QueryStorageOut()">查询</button>
-
-			<scroll-view class="billscrollview" scroll-y="true" v-show="IsScanSEOrder">
+			
+			<scroll-view class="billscrollview" scroll-y="true" v-show="IsAddStorageOut">
 				<uni-list>
-					<uni-list-item v-for="(item,index) in BillListData" :key="index" :title="'制单人：'
+					<DelItem v-for="(item,index) in BillListData" :key="index" :title="'制单人：'
 				    + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '编号：' + item.FBillNo
-					+ '\n' + '购货单位：' + item.FCustName + '\n' + '单据状态：' + item.FStatus" clickable :ischecked="item.FIsChecked"
-						:isshowcheckbox="true" @CheckBoxChange="RefreshListByChecked(item)">
-					</uni-list-item>
+					+ '\n' + '购货单位：' + item.FCustName" clickable @ButtonClick="DelOriginItem(item)">
+					</DelItem>
 				</uni-list>
 			</scroll-view>
 
-			<scroll-view class="billscrollview" scroll-y="true" v-show="!IsScanSEOrder">
+			<scroll-view class="billscrollview" scroll-y="true" v-show="!IsAddStorageOut">
 				<uni-list>
-					<uni-list-item v-for="(item,index) in BillListData" :key="index" :title="'制单人：'
-				    + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '编号：' + item.FBillNo
-					+ '\n' + '购货单位：' + item.FCustName + '\n' + '单据状态：' + item.FStatus" clickable :ischecked="item.FIsChecked"
-						:isshowcheckbox="true" @CheckBoxChange="RefreshListByChecked(item)">
+					<uni-list-item v-for="(item,index) in BillListData" :key="index" :title="'合并单制单人：'
+				    + item.FBillerName + '\n'+ '合并单日期：' + item.FDate + '\n' + '合并单编号：' + item.FBillNo
+					+ '\n' + '购货单位：' + item.FCustName + '\n' + '单据状态：' + item.FStatus" clickable
+					@click="ShowSelectMergeInfo(item)">
 					</uni-list-item>
 				</uni-list>
 			</scroll-view>
@@ -44,9 +40,9 @@
 			
 			<view class="billhead" v-show="IsBillHeadVisible">				
 				<text class="title">出库日期：</text>
-				<picker mode="date" :value="OutStorageDate" :start="StartDate" :end="EndDate"
+				<picker mode="date" :value="AddSOutGroupDate" :start="StartDate" :end="EndDate"
 					@change="OutStorageDateChange">
-					<view class="data">{{OutStorageDate}}</view>
+					<view class="data">{{AddSOutGroupDate}}</view>
 				</picker>
 				<view class="dataline"></view>
 
@@ -59,11 +55,11 @@
 				v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}" scroll-y="true">
 				<uni-list>
 					<FillQty v-for="(item,index) in BillGroupData" :key="index" :title="item.FModel 
-			 		+ '/' + item.FNumber" :note="'应发:' + item.FShouldSendQty + '只/'
-			        + (item.FShouldSendQty/item.FInPackPreQty).toFixed(1)
-			        + '件' + '\n' + '实发:'+ item.FRealSendQty + '只/' 
-			        + (item.FRealSendQty/item.FInPackPreQty).toFixed(1) + '件'" :rownumber="index + 1"
-					v-bind:percent="Math.round((item.FRealSendQty / item.FShouldSendQty) * 100, 0)" isshowprogress
+			 		+ '/' + item.FNumber" :note="'应发:' + item.FSQty + '只/'
+			        + (item.FSQty/item.FInPackPreQty).toFixed(1)
+			        + '件' + '\n' + '实发:'+ item.FFactQty + '只/' 
+			        + (item.FFactQty/item.FInPackPreQty).toFixed(1) + '件'" :rownumber="index + 1"
+					v-bind:percent="Math.round((item.FFactQty / item.FSQty) * 100, 0)" isshowprogress
 					:ishighlight="item.FHighLight" clickable v-on:click="GetSelectGroupModel(item)" 
 					@ButtonClick="OpenQtyPopupWindow(index)">
 					</FillQty>
@@ -82,8 +78,12 @@
 			<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FNumber : '空'}}</text>
 			<view class="listline"></view>
 			
+			<text class="detailtitle">物料型号：</text>
+			<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FModel : '空'}}</text>
+			<view class="listline"></view>
+			
 			<text class="detailtitle">物料名称：</text>
-			<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FItemName : '空'}}</text>				
+			<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FName : '空'}}</text>				
 		    <view class="listline"></view>
 		</view>
 
@@ -118,60 +118,58 @@
 
 <script>
 	import Config from '../../common/config.js';
+	import DelItem from '../../components/del-uni-list-item/del-uni-list-item.vue';
 	import FillQty from '../../components/fill-qty/fill-qty.vue';
 	import OutStorageKeyboard from '../../components/outstorage-keyboard/outstorage-keyboard.vue';
-	import BillStatus from '../../components/billstatus/billstatus.vue';
+	import BillStatus from '../../components/out-billstatus/out-billstatus.vue';
 	export default {
 		components: {
 			Config,
+			DelItem,
 			FillQty,
 			OutStorageKeyboard,
 			BillStatus
 		},
 		data() {
-			return {
-				SearchValue: '',
+			return {				
 				SelectStatus: '未出库',
-				StatusArray: ['未出库', '已出库'],
-				SelectBillModel: null,
+				StatusArray: ['未出库', '已出库'],				
 				SelectGroupModel: null,
-				StorageOutInterId: 0,
-				StorageOutBillNo: '空',
-				SelectSrcInterId: '',
+				AddSOutGroupInterId: 0,
+				AddSOutGroupBillNo: '空',
+				AddSOutGroupCustId: 0,		
 				SelectSrcBillNo: '空',
 				SelectItems: '',
 				TabSelectedIndex: 0,
 				TouchStartX: 0,
 				ScrollTop: 0,
-				IsAddStorageOut: true,
-				IsScanSEOrder: true,
+				IsAddStorageOut: true,				
 				IsOpenDigitKeyboard: false,
-				OutStorageDate: DateFormat({
+				AddSOutGroupDate: Config.DateFormat({
 					format: true
 				}),
-				StartDate: DateFormat('start'),
-				EndDate: DateFormat('end'),
+				StartDate: Config.DateFormat('start'),
+				EndDate: Config.DateFormat('end'),
 				BillListData: [],
-				BillGroupData: [],
-				QtyExceptionList: [],
+				BillGroupData: [],				
 				IsBillHeadVisible: true,
-				IsAuditStorageOut: true,
-				SelectCustomerArray: [0, '空'],
+				IsAuditStorageOut: true,				
 				ScanProgress: '空',
 				Main: '',
 				Receiver: ''
 			}
-		},
-		onShow() {
-			this.ShowBillGroupInfo();
-		},
+		},		
 		onLoad() {
-			this.AddListener();
-			this.ShowBillInfo('');
+			this.AddListener();	
+	        //this.AddItemList(null);
 		},
 		onUnload() {
 			this.RemoveListener();
+			this.CheckScanLab();
 		},
+		onShow(){
+			this.ShowBillGroupInfo(0,false);
+		},		
 		onNavigationBarButtonTap() {
 			this.SwitchBillHeadVisible();
 		},
@@ -185,22 +183,11 @@
 				} else {
 					uni.hideLoading();
 				}
-			},
-			//切换扫描模式
-			SwitchScanMode: function() {
-				this.IsScanSEOrder = !this.IsScanSEOrder;
-				this.ShowBillInfo('');
-			},
+			},			
 			//切换审核标志
 			SwitchAuditFlag: function(IsAuditStorageOut){
 				this.IsAuditStorageOut = IsAuditStorageOut;
-			},
-			RefreshListByChecked: function(item){
-			   for(let i = 0; i < this.BillListData.length; i++){
-				   let DataModel = this.BillListData[i];
-				   DataModel.FIsChecked = (DataModel.FBillNo == item.FBillNo) ? true : false;				   
-			   }
-			},	
+			},				
 			//打开物料弹窗
 			OpenMatPopupWindow: function() {
 				this.$refs.material.open();
@@ -287,129 +274,54 @@
 				}
 
 				this.IsOpenDigitKeyboard = false;
-				if (this.IsScanSEOrder) {
-					uni.request({
-						url: uni.getStorageSync('OtherUrl'),
-						method: 'POST',
-						data: {
-							ModuleCode: 'addPdaStorageOutRpt',
-							token: uni.getStorageSync('token'),
-							ModuleParam: {
-								FId: this.StorageOutInterId,
-								FBillNo: this.StorageOutBillNo,
-								FBillerID: uni.getStorageSync('FUserId'),
-								FDate: this.OutStorageDate,
-								FDeptID: this.SelectBillModel.FDeptID,
-								FManagerID: this.SelectBillModel.FManagerID,
-								FEmpID: this.SelectBillModel.FEmpID,
-								FCustID: this.SelectBillModel.FCustID,
-								FSrcInterId: this.SelectBillModel.FInterID,
-								FPackBarCode: '',
-								FICItems: this.SelectItems,
-								FICItemByHand: this.SelectGroupModel.FItemID,
-								FQtyByHand: e,
-								FShouldSendQty: this.SelectGroupModel.FShouldSendQty,
-								FRealSendQty: this.SelectGroupModel.FRealSendQty,
-								FIsVirtual: true,
-								Result: 0,
-								Msg: ''
-							}
-						},
-						success: (result) => {
-							//console.log(result.data);
-							let ResultCode = result.data.ResultCode;
-							let ResultMsg = result.data.ResultMsg;
-							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-								Config.ShowMessage('账号登录异常，请重新登录！');
-								Config.PopAudioContext(false);
-								return;
-							}
-							let ResultData = result.data.ResultData.AddPdaStorageOutRpt;
-							let Result = ResultData.dataparam.Result;
-							if (Result == 0) {
-								Config.ShowMessage(ResultData.dataparam.Msg);
-								Config.PopAudioContext(false);
-								return;
-							}
-							Config.ShowMessage(ResultData.dataparam.Msg);
-							Config.PopAudioContext(true);
-							this.ShowBillGroupInfo();
-						},
-						fail: () => {
-							Config.ShowMessage('请求数据失败！');
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'AddPdaSOutGroupVirtualLab',
+						token: uni.getStorageSync('token'),
+						ModuleParam: {
+							FInterId: this.AddSOutGroupInterId,
+							FItemId: this.SelectGroupModel.FItemId,
+							FQty: e,	
+							FBillerId: uni.getStorageSync('FUserId'),							
+							Result: 0,
+							Msg: ''
+						}
+					},
+					success: (result) => {
+						//console.log(result.data);
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.ShowMessage('账号登录异常，请重新登录！');
 							Config.PopAudioContext(false);
 							return;
-						},
-						complete: (resultcomp) => {
-							let ResultMsg = resultcomp.data.ResultMsg;
-							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-								Config.ShowMessage(ResultMsg);
-								Config.PopAudioContext(false);
-							}
 						}
-					});
-				} else {
-					uni.request({
-						url: uni.getStorageSync('OtherUrl'),
-						method: 'POST',
-						data: {
-							ModuleCode: 'addPdaStorageOutRpt',
-							token: uni.getStorageSync('token'),
-							ModuleParam: {
-								FId: this.StorageOutInterId,
-								FBillNo: this.StorageOutBillNo,
-								FBillerID: uni.getStorageSync('FUserId'),
-								FDate: this.OutStorageDate,
-								FDeptID: 0,
-								FManagerID: 0,
-								FEmpID: 0,
-								FCustID: this.SelectBillModel.FCustID,
-								FSrcInterId: this.SelectBillModel.FInterID,
-								FPackBarCode: '',
-								FICItems: this.SelectItems,
-								FICItemByHand: this.SelectGroupModel.FItemID,
-								FQtyByHand: e,
-								FShouldSendQty: this.SelectGroupModel.FShouldSendQty,
-								FRealSendQty: this.SelectGroupModel.FRealSendQty,
-								FIsVirtual: true,
-								Result: 0,
-								Msg: ''
-							}
-						},
-						success: (result) => {
-							//console.log(result.data);
-							let ResultCode = result.data.ResultCode;
-							let ResultMsg = result.data.ResultMsg;
-							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-								Config.ShowMessage('账号登录异常，请重新登录！');
-								Config.PopAudioContext(false);
-								return;
-							}
-							let ResultData = result.data.ResultData.AddPdaStorageOutRpt;
-							let Result = ResultData.dataparam.Result;
-							if (Result == 0) {
-								Config.ShowMessage(ResultData.dataparam.Msg);
-								Config.PopAudioContext(false);
-								return;
-							}
+						let ResultData = result.data.ResultData.AddPdaSOutGroupVirtualLab;
+						let Result = ResultData.dataparam.Result;
+						if (Result == 0) {
 							Config.ShowMessage(ResultData.dataparam.Msg);
-							Config.PopAudioContext(true);
-							this.ShowBillGroupInfo();
-						},
-						fail: () => {
-							Config.ShowMessage('请求数据失败！');
 							Config.PopAudioContext(false);
 							return;
-						},
-						complete: (resultcomp) => {
-							let ResultMsg = resultcomp.data.ResultMsg;
-							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-								Config.ShowMessage(ResultMsg);
-								Config.PopAudioContext(false);
-							}
 						}
-					});
-				}
+						Config.ShowMessage(ResultData.dataparam.Msg);
+						Config.PopAudioContext(true);
+						this.ShowBillGroupInfo(0,false);
+					},
+					fail: () => {
+						Config.ShowMessage('请求数据失败！');
+						Config.PopAudioContext(false);
+						return;
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.ShowMessage(ResultMsg);
+							Config.PopAudioContext(false);
+						}
+					}
+				});
 			},			
 			//获取手指滑动页面的起点
 			TouchStart: function(e) {
@@ -425,18 +337,38 @@
 					this.SlidingPage(false);
 				}
 			},
+			//检查扫描标签情况（检查是否有没扫码的合并单弹出提示）
+			CheckScanLab:function(){
+				console.log('CheckScanLab');
+			},
+			//删除来源单选中项
+			DelOriginItem:function(item){
+				let me = this;
+				uni.showModal({
+					title: '提示',
+					content: '是否要对选中的来源单进行删除？',
+					success: function (result) {
+						if (result.confirm) {
+							me.BillListData.splice(item.index, 1);
+							Config.ShowMessage("删除成功！");
+							Config.PopAudioContext(true);
+						} 
+					}
+				});	
+			},
+			ClearOriginRecordData:function(){
+				this.AddSOutGroupCustId = 0;
+			},
 			//清除单据头数据
-			ClearBillHeadData: function(me) {
-				me.StorageOutInterId = 0;
-				me.StorageOutBillNo = '空';
-				me.SelectSrcInterId = 0;
-				me.SelectSrcBillNo = '空';
-				me.SelectCustomerArray = [0, '空'];
-				me.ScanProgress = '空';
-				me.OutStorageDate = DateFormat({
+			ClearBillHeadData: function() {
+				this.AddSOutGroupInterId = 0;
+				this.AddSOutGroupBillNo = '空';				
+				this.SelectSrcBillNo = '空';				
+				this.ScanProgress = '空';
+				this.AddSOutGroupDate = DateFormat({
 					format: true
 				});
-				me.BillGroupData = [];
+				this.BillGroupData = [];
 			},
 			//切换表头是否可见
 			SwitchBillHeadVisible: function() {
@@ -447,7 +379,7 @@
 				if (this.TabSelectedIndex != TabSelectedIndex) {
 					this.TabSelectedIndex = TabSelectedIndex;
 				}
-			},
+			},			
 			//添加广播监听
 			AddListener: function() {
 				var me = this;
@@ -472,7 +404,7 @@
 					plus.android.importClass(intent);
 					var Barcode = intent.getStringExtra("barcode_string");
 					if (me.TabSelectedIndex == 0) {
-						me.ShowBillInfo(Barcode);
+						me.ShowICStockBillAddList(Barcode);
 					} else if (me.TabSelectedIndex == 1) {
 						me.ScanBarCode(Barcode);
 					}
@@ -484,186 +416,125 @@
 			},
 			//统计单据数量
 			StatBillQty: function() {
-				let RealSendQty = 0;
-				let ShouldSendQty = 0;
+				let FSQty = 0;
+				let FFactQty = 0;
 				for (let i = 0; i < this.BillGroupData.length; i++) {
 					let DataModel = this.BillGroupData[i];
-					RealSendQty += parseFloat((DataModel.FRealSendQty / DataModel.FInPackPreQty).toFixed(2));
-					ShouldSendQty += parseFloat((DataModel.FShouldSendQty / DataModel.FInPackPreQty).toFixed(2));
+					FSQty += parseFloat((DataModel.FSQty / DataModel.FInPackPreQty).toFixed(2));
+					FFactQty += parseFloat((DataModel.FFactQty / DataModel.FInPackPreQty).toFixed(2));
 				}
-				this.ScanProgress = RealSendQty.toFixed(2) + '/' + ShouldSendQty.toFixed(2) + '     件';
+				this.ScanProgress = FFactQty.toFixed(2) + '件' + '/' + FSQty.toFixed(2) + '     件';
 			},
 			//扫描条码做出库
 			ScanBarCode: function(Barcode) {
-				if (this.StorageOutBillNo == '空') {
-					Config.ShowMessage('请新增出库单！');
-					Config.PopAudioContext(false);
-					return;
-				}
-				if (this.IsScanSEOrder) {
-					uni.request({
-						url: uni.getStorageSync('OtherUrl'),
-						method: 'POST',
-						data: {
-							ModuleCode: 'addPdaStorageOutRpt',
-							token: uni.getStorageSync('token'),
-							ModuleParam: {
-								FId: this.StorageOutInterId,
-								FBillNo: this.StorageOutBillNo,
-								FBillerID: uni.getStorageSync('FUserId'),
-								FDate: this.OutStorageDate,
-								FDeptID: this.SelectBillModel.FDeptID,
-								FManagerID: this.SelectBillModel.FManagerID,
-								FEmpID: this.SelectBillModel.FEmpID,
-								FCustID: this.SelectBillModel.FCustID,
-								FSrcInterId: this.SelectBillModel.FInterID,
-								FPackBarCode: Barcode,
-								FICItems: this.SelectItems,
-								FICItemByHand: 0,
-								FQtyByHand: 0,
-								FShouldSendQty: 0,
-								FRealSendQty: 0,
-								FIsVirtual: false,
-								Result: 0,
-								Msg: ''
-							}
-						},
-						success: (result) => {
-							//console.log(result.data);
-							let ResultCode = result.data.ResultCode;
-							let ResultMsg = result.data.ResultMsg;
-							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-								Config.ShowMessage('账号登录异常，请重新登录！');
-								Config.PopAudioContext(false);
-								return;
-							}
-							let ResultData = result.data.ResultData.AddPdaStorageOutRpt;
-							let Result = ResultData.dataparam.Result;
-							if (Result == 0) {
-								Config.ShowMessage(ResultData.dataparam.Msg);
-								Config.PopAudioContext(false);
-								return;
-							}
-							Config.ShowMessage(ResultData.dataparam.Msg);
-							Config.PopAudioContext(true);
-							this.ShowBillGroupInfoByScan(Barcode);
-						},
-						fail: () => {
-							Config.ShowMessage('请求数据失败！');
-							Config.PopAudioContext(false);
-							return;
-						},
-						complete: (resultcomp) => {
-							let ResultMsg = resultcomp.data.ResultMsg;
-							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-								Config.ShowMessage(ResultMsg);
-								Config.PopAudioContext(false);
-							}
-						}
-					});
-				} else {
-					uni.request({
-						url: uni.getStorageSync('OtherUrl'),
-						method: 'POST',
-						data: {
-							ModuleCode: 'addPdaStorageOutRpt',
-							token: uni.getStorageSync('token'),
-							ModuleParam: {
-								FId: this.StorageOutInterId,
-								FBillNo: this.StorageOutBillNo,
-								FBillerID: uni.getStorageSync('FUserId'),
-								FDate: this.OutStorageDate,
-								FDeptID: 0,
-								FManagerID: 0,
-								FEmpID: 0,
-								FCustID: this.SelectBillModel.FCustID,
-								FSrcInterId: this.SelectBillModel.FInterID,
-								FPackBarCode: Barcode,
-								FICItems: this.SelectItems,
-								FICItemByHand: 0,
-								FQtyByHand: 0,
-								FShouldSendQty: 0,
-								FRealSendQty: 0,
-								FIsVirtual: false,
-								Result: 0,
-								Msg: ''
-							}
-						},
-						success: (result) => {
-							//console.log(result.data);
-							let ResultCode = result.data.ResultCode;
-							let ResultMsg = result.data.ResultMsg;
-							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-								Config.ShowMessage('账号登录异常，请重新登录！');
-								Config.PopAudioContext(false);
-								return;
-							}
-							let ResultData = result.data.ResultData.AddPdaStorageOutRpt;
-							let Result = ResultData.dataparam.Result;
-							if (Result == 0) {
-								Config.ShowMessage(ResultData.dataparam.Msg);
-								Config.PopAudioContext(false);
-								return;
-							}
-							Config.ShowMessage(ResultData.dataparam.Msg);
-							Config.PopAudioContext(true);
-							this.ShowBillGroupInfoByScan(Barcode);
-						},
-						fail: () => {
-							Config.ShowMessage('请求数据失败！');
-							Config.PopAudioContext(false);
-							return;
-						},
-						complete: (resultcomp) => {
-							let ResultMsg = resultcomp.data.ResultMsg;
-							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-								Config.ShowMessage(ResultMsg);
-								Config.PopAudioContext(false);
-							}
-						}
-					});
+				if(this.AddSOutGroupInterId != 0 && this.AddSOutGroupBillNo != '空' && this.BillListData.length != 0){
+				   uni.request({
+				   	url: uni.getStorageSync('OtherUrl'),
+				   	method: 'POST',
+				   	data: {
+				   		ModuleCode: 'SOutGroupScan',
+				   		token: uni.getStorageSync('token'),
+				   		ModuleParam: {				   			
+				   			FInterId: this.AddSOutGroupInterId,
+				   			FBarCode: Barcode,
+							FItemId: 0,
+				   			Result: 0,							
+				   			Msg: ''
+				   		}
+				   	},
+				   	success: (result) => {
+				   		//console.log(result.data);
+				   		let ResultCode = result.data.ResultCode;
+				   		let ResultMsg = result.data.ResultMsg;
+				   		if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+				   			Config.ShowMessage('账号登录异常，请重新登录！');
+				   			Config.PopAudioContext(false);
+				   			return;
+				   		}
+				   		
+				   		let DataParam = result.data.ResultData.SOutGroupScan.dataparam;
+				   		let Result = DataParam.Result;
+				   		if(Result == 0){
+				   			Config.ShowMessage(DataParam.Msg);
+				   			Config.PopAudioContext(false);
+				   			return;
+				   		}							
+				   		
+				   		Config.ShowMessage(DataParam.Msg);
+				   		Config.PopAudioContext(true);
+						this.ShowBillGroupInfo(DataParam.FItemId,true);
+				   	},
+				   	fail: () => {
+				   		Config.ShowMessage('请求数据失败！');
+				   		Config.PopAudioContext(false);
+				   		return;
+				   	},
+				   	complete: (resultcomp) => {
+				   		let ResultMsg = resultcomp.data.ResultMsg;
+				   		if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+				   			Config.ShowMessage(ResultMsg);
+				   			Config.PopAudioContext(false);
+				   		}
+				   	}
+				   });
 				}
 			},
-			//新增销售出库单
-			AddStorageOut: function() {
-				let IsSuccess = this.GetSelectBillByAdd();
-				if (IsSuccess == 0) {
-					return;
-				}
-				this.SwitchTab(1);
-				this.SwitchAuditFlag(true);
-				this.AddStorageOutBillNo();
-				this.ShowBillGroupInfo();
-			},
-			//查询销售出库单
-			QueryStorageOut: function() {
-				let IsSuccess = this.GetSelectBillByQuery();
-				if (IsSuccess == 0) {
-					return;
-				}
-				this.SwitchTab(1);
-				if(this.SelectBillModel.FStatus == '未审核'){
-				   this.SwitchAuditFlag(true);
+			//新增销售出库合并单
+			AddSOutGroup: function() {
+                if(this.BillListData.length != 0){
+					this.CheckAddSOutGroupInfo();
 				}
 				else{
-				   this.SwitchAuditFlag(false);
-				}
-				this.ShowBillGroupInfo();
+					this.ClearOriginRecordData();
+					this.AddSOutGroupInfo();
+				}				
 			},
-			//新增入库单编号
-			AddStorageOutBillNo: function() {
+			//查询销售出库单
+			ConfirmSOutGroup: function() {	
+				let IsSuccess = this.CheckConfirmSOutGroup();
+				if(IsSuccess != 0){
+					
+				}						
+				this.SwitchAuditFlag(true);				
+				this.ShowBillGroupInfo(0,false);
+				this.SwitchTab(1);
+			},
+			CheckConfirmSOutGroup:function(){
+				if(this.AddSOutGroupInterId == 0 && this.AddSOutGroupBillNo == '空'){
+				   return 0;
+				}
+				
+				if(this.BillListData.length == 0){
+				   Config.ShowMessage('请选择需要出库的来源单！');
+				   Config.PopAudioContext(false);
+				   return 0;
+				}
+			},
+			//检查来源单是否存在扫描单据数据
+			CheckAddSOutGroupInfo: function() {
+				uni.showModal({
+					title: '提示',
+					content: '来源单列表存在数据，是否还要重新新增？',
+					success: function(result) {
+						if (result.confirm) {
+							
+						}
+					}
+				});
+			},
+			//新增入库单合并信息
+			AddSOutGroupInfo: function() {
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
 					data: {
-						ModuleCode: 'getPdaStorageOutRptMaxId',
+						ModuleCode: 'AddSOutGroup',
 						token: uni.getStorageSync('token'),
 						ModuleParam: {
-							Result: 0,
-							FId: 0,
+							FBillerId: uni.getStorageSync('FUserId'),
+							FInterId: 0,
 							FBillNo: '',
-							FStatus: 0,
-							FStatusCN: '',
+							Result: 0,							
 							Msg: ''
 						}
 					},
@@ -676,12 +547,22 @@
 							Config.PopAudioContext(false);
 							return;
 						}
-						let DataModel = result.data.ResultData.GetPdaStorageOutRptMaxId.dataparam;
-						this.StorageOutInterId = DataModel.FId;
-						this.StorageOutBillNo = DataModel.FBillNo;
-						this.OutStorageDate = DateFormat({
+						
+						let DataParam = result.data.ResultData.AddSOutGroup.dataparam;
+						let Result = DataParam.Result;
+						if(Result == 0){
+							Config.ShowMessage(DataParam.Msg);
+							Config.PopAudioContext(false);
+							return;
+						}							
+						
+						this.AddSOutGroupInterId = DataParam.FInterId;
+						this.AddSOutGroupBillNo = DataParam.FBillNo;
+						this.AddSOutGroupDate = Config.DateFormat({
 							format: true,
 						});
+						Config.ShowMessage(DataParam.Msg);
+						Config.PopAudioContext(true);
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -737,8 +618,116 @@
 					}
 				});
 			},
-			//根据状态显示对应单据列表
-			ShowSEOrderInfoByNoPutIn: function(Barcode) {
+		    ShowICStockBillAddList: function(Barcode) {
+				if(this.AddSOutGroupInterId == 0 && this.AddSOutGroupBillNo == '空'){
+				   Config.ShowMessage('请先新增！');
+				   Config.PopAudioContext(false);
+				   return;
+				}
+				
+				if(this.BillListData.length != 0){
+				   let RepeatCount = this.BillListData.filter(x => x.FBillNo == Barcode).length;
+				   if(RepeatCount > 0){
+					  Config.ShowMessage("该单据已在来源单列表中，请重新扫描！");
+					  Config.PopAudioContext(false);	
+					  return;
+				   }
+				}
+				
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'AddSOutSrcBillChk',
+						token: uni.getStorageSync('token'),
+						ModuleParam: {						
+							FInterId: this.AddSOutGroupInterId,							
+							Result: 0,
+							Msg: ''
+						}
+					},
+					success: (result) => {
+						//console.log(result.data);
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.ShowMessage('账号登录异常，请重新登录！');
+							Config.PopAudioContext(false);							
+							return;
+						}
+						
+						let DataParam = result.data.ResultData.AddSOutSrcBillChk.dataparam;
+						let Result = DataParam.Result;
+						if(Result == 0){
+							Config.ShowMessage(DataParam.Msg);
+							Config.PopAudioContext(false);
+							return;
+						}													
+						this.AddSOutSrcBill(Barcode);
+					},
+					fail: () => {
+						Config.ShowMessage('请求数据失败！');
+						Config.PopAudioContext(false);
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.PopAudioContext(false);
+							Config.ShowMessage(ResultMsg);
+						}						
+					}
+				});				
+			},
+			AddSOutSrcBill: function(Barcode){
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'AddSOutSrcBill',
+						token: uni.getStorageSync('token'),
+						ModuleParam: {						
+							FInterId: this.AddSOutGroupInterId,							
+							FCustId: this.AddSOutGroupCustId,
+							FSrcBillNo: Barcode,
+							FGCustId: 0,
+							Result: 0,
+							Msg: ''
+						}
+					},
+					success: (result) => {
+						//console.log(result.data);
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.ShowMessage('账号登录异常，请重新登录！');
+							Config.PopAudioContext(false);							
+							return;
+						}
+						
+						let DataParam = result.data.ResultData.AddSOutSrcBill.dataparam;
+						let Result = DataParam.Result;
+						if(Result == 0){
+							Config.ShowMessage(DataParam.Msg);
+							Config.PopAudioContext(false);
+							return;
+						}	
+						this.AddSOutGroupCustId = DataParam.FGCustId;						
+						this.AddICStockBillList(Barcode);
+					},
+					fail: () => {
+						Config.ShowMessage('请求数据失败！');
+						Config.PopAudioContext(false);
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.PopAudioContext(false);
+							Config.ShowMessage(ResultMsg);
+						}						
+					}
+				});
+			},
+			AddICStockBillList:function(Barcode){				
 				uni.showLoading({
 					title: 'Loading',
 					mask: true
@@ -747,11 +736,18 @@
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
 					data: {
-						ModuleCode: 'getPdaSEOrderNoPutInList',
+						ModuleCode: 'GetPdaICStockBillAddList',
 						token: uni.getStorageSync('token'),
-						ModuleParam: {
-							FBillNoList: Barcode,
-							FBillNo: this.SearchValue
+						ModuleParam: {							
+							FBillNo: Barcode,
+							FInterID: 0,
+							FDate: '',
+							FBillerID: 0,
+							FBillerName: '',
+							FCustID: 0,
+							FCustName: '',
+							Result: 0,
+							Msg: ''
 						}
 					},
 					success: (result) => {
@@ -764,8 +760,15 @@
 							uni.hideLoading();
 							return;
 						}
-						this.BillListData = result.data.ResultData.GetPdaSEOrderNoPutInList
-							.data0;
+						
+						let DataParam = result.data.ResultData.GetPdaICStockBillAddList.dataparam;
+						let Result = DataParam.Result;
+						if(Result == 0){
+							Config.ShowMessage(DataParam.Msg);
+							Config.PopAudioContext(false);
+							return;
+						}												
+						this.AddItemList(DataParam);
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -781,8 +784,22 @@
 					}
 				});
 			},
-			//根据状态显示对应单据列表
-			ShowSEOrderInfoByPutIn: function(Barcode) {
+			AddItemList(DataParam){
+				// let AddItem = {"FInterID":null,"FBillNo":null,"FDate":null,
+				// "FBillerID":null,"FBillerName":null,"FCustID":null,
+				// "FCustName":null};
+				// this.BillListData.push(AddItem);				
+				let AddItem = {"FInterID":DataParam.FInterID,"FBillNo":DataParam.FBillNo,"FDate":DataParam.FDate,
+				"FBillerID":DataParam.FBillerID,"FBillerName":DataParam.FBillerName,"FCustID":DataParam.FCustID,
+				"FCustName":DataParam.FCustName};
+				this.BillListData.push(AddItem);				
+				Config.ShowMessage(DataParam.Msg);
+				Config.PopAudioContext(true);	
+				// let AddItem = [{"FInterID":DataParam.FInterID,"FBillNo":DataParam.FBillNo,"FDate":DataParam.FDate,"FBillerID":DataParam.FBillerID,
+				// ,"FBillerName": DataParam.FBillerName,"FCustID":DataParam.FCustID,"FCustName":DataParam.FCustName}];
+				//console.log(this.BillListData);
+			},
+			FindICStockBillAddList: function() {
 				uni.showLoading({
 					title: 'Loading',
 					mask: true
@@ -791,11 +808,10 @@
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
 					data: {
-						ModuleCode: 'getPdaSEOrderPutInList',
+						ModuleCode: 'GetPdaSOutGroupNotPutInList',
 						token: uni.getStorageSync('token'),
-						ModuleParam: {
-							FScanBillNo: Barcode,
-							FBillNo: this.SearchValue
+						ModuleParam: {	
+							FInterId: this.AddSOutGroupInterId
 						}
 					},
 					success: (result) => {
@@ -808,7 +824,10 @@
 							uni.hideLoading();
 							return;
 						}
-						this.BillListData = result.data.ResultData.GetPdaSEOrderPutInList.data0;
+						this.BillListData = result.data.ResultData.GetPdaSOutGroupNotPutInList.data0;
+						if(this.BillListData.length == 0){
+						   this.ClearBillHeadData();
+						}
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -824,8 +843,7 @@
 					}
 				});
 			},
-			//根据状态显示对应单据列表
-			ShowSEOutStockInfoByNoPutIn: function(Barcode) {
+		    ShowICStockBillQueryList: function() {
 				uni.showLoading({
 					title: 'Loading',
 					mask: true
@@ -834,11 +852,9 @@
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
 					data: {
-						ModuleCode: 'getPdaSEOutStockNoPutInList',
+						ModuleCode: 'GetPdaSOutGroupPutInList',
 						token: uni.getStorageSync('token'),
-						ModuleParam: {
-							FBillNoList: Barcode,
-							FBillNo: this.SearchValue
+						ModuleParam: {							
 						}
 					},
 					success: (result) => {
@@ -851,51 +867,7 @@
 							uni.hideLoading();
 							return;
 						}
-						this.BillListData = result.data.ResultData.GetPdaSEOutStockNoPutInList
-							.data0;
-					},
-					fail: () => {
-						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);
-					},
-					complete: (resultcomp) => {
-						let ResultMsg = resultcomp.data.ResultMsg;
-						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-							Config.PopAudioContext(false);
-							Config.ShowMessage(ResultMsg);
-						}
-						uni.hideLoading();
-					}
-				});
-			},
-			//根据状态显示对应单据列表
-			ShowSEOutStockInfoByPutIn: function(Barcode) {
-				uni.showLoading({
-					title: 'Loading',
-					mask: true
-				});
-				uni.request({
-					url: uni.getStorageSync('OtherUrl'),
-					method: 'POST',
-					data: {
-						ModuleCode: 'getPdaSEOutStockPutInList',
-						token: uni.getStorageSync('token'),
-						ModuleParam: {
-							FScanBillNo: Barcode,
-							FBillNo: this.SearchValue
-						}
-					},
-					success: (result) => {
-						//console.log(result.data);
-						let ResultCode = result.data.ResultCode;
-						let ResultMsg = result.data.ResultMsg;
-						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-							Config.ShowMessage('账号登录异常，请重新登录！');
-							Config.PopAudioContext(false);
-							uni.hideLoading();
-							return;
-						}
-						this.BillListData = result.data.ResultData.GetPdaSEOutStockPutInList.data0;
+						this.BillListData = result.data.ResultData.GetPdaSOutGroupPutInList.data0;
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -912,277 +884,74 @@
 				});
 			},
 			//显示对应单据列表
-			ShowBillInfo: function(BarCode) {
+			ShowBillInfo: function(Barcode) {
 				if (this.SelectStatus == '未出库') {
-					if (this.IsScanSEOrder) {
-						this.ShowSEOrderInfoByNoPutIn(BarCode);
-					} else {
-						this.ShowSEOutStockInfoByNoPutIn(BarCode);
-					}
-				} else {
-					if (this.IsScanSEOrder) {
-						this.ShowSEOrderInfoByPutIn(BarCode);
-					} else {
-						this.ShowSEOutStockInfoByPutIn(BarCode);
-					}
+			        this.FindICStockBillAddList();				
+				} else {					
+				    this.ShowICStockBillQueryList();					
 				}
 				this.IsAddStorageOut = this.SelectStatus == '未出库' ? true : false;
+			},	
+			ShowSelectMergeInfo: function(item){
+				this.GetSelectMergeInfo(item);
+				this.SwitchTab(1);
+				this.ShowBillGroupInfo(0,false);
 			},
-			//获取选中的单据
-			GetSelectBillByAdd: function() {
-				this.SelectSrcInterId = '';
-				this.SelectSrcBillNo = '';
-				this.SelectCustomerArray = [0, '空'];
-				for (var i = 0; i < this.BillListData.length; i++) {
-					let DataModel = this.BillListData[i];
-					if (DataModel.FIsChecked) {
-						this.SelectBillModel = DataModel;
-						if (this.SelectCustomerArray[0] == 0 && this.SelectCustomerArray[1] == '空') {
-							this.SelectCustomerArray = [this.SelectBillModel.FCustID, this.SelectBillModel.FCustName];
-						} else {
-							if (this.SelectCustomerArray[0] != this.SelectBillModel.FCustID &&
-								this.SelectCustomerArray[1] != this.SelectBillModel.FCustName) {
-								Config.ShowMessage('请选择同一个客户出库的单据！');
-								Config.PopAudioContext(false);
-								return 0;
-							}
-						}
-						this.SelectSrcInterId += this.SelectBillModel.FInterID + ',';
-						this.SelectSrcBillNo = this.SelectBillModel.FBillNo + ' ';
-					}
-				}
-				if (this.SelectSrcInterId != '') {
-					this.SelectSrcInterId = this.SelectSrcInterId.substr(0, this.SelectSrcInterId.length - 1);
-				} else {
-					this.SelectSrcInterId = '0';
-				}
-
-				if (this.SelectSrcInterId == '0') {
-					Config.ShowMessage('请选择需要新增出库的单据！');
-					Config.PopAudioContext(false);
-					return 0;
-				}
-			},
-			//获取选中的单据
-			GetSelectBillByQuery: function() {
-				this.SelectSrcInterId = '';
-				this.SelectSrcBillNo = '';
-				this.SelectCustomerArray = [0, '空'];
-				for (var i = 0; i < this.BillListData.length; i++) {
-					let DataModel = this.BillListData[i];
-					if (DataModel.FIsChecked) {
-						this.SelectBillModel = DataModel;
-						this.StorageOutInterId = this.SelectBillModel.FStorageOutId;
-						this.StorageOutBillNo = this.SelectBillModel.FStorageOutBillNo;
-						this.OutStorageDate = this.SelectBillModel.FStorageOutDate;
-						if (this.SelectCustomerArray[0] == 0 && this.SelectCustomerArray[1] == '空') {
-							this.SelectCustomerArray = [this.SelectBillModel.FCustID, this.SelectBillModel.FCustName];
-						} else {
-							if (this.SelectCustomerArray[0] != this.SelectBillModel.FCustID &&
-								this.SelectCustomerArray[1] != this.SelectBillModel.FCustName) {
-								Config.ShowMessage('请选择同一个客户出库的单据！');
-								Config.PopAudioContext(false);
-								return 0;
-							}
-						}
-						this.SelectSrcInterId += this.SelectBillModel.FInterID + ',';
-						this.SelectSrcBillNo = this.SelectBillModel.FBillNo + ' ';
-					}
-				}
-				if (this.SelectSrcInterId != '') {
-					this.SelectSrcInterId = this.SelectSrcInterId.substr(0, this.SelectSrcInterId.length - 1);
-				} else {
-					this.SelectSrcInterId = '0';
-				}
-
-				if (this.SelectSrcInterId == '0') {
-					Config.ShowMessage('请选择需要查询出库的单据！');
-					Config.PopAudioContext(false);
-					return 0;
-				}
+			GetSelectMergeInfo: function(item){
+				this.AddSOutGroupInterId = item.FInterId;
+				this.AddSOutGroupBillNo = item.FBillNo;
+				this.AddSOutGroupCustId = item.FCustId;
+				this.AddSOutGroupDate = item.FDate;				
 			},
 			//显示单据分组信息
-			ShowBillGroupInfo: function() {
-				if (this.SelectSrcInterId != '') {
-					if (this.IsScanSEOrder) {
-						uni.showLoading({
-							title: 'Loading',
-							mask: true
-						});
-						uni.request({
-							url: uni.getStorageSync('OtherUrl'),
-							method: 'POST',
-							data: {
-								ModuleCode: 'getPdaSEOrderGroupInfoByItemId',
-								token: uni.getStorageSync('token'),
-								ModuleParam: {
-									FIndexIdList: this.SelectSrcInterId
-								}
-							},
-							success: (result) => {
-								//console.log(result.data);
-								let ResultCode = result.data.ResultCode;
-								let ResultMsg = result.data.ResultMsg;
-								if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-									Config.ShowMessage('账号登录异常，请重新登录！');
-									Config.PopAudioContext(false);
-									return;
-								}
-								this.BillGroupData = result.data.ResultData.GetPdaSEOrderGroupInfoByItemId
-									.data0;
-								this.GetBillSelectItem();
-								this.StatBillQty();
-							},
-							fail: () => {
-								Config.ShowMessage('请求数据失败！');
-								Config.PopAudioContext(false);
-							},
-							complete: (resultcomp) => {
-								let ResultMsg = resultcomp.data.ResultMsg;
-								if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-									Config.ShowMessage(ResultMsg);
-									Config.PopAudioContext(false);
-								}
-								uni.hideLoading();
-							}
-						});
-					} else {
-						uni.showLoading({
-							title: 'Loading',
-							mask: true
-						});
-						uni.request({
-							url: uni.getStorageSync('OtherUrl'),
-							method: 'POST',
-							data: {
-								ModuleCode: 'getPdaSEOutStockGroupInfo',
-								token: uni.getStorageSync('token'),
-								ModuleParam: {
-									FIndexIdList: this.SelectSrcInterId
-								}
-							},
-							success: (result) => {
-								//console.log(result.data);
-								let ResultCode = result.data.ResultCode;
-								let ResultMsg = result.data.ResultMsg;
-								if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-									Config.ShowMessage('账号登录异常，请重新登录！');
-									Config.PopAudioContext(false);
-									return;
-								}
-								this.BillGroupData = result.data.ResultData.GetPdaSEOutStockGroupInfo
-								.data0;
-								this.GetBillSelectItem();
-								this.StatBillQty();
-							},
-							fail: () => {
-								Config.ShowMessage('请求数据失败！');
-								Config.PopAudioContext(false);
-							},
-							complete: (resultcomp) => {
-								let ResultMsg = resultcomp.data.ResultMsg;
-								if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-									Config.ShowMessage(ResultMsg);
-									Config.PopAudioContext(false);
-								}
-								uni.hideLoading();
-							}
-						});
-					}
-				}
-			},
-			//显示单据分组信息
-			ShowBillGroupInfoByScan: function(Barcode) {
-				if (this.SelectSrcInterId != '') {
-					if (this.IsScanSEOrder) {
-						uni.showLoading({
-							title: 'Loading',
-							mask: true
-						});
-						uni.request({
-							url: uni.getStorageSync('OtherUrl'),
-							method: 'POST',
-							data: {
-								ModuleCode: 'getPdaSEOrderGroupByItemIdScan',
-								token: uni.getStorageSync('token'),
-								ModuleParam: {
-									FIndexIdList: this.SelectSrcInterId,
-									FPackBarcode: Barcode
-								}
-							},
-							success: (result) => {
-								//console.log(result.data);
-								let ResultCode = result.data.ResultCode;
-								let ResultMsg = result.data.ResultMsg;
-								if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-									Config.ShowMessage('账号登录异常，请重新登录！');
-									Config.PopAudioContext(false);
-									return;
-								}
-								this.BillGroupData = result.data.ResultData.GetPdaSEOrderGroupByItemIdScan
-									.data0;
-								this.GetBillSelectItem();
-								this.StatBillQty();
-							},
-							fail: () => {
-								Config.ShowMessage('请求数据失败！');
-								Config.PopAudioContext(false);
-							},
-							complete: (resultcomp) => {
-								let ResultMsg = resultcomp.data.ResultMsg;
-								if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-									Config.ShowMessage(ResultMsg);
-									Config.PopAudioContext(false);
-								}
-								uni.hideLoading();
-							}
-						});
-					} else {
-						uni.showLoading({
-							title: 'Loading',
-							mask: true
-						});
-						uni.request({
-							url: uni.getStorageSync('OtherUrl'),
-							method: 'POST',
-							data: {
-								ModuleCode: 'getPdaSEOutStockGroupItemScan',
-								token: uni.getStorageSync('token'),
-								ModuleParam: {
-									FIndexIdList: this.SelectSrcInterId,
-									FPackBarcode: Barcode
-								}
-							},
-							success: (result) => {
-								//console.log(result.data);
-								let ResultCode = result.data.ResultCode;
-								let ResultMsg = result.data.ResultMsg;
-								if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-									Config.ShowMessage('账号登录异常，请重新登录！');
-									Config.PopAudioContext(false);
-									return;
-								}
-								this.BillGroupData = result.data.ResultData.GetPdaSEOutStockGroupItemScan
-									.data0;
-								this.GetBillSelectItem();
-								this.StatBillQty();
-							},
-							fail: () => {
-								Config.ShowMessage('请求数据失败！');
-								Config.PopAudioContext(false);
-							},
-							complete: (resultcomp) => {
-								let ResultMsg = resultcomp.data.ResultMsg;
-								if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-									Config.ShowMessage(ResultMsg);
-									Config.PopAudioContext(false);
-								}
-								uni.hideLoading();
-							}
-						});
-					}
-				}
-			},
+			ShowBillGroupInfo: function(FItemId, FIsScanned) {
+				if(this.AddSOutGroupInterId != 0){
+				   uni.showLoading({
+				   	title: 'Loading',
+				   	mask: true
+				   });
+				   uni.request({
+				   	url: uni.getStorageSync('OtherUrl'),
+				   	method: 'POST',
+				   	data: {
+				   		ModuleCode: 'GetPdaSOutGroupByItemScan',
+				   		token: uni.getStorageSync('token'),
+				   		ModuleParam: {
+				   			FInterId: this.AddSOutGroupInterId,
+				   			FItemId: FItemId,
+				   			FIsScanned: FIsScanned
+				   		}
+				   	},
+				   	success: (result) => {
+				   		//console.log(result.data);
+				   		let ResultCode = result.data.ResultCode;
+				   		let ResultMsg = result.data.ResultMsg;
+				   		if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+				   			Config.ShowMessage('账号登录异常，请重新登录！');
+				   			Config.PopAudioContext(false);
+				   			return;
+				   		}
+				   		this.BillGroupData = result.data.ResultData.GetPdaSOutGroupByItemScan
+				   			.data0;
+				   		this.BillGroupData.sort(x => x.FHighLight);
+				   		this.GetBillSelectItem();
+				   		this.StatBillQty();
+				   	},
+				   	fail: () => {
+				   		Config.ShowMessage('请求数据失败！');
+				   		Config.PopAudioContext(false);
+				   	},
+				   	complete: (resultcomp) => {
+				   		let ResultMsg = resultcomp.data.ResultMsg;
+				   		if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+				   			Config.ShowMessage(ResultMsg);
+				   			Config.PopAudioContext(false);
+				   		}
+				   		uni.hideLoading();
+				   	}
+				   });	
+				}											
+			},			
 			//获取选中单据的物料信息
 			GetBillSelectItem: function() {
 				this.SelectItems = '';
@@ -1195,70 +964,66 @@
 			//删除销售出库单
 			DeleteStorageOut: function() {
 				let me = this;
-				if (me.StorageOutBillNo == '空') {
-					Config.ShowMessage('请选择要删除的销售出库单！');
+				if (me.AddSOutGroupInterId == 0 && me.AddSOutGroupBillNo == '空') {
+					Config.ShowMessage('请选择要删除的合并单！');
 					Config.PopAudioContext(false);
 					return;
 				}
 				uni.showModal({
 					title: '提示',
-					content: '是否需要删除单据编号为' + me.StorageOutBillNo + '的销售出库单？',
+					content: '是否需要删除单据编号为' + me.AddSOutGroupBillNo + '的合并单？',
 					success: function(result) {
-						if (result.confirm) {
-							if (me.IsScanSEOrder) {
-								uni.request({
-									url: uni.getStorageSync('OtherUrl'),
-									method: 'POST',
-									data: {
-										ModuleCode: 'delPdaStorageOutRptHead',
-										token: uni.getStorageSync('token'),
-										ModuleParam: {
-											FId: me.StorageOutInterId,
-											Result: 0,
-											Msg: ''
-										}
-									},
-									success: (resdelete) => {
-										let ResultCode = resdelete.data.ResultCode;
-										let ResultMsg = resdelete.data.ResultMsg;
-										if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-											Config.ShowMessage('账号登录异常，请重新登录！');
-											Config.PopAudioContext(false);
-											return;
-										}
-										let DataParam = resdelete.data.ResultData
-											.DelPdaStorageOutRptHead
-											.dataparam;
-										ResultCode = DataParam.Result;
-										if (ResultCode == 0) {
-											Config.ShowMessage(DataParam.Msg);
-											Config.PopAudioContext(false);
-											return;
-										}
-										Config.ShowMessage(DataParam.Msg);
-										Config.PopAudioContext(true);
-										me.ClearBillHeadData(me);
-										me.GetSelectGroupModel(null);
-										me.SwitchTab(0);
-									},
-									fail: () => {
-										Config.ShowMessage('请求数据失败！');
+						if (result.confirm) {							
+							uni.request({
+								url: uni.getStorageSync('OtherUrl'),
+								method: 'POST',
+								data: {
+									ModuleCode: 'SOutGroupDel',
+									token: uni.getStorageSync('token'),
+									ModuleParam: {
+										FInterId: me.AddSOutGroupInterId,
+										Result: 0,
+										Msg: ''
+									}
+								},
+								success: (resdelete) => {
+									let ResultCode = resdelete.data.ResultCode;
+									let ResultMsg = resdelete.data.ResultMsg;
+									if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+										Config.ShowMessage('账号登录异常，请重新登录！');
 										Config.PopAudioContext(false);
 										return;
-									},
-									complete: (resultcomp) => {
-										let ResultMsg = resultcomp.data.ResultMsg;
-										if (ResultMsg != 'undefined' && ResultMsg.indexOf(
-												'执行成功') == -1) {
-											Config.ShowMessage(ResultMsg);
-											Config.PopAudioContext(false);
-											uni.hideLoading();
-										}
 									}
-								});
-							} else {
-
-							}
+									let DataParam = resdelete.data.ResultData
+										.SOutGroupDel
+										.dataparam;
+									ResultCode = DataParam.Result;
+									if (ResultCode == 0) {
+										Config.ShowMessage(DataParam.Msg);
+										Config.PopAudioContext(false);
+										return;
+									}
+									Config.ShowMessage(DataParam.Msg);
+									Config.PopAudioContext(true);
+									me.ClearBillHeadData();
+									me.GetSelectGroupModel(null);
+									me.SwitchTab(0);
+								},
+								fail: () => {
+									Config.ShowMessage('请求数据失败！');
+									Config.PopAudioContext(false);
+									return;
+								},
+								complete: (resultcomp) => {
+									let ResultMsg = resultcomp.data.ResultMsg;
+									if (ResultMsg != 'undefined' && ResultMsg.indexOf(
+											'执行成功') == -1) {
+										Config.ShowMessage(ResultMsg);
+										Config.PopAudioContext(false);										
+									}
+									uni.hideLoading();
+								}
+							});								
 						}
 					}
 				});
@@ -1381,272 +1146,122 @@
 			},
 			//审核销售出库单
 			AuditStorageOut: function() {
-				if (this.StorageOutBillNo == '空') {
-					Config.ShowMessage('请选择要审核的销售出库单！');
+				if (this.AddSOutGroupInterId == 0 && this.AddSOutGroupBillNo == '空') {
+					Config.ShowMessage('请选择要审核的合并单！');
 					Config.PopAudioContext(false);
 					return;
 				}
 
-				this.QtyExceptionList = this.BillGroupData.filter(x => x.FRealSendQty < x.FShouldSendQty);
-				if (this.IsScanSEOrder) {
-					uni.showLoading({
-						title: 'Loading',
-						mask: true
-					});
-					uni.request({
-						url: uni.getStorageSync('OtherUrl'),
-						method: 'POST',
-						data: {
-							ModuleCode: 'pdaSEOrderRptToStorageOutRpt',
-							token: uni.getStorageSync('token'),
-							ModuleParam: {
-								FIndexIdList: this.SelectSrcInterId,
-								FId: this.StorageOutInterId,
-								FDate: this.OutStorageDate,
-								FBillerID: uni.getStorageSync('FUserId'),
-								FBillNo: this.StorageOutBillNo,
-								FDeptID: this.SelectBillModel.FDeptID,
-								FManagerID: this.SelectBillModel.FManagerID,
-								FEmpID: this.SelectBillModel.FEmpID,
-								FCustID: this.SelectBillModel.FCustID,
-								FQtyCheckCount: this.QtyExceptionList.length,
-								Result: 0,
-								FStatus: 0,
-								FStatusCN: '',
-								Msg: ''
-							}
-						},
-						success: (result) => {
-							//console.log(result.data);
-							let ResultCode = result.data.ResultCode;
-							let ResultMsg = result.data.ResultMsg;
-							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-								Config.ShowMessage('账号登录异常，请重新登录！');
-								Config.PopAudioContext(false);
-								uni.hideLoading();
-								return;
-							}
-							let DataParam = result.data.ResultData.PdaSEOrderRptToStorageOutRpt.dataparam;
-							let Result = DataParam.Result;
-							if (Result == 0) {
-								Config.ShowMessage(DataParam.Msg);
-								Config.PopAudioContext(false);
-							} else if (Result == -1) {
-								Config.ShowMessage(DataParam.Msg);
-								Config.PopAudioContext(false);
-								this.QtyExceptionCheck();
-							} else {
-								Config.ShowMessage(DataParam.Msg);
-								Config.PopAudioContext(true);
-								this.SwitchAuditFlag(false);
-							}
-						},
-						fail: () => {
-							Config.ShowMessage('请求数据失败！');
-							Config.PopAudioContext(false);
-						},
-						complete: (resultcomp) => {
-							let ResultMsg = resultcomp.data.ResultMsg;
-							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-								Config.ShowMessage(ResultMsg);
-								Config.PopAudioContext(false);
-							}
-							uni.hideLoading();
+				uni.showLoading({
+					title: 'Loading',
+					mask: true
+				});
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'SOutGroupSubmitChk',
+						token: uni.getStorageSync('token'),
+						ModuleParam: {
+							FInterId: this.AddSOutGroupInterId,							
+							Result: 0,							
+							Msg: '',
+							FStatusCN: ''
 						}
-					});
-				} else {
-					uni.showLoading({
-						title: 'Loading',
-						mask: true
-					});
-					uni.request({
-						url: uni.getStorageSync('OtherUrl'),
-						method: 'POST',
-						data: {
-							ModuleCode: 'pdaSEOutStockRptToStorageOut',
-							token: uni.getStorageSync('token'),
-							ModuleParam: {
-								FIndexIdList: this.SelectSrcInterId,
-								FId: this.StorageOutInterId,
-								FDate: this.OutStorageDate,
-								FBillerID: uni.getStorageSync('FUserId'),
-								FBillNo: this.StorageOutBillNo,
-								FDeptID: 0,
-								FManagerID: 0,
-								FEmpID: 0,
-								FCustID: this.SelectBillModel.FCustID,
-								FQtyCheckCount: this.QtyExceptionList.length,
-								Result: 0,
-								FStatus: 0,
-								FStatusCN: '',
-								Msg: ''
-							}
-						},
-						success: (result) => {
-							//console.log(result.data);
-							let ResultCode = result.data.ResultCode;
-							let ResultMsg = result.data.ResultMsg;
-							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-								Config.ShowMessage('账号登录异常，请重新登录！');
-								Config.PopAudioContext(false);
-								uni.hideLoading();
-								return;
-							}
-							let DataParam = result.data.ResultData.PdaSEOutStockRptToStorageOut.dataparam;
-							let Result = DataParam.Result;
-							if (Result == 0) {
-								Config.ShowMessage(DataParam.Msg);
-								Config.PopAudioContext(false);
-							} else if (Result == -1) {
-								Config.ShowMessage(DataParam.Msg);
-								Config.PopAudioContext(false);
-								this.QtyExceptionCheck();
-							} else {
-								Config.ShowMessage(DataParam.Msg);
-								Config.PopAudioContext(true);
-								this.SwitchAuditFlag(false);
-							}
-						},
-						fail: () => {
-							Config.ShowMessage('请求数据失败！');
+					},
+					success: (result) => {
+						//console.log(result.data);
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.ShowMessage('账号登录异常，请重新登录！');
 							Config.PopAudioContext(false);
-						},
-						complete: (resultcomp) => {
-							let ResultMsg = resultcomp.data.ResultMsg;
-							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-								Config.ShowMessage(ResultMsg);
-								Config.PopAudioContext(false);
-							}
 							uni.hideLoading();
+							return;
 						}
-					});
-				}
+						let DataParam = result.data.ResultData.SOutGroupSubmitChk.dataparam;
+						let Result = DataParam.Result;
+						if (Result == 0) {
+							this.SOutGroupSubmitChk(DataParam.Msg);
+						} 
+						else{
+							this.SOutGroupSubmit();
+						}				
+					},
+					fail: () => {
+						Config.ShowMessage('请求数据失败！');
+						Config.PopAudioContext(false);
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.ShowMessage(ResultMsg);
+							Config.PopAudioContext(false);
+						}
+						uni.hideLoading();
+					}
+				});
 			},
 			//审核销售出库单
-			AuditStorageOutByQtyException: function() {
-				if (this.IsScanSEOrder) {
-					uni.showLoading({
-						title: 'Loading',
-						mask: true
-					});
-					uni.request({
-						url: uni.getStorageSync('OtherUrl'),
-						method: 'POST',
-						data: {
-							ModuleCode: 'pdaSEOrderRptToStorageOutRpt',
-							token: uni.getStorageSync('token'),
-							ModuleParam: {
-								FIndexIdList: this.SelectSrcInterId,
-								FId: this.StorageOutInterId,
-								FDate: this.OutStorageDate,
-								FBillerID: uni.getStorageSync('FUserId'),
-								FBillNo: this.StorageOutBillNo,
-								FDeptID: this.SelectBillModel.FDeptID,
-								FManagerID: this.SelectBillModel.FManagerID,
-								FEmpID: this.SelectBillModel.FEmpID,
-								FCustID: this.SelectBillModel.FCustID,
-								FQtyCheckCount: 0,
-								Result: 0,
-								FStatus: 0,
-								FStatusCN: '',
-								Msg: ''
-							}
-						},
-						success: (result) => {
-							//console.log(result.data);
-							let ResultCode = result.data.ResultCode;
-							let ResultMsg = result.data.ResultMsg;
-							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-								Config.ShowMessage('账号登录异常，请重新登录！');
-								Config.PopAudioContext(false);
-								uni.hideLoading();
-								return;
-							}
-							let DataParam = result.data.ResultData.PdaSEOrderRptToStorageOutRpt.dataparam;
-							let Result = DataParam.Result;
-							if (Result == 0) {
-								Config.ShowMessage(DataParam.Msg);
-								Config.PopAudioContext(false);
-							} else {
-								Config.ShowMessage(DataParam.Msg);
-								Config.PopAudioContext(true);
-							}
-						},
-						fail: () => {
-							Config.ShowMessage('请求数据失败！');
-							Config.PopAudioContext(false);
-						},
-						complete: (resultcomp) => {
-							let ResultMsg = resultcomp.data.ResultMsg;
-							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-								Config.ShowMessage(ResultMsg);
-								Config.PopAudioContext(false);
-							}
-							uni.hideLoading();
+			SOutGroupSubmit: function(){
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'SOutGroupSubmit',
+						token: uni.getStorageSync('token'),
+						ModuleParam: {
+							FInterId: this.AddSOutGroupInterId,	
+							FBillerId: uni.getStorageSync('FUserId'),						
+							Result: 0,							
+							Msg: '',							
 						}
-					});
-				} else {
-					uni.showLoading({
-						title: 'Loading',
-						mask: true
-					});
-					uni.request({
-						url: uni.getStorageSync('OtherUrl'),
-						method: 'POST',
-						data: {
-							ModuleCode: 'pdaSEOutStockRptToStorageOut',
-							token: uni.getStorageSync('token'),
-							ModuleParam: {
-								FIndexIdList: this.SelectSrcInterId,
-								FId: this.StorageOutInterId,
-								FDate: this.OutStorageDate,
-								FBillerID: uni.getStorageSync('FUserId'),
-								FBillNo: this.StorageOutBillNo,
-								FDeptID: 0,
-								FManagerID: 0,
-								FEmpID: 0,
-								FCustID: this.SelectBillModel.FCustID,
-								FQtyCheckCount: 0,
-								Result: 0,
-								FStatus: 0,
-								FStatusCN: '',
-								Msg: ''
-							}
-						},
-						success: (result) => {
-							//console.log(result.data);
-							let ResultCode = result.data.ResultCode;
-							let ResultMsg = result.data.ResultMsg;
-							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-								Config.ShowMessage('账号登录异常，请重新登录！');
-								Config.PopAudioContext(false);
-								uni.hideLoading();
-								return;
-							}
-							let DataParam = result.data.ResultData.PdaSEOutStockRptToStorageOut.dataparam;
-							let Result = DataParam.Result;
-							if (Result == 0) {
-								Config.ShowMessage(DataParam.Msg);
-								Config.PopAudioContext(false);
-							} else {
-								Config.ShowMessage(DataParam.Msg);
-								Config.PopAudioContext(true);
-							}
-						},
-						fail: () => {
-							Config.ShowMessage('请求数据失败！');
-							Config.PopAudioContext(false);
-						},
-						complete: (resultcomp) => {
-							let ResultMsg = resultcomp.data.ResultMsg;
-							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-								Config.ShowMessage(ResultMsg);
-								Config.PopAudioContext(false);
-							}
-							uni.hideLoading();
+					},
+					success: (result) => {
+						console.log(result.data);
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.ShowMessage('账号登录异常，请重新登录！');
+							Config.PopAudioContext(false);										
+							return;
 						}
-					});
-				}
+						let DataParam = result.data.ResultData.SOutGroupSubmit.dataparam;
+						let Result = DataParam.Result;
+						if (Result == 0) {
+							Config.ShowMessage(DataParam.Msg);
+							Config.PopAudioContext(false);
+							return;
+						} 
+						Config.ShowMessage(DataParam.Msg);
+						Config.PopAudioContext(true);	
+				        this.SwitchAuditFlag();
+					},
+					fail: () => {
+						Config.ShowMessage('请求数据失败！');
+						Config.PopAudioContext(false);
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.ShowMessage(ResultMsg);
+							Config.PopAudioContext(false);
+						}									
+					}
+				});
+			},
+			//审核销售出库单校验
+			SOutGroupSubmitChk: function(Msg) {
+				let me = this;
+				uni.showModal({
+					title: '提示',
+					content: Msg,
+					success: function (result) {
+						if (result.confirm) {
+							me.SOutGroupSubmit();
+						} 
+					}
+				});	
 			},
 			//获取出库单外箱明细信息
 			GetStorageOutCartonDetail: function() {
@@ -1655,8 +1270,8 @@
 						title: 'Loading'
 					});
 					uni.navigateTo({
-						url: '/pages/outstorage/cartonlabeldetail?StorageOutInterId=' + this.StorageOutInterId +
-							'&ItemId=' + this.SelectGroupModel.FItemID
+						url: '/pages/outstorage/cartonlabeldetail?AddSOutGroupInterId=' + this.AddSOutGroupInterId +
+							'&ItemId=' + this.SelectGroupModel.FItemId
 					});
 					uni.hideLoading();
 				}				
@@ -1664,6 +1279,7 @@
 			//获取选中的分组信息
 			GetSelectGroupModel: function(item) {
 				this.SelectGroupModel = item;
+				//console.log(this.SelectGroupModel);
 			},
 			//弹出填写数量窗口
 			PopupFillQtyWindow: function() {
@@ -1679,42 +1295,20 @@
 			//选择出库日期
 			OutStorageDateChange(e) {
 				this.OutStorageDate = e.detail.value
-			},
-			//条件搜索销售订单（发货通知单）列表
-			ValueChanged: function() {
-				this.ShowBillInfo('');
-			}
+			}			
 		}
-	}
-
-	//获取选中的日期格式化
-	function DateFormat(type) {
-		const CurrentDate = new Date();
-		let Year = CurrentDate.getFullYear();
-		let Month = CurrentDate.getMonth() + 1;
-		let Day = CurrentDate.getDate();
-		let Hour = CurrentDate.getHours();
-		let Minute = CurrentDate.getMinutes();
-		let Second = CurrentDate.getSeconds();
-
-		if (type === 'start') {
-			Year = Year - 60;
-		} else if (type === 'end') {
-			Year = Year + 2;
-		}
-		Month = Month > 9 ? Month : '0' + Month;;
-		Day = Day > 9 ? Day : '0' + Day;
-		if (type != '') {
-			return `${Year}-${Month}-${Day}`;
-		}
-		return `${Year}-${Month}-${Day} ${Hour}:${Minute}:${Second}`;
-	}
+	}	
 </script>
 
 <style>
 	.outstorageview {
 		width: 100%;
 		height: 950upx;
+	}
+	
+	.billstatus {
+		margin-top: -90upx;
+		margin-left: 570upx;
 	}
 
 	.billscrollview {
@@ -1754,23 +1348,24 @@
 	}
 
 	.addstorageout {
-		width: 20%;
+		display: inline-block;
+		width: 25%;
 		height: 90upx;
 		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 340upx;
-		margin-top: -91upx;
+		border: 1px solid #FFFFFF;
+		background-color: #1AAD19;	
+		margin-left: 40upx;
+		margin-top: 20upx;
 	}
 
-	.querystorageout {
-		width: 20%;
+	.confirmsoutgroup {
+		width: 25%;
 		height: 90upx;
 		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 550upx;
-		margin-top: -91upx;
+		border: 1px solid #FFFFFF;
+		background-color: #1AAD19;	
+		margin-left: 300upx;
+		margin-top: -100upx;
 	}
 
 	.auditstorageout {		

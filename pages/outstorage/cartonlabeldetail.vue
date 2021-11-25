@@ -5,8 +5,8 @@
 	
 	<scroll-view class="scrollview" scroll-y="true">		
 		<uni-list>
-			<uni-list-item v-for="(item,index) in DetailListData" :key="index" :title="'外箱标签：'+ item.FPackBarcode + '\n'
-			+ '数量：' + item.FQty"  :checkboxvalue="item.FPackBarcode" :ischecked="item.FIsChecked" :isshowcheckbox="true" 
+			<uni-list-item v-for="(item,index) in DetailListData" :key="index" :title="'外箱标签：'+ item.FBarCode + '\n'
+			+ '数量：' + item.FQty" :checkboxvalue="item.FBarCode" :ischecked="item.FIsChecked" :isshowcheckbox="true" 
 			@CheckBoxChange="ChangeIsChecked(item)" clickable></uni-list-item>
 		</uni-list>	
 	</scroll-view>
@@ -21,7 +21,7 @@
 		},
 		data() {
 			return {
-				StorageOutInterId: 0,				
+				AddSOutGroupInterId: 0,				
 				ItemId: 0,
 				DetailListData: [],
 				SelectCartonLabel: '',
@@ -37,11 +37,11 @@
 				let Pages = getCurrentPages();
 				let PrevPage = Pages[Pages.length - 2];  //上一个页面	
 				//#ifdef APP-PLUS
-				this.StorageOutInterId = PrevPage.$vm.StorageOutInterId;				
-				this.ItemId = PrevPage.$vm.SelectGroupModel.FItemID;					
+				this.AddSOutGroupInterId = PrevPage.$vm.AddSOutGroupInterId;				
+				this.ItemId = PrevPage.$vm.SelectGroupModel.FItemId;				
 				//#endif				
 			},
-			//显示出库单外箱明细
+			//显示外箱明细
 			ShowStorageOutDetail:function(){	
 				uni.showLoading({
 					title: 'Loading',
@@ -51,15 +51,15 @@
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
 					data: {
-						ModuleCode: 'getPdaStorageOutRptCartonList',
+						ModuleCode: 'GetPdaSOutGroupCartonList',
 						token: uni.getStorageSync('token'),					
 						ModuleParam:  {
-							FId: this.StorageOutInterId,							
+							FInterId: this.AddSOutGroupInterId,							
 							FItemId: this.ItemId 
 						}
 					},
 					success: (result) => {	
-						//console.log(result.data);
+						console.log(result.data);
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if(ResultCode == 'FAIL' && ResultMsg == '不存在的Token')
@@ -69,7 +69,7 @@
 							uni.hideLoading();							
 							return;
 						}
-						this.DetailListData = result.data.ResultData.GetPdaStorageOutRptCartonList.data0;						
+						this.DetailListData = result.data.ResultData.GetPdaSOutGroupCartonList.data0;						
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');	
@@ -95,7 +95,7 @@
 				for (var i = 0; i < this.DetailListData.length; i++) {
 					if(this.DetailListData[i].FIsChecked)
 				    {						
-						this.SelectCartonLabel += this.DetailListData[i].FIndexId + ',';													
+						this.SelectCartonLabel += this.DetailListData[i].FLabelId + ',';													
 					}					
 				}	
 				if(this.SelectCartonLabel != '')					
@@ -133,10 +133,12 @@
 								url: uni.getStorageSync('OtherUrl'),
 								method: 'POST',
 								data: {
-									ModuleCode: 'delPdaStorageOutRptCartonList',
+									ModuleCode: 'SOutGroupScanDel',
 									token: uni.getStorageSync('token'),
 									ModuleParam: {
-										FIndexIdList: me.SelectCartonLabel,
+										FInterId: me.AddSOutGroupInterId,
+										FItemId: me.ItemId,
+										FLabelIdList: me.SelectCartonLabel,
 										Result:0,
 										Msg:''
 									}
@@ -150,7 +152,7 @@
 										Config.PopAudioContext(false);																			
 										return;
 									}										
-									let DataParam = res.data.ResultData.DelPdaStorageOutRptCartonList.dataparam;	
+									let DataParam = res.data.ResultData.SOutGroupScanDel.dataparam;	
 									let Result = DataParam.Result;
 									if(Result == 0)
 									{
