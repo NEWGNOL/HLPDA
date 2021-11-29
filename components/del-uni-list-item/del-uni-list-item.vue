@@ -254,11 +254,7 @@
 			},
 			buttonclick(e){
 				this.$emit('ButtonClick', e);
-			},
-		    GetInputSection: function(e){
-				//console.log(e);
-				this.realsendqty = e;
-			}
+			}		   
 		}
 	};
 </script>
@@ -459,25 +455,6 @@
 	
 	.selectuniitem{
 		color: #888888;
-	}
-	
-	.inputsectiontitle{		
-		font-size: 16px;
-		color: #000000;	
-		margin-top: 20upx;
-	}
-	
-	.inputsection{		
-		font-size: 16px;
-		color: #000000;
-		border: 5upx solid;
-		border-color: #888888;
-		margin-left: 170upx;
-		margin-top: -55upx;
-	}
-	
-	.progress{
-		margin-top: 10upx;
 	}
 	
 	.delitem{		

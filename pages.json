@@ -423,6 +423,28 @@
 					 }
 			    }
 			}			
+		},
+		{
+			"path": "pages/outstorage/receivegoods",
+			"style": {
+				"navigationBarTitleText": "单据收退",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF"
+					 }
+			    }
+			}			
+		},
+		{
+			"path": "pages/outstorage/stockgoods",
+			"style": {
+				"navigationBarTitleText": "单据备货",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF"
+					 }
+			    }
+			}			
 		}	
     ],
 	"globalStyle": {

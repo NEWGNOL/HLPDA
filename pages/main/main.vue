@@ -48,6 +48,16 @@
 		<view class="outsidetransfers" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[8].FIsAllow : true" @click="JumpPage('/pages/outsidetransfers/outsidetransfers')">
 			<image class="img" src="../../static/outsidetransfers.png" mode="aspectFit"></image>
 			<text class="title">外部调拨</text>
+		</view>	
+				
+		<view class="receivegoods" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[10].FIsAllow : true" @click="JumpPage('/pages/outstorage/receivegoods')">
+			<image class="img" src="../../static/receivegoods.png" mode="aspectFit"></image>
+			<text class="title">单据收退</text>
+		</view>	
+				
+		<view class="stockgoods" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[11].FIsAllow : true" @click="JumpPage('/pages/outstorage/stockgoods')">
+			<image class="img" src="../../static/stockgoods.png" mode="aspectFit"></image>
+			<text class="title">单据备货</text>
 		</view>			
 	</view>	
 </template>
@@ -225,6 +235,28 @@
 		text-align: center;	
 		margin-left: 190upx;
 		margin-top: 280upx;
+	}
+	
+	.receivegoods{
+		position: absolute;
+		width: 300upx;
+		height: 150upx;
+		background-color: #007AFF;
+		border-radius: 25upx;
+		text-align: center;	
+		margin-left: -190upx;
+		margin-top: 1000upx;
+	}
+	
+	.stockgoods{
+		position: absolute;
+		width: 300upx;
+		height: 150upx;
+		background-color: #007AFF;
+		border-radius: 25upx;
+		text-align: center;	
+		margin-left: 190upx;
+		margin-top: 1000upx;
 	}
 	
 	.title{
