@@ -33,9 +33,10 @@
 		<view class="outstorageview" v-show="TabSelectedIndex == 1" @touchstart='TouchStart' @touchend='TouchEnd'>	
 		    <view class="pagehead">
 			    <text class="srcbillno">{{SelectSrcBillNo}}</text>	
-			    <button class="auditstorageout" v-on:click="AuditStorageOut()" v-show="IsAuditStorageOut">审核</button>
-				<button class="unauditstorageout" v-on:click="UnAuditStorageOut()" v-show="!IsAuditStorageOut">反审</button>
+			    <button class="auditstorageout" v-on:click="AuditStorageOut()" v-show="false">审核</button>
+				<button class="unauditstorageout" v-on:click="UnAuditStorageOut()" v-show="false">反审</button>
 			    <button class="deletestorageout" v-on:click="DeleteStorageOut()">删除</button>
+				<!-- v-show="IsAuditStorageOut" v-show="!IsAuditStorageOut" -->
 			</view>
 			
 			<view class="billhead" v-show="IsBillHeadVisible">				

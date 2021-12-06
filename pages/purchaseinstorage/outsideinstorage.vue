@@ -1,6 +1,3 @@
-
-
-
 <template>
 	<view class="container">
 		<view class="instorageview" v-show="TabSelectedIndex == 0">	
@@ -12,10 +9,9 @@
 			
 			<scroll-view class="instoragelistview" scroll-y="true">
 				<uni-list>
-					<uni-list-item v-for="(item,index) in InstorageListData" :key="index" :title="'制单人：'
+					<uni-list-item v-for="(item,index) in POOrderListData" :key="index" :title="'制单人：'
 				    + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '单据编号：' + item.FBillNo
-					+ '\n' + '供应商：' + item.FSupplyName+ '\n' + '单据状态：' + item.FStatus" clickable 
-					:ischecked="item.FIsChecked" :isshowcheckbox="true">
+					+ '\n' + '供应商：' + item.FSupplyName" clickable @click="GetQueryStorageInfo(item)">
 					</uni-list-item>
 				</uni-list>
 			</scroll-view>			
@@ -33,15 +29,11 @@
 				<text class="title">单据编号：</text>
 				<view class="data">{{StorageInBillNo}}</view>
 				<view class="dataline"></view>	
-					
-				<!-- <text class="title">供应商：</text>
-				<view class="data">{{SelectSupplierArray[1]}}</view>
-				<view class="dataline"></view> -->
-			
+				
 				<text class="title">入库日期：</text>
-				<picker mode="date" :value="InStorageDate" :start="StartDate" :end="EndDate"
-					@change="InStorageDateChange">
-					<view class="data">{{InStorageDate}}</view>
+				<picker mode="date" :value="StorageInDate" :start="StartDate" :end="EndDate"
+					@change="StorageInDateChange">
+					<view class="data">{{StorageInDate}}</view>
 				</picker>
 				<view class="dataline"></view>
 			
@@ -49,6 +41,10 @@
 				<navigator url="/pages/basic/stock" hover-class="navigator-hover">
 					<view class="data">{{SelectWareHouseArray[1]}}</view>
 				</navigator>				
+				<view class="dataline"></view>
+				
+				<text class="title">扫码进度：</text>
+				<view class="data">{{ScanProgress}}</view>
 				<view class="dataline"></view>
 			</view>
 			
@@ -58,7 +54,7 @@
 					<FillQty v-for="(item,index) in POOrderGroupData" :key="index" :title="item.FModel 
 			 		+ '/' + item.FNumber + '\n' + item.FShouldSendQty + '只/' + (item.FShouldSendQty/item.FInPackPreQty)
 					.toFixed(2)+ '件' + '\n' + item.FRealSendQty + '只/' + (item.FRealSendQty/item.FInPackPreQty)
-					.toFixed(2) + '件'" :rownumber="index + 1" :ishighlight="item.FHighLight" isshowprogress 
+					.toFixed(2) + '件' + '\n' + '仓库：' + item.FStockName" :rownumber="index + 1" :ishighlight="item.FHighLight"
 					v-bind:percent="Math.round((item.FRealSendQty / item.FShouldSendQty) * 100, 0)"
 					clickable v-on:click="GetPOOrderInfoExpand(item)">
 					</FillQty>
@@ -117,23 +113,22 @@
 				StorageInBillNo: '空',
 				StorageInSrcInterId: 0,
 				StorageInSrcBillNo: '空',
+				ScanProgress: '空',
 				SelectPOOrderModel: null,
 				SelectGroupModel: null,
-				SelectItems: '',
-				SelectSupplierArray: [0, '请选择供应商'],
+				SelectItems: '',				
 				SelectWareHouseArray: [0, '请选择收料仓库'],
 				SearchValue: '',
 				TabSelectedIndex: 1,
-				InStorageDate: Config.DateFormat({
+				StorageInDate: Config.DateFormat({
 					format: true
 				}),
 				StartDate: Config.DateFormat('start'),
 				EndDate: Config.DateFormat('end'),
-				POOrderListData: [],
-				InstorageListData: [],
+				POOrderListData: [],				
 				POOrderGroupData: [],
-				SelectStatus: '未入库',
-				StatusArray: ['未入库', '已入库'],
+				SelectStatus: '未审核',
+				StatusArray: ['未审核', '已审核','全部'],
 				IsBillHeadVisible: true,
 				IsAddStorageIn: true,
 				IsAuditStorageIn: true,
@@ -194,10 +189,10 @@
 				me.StorageInterId = 0;
 				me.StorageInBillNo = '空';
 				me.StorageInSrcInterId = 0;
-				me.StorageInSrcBillNo = '空';
-				me.SelectSupplierArray = [0, '请选择供应商'];
+				me.StorageInSrcBillNo = '空';	
+				me.ScanProgress = '空';			
 				me.SelectWareHouseArray = [0, '请选择收料仓库'];				
-				me.InStorageDate = Config.DateFormat({
+				me.StorageInDate = Config.DateFormat({
 					format: true
 				});
 				me.GroupListData = [];
@@ -225,7 +220,7 @@
 			},
 			//扫描条码做入库
 			ScanBarCode: function(Barcode) {
-				if (this.StorageInBillNo == '空') {
+				if (this.StorageInterId == 0 && this.StorageInBillNo == '空') {
 					Config.PopAudioContext(false);
 					Config.ShowMessage('请新增入库单！');
 					return;
@@ -243,29 +238,17 @@
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
 					data: {
-						ModuleCode: 'addPdaStockBillRpt',
+						ModuleCode: 'Purch6_2',
 						token: uni.getStorageSync('token'),
 						ModuleParam: {
-							FId: this.StorageInterId,
-							FDate: this.InStorageDate,
-							FFManagerID: this.SelectPOOrderModel.FFManagerID,
-							FSManagerID: this.SelectPOOrderModel.FSManagerID,
-							FBillerID: uni.getStorageSync('FUserId'),
+							FId: this.StorageInterId,							
 							FBillNo: this.StorageInBillNo,
-							FDeptID: this.SelectPOOrderModel.FDeptID,
-							FManagerID: this.SelectPOOrderModel.FMangerID,
-							FEmpID: this.SelectPOOrderModel.FEmpID,
-							FSupplyID: this.SelectPOOrderModel.FSupplyID,							
-							FPackBarCode: Barcode,
-							FSrcInterId: this.StorageInSrcInterId,
+							FDate: this.StorageInDate,
+							FBillerID: uni.getStorageSync('FUserId'),
+							FPackBarCode: Barcode,							
 							FStorageId: this.SelectWareHouseArray[0],
-							FStorageBinId: this.SelectPOOrderModel.FStorageBinId,	
-							FICItems: this.SelectItems,
-							FICItemByHand: 0,
-							FQtyByHand: 0,
-							FShouldSendQty: 0,
-							FRealSendQty: 0,
-							FIsVirtual: false,
+							FStorageBinId: 0,
+							FLabelQty: 0,
 							FItemId: 0,
 							Result: 0,
 							Msg: ''
@@ -281,7 +264,7 @@
 							uni.hideLoading();
 							return;
 						}
-						let ResultData = result.data.ResultData.AddPdaStockBillRpt;
+						let ResultData = result.data.ResultData.Purch6_2;
 						let Result = ResultData.dataparam.Result;
 						if (Result == 0) {
 							Config.ShowMessage(ResultData.dataparam.Msg);
@@ -289,8 +272,9 @@
 							return;
 						}
 						Config.ShowMessage(ResultData.dataparam.Msg);
-						Config.PopAudioContext(true);						
-						this.ShowPOOrderGroupInfoByCache(ResultData.dataparam.FItemId);
+						Config.PopAudioContext(true);
+						//this.ShowPOOrderGroupInfo();
+						this.ShowPOOrderGroupInfoByCache(ResultData.dataparam.FLabelQty, ResultData.dataparam.FItemId);
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -307,93 +291,50 @@
 				});					
 			},			
 			//显示采购订单信息
-			ShowPOOrderInfo: function(Barcode) {
-				if (this.SelectStatus == '未入库') {
-					uni.showLoading({
-						title: 'Loading',
-						mask: true
-					});
-					uni.request({
-						url: uni.getStorageSync('OtherUrl'),
-						method: 'POST',
-						data: {
-							ModuleCode: 'Purch6_5',
-							token: uni.getStorageSync('token'),
-							ModuleParam: {
-								FScanBillNo: Barcode,
-								FSearchBillNo: this.SearchValue
-							}
-						},
-						success: (result) => {
-							//console.log(result.data);
-							let ResultCode = result.data.ResultCode;
-							let ResultMsg = result.data.ResultMsg;
-							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-								Config.ShowMessage('账号登录异常，请重新登录！');
-								Config.PopAudioContext(false);
-								uni.hideLoading();
-								return;
-							}
-							this.POOrderListData = result.data.ResultData.Purch6_5
-								.data0;							
-						},
-						fail: () => {
-							Config.ShowMessage('请求数据失败！');
-							Config.PopAudioContext(false);							
-						},
-						complete: (resultcomp) => {
-							let ResultMsg = resultcomp.data.ResultMsg;
-							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-								Config.PopAudioContext(false);
-								Config.ShowMessage(ResultMsg);								
-							}
-							uni.hideLoading();
+			ShowPOOrderInfo: function(Barcode) {				
+				uni.showLoading({
+					title: 'Loading',
+					mask: true
+				});
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'Purch6_5',
+						token: uni.getStorageSync('token'),
+						ModuleParam: {						
+							FBillNo: this.SearchValue,
+							FStatus: this.SelectStatus == '全部' ? '0,1' : (this.SelectStatus == '已审核' ? '1' :
+							'0'),
+							FBillerID: uni.getStorageSync('FUserId'),
 						}
-					});
-				} 
-				else {
-					uni.showLoading({
-						title: 'Loading',
-						mask: true
-					});
-					uni.request({
-						url: uni.getStorageSync('OtherUrl'),
-						method: 'POST',
-						data: {
-							ModuleCode: 'Purch6_7',
-							token: uni.getStorageSync('token'),
-							ModuleParam: {
-								FScanBillNo: Barcode,
-								FSearchBillNo: this.SearchValue
-							}
-						},
-						success: (result) => {
-							//console.log(result.data);
-							let ResultCode = result.data.ResultCode;
-							let ResultMsg = result.data.ResultMsg;
-							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-								Config.ShowMessage('账号登录异常，请重新登录！');
-								Config.PopAudioContext(false);
-								uni.hideLoading();
-								return;
-							}
-							this.POOrderListData = result.data.ResultData.Purch6_7.data0;							
-						},
-						fail: () => {
-							Config.ShowMessage('请求数据失败！');
-							Config.PopAudioContext(false);							
-						},
-						complete: (resultcomp) => {
-							let ResultMsg = resultcomp.data.ResultMsg;
-							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-								Config.PopAudioContext(false);
-								Config.ShowMessage(ResultMsg);								
-							}
+					},
+					success: (result) => {
+						//console.log(result.data);
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.ShowMessage('账号登录异常，请重新登录！');
+							Config.PopAudioContext(false);
 							uni.hideLoading();
+							return;
 						}
-					});
-				}
-				this.IsAddStorageIn = this.SelectStatus == '未入库' ? true : false;
+						this.POOrderListData = result.data.ResultData.Purch6_5
+							.data0;							
+					},
+					fail: () => {
+						Config.ShowMessage('请求数据失败！');
+						Config.PopAudioContext(false);							
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.PopAudioContext(false);
+							Config.ShowMessage(ResultMsg);								
+						}
+						uni.hideLoading();
+					}
+				});	
 			},						
 			//新增入库单编号
 			AddStorageInBillNo: function() {
@@ -404,9 +345,12 @@
 						ModuleCode: 'getPdaStorageInRptMaxId',
 						token: uni.getStorageSync('token'),
 						ModuleParam: {
+							FClassType: 1,
 							Result: 0,
 							FId: 0,
 							FBillNo: '',
+							FStatus: 0,
+							FStatusCN: '',
 							Msg: ''
 						}
 					},
@@ -419,13 +363,16 @@
 							Config.PopAudioContext(false);
 							return;
 						}
+						
 						let DataModel = result.data.ResultData.PdaStorageInRpt.dataparam;
 						this.ShowStorageInBillHeadInfo(DataModel);
+						this.SwitchAuditFlag(true);
+						Config.ShowMessage('新增成功！');
+						Config.PopAudioContext(true);	
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);
-						return;
+						Config.PopAudioContext(false);						
 					},
 					complete: (resultcomp) => {
 						let ResultMsg = resultcomp.data.ResultMsg;
@@ -435,63 +382,17 @@
 						}
 					}
 				});
-			},			
-			//查询入库单
-			QueryStorageIn: function() {
-				let IsSuccess = this.GetSelectPOOrderByQuery();
-				if (IsSuccess == 0) {
-					return;
+			},	
+			//统计单据数量
+			StatBillQty: function() {
+				let FShouldSendQty = 0;
+				let FRealSendQty = 0;
+				for (let i = 0; i < this.POOrderGroupData.length; i++) {
+					let DataModel = this.POOrderGroupData[i];
+					FShouldSendQty += parseFloat((DataModel.FShouldSendQty / DataModel.FInPackPreQty).toFixed(2));
+					FRealSendQty += parseFloat((DataModel.FRealSendQty / DataModel.FInPackPreQty).toFixed(2));
 				}
-				this.SwitchTab(1);
-				if(this.SelectPOOrderModel.FStatus == '未审核'){
-					this.SwitchAuditFlag(true);
-				}
-				else{
-					this.SwitchAuditFlag(false);
-				}
-				this.ShowPOOrderGroupInfo();
-			},
-			//获取选中的采购订单
-			GetSelectPOOrderByAdd: function() {	
-				let CheckCount = this.POOrderListData.filter(x => x.FIsChecked).length;
-				if (CheckCount == 0) {
-					Config.ShowMessage('请选择采购订单进行新增！');
-					Config.PopAudioContext(false);
-					return 0;
-				}
-				if (CheckCount > 1) {
-					Config.ShowMessage('只能选择一张采购订单进行新增！');
-					Config.PopAudioContext(false);
-					return 0;
-				}	
-							
-				this.SelectPOOrderModel = this.POOrderListData.find(x => x.FIsChecked);				
-				this.StorageInSrcInterId = this.SelectPOOrderModel.FInterID;
-				this.StorageInSrcBillNo = this.SelectPOOrderModel.FBillNo;
-				this.SelectSupplierArray = [this.SelectPOOrderModel.FSupplyID, this.SelectPOOrderModel.FSupplyName];
-				this.SelectWareHouseArray = [this.SelectPOOrderModel.FStorageId, this.SelectPOOrderModel.FStorageName];				
-			},
-			//获取选中的采购订单
-			GetSelectPOOrderByQuery: function() {	
-				let CheckCount = this.POOrderListData.filter(x => x.FIsChecked).length;
-				if (CheckCount == 0) {
-					Config.ShowMessage('请选择采购订单进行查询！');
-					Config.PopAudioContext(false);
-					return 0;
-				}
-				if (CheckCount > 1) {
-					Config.ShowMessage('只能选择一张采购订单进行查询！');
-					Config.PopAudioContext(false);
-					return 0;
-				}
-				this.SelectPOOrderModel = this.POOrderListData.find(x => x.FIsChecked);	
-				this.StorageInterId = this.SelectPOOrderModel.FStorageInId;
-				this.StorageInBillNo = this.SelectPOOrderModel.FStorageInBillNo;
-				this.InStorageDate = this.SelectPOOrderModel.FStorageInDate;
-				this.StorageInSrcInterId = this.SelectPOOrderModel.FInterID;
-				this.StorageInSrcBillNo = this.SelectPOOrderModel.FBillNo;
-				this.SelectSupplierArray = [this.SelectPOOrderModel.FSupplyID, this.SelectPOOrderModel.FSupplyName];
-				this.SelectWareHouseArray = [this.SelectPOOrderModel.FStorageId, this.SelectPOOrderModel.FStorageName];					
+				this.ScanProgress = FRealSendQty.toFixed(2) + '件' + '/' + FShouldSendQty.toFixed(2) + '     件';
 			},
 			//获取选中单据的物料信息
 			GetBillSelectItem: function() {
@@ -502,9 +403,26 @@
 				}
 				this.SelectItems = this.SelectItems.substr(0, this.SelectItems.length - 1);
 			},
+			GetQueryStorageInfo: function(item){
+				if(item.FStatus == "未审核"){
+				   this.SwitchAuditFlag(true);
+				}
+				else{
+				   this.SwitchAuditFlag(false);
+				}
+				this.GetStorageInfo(item);
+				this.ShowPOOrderGroupInfo();
+				this.SwitchTab(1);				
+			},
+			//获取入库单信息
+			GetStorageInfo: function(item){
+				this.StorageInterId = item.FId;
+				this.StorageInBillNo = item.FBillNo;
+				this.StorageInDate = item.FDate;
+			},
 			//显示采购订单分组信息
 			ShowPOOrderGroupInfo: function() {	
-				if(this.StorageInSrcInterId != 0){
+				if(this.StorageInterId != 0 && this.StorageInBillNo != '空'){
 					uni.showLoading({
 						title: 'Loading',
 						mask: true
@@ -516,7 +434,7 @@
 							ModuleCode: 'Purch6_8',
 							token: uni.getStorageSync('token'),
 							ModuleParam: {
-								FPOOrderInterId: this.StorageInSrcInterId
+								FId: this.StorageInterId
 							}
 						},
 						success: (result) => {
@@ -530,7 +448,8 @@
 								return;
 							}
 							this.POOrderGroupData = result.data.ResultData.Purch6_8.data0;	
-							this.GetBillSelectItem();
+							this.StatBillQty();
+							//this.GetBillSelectItem();
 						},
 						fail: () => {
 							Config.ShowMessage('请求数据失败！');
@@ -548,15 +467,15 @@
 				}				
 			},
 			//显示采购订单分组信息
-			ShowPOOrderGroupInfoByCache: function(FItemId){
+			ShowPOOrderGroupInfoByCache: function(FLabelQty, FItemId){
 				for(let i = 0; i< this.POOrderGroupData.length; i++){
 					if(this.POOrderGroupData[i].FItemID == FItemId){						
 						this.POOrderGroupData[i].FHighLight = -1;
-						this.POOrderGroupData[i].FShouldSendQty += this.POOrderGroupData[i].FInPackPreQty;						
+						this.POOrderGroupData[i].FRealSendQty += FLabelQty;						
 					}
 					else{
 						this.POOrderGroupData[i].FHighLight = 0;
-					}					
+					}	
 				}				
 				this.POOrderGroupData.sort(x => x.FHighLight);
 			},
@@ -564,48 +483,38 @@
 			ShowStorageInBillHeadInfo: function(DataModel){
 				this.StorageInterId = DataModel.FId;
 				this.StorageInBillNo = DataModel.FBillNo;
-				this.InStorageDate = Config.DateFormat({
+				this.StorageInDate = Config.DateFormat({
 					format: true,
 				});
+				this.SelectWareHouseArray = [0, '请选择收料仓库'];
 				this.StorageInListData = [];
+				this.POOrderGroupData = [];
+				this.SelectGroupModel = null;
 			},
 			GetPOOrderInfoExpand: function(item){
 				this.SelectGroupModel = item;
 			},
 			//获取入库单外箱明细信息
 			GetStorageInCartonDetail: function() {
-				uni.showLoading({
-					title: 'Loading'
-				});
-				uni.navigateTo({
-					url: '/pages/purchaseinstorage/cartonlabeldetail?StorageInterId=' + this.StorageInterId +
-						'&StorageInSrcInterId=' + this.StorageInSrcInterId
-				});
-				uni.hideLoading();
-			},
-			//审核入库单验证
-			CheckAuditStorageIn:function(){
-				if (this.StorageInBillNo == '空') {
-					Config.PopAudioContext(false);
-					Config.ShowMessage('请新增或者选择入库单！');
-					return 0;
-				}				
-				for (var i = 0; i < this.POOrderGroupData.length; i++) {
-					let DataModel = this.POOrderGroupData[i];	
-					if(DataModel.FRealSendQty < DataModel.FShouldSendQty)
-					{						
-						Config.PopAudioContext(false);
-						Config.ShowMessage('物料编码为' + DataModel.FNumber + '没有完成扫描入库！');
-						return 0;
-					}
-				}				
-			},
+				if(this.SelectGroupModel != null){
+				   uni.showLoading({
+				   	title: 'Loading'
+				   });
+				   uni.navigateTo({
+				   	    url: '/pages/purchaseinstorage/cartonlabeldetail?StorageInterId=' + this.StorageInterId +
+				   		'&FItemId=' + this.SelectGroupModel.FItemId
+				   });	
+				   uni.hideLoading();
+				}					
+			},			
 			//审核入库单
 			AuditStorageIn: function() {
-			    let IsSuccess = this.CheckAuditStorageIn();
-			    if(IsSuccess == 0){
-			    	return;
+			    if (this.StorageInterId == 0 && this.StorageInBillNo == '空') {
+			    	Config.PopAudioContext(false);
+			    	Config.ShowMessage('请新增或者选择入库单！');
+			    	return 0;
 			    }
+				
 				uni.showLoading({
 					title: 'Loading',
 					mask: true
@@ -722,7 +631,7 @@
 			},
 			//删除外购入库单
 			DeleteStorageIn: function() {
-				if (this.StorageInBillNo == '空') {
+				if (this.StorageInterId == 0 && this.StorageInBillNo == '空') {
 					Config.ShowMessage('请选择要删除的入库单！');
 					Config.PopAudioContext(false);					
 					return;
@@ -783,11 +692,11 @@
 							});
 					}
 					}
-					});
+				});
 			},				
 			//选择入库日期
-			InStorageDateChange(e) {
-				this.InStorageDate = e.detail.value
+			StorageInDateChange(e) {
+				this.StorageInDate = e.detail.value
 			},
 			//条件搜索采购订单列表
 			ValueChanged: function() {
@@ -817,7 +726,7 @@
 	
 	.unselectinfoscrollview {
 		width: 100%;
-		height: 900upx;
+		height: 850upx;
 		margin-top: 50upx;
 	}
 	

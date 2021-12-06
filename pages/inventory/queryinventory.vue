@@ -1,9 +1,7 @@
 <template>
 	<view class="container">
 		<text class="title">物料编码：</text>
-		<navigator url="/pages/basic/icitem" hover-class="navigator-hover">
-		    <text class="data">{{MaterialModel != null ? MaterialModel.FMaterialNumber : '物料编码'}}</text>
-		</navigator>
+		<text class="data">{{MaterialModel != null ? MaterialModel.FMaterialNumber : '物料编码'}}</text>		
 		
 	    <text class="title">物料型号：</text>
 		<text class="data">{{MaterialModel != null ? MaterialModel.FModel : '物料型号'}}</text>
@@ -14,12 +12,14 @@
 		<scroll-view class="scrollviewinfo" scroll-y="true">
 		         <uni-table class="tablebill" border v-bind:data="InventoryList">
 						           <uni-tr>
-						                  <uni-th align="center">仓库</uni-th>
-										  <uni-th align="center">数量</uni-th>
+						                  <uni-td align="center">仓库</uni-td>										  
+										  <uni-td align="center">件</uni-td>
+										  <uni-td align="center">只</uni-td>
 								   </uni-tr>
 						           <uni-tr v-for="item in InventoryList" :key="item.FIndex">
 								          <uni-td>{{item.FStockName}}</uni-td>	
-										  <uni-td>{{item.FQty + item.FUnitName}}</uni-td>
+										  <uni-td>{{item.FQty/item.FInPackPreQty + '件'}}</uni-td>
+										  <uni-td>{{item.FQty + item.FUnitName}}</uni-td>										
 								   </uni-tr>			
 		         </uni-table>
 		</scroll-view>		
@@ -46,6 +46,9 @@
 		},	
 		onUnload() {
 			this.RemoveListener();
+		},
+		onNavigationBarButtonTap() {
+			this.JumpToICItemPage();
 		},
         methods: {	
 			//添加广播监听
@@ -101,9 +104,13 @@
 						}
 						this.InventoryList = result.data.ResultData.QueryInventoryQty.data0;
 						if(this.InventoryList.length > 0){
-							this.MaterialModel = this.InventoryList[0];
+							this.MaterialModel = this.InventoryList[0];							
 							//console.log(this.MaterialModel);
-						}						
+						}	
+						else{
+							Config.ShowMessage('该物料编码/型号没有对应的库存！');
+							Config.PopAudioContext(false);
+						}
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -117,7 +124,17 @@
 						}
 					}
 				});
-			}			
+			},
+			JumpToICItemPage: function(){
+				uni.showLoading({
+					title: 'Loading',
+					mask: true
+				});
+				uni.navigateTo({
+					url: '/pages/basic/icitem'
+				});
+				uni.hideLoading();
+			}
 		}		
 	}
 </script>

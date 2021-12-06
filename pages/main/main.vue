@@ -15,9 +15,9 @@
 			<text class="title">汇报入库</text>
 		</view>	
 		
-		<view class="outsideinstorage" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[9].FIsAllow : true" @click="JumpPage('/pages/purchaseinstorage/outsideinstorage')">
+		<view class="outsideinstorage" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[4].FIsAllow : true" @click="JumpPage('/pages/purchaseinstorage/outsideinstorage')">
 			<image class="img" src="../../static/outsideinstorage.png" mode="aspectFit"></image>
-			<text class="title">外购入库</text>
+			<text class="title">采购入库</text>
 		</view>	
 		
 		<!-- <view class="purchaseinstorage" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[3].FIsAllow : true" @click="JumpPage('/pages/purchaseinstorage/purchaseinstorage')">

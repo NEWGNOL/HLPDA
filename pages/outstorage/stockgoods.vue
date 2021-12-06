@@ -8,7 +8,10 @@
 			<text class="detaildata">{{this.BillArray[1]}}</text>
 			
 			<text class="detailtitle">制单人：</text>
-			<text class="detaildata">{{this.BillArray[2]}}</text>			
+			<text class="detaildata">{{this.BillArray[2]}}</text>
+						
+			<text class="detailtitle">单据状态：</text>
+			<text class="detaildata">{{this.BillArray[3]}}</text>
 		</view>
 		
 		
@@ -32,7 +35,7 @@
 		data() {
 			return {		
 				TabSelectedIndex: 0,
-				BillArray: ['空','空','空'],
+				BillArray: ['空','空','空','空'],
 				BillDealStatus: 20,
 				Main: '',
 				Receiver: ''
@@ -138,7 +141,7 @@
 			},
 			//显示扫描单据信息
 			ShowScanBillInfo: function(DataParam){
-				this.BillArray = [DataParam.FBillNo,DataParam.FDate,DataParam.FBillerName];
+				this.BillArray = [DataParam.FBillNo,DataParam.FDate,DataParam.FBillerName,DataParam.FStatus];
 			}
 		}
 	}	
@@ -182,10 +185,10 @@
 		width: 100%;
 	}
 	
-	.detailtitle {	
+	.detailtitle {
 		display: flex;
 		flex-direction: column;
-		font-size: 25px;
+		font-size: 22px;
 		margin-top: 30upx;
 		margin-left: 10upx;
 		text-align: left;	
@@ -194,9 +197,9 @@
 	.detaildata {	
 		display: flex;
 		flex-direction: column;
-		font-size: 25px;
-		margin-top: -78upx;	
-		margin-left: 250upx;
+		font-size: 22px;
+		margin-top: -70upx;	
+		margin-left: 260upx;
 		text-align: left;
 	}
 	

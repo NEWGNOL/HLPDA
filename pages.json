@@ -354,7 +354,15 @@
 				"navigationBarTitleText": "库存查询",
 				"app-plus":{
 				                  "titleNView":{
-				                  "titleColor":"FFFFFF"		 
+				                  "titleColor":"FFFFFF",
+								  "buttons": [{
+								  		"text": "手工查询",
+								  		    "fontSrc": "/static/fonts/icomoon.ttf",
+								  		    "fontSize": "17px",
+								  			"color":"#FFFFFF",
+								  		    "float": "right",
+								  		    "width": "90px"											
+								  		}]								   
 					 }
 				}	
 			}			

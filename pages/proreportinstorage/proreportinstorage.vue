@@ -630,13 +630,17 @@
 						ModuleCode: 'getPdaStorageInRptMaxId',
 						token: uni.getStorageSync('token'),
 						ModuleParam: {
+							FClassType: 2,
 							Result: 0,
 							FId: 0,
 							FBillNo: '',
+							FStatus: 0,
+							FStatusCN: '',
 							Msg: ''
 						}
 					},
 					success: (result) => {
+						//console.log(result.data);
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
@@ -733,7 +737,7 @@
 							}
 						},
 						success: (result) => {
-							console.log(result.data);
+							//console.log(result.data);
 							let ResultCode = result.data.ResultCode;
 							let ResultMsg = result.data.ResultMsg;
 							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {

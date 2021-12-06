@@ -8,7 +8,10 @@
 			<text class="detaildata">{{this.BillArray[1]}}</text>
 			
 			<text class="detailtitle">制单人：</text>
-			<text class="detaildata">{{this.BillArray[2]}}</text>			
+			<text class="detaildata">{{this.BillArray[2]}}</text>
+						
+			<text class="detailtitle">单据状态：</text>
+			<text class="detaildata">{{this.BillArray[3]}}</text>
 		</view>
 		
 		
@@ -32,7 +35,7 @@
 		data() {
 			return {		
 				TabSelectedIndex: 0,
-				BillArray: ['空','空','空'],
+				BillArray: ['空','空','空','空'],
 				BillDealStatus: 10,
 				Main: '',
 				Receiver: ''
@@ -115,12 +118,17 @@
 				   		if(Result == 0){
 				   			Config.ShowMessage(DataParam.Msg);
 				   			Config.PopAudioContext(false);
-				   			return;
-				   		}							
-				   		
-				   		Config.ShowMessage(DataParam.Msg);
-				   		Config.PopAudioContext(true);
-						this.ShowScanBillInfo(DataParam);
+				   			
+				   		}
+                        else if(Result == -1){							
+							Config.PopAudioContext(false);
+							this.CheckCancelOrder(Barcode, DataParam);
+						}
+						else{
+							Config.ShowMessage(DataParam.Msg);
+							Config.PopAudioContext(true);
+							this.ShowScanBillInfo(DataParam);
+						}				   		
 				   	},
 				   	fail: () => {
 				   		Config.ShowMessage('请求数据失败！');
@@ -136,9 +144,67 @@
 				   	}
 				});				
 			},
+			//确认是否退单
+			CheckCancelOrder: function(Barcode, DataParam){				
+				let me = this;
+				uni.showModal({
+					title: '提示',
+					content: DataParam.Msg,
+					success: function(result) {
+					if (result.confirm) {
+						uni.request({
+							url: uni.getStorageSync('OtherUrl'),
+							method: 'POST',
+							data: {
+								    ModuleCode: 'CancelSOut',
+									token: uni.getStorageSync('token'),
+									ModuleParam: {										
+										FBillNo: Barcode,
+										FDate: '',
+										FBillerName: uni.getStorageSync('FUserName'),						
+										Result: 0,							
+										Msg: ''
+									}
+						  },
+						  success: (resdelete) => {							        
+									let ResultCode = resdelete.data.ResultCode;
+									let ResultMsg = resdelete.data.ResultMsg;
+									if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+										Config.ShowMessage('账号登录异常，请重新登录！');
+									    Config.PopAudioContext(false);											
+									    return;
+									}
+									let DataParamDel = resdelete.data.ResultData.CancelSOut
+									.dataparam;
+									ResultCode = DataParamDel.Result;
+									if (ResultCode == 0) {
+										Config.ShowMessage(DataParamDel.Msg);
+										Config.PopAudioContext(false);										
+										return;
+									}										
+									me.ShowScanBillInfo(DataParamDel);									
+									Config.ShowMessage(DataParamDel.Msg);
+									Config.PopAudioContext(true);																	
+							},
+						    fail: () => {
+								    Config.ShowMessage('请求数据失败！');
+									Config.PopAudioContext(false);								
+							},
+							complete: (resultcomp) => {
+									let ResultMsg = resultcomp.data.ResultMsg;
+									if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+										Config.ShowMessage(ResultMsg);
+										Config.PopAudioContext(false);									
+								    }
+							}
+							});
+					}
+					}
+				});
+			},
 			//显示扫描单据信息
 			ShowScanBillInfo: function(DataParam){
-				this.BillArray = [DataParam.FBillNo,DataParam.FDate,DataParam.FBillerName];
+				this.BillArray = [DataParam.FBillNo,DataParam.FDate,DataParam.FBillerName,DataParam.FStatus];
 			}
 		}
 	}	
@@ -185,7 +251,7 @@
 	.detailtitle {	
 		display: flex;
 		flex-direction: column;
-		font-size: 25px;
+		font-size: 22px;
 		margin-top: 30upx;
 		margin-left: 10upx;
 		text-align: left;	
@@ -194,9 +260,9 @@
 	.detaildata {	
 		display: flex;
 		flex-direction: column;
-		font-size: 25px;
-		margin-top: -78upx;	
-		margin-left: 250upx;
+		font-size: 22px;
+		margin-top: -70upx;	
+		margin-left: 260upx;
 		text-align: left;
 	}
 	

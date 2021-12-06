@@ -5,8 +5,8 @@
 		<scroll-view class="scrollview" scroll-y="true">
 			<uni-list>
 				<uni-list-item v-for="(item,index) in ItemList" :key="index"
-					:title="item.FNumber + '     ' + item.FModel" clickable :isshowcheckbox="false"
-					:isshowprogress="false" v-on:click="ItemSelected(item)"></uni-list-item>
+				:title="item.FNumber + '/' + item.FModel" clickable :isshowcheckbox="false"
+				:isshowprogress="false" v-on:click="ItemSelected(item)"></uni-list-item>
 			</uni-list>
 		</scroll-view>
 	</view>
@@ -20,7 +20,7 @@
 		},
 		data() {
 			return {
-				SearchValue: '08.',
+				SearchValue: '',
 				ItemList: []				
 			}
 		},
@@ -28,7 +28,7 @@
 			this.LoadItemData();
 		},
 		methods: {			
-			LoadItemData: function() {
+			LoadItemData: function() {				
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -40,6 +40,7 @@
 						}
 					},
 					success: (result) => {
+						//console.log(result.data);
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
