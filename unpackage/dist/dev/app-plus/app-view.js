@@ -6231,16 +6231,29 @@ var render = function() {
         [_vm._v("删除")]
       ),
       _c(
+        "v-uni-button",
+        {
+          staticClass: _vm._$g(3, "sc"),
+          attrs: { _i: 3 },
+          on: {
+            click: function($event) {
+              return _vm.$handleViewEvent($event)
+            }
+          }
+        },
+        [_vm._v("修改数量")]
+      ),
+      _c(
         "v-uni-scroll-view",
-        { staticClass: _vm._$g(3, "sc"), attrs: { "scroll-y": "true", _i: 3 } },
+        { staticClass: _vm._$g(4, "sc"), attrs: { "scroll-y": "true", _i: 4 } },
         [
           _c(
             "uni-list",
-            { attrs: { _i: 4 } },
-            _vm._l(_vm._$g(5, "f"), function(item, index, $20, $30) {
+            { attrs: { _i: 5 } },
+            _vm._l(_vm._$g(6, "f"), function(item, index, $20, $30) {
               return _c("uni-list-item", {
                 key: item,
-                attrs: { _i: "5-" + $30 },
+                attrs: { _i: "6-" + $30 },
                 on: {
                   CheckBoxChange: function($event) {
                     return _vm.$handleViewEvent($event)
@@ -6252,7 +6265,26 @@ var render = function() {
           )
         ],
         1
-      )
+      ),
+      _c("OutStorageKeyboard", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm._$g(7, "v-show"),
+            expression: "_$g(7,'v-show')"
+          }
+        ],
+        attrs: { _i: 7 },
+        on: {
+          confirm: function($event) {
+            return _vm.$handleViewEvent($event)
+          },
+          exit: function($event) {
+            return _vm.$handleViewEvent($event)
+          }
+        }
+      })
     ],
     1
   )
@@ -6288,7 +6320,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 29));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 29));
+var _outstorageKeyboard = _interopRequireDefault(__webpack_require__(/*! ../../components/outstorage-keyboard/outstorage-keyboard.vue */ 110));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -6297,7 +6330,8 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
 
   },
   components: {
-    'Config': _config.default } };exports.default = _default;
+    'Config': _config.default,
+    'OutStorageKeyboard': _outstorageKeyboard.default } };exports.default = _default;
 
 /***/ }),
 /* 126 */
@@ -6346,7 +6380,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.scrollview{\t\n\tmargin-top: 20rpx;\n\theight: 1000rpx;\n}\n.selectlabel{\n\twidth: 30%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\t\t\n\tborder-radius: 50rpx;\n\tmargin-left: 150rpx;\n\tmargin-top: 20rpx;\n}\n.deletelabel{\t\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50rpx;\n\tmargin-right: 150rpx;\n\tmargin-top: -95rpx;\n}\n", ""]);
+exports.push([module.i, "\n.scrollview{\t\n\tmargin-top: 20upx;\n\theight: 1000upx;\n}\n.selectlabel{\n\twidth: 30%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\t\t\n\tborder-radius: 50upx;\n\tmargin-left: 50upx;\n\tmargin-top: 20upx;\n}\n.deletelabel{\t\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 550upx;\n\tmargin-top: -96upx;\n}\n.modifyqty{\n\twidth: 30%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 300upx;\n\tmargin-top: -96upx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -10515,7 +10549,6 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 29));
 var _fillQty = _interopRequireDefault(__webpack_require__(/*! ../../components/fill-qty/fill-qty.vue */ 102));
-var _instorageKeyboard = _interopRequireDefault(__webpack_require__(/*! ../../components/instorage-keyboard/instorage-keyboard.vue */ 190));
 var _billstatus = _interopRequireDefault(__webpack_require__(/*! ../../components/billstatus/billstatus.vue */ 92));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
@@ -10527,7 +10560,6 @@ var _billstatus = _interopRequireDefault(__webpack_require__(/*! ../../component
   components: {
     'Config': _config.default,
     'FillQty': _fillQty.default,
-    'InStorageKeyboard': _instorageKeyboard.default,
     'BillStatus': _billstatus.default } };exports.default = _default;
 
 /***/ }),
@@ -17904,35 +17936,33 @@ var render = function() {
       _c("v-uni-text", { staticClass: _vm._$g(4, "sc"), attrs: { _i: 4 } }, [
         _vm._v(_vm._$g(4, "t0-0"))
       ]),
-      _c("v-uni-text", { staticClass: _vm._$g(5, "sc"), attrs: { _i: 5 } }, [
-        _vm._v("物料名称：")
-      ]),
-      _c("v-uni-text", { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } }, [
-        _vm._v(_vm._$g(6, "t0-0"))
-      ]),
       _c(
         "v-uni-scroll-view",
-        { staticClass: _vm._$g(7, "sc"), attrs: { "scroll-y": "true", _i: 7 } },
+        { staticClass: _vm._$g(5, "sc"), attrs: { "scroll-y": "true", _i: 5 } },
         [
           _c(
             "uni-table",
-            { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
+            { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
             [
               _c(
                 "uni-tr",
-                { attrs: { _i: 9 } },
+                { attrs: { _i: 7 } },
                 [
-                  _c("uni-td", { attrs: { _i: 10 } }, [_vm._v("仓库")]),
-                  _c("uni-td", { attrs: { _i: 11 } }, [_vm._v("件")]),
-                  _c("uni-td", { attrs: { _i: 12 } }, [_vm._v("只")])
+                  _c("uni-td", { attrs: { _i: 8 } }, [_vm._v("仓库")]),
+                  _c("uni-td", { attrs: { _i: 9 } }, [_vm._v("批号")]),
+                  _c("uni-td", { attrs: { _i: 10 } }, [_vm._v("件")]),
+                  _c("uni-td", { attrs: { _i: 11 } }, [_vm._v("只")])
                 ],
                 1
               ),
-              _vm._l(_vm._$g(13, "f"), function(item, $10, $20, $30) {
+              _vm._l(_vm._$g(12, "f"), function(item, $10, $20, $30) {
                 return _c(
                   "uni-tr",
-                  { key: item, attrs: { _i: "13-" + $30 } },
+                  { key: item, attrs: { _i: "12-" + $30 } },
                   [
+                    _c("uni-td", { attrs: { _i: "13-" + $30 } }, [
+                      _vm._v(_vm._$g("13-" + $30, "t0-0"))
+                    ]),
                     _c("uni-td", { attrs: { _i: "14-" + $30 } }, [
                       _vm._v(_vm._$g("14-" + $30, "t0-0"))
                     ]),
@@ -18045,7 +18075,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.title {\n\tdisplay: flex;\n\tmargin-left: -500upx;\n\tmargin-top: 50upx;\n\tfont-size: 20px;\n}\n.data {\t\n\tdisplay: flex;\n\twidth: 400upx;\n\tfont-size: 20px;\n\tmargin-top: -60upx;\n\tmargin-left: 150upx;\n\ttext-align: center;\n}\n.tablebill{\n\twidth: 100%;\n\theight: 700upx;\n\tmargin-top: 50upx;\n}\n", ""]);
+exports.push([module.i, "\n.title {\n\tdisplay: flex;\n\tmargin-left: -500upx;\n\tmargin-top: 50upx;\n\tfont-size: 20px;\n}\n.data {\t\n\tdisplay: flex;\n\twidth: 400upx;\n\tfont-size: 20px;\n\tmargin-top: -60upx;\n\tmargin-left: 150upx;\n\ttext-align: center;\n}\n.scrollviewinfo{\n\twidth: 100%;\n\theight: 910upx;\n\tmargin-top: 50upx;\n}\n.tablebill{\n\twidth: 100%;\n\theight: 890upx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -19432,7 +19462,10 @@ var components
 try {
   components = {
     uniList: __webpack_require__(/*! @/components/uni-list/uni-list.vue */ 52).default,
-    uniListItem: __webpack_require__(/*! @/components/uni-list-item/uni-list-item.vue */ 60).default
+    uniListItem: __webpack_require__(/*! @/components/uni-list-item/uni-list-item.vue */ 60)
+      .default,
+    uniPopup: __webpack_require__(/*! @/components/uni-popup/uni-popup.vue */ 220).default,
+    modFty: __webpack_require__(/*! @/components/mod-fty/mod-fty.vue */ 233).default
   }
 } catch (e) {
   if (
@@ -19486,16 +19519,42 @@ var render = function() {
         [_vm._v("删除")]
       ),
       _c(
+        "v-uni-button",
+        {
+          staticClass: _vm._$g(3, "sc"),
+          attrs: { _i: 3 },
+          on: {
+            click: function($event) {
+              return _vm.$handleViewEvent($event)
+            }
+          }
+        },
+        [_vm._v("修改数量")]
+      ),
+      _c(
+        "v-uni-button",
+        {
+          staticClass: _vm._$g(4, "sc"),
+          attrs: { _i: 4 },
+          on: {
+            click: function($event) {
+              return _vm.$handleViewEvent($event)
+            }
+          }
+        },
+        [_vm._v("修改批号")]
+      ),
+      _c(
         "v-uni-scroll-view",
-        { staticClass: _vm._$g(3, "sc"), attrs: { "scroll-y": "true", _i: 3 } },
+        { staticClass: _vm._$g(5, "sc"), attrs: { "scroll-y": "true", _i: 5 } },
         [
           _c(
             "uni-list",
-            { attrs: { _i: 4 } },
-            _vm._l(_vm._$g(5, "f"), function(item, index, $20, $30) {
+            { attrs: { _i: 6 } },
+            _vm._l(_vm._$g(7, "f"), function(item, index, $20, $30) {
               return _c("uni-list-item", {
                 key: item,
-                attrs: { _i: "5-" + $30 },
+                attrs: { _i: "7-" + $30 },
                 on: {
                   CheckBoxChange: function($event) {
                     return _vm.$handleViewEvent($event)
@@ -19505,6 +19564,43 @@ var render = function() {
             }),
             1
           )
+        ],
+        1
+      ),
+      _c("OutStorageKeyboard", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm._$g(8, "v-show"),
+            expression: "_$g(8,'v-show')"
+          }
+        ],
+        attrs: { _i: 8 },
+        on: {
+          confirm: function($event) {
+            return _vm.$handleViewEvent($event)
+          },
+          exit: function($event) {
+            return _vm.$handleViewEvent($event)
+          }
+        }
+      }),
+      _c(
+        "uni-popup",
+        { ref: "batchno", attrs: { _i: 9 } },
+        [
+          _c("mod-fty", {
+            attrs: { _i: 10 },
+            on: {
+              close: function($event) {
+                return _vm.$handleViewEvent($event)
+              },
+              confirm: function($event) {
+                return _vm.$handleViewEvent($event)
+              }
+            }
+          })
         ],
         1
       )
@@ -19543,7 +19639,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 29));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 29));
+var _outstorageKeyboard = _interopRequireDefault(__webpack_require__(/*! ../../components/outstorage-keyboard/outstorage-keyboard.vue */ 110));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
 
   data: function data() {
@@ -19552,7 +19649,8 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
 
   },
   components: {
-    'Config': _config.default } };exports.default = _default;
+    'Config': _config.default,
+    'OutStorageKeyboard': _outstorageKeyboard.default } };exports.default = _default;
 
 /***/ }),
 /* 419 */
@@ -19601,7 +19699,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.scrollview{\t\n\tmargin-top: 20upx;\n\theight: 1000upx;\n}\n.selectlabel{\n\twidth: 30%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\t\t\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.deletelabel{\t\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-right: 150upx;\n\tmargin-top: -95upx;\n}\n", ""]);
+exports.push([module.i, "\n.scrollview{\t\n\tmargin-top: 20upx;\n\theight: 1000upx;\n}\n.selectlabel{\n\twidth: 27%;\t\t\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\t\n\tfont-size: 15px;\n\tborder-radius: 50upx;\n\tmargin-left: 5upx;\n\tmargin-top: 20upx;\n}\n.deletelabel{\t\n\twidth: 18%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tfont-size: 15px;\n\tborder-radius: 50upx;\n\tmargin-right: 5upx;\n\tmargin-top: -80upx;\n}\n.modifyqty{\n\twidth: 25%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\t\n\tfont-size: 15px;\n\tborder-radius: 50upx;\n\tmargin-left: 220upx;\n\tmargin-top: -80upx;\n}\n.modifybatchno{\n\twidth: 25%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\t\n\tfont-size: 15px;\t\n\tborder-radius: 50upx;\n\tmargin-left: 420upx;\n\tmargin-top: -80upx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 

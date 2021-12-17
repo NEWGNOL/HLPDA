@@ -168,10 +168,7 @@
 				Main: '',
 				Receiver: ''
 			}
-		},
-		// onShow() {			
-		// 	this.ShowBillGroupInfo();			
-		// },
+		},		
 		onLoad() {
 			this.AddListener();			
 			this.ShowPdaIcmoInfo('');
@@ -529,10 +526,9 @@
 							return;
 						}
 						Config.ShowMessage(ResultData.dataparam.Msg);
-						Config.PopAudioContext(true);
-						//this.ShowBillGroupInfoByScan(Barcode);	
-						//this.ShowBillGroupInfo();
+						Config.PopAudioContext(true);					
 						this.ShowBillGroupInfoByCache(DataModel);
+						this.StatBillQty();
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');

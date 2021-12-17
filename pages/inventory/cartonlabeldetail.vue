@@ -2,6 +2,8 @@
 	<view class="container">
 	<button class="selectlabel" v-on:click="SelectAllLabel()">全选/反选</button>
 	<button class="deletelabel" v-on:click="DeleteSelectLabel()">删除</button>
+	<button class="modifyqty" v-on:click="ModifyQty()">修改数量</button>
+	<button class="modifybatchno" v-on:click="OpenBatPopupWindow()">修改批号</button>
 	
 	<scroll-view class="scrollview" scroll-y="true">		
 		<uni-list>
@@ -10,14 +12,24 @@
 			@CheckBoxChange="ChangeIsChecked(item)" clickable></uni-list-item>
 		</uni-list>	
 	</scroll-view>
+	
+	<OutStorageKeyboard @confirm="UpdateLabelQty" @exit="CloseQtyPopupWindowDirect"
+	v-show="IsOpenDigitKeyboard"></OutStorageKeyboard>
+	
+	<uni-popup ref="batchno" type="center" :mask-click="false">
+		<mod-fty mode="input" title="修改批号" placeholder="请输入产品批号" :duration="2000"
+			:before-close="true" @close="CloseBatPopupWindowDirect" @confirm="UpdateLabelBatchNo"></mod-fty>
+	</uni-popup>
 	</view>
 </template>
 
 <script>
 	import Config from '../../common/config.js';
+	import OutStorageKeyboard from '../../components/outstorage-keyboard/outstorage-keyboard.vue';
 	export default {
 		components: {
-			Config
+			Config,
+			OutStorageKeyboard
 		},
 		data() {
 			return {
@@ -27,6 +39,7 @@
 				DetailListData: [],
 				SelectCartonLabel: '',
 				IsSelectAllLabel: false,
+				IsOpenDigitKeyboard: false,
 				PrevPage: null
 			}
 		},		
@@ -120,6 +133,16 @@
 				this.GetSelectLabel();	
 				this.UnBinding();				
 			},
+			//修改标签数量
+			ModifyQty: function(){
+				let ModifyCount = this.DetailListData.filter(x => x.FIsChecked).length;
+				if(ModifyCount == 0){
+				   Config.ShowMessage('请选择标签进行修改数量！');
+				   Config.PopAudioContext(false);	
+				   return;
+				}
+				this.IsOpenDigitKeyboard = true;
+			},			
 			//入库单选中的外箱解绑
 			UnBinding: function() {	
 				let me = this;
@@ -183,7 +206,147 @@
 						} 
 					}
 				});	
-			}			
+			},
+			CloseQtyPopupWindowDirect: function(e) {				
+				this.IsOpenDigitKeyboard = false;
+			},
+			UpdateLabelQty: function(e){
+				this.GetSelectLabel();
+				this.CloseQtyPopupWindow(e);
+			},
+			UpdateLabelBatchNo: function(e){
+				this.GetSelectLabel();
+				this.CloseBatPopupWindow(e);
+			},
+			//打开批号弹窗
+			OpenBatPopupWindow: function() {
+				let ModifyCount = this.DetailListData.filter(x => x.FIsChecked).length;
+				if(ModifyCount == 0){
+				   Config.ShowMessage('请选择标签进行修改批号！');
+				   Config.PopAudioContext(false);	
+				   return;
+				}
+				this.$refs.batchno.open();
+			},
+			CloseBatPopupWindowDirect: function(e) {
+				this.$refs.batchno.close();
+			},
+			//关闭批号弹窗
+			CloseBatPopupWindow: function(e) {
+				//console.log(e);				
+				if (e == null || e == '') {
+					Config.ShowMessage('请填写要修改的产品批号！');
+					Config.PopAudioContext(false);
+					return;
+				}				
+			    this.$refs.batchno.close();
+				
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'UpdateLabelInfo',
+						token: uni.getStorageSync('token'),
+						ModuleParam: {
+							FType: 2,
+							FIndexIdList: this.SelectCartonLabel,
+							FUpdateInfo: e,	
+						    FIsInWorkShop: false,
+							Result: 0,
+							Msg: ''
+						}
+					},
+					success: (result) => {
+						//console.log(result.data);
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.ShowMessage('账号登录异常，请重新登录！');
+							Config.PopAudioContext(false);
+							return;
+						}
+						let ResultData = result.data.ResultData.UpdateLabelInfo;
+						let Result = ResultData.dataparam.Result;
+						if (Result == 0) {
+							Config.ShowMessage(ResultData.dataparam.Msg);
+							Config.PopAudioContext(false);
+							return;
+						}
+						Config.ShowMessage(ResultData.dataparam.Msg);
+						Config.PopAudioContext(true);
+						this.ShowInventoryDetail();
+					},
+					fail: () => {
+						Config.ShowMessage('请求数据失败！');
+						Config.PopAudioContext(false);						
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.ShowMessage(ResultMsg);
+							Config.PopAudioContext(false);
+						}
+					}
+				});
+			},
+			//关闭数量弹窗
+			CloseQtyPopupWindow: function(e) {				
+				//console.log(e);
+				if (e == null || e == '' || e == 0) {
+					Config.ShowMessage('请填写要修改的标签数量！');
+					Config.PopAudioContext(false);
+					return;
+				}
+			
+				this.IsOpenDigitKeyboard = false;
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'UpdateLabelInfo',
+						token: uni.getStorageSync('token'),
+						ModuleParam: {
+							FType: 1,
+							FIndexIdList: this.SelectCartonLabel,
+							FUpdateInfo: e,	
+						    FIsInWorkShop: false,
+							Result: 0,
+							Msg: ''
+						}
+					},
+					success: (result) => {
+						//console.log(result.data);
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.ShowMessage('账号登录异常，请重新登录！');
+							Config.PopAudioContext(false);
+							return;
+						}
+						let ResultData = result.data.ResultData.UpdateLabelInfo;
+						let Result = ResultData.dataparam.Result;
+						if (Result == 0) {
+							Config.ShowMessage(ResultData.dataparam.Msg);
+							Config.PopAudioContext(false);
+							return;
+						}
+						Config.ShowMessage(ResultData.dataparam.Msg);
+						Config.PopAudioContext(true);
+						this.ShowInventoryDetail();
+					},
+					fail: () => {
+						Config.ShowMessage('请求数据失败！');
+						Config.PopAudioContext(false);						
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.ShowMessage(ResultMsg);
+							Config.PopAudioContext(false);
+						}
+					}
+				});
+		    }
 		}
 	}
 </script>
@@ -195,20 +358,42 @@
 	}
 	
 	.selectlabel{
-		width: 30%;
+		width: 27%;		
 		color: #FFFFFF;
-		background-color: #007AFF;		
+		background-color: #007AFF;	
+		font-size: 15px;
 		border-radius: 50upx;
-		margin-left: 150upx;
+		margin-left: 5upx;
 		margin-top: 20upx;
 	}
 	
 	.deletelabel{	
-		width: 20%;
+		width: 18%;
 		color: #FFFFFF;
 		background-color: #007AFF;
+		font-size: 15px;
 		border-radius: 50upx;
-		margin-right: 150upx;
-		margin-top: -95upx;
+		margin-right: 5upx;
+		margin-top: -80upx;
+	}
+	
+	.modifyqty{
+		width: 25%;
+		color: #FFFFFF;
+		background-color: #007AFF;	
+		font-size: 15px;
+		border-radius: 50upx;
+		margin-left: 220upx;
+		margin-top: -80upx;
+	}
+	
+	.modifybatchno{
+		width: 25%;
+		color: #FFFFFF;
+		background-color: #007AFF;	
+		font-size: 15px;	
+		border-radius: 50upx;
+		margin-left: 420upx;
+		margin-top: -80upx;
 	}
 </style>

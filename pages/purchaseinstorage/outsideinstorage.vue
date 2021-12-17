@@ -97,14 +97,12 @@
 
 <script>
 	import Config from '../../common/config.js';
-	import FillQty from '../../components/fill-qty/fill-qty.vue';
-	import InStorageKeyboard from '../../components/instorage-keyboard/instorage-keyboard.vue';
+	import FillQty from '../../components/fill-qty/fill-qty.vue';	
 	import BillStatus from '../../components/billstatus/billstatus.vue';
 	export default {
 		components: {
 			Config,
-			FillQty,
-			InStorageKeyboard,
+			FillQty,			
 			BillStatus
 		},
 		data() {

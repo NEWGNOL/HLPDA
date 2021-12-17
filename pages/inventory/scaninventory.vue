@@ -73,6 +73,9 @@
 		onUnload() {
 			this.RemoveListener();
 		},	
+		onShow() {
+			this.GenInventoryList();
+		},
 		onNavigationBarButtonTap() {
 			this.ConfirmInventory();
 		},
@@ -175,52 +178,53 @@
 				this.UpdateInventoryLabelStatus();
 			},
 			UpdateInventoryLabelStatus: function(){
+				if(this.InventoryItemId != ''){
 				uni.request({
-					url: uni.getStorageSync('OtherUrl'),
-					method: 'POST',
-					data: {
-						ModuleCode: 'ConfirmInventory',
-						token: uni.getStorageSync('token'),
-						ModuleParam: {
-							FProcessId: this.ProcessModel.FID,												
-							FItemIdList: this.InventoryItemId,							
-							Result: 0,
-							Msg: ''
-						}
-					},
-					success: (result) => {
-						//console.log(result.data);
-						let ResultCode = result.data.ResultCode;
-						let ResultMsg = result.data.ResultMsg;
-						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-							Config.ShowMessage('账号登录异常，请重新登录！');
-							Config.PopAudioContext(false);
-							return;
-						}
-						let ResultData = result.data.ResultData.ConfirmInventory;
-						let Result = ResultData.dataparam.Result;
-						if (Result == 0) {
-							Config.ShowMessage(ResultData.dataparam.Msg);
-							Config.PopAudioContext(false);
-							return;
-						}
-						Config.ShowMessage(ResultData.dataparam.Msg);
-						Config.PopAudioContext(true);	
+				   	url: uni.getStorageSync('OtherUrl'),
+				   	method: 'POST',
+				   	data: {
+				   		ModuleCode: 'ConfirmInventory',
+				   		token: uni.getStorageSync('token'),
+				   		ModuleParam: {
+				   			FProcessId: this.ProcessModel.FID,												
+				   			FItemIdList: this.InventoryItemId,							
+				   			Result: 0,
+				   			Msg: ''
+				   		}
+				   	},
+				   	success: (result) => {
+				   		//console.log(result.data);
+				   		let ResultCode = result.data.ResultCode;
+				   		let ResultMsg = result.data.ResultMsg;
+				   		if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+				   			Config.ShowMessage('账号登录异常，请重新登录！');
+				   			Config.PopAudioContext(false);
+				   			return;
+				   		}
+				   		let ResultData = result.data.ResultData.ConfirmInventory;
+				   		let Result = ResultData.dataparam.Result;
+				   		if (Result == 0) {
+				   			Config.ShowMessage(ResultData.dataparam.Msg);
+				   			Config.PopAudioContext(false);
+				   			return;
+				   		}
+				   		Config.ShowMessage(ResultData.dataparam.Msg);
+				   		Config.PopAudioContext(true);	
 				        this.GenInventoryList();
-					},
-					fail: () => {
-						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);
-						return;
-					},
-					complete: (resultcomp) => {
-						let ResultMsg = resultcomp.data.ResultMsg;
-						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-							Config.ShowMessage(ResultMsg);
-							Config.PopAudioContext(false);
-						}
-					}
-				});
+				   	},
+				   	fail: () => {
+				   		Config.ShowMessage('请求数据失败！');
+				   		Config.PopAudioContext(false);				   		
+				   	},
+				   	complete: (resultcomp) => {
+				   		let ResultMsg = resultcomp.data.ResultMsg;
+				   		if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+				   			Config.ShowMessage(ResultMsg);
+				   			Config.PopAudioContext(false);
+				   		}
+				   	}
+				   });
+				}				
 			},
 			//获取选中的物料
 			GetSelectMaterial(item){
@@ -250,7 +254,7 @@
 				uni.hideLoading();
 			},			
 			//统计盘点数量
-			StatInventoryQty: function() {				
+			StatInventoryQty: function() {					
 				let BasicQty = 0;
 				let CartonQty = 0;
 				for (let i = 0; i < this.ProcessRecordList.length; i++) {
@@ -259,6 +263,7 @@
 					CartonQty += parseFloat((DataModel.FQty / DataModel.FInPackPreQty).toFixed(2));
 				}
 				this.TotalText = CartonQty.toFixed(2) + '件' + '/'  + BasicQty.toFixed(2) + '只';
+				this.ProcessRecordModel = null;
 			},
 			QueryDetail: function(){
 				if (this.ProcessRecordModel == null) {

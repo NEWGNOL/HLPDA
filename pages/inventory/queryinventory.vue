@@ -6,19 +6,21 @@
 	    <text class="title">物料型号：</text>
 		<text class="data">{{MaterialModel != null ? MaterialModel.FModel : '物料型号'}}</text>
 		
-		<text class="title">物料名称：</text>
-		<text class="data">{{MaterialModel != null ? MaterialModel.FMaterialName : '物料名称'}}</text>
+	<!-- 	<text class="title">物料名称：</text>
+		<text class="data">{{MaterialModel != null ? MaterialModel.FMaterialName : '物料名称'}}</text> -->
 		
 		<scroll-view class="scrollviewinfo" scroll-y="true">
 		         <uni-table class="tablebill" border v-bind:data="InventoryList">
 						           <uni-tr>
-						                  <uni-td align="center">仓库</uni-td>										  
+						                  <uni-td align="center">仓库</uni-td>	
+										  <uni-td align="center">批号</uni-td>
 										  <uni-td align="center">件</uni-td>
 										  <uni-td align="center">只</uni-td>
 								   </uni-tr>
 						           <uni-tr v-for="item in InventoryList" :key="item.FIndex">
-								          <uni-td>{{item.FStockName}}</uni-td>	
-										  <uni-td>{{item.FQty/item.FInPackPreQty + '件'}}</uni-td>
+								          <uni-td>{{item.FStockName}}</uni-td>
+										  <uni-td>{{item.FBatchNo}}</uni-td>
+										  <uni-td>{{(item.FQty/item.FInPackPreQty).toFixed(2) + '件'}}</uni-td>
 										  <uni-td>{{item.FQty + item.FUnitName}}</uni-td>										
 								   </uni-tr>			
 		         </uni-table>
@@ -82,7 +84,11 @@
 				this.Main.unregisterReceiver(this.Receiver); //取消监听
 			},
 			//扫描条码做库存查询
-			ScanBarCode: function(Barcode) {				
+			ScanBarCode: function(Barcode) {	
+				uni.showLoading({
+					title: 'Loading',
+					mask: true
+				});
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -124,6 +130,7 @@
 						}
 					}
 				});
+				uni.hideLoading();
 			},
 			JumpToICItemPage: function(){
 				uni.showLoading({
@@ -156,9 +163,14 @@
 		text-align: center;		
 	}
 	
+	.scrollviewinfo{
+		width: 100%;
+		height: 910upx;
+		margin-top: 50upx;
+	}
+	
 	.tablebill{
 		width: 100%;
-		height: 700upx;
-		margin-top: 50upx;
+		height: 890upx;		
 	}
 </style>
