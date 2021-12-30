@@ -22,8 +22,8 @@
 				<uni-list>
 					<uni-list-item v-for="(item,index) in BillListData" :key="index" :title="'合并单制单人：'
 				    + item.FBillerName + '\n'+ '合并单日期：' + item.FDate + '\n' + '合并单编号：' + item.FBillNo
-					+ '\n' + '购货单位：' + item.FCustName + '\n' + '单据状态：' + item.FStatus" clickable
-					@click="ShowSelectMergeInfo(item)">
+					+ '\n' + '购货单位：' + item.FCustName + '\n' + '单据状态：' + item.FStatus + '\n' 
+					+ '源单编号：' + item.FSrcBillNo" clickable @click="ShowSelectMergeInfo(item)">
 					</uni-list-item>
 				</uni-list>
 			</scroll-view>
@@ -32,7 +32,8 @@
 
 		<view class="outstorageview" v-show="TabSelectedIndex == 1" @touchstart='TouchStart' @touchend='TouchEnd'>	
 		    <view class="pagehead">
-			    <text class="srcbillno">{{SelectSrcBillNo}}</text>	
+			    <!-- <text class="srcbillno" v-show="false">{{SelectSrcBillNo}}</text>	 -->
+				<button class="srcbillno" disabled="true">新增板号</button>
 			    <button class="auditstorageout" v-on:click="AuditStorageOut()" v-show="false">审核</button>
 				<button class="unauditstorageout" v-on:click="UnAuditStorageOut()" v-show="false">反审</button>
 			    <button class="deletestorageout" v-on:click="DeleteStorageOut()">删除</button>
@@ -502,8 +503,10 @@
 				let FFactQty = 0;
 				for (let i = 0; i < this.BillGroupData.length; i++) {
 					let DataModel = this.BillGroupData[i];
-					FSQty += parseFloat((DataModel.FSQty / DataModel.FInPackPreQty).toFixed(2));
-					FFactQty += parseFloat((DataModel.FFactQty / DataModel.FInPackPreQty).toFixed(2));
+					if(DataModel.FInPackPreQty != null && DataModel.FInPackPreQty != 0){
+					   FSQty += parseFloat((DataModel.FSQty / DataModel.FInPackPreQty).toFixed(2));
+					   FFactQty += parseFloat((DataModel.FFactQty / DataModel.FInPackPreQty).toFixed(2));
+					}					
 				}
 				this.ScanProgress = FFactQty.toFixed(2) + '件' + '/' + FSQty.toFixed(2) + '     件';
 			},
@@ -1355,7 +1358,7 @@
 
 	.billscrollview {
 		width: 100%;
-		height: 850upx;
+		height: 950upx;
 		margin-top: 10upx;
 	}
 
@@ -1409,6 +1412,15 @@
 		margin-left: 300upx;
 		margin-top: -100upx;
 	}
+	
+	.srcbillno {
+		display: inline-block;
+		color: #FFFFFF;
+		font-size: 15px;
+		margin-left: 20upx;
+		margin-top: 30upx;
+	}
+	
 
 	.auditstorageout {		
 		width: 20%;
@@ -1452,16 +1464,8 @@
 	
 	.pagehead{
 		width: 100%;
-		height: 130upx;
+		height: 130upx;		
 		background-color: #1AAD19;
-	}
-
-	.srcbillno {
-		display: inline-block;
-		color: #FFFFFF;
-		font-size: 19px;
-		margin-left: 20upx;
-		margin-top: 30upx;
 	}
 
 	.billhead {
