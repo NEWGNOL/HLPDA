@@ -255,6 +255,25 @@
 			}			
 		},
 		{
+			"path": "pages/outstorage/queryboard",
+			"style": {
+				"navigationBarTitleText": "板号查询",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF",
+								  "buttons": [{
+								      "text": "确定",
+								      "fontSrc": "/static/fonts/icomoon.ttf",
+								      "fontSize": "17px",
+								  	  "color":"#FFFFFF",
+								      "float": "right",
+								      "width": "60px"											
+								  }]
+					 }
+			    }
+			}			
+		},
+		{
 			"path": "pages/transfers/transfers",
 			"style": {
 				"navigationBarTitleText": "仓库调拨",
