@@ -13017,7 +13017,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.outstorageview {\n\twidth: 100%;\n\theight: 950upx;\n}\n.billstatus {\n\tmargin-top: -90upx;\n\tmargin-left: 570upx;\n}\n.billscrollview {\n\twidth: 100%;\n\theight: 950upx;\n\tmargin-top: 10upx;\n}\n.selectinfoscrollview {\n\twidth: 100%;\n\theight: 700upx;\n\tmargin-top: 30upx;\n}\n.unselectinfoscrollview {\n\twidth: 100%;\n\theight: 850upx;\n\tmargin-top: 30upx;\n}\n.scanseorder {\n\twidth: 31%;\n\tcolor: #FFFFFF;\n\tbackground-color: #F0AD4E;\n\tborder-radius: 50upx;\n\tmargin-left: 50upx;\n\tmargin-top: 20upx;\n}\n.scanseoutstockorder {\n\twidth: 31%;\n\tcolor: #FFFFFF;\n\tbackground-color: #1AAD19;\n\tborder-radius: 50upx;\n\tmargin-left: 50upx;\n\tmargin-top: 30upx;\n}\n.addstorageout {\n\tdisplay: inline-block;\n\twidth: 25%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\tmargin-left: 40upx;\n\tmargin-top: 20upx;\n}\n.confirmsoutgroup {\n\twidth: 25%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\tmargin-left: 300upx;\n\tmargin-top: -100upx;\n}\n.addboard {\n\tdisplay: inline-block;\n\tcolor: #FFFFFF;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\tfont-size: 15px;\n\tmargin-left: 20upx;\n\tmargin-top: 30upx;\n}\n.queryboard {\n\twidth: 22%;\n\tcolor: #FFFFFF;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\tfont-size: 15px;\n\tmargin-left: 190upx;\n\tmargin-top: -97upx;\n}\n.auditstorageout {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\tmargin-left: 420upx;\n\tmargin-top: -70upx;\n}\n.unauditstorageout {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\tmargin-left: 420upx;\n\tmargin-top: -70upx;\n}\n.deletestorageout {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\ttext-align: center;\n\tmargin-left: 590upx;\n\tmargin-top: -85upx;\n}\n.checkitem {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 580upx;\n\tmargin-top: -96upx;\n}\n.pagehead {\n\twidth: 100%;\n\theight: 130upx;\n\tbackground-color: #1AAD19;\n}\n.billhead {\n\twidth: 100%;\n\tmargin-top: 30upx;\n}\n.billnoempty {\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 50upx;\n\ttext-align: center;\n\tcolor: #777777;\n}\n.switchtitle{\n\tdisplay:inline-block;\n\tmargin-top: 10upx;\n\tmargin-left: 50upx;\n\tfont-size: 40upx;\n}\n.title {\n\tmargin-left: 50upx;\n\tfont-size: 40upx;\n}\n.data {\n\twidth: 450upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 250upx;\n\ttext-align: center;\n}\n.dataline {\n\twidth: 60%;\n\theight: 5upx;\n\tbackground-color: #4CD964;\n\tmargin-left: 250upx;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline {\n\tbackground-color: #007AFF;\n}\n.scanned {\n\tdisplay: inline-block;\n\tcolor: #FFFFFF;\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 30upx;\n}\n.queryall {\n\tdisplay: flex;\n\tflex-direction: column;\n\tfont-size: 40upx;\n\tcolor: #007AFF;\n\tmargin-left: 570upx;\n\tmargin-top: -60upx;\n}\n.detailscrollview {\n\twidth: 100%;\n\theight: 950upx;\n\tmargin-top: 20upx;\n}\n.detailtitle {\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: 30upx;\n\tmargin-left: 30upx;\n}\n.detaildata {\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: -50upx;\n\tmargin-left: 270upx;\n\ttext-align: center;\n}\n.listline {\n\twidth: 100%;\n\theight: 3upx;\n\tbackground-color: #000000;\n\tmargin-top: 20upx;\n}\n.tabbackground {\n\twidth: 100%;\n\theight: 90upx;\n\tmargin-top: 150upx;\n\tbackground-color: #F4F4F4;\n}\n.tableft {\n\tfont-size: 45upx;\n\tmargin-top: 20upx;\n\tmargin-left: 40upx;\n}\n.tabmiddle {\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 330upx;\n}\n.tabright {\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 630upx;\n}\n.tableftline {\n\twidth: 18%;\n\theight: 5upx;\n\tmargin-left: 40upx;\n}\n.tabmiddleline {\n\twidth: 18%;\n\theight: 5upx;\n\tmargin-left: 330upx;\n}\n.tabrightline {\n\twidth: 15%;\n\theight: 5upx;\n\tmargin-left: 620upx;\n}\n.inputsectiontitle {\n\tfont-size: 16px;\n\tcolor: #000000;\n\tmargin-top: 20upx;\n}\n.inputsection {\n\tfont-size: 16px;\n\tcolor: #000000;\n\tborder: 5upx solid;\n\tborder-color: #888888;\n\tmargin-left: 170upx;\n\tmargin-top: -55upx;\n}\n", ""]);
+exports.push([module.i, "\n.outstorageview {\n\twidth: 100%;\n\theight: 950upx;\n}\n.billstatus {\n\tmargin-top: -90upx;\n\tmargin-left: 570upx;\n}\n.billscrollview {\n\twidth: 100%;\n\theight: 950upx;\n\tmargin-top: 10upx;\n}\n.selectinfoscrollview {\n\twidth: 100%;\n\theight: 700upx;\n\tmargin-top: 30upx;\n}\n.unselectinfoscrollview {\n\twidth: 100%;\n\theight: 850upx;\n\tmargin-top: 30upx;\n}\n.scanseorder {\n\twidth: 31%;\n\tcolor: #FFFFFF;\n\tbackground-color: #F0AD4E;\n\tborder-radius: 50upx;\n\tmargin-left: 50upx;\n\tmargin-top: 20upx;\n}\n.scanseoutstockorder {\n\twidth: 31%;\n\tcolor: #FFFFFF;\n\tbackground-color: #1AAD19;\n\tborder-radius: 50upx;\n\tmargin-left: 50upx;\n\tmargin-top: 30upx;\n}\n.addstorageout {\n\tdisplay: inline-block;\n\twidth: 25%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\tmargin-left: 40upx;\n\tmargin-top: 20upx;\n}\n.confirmsoutgroup {\n\twidth: 25%;\n\theight: 90upx;\n\tcolor: #FFFFFF;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\tmargin-left: 300upx;\n\tmargin-top: -100upx;\n}\n.addboard {\n\tdisplay: inline-block;\n\tcolor: #FFFFFF;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\tfont-size: 15px;\n\tmargin-left: 20upx;\n\tmargin-top: 30upx;\n}\n.queryboard {\n\twidth: 22%;\n\tcolor: #FFFFFF;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\tfont-size: 15px;\n\tmargin-left: 210upx;\n\tmargin-top: -97upx;\n}\n.auditstorageout {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\tmargin-left: 410upx;\n\tmargin-top: -85upx;\n}\n.unauditstorageout {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\tmargin-left: 410upx;\n\tmargin-top: -85upx;\n}\n.deletestorageout {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tfont-size: 15px;\n\tborder: 1px solid #FFFFFF;\n\tbackground-color: #1AAD19;\n\ttext-align: center;\n\tmargin-left: 590upx;\n\tmargin-top: -85upx;\n}\n.checkitem {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 580upx;\n\tmargin-top: -96upx;\n}\n.pagehead {\n\twidth: 100%;\n\theight: 130upx;\n\tbackground-color: #1AAD19;\n}\n.billhead {\n\twidth: 100%;\n\tmargin-top: 30upx;\n}\n.billnoempty {\n\twidth: 200upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 50upx;\n\ttext-align: center;\n\tcolor: #777777;\n}\n.switchtitle {\n\tdisplay: inline-block;\n\tmargin-top: 10upx;\n\tmargin-left: 50upx;\n\tfont-size: 40upx;\n}\n.title {\n\tmargin-left: 50upx;\n\tfont-size: 40upx;\n}\n.data {\n\twidth: 450upx;\n\tfont-size: 40upx;\n\tmargin-top: -60upx;\n\tmargin-left: 250upx;\n\ttext-align: center;\n}\n.dataline {\n\twidth: 60%;\n\theight: 5upx;\n\tbackground-color: #4CD964;\n\tmargin-left: 250upx;\n}\n.selecttab {\n\tcolor: #007AFF;\n}\n.selecttabline {\n\tbackground-color: #007AFF;\n}\n.scanned {\n\tdisplay: inline-block;\n\tcolor: #FFFFFF;\n\tfont-size: 40upx;\n\tmargin-left: 30upx;\n\tmargin-top: 30upx;\n}\n.queryall {\n\tdisplay: flex;\n\tflex-direction: column;\n\tfont-size: 40upx;\n\tcolor: #007AFF;\n\tmargin-left: 570upx;\n\tmargin-top: -60upx;\n}\n.detailscrollview {\n\twidth: 100%;\n\theight: 950upx;\n\tmargin-top: 20upx;\n}\n.detailtitle {\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: 30upx;\n\tmargin-left: 30upx;\n}\n.detaildata {\n\tdisplay: flex;\n\tfont-size: 35upx;\n\tmargin-top: -50upx;\n\tmargin-left: 270upx;\n\ttext-align: center;\n}\n.listline {\n\twidth: 100%;\n\theight: 3upx;\n\tbackground-color: #000000;\n\tmargin-top: 20upx;\n}\n.tabbackground {\n\twidth: 100%;\n\theight: 90upx;\n\tmargin-top: 150upx;\n\tbackground-color: #F4F4F4;\n}\n.tableft {\n\tfont-size: 45upx;\n\tmargin-top: 20upx;\n\tmargin-left: 40upx;\n}\n.tabmiddle {\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 330upx;\n}\n.tabright {\n\tdisplay: flex;\n\tfont-size: 45upx;\n\tmargin-top: -68upx;\n\tmargin-left: 630upx;\n}\n.tableftline {\n\twidth: 18%;\n\theight: 5upx;\n\tmargin-left: 40upx;\n}\n.tabmiddleline {\n\twidth: 18%;\n\theight: 5upx;\n\tmargin-left: 330upx;\n}\n.tabrightline {\n\twidth: 15%;\n\theight: 5upx;\n\tmargin-left: 620upx;\n}\n.inputsectiontitle {\n\tfont-size: 16px;\n\tcolor: #000000;\n\tmargin-top: 20upx;\n}\n.inputsection {\n\tfont-size: 16px;\n\tcolor: #000000;\n\tborder: 5upx solid;\n\tborder-color: #888888;\n\tmargin-left: 170upx;\n\tmargin-top: -55upx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -13270,7 +13270,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.scrollview{\t\n\tmargin-top: 20upx;\n\theight: 1000upx;\n}\n.selectlabel{\n\twidth: 30%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\t\t\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.deletelabel{\t\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-right: 150upx;\n\tmargin-top: -95upx;\n}\n", ""]);
+exports.push([module.i, "\n.scrollview {\n\tmargin-top: 20upx;\n\theight: 1000upx;\n}\n.selectlabel {\n\twidth: 30%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 150upx;\n\tmargin-top: 20upx;\n}\n.deletelabel {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-right: 150upx;\n\tmargin-top: -95upx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -13382,57 +13382,139 @@ var render = function() {
     { staticClass: _vm._$g(0, "sc"), attrs: { _i: 0 } },
     [
       _c(
-        "uni-grid",
-        {
-          attrs: { _i: 1 },
-          on: {
-            change: function($event) {
-              return _vm.$handleViewEvent($event)
-            }
-          }
-        },
-        _vm._l(_vm._$g(2, "f"), function(item, $10, $20, $30) {
-          return _c(
-            "uni-grid-item",
-            { key: item, attrs: { _i: "2-" + $30 } },
-            [
-              _vm._$g("3-" + $30, "i")
-                ? _c(
-                    "v-uni-text",
-                    {
-                      staticClass: _vm._$g("3-" + $30, "sc"),
-                      style: _vm._$g("3-" + $30, "s"),
-                      attrs: { _i: "3-" + $30 }
-                    },
-                    [_vm._v(_vm._$g("3-" + $30, "t0-0"))]
-                  )
-                : _vm._e(),
-              _vm._$g("4-" + $30, "i")
-                ? _c(
-                    "v-uni-text",
+        "v-uni-scroll-view",
+        { staticClass: _vm._$g(1, "sc"), attrs: { "scroll-y": "true", _i: 1 } },
+        [
+          _c(
+            "uni-grid",
+            {
+              attrs: { _i: 2 },
+              on: {
+                change: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            _vm._l(_vm._$g(3, "f"), function(item, $10, $20, $30) {
+              return _c(
+                "uni-grid-item",
+                { key: item, attrs: { _i: "3-" + $30 } },
+                [
+                  _c(
+                    "v-uni-view",
                     {
                       staticClass: _vm._$g("4-" + $30, "sc"),
-                      style: _vm._$g("4-" + $30, "s"),
                       attrs: { _i: "4-" + $30 }
                     },
-                    [_vm._v(_vm._$g("4-" + $30, "t0-0"))]
+                    [
+                      _vm._$g("5-" + $30, "i")
+                        ? _c(
+                            "v-uni-view",
+                            {
+                              style: _vm._$g("5-" + $30, "s"),
+                              attrs: { _i: "5-" + $30 }
+                            },
+                            [
+                              _c(
+                                "v-uni-text",
+                                {
+                                  staticClass: _vm._$g("6-" + $30, "sc"),
+                                  attrs: { _i: "6-" + $30 }
+                                },
+                                [_vm._v(_vm._$g("6-" + $30, "t0-0"))]
+                              ),
+                              _vm._$g("7-" + $30, "i")
+                                ? _c(
+                                    "v-uni-text",
+                                    {
+                                      staticClass: _vm._$g("7-" + $30, "sc"),
+                                      attrs: { _i: "7-" + $30 }
+                                    },
+                                    [_vm._v(_vm._$g("7-" + $30, "t0-0") + "件")]
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._$g("8-" + $30, "i")
+                        ? _c(
+                            "v-uni-view",
+                            {
+                              style: _vm._$g("8-" + $30, "s"),
+                              attrs: { _i: "8-" + $30 }
+                            },
+                            [
+                              _c(
+                                "v-uni-text",
+                                {
+                                  staticClass: _vm._$g("9-" + $30, "sc"),
+                                  attrs: { _i: "9-" + $30 }
+                                },
+                                [_vm._v(_vm._$g("9-" + $30, "t0-0"))]
+                              ),
+                              _vm._$g("10-" + $30, "i")
+                                ? _c(
+                                    "v-uni-text",
+                                    {
+                                      staticClass: _vm._$g("10-" + $30, "sc"),
+                                      attrs: { _i: "10-" + $30 }
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._$g("10-" + $30, "t0-0") + "件"
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._$g("11-" + $30, "i")
+                        ? _c(
+                            "v-uni-view",
+                            {
+                              style: _vm._$g("11-" + $30, "s"),
+                              attrs: { _i: "11-" + $30 }
+                            },
+                            [
+                              _c(
+                                "v-uni-text",
+                                {
+                                  staticClass: _vm._$g("12-" + $30, "sc"),
+                                  attrs: { _i: "12-" + $30 }
+                                },
+                                [_vm._v(_vm._$g("12-" + $30, "t0-0"))]
+                              ),
+                              _vm._$g("13-" + $30, "i")
+                                ? _c(
+                                    "v-uni-text",
+                                    {
+                                      staticClass: _vm._$g("13-" + $30, "sc"),
+                                      attrs: { _i: "13-" + $30 }
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._$g("13-" + $30, "t0-0") + "件"
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ],
+                    1
                   )
-                : _vm._e(),
-              _vm._$g("5-" + $30, "i")
-                ? _c(
-                    "v-uni-text",
-                    {
-                      staticClass: _vm._$g("5-" + $30, "sc"),
-                      style: _vm._$g("5-" + $30, "s"),
-                      attrs: { _i: "5-" + $30 }
-                    },
-                    [_vm._v(_vm._$g("5-" + $30, "t0-0"))]
-                  )
-                : _vm._e()
-            ],
+                ],
+                1
+              )
+            }),
             1
           )
-        }),
+        ],
         1
       )
     ],
@@ -13836,7 +13918,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.uni-grid-item[data-v-c05ffd80] {\n\n\theight: 100%;\n\tdisplay: flex;\n}\n.uni-grid-item__box[data-v-c05ffd80] {\n\n\tdisplay: flex;\n\twidth: 100%;\n\n\tposition: relative;\n\tflex: 1;\n\tflex-direction: column;\n}\n.uni-grid-item--border[data-v-c05ffd80] {\n\tposition: relative;\n\n\n\n\n\n\n\n\n\n\tz-index: 0;\n\tborder-bottom: 1px #e5e5e5 solid;\n\tborder-right: 1px #e5e5e5 solid;\n}\n.uni-grid-item--border-top[data-v-c05ffd80] {\n\tposition: relative;\n\n\n\n\n\n\n\tborder-top: 1px #e5e5e5 solid;\n\tz-index: 0;\n}\n.uni-highlight[data-v-c05ffd80]:active {\n\tbackground-color: #f1f1f1;\n}\n", ""]);
+exports.push([module.i, "\n.uni-grid-item[data-v-c05ffd80] {\n\n\t/* height: 80upx;\n\twidth: 150upx; */\n\theight: 100%;\n\tdisplay: flex;\n}\n.uni-grid-item__box[data-v-c05ffd80] {\n\n\t/* height: 80upx;\n\twidth: 150upx; */\n\tdisplay: flex;\n\twidth: 100%;\n\n\tposition: relative;\n\tflex: 1;\n\tflex-direction: column;\n}\n.uni-grid-item--border[data-v-c05ffd80] {\n\tposition: relative;\n\n\n\n\n\n\n\n\n\n\tz-index: 0;\n\tborder-bottom: 1px #e5e5e5 solid;\n\tborder-right: 1px #e5e5e5 solid;\n}\n.uni-grid-item--border-top[data-v-c05ffd80] {\n\tposition: relative;\n\n\n\n\n\n\n\tborder-top: 1px #e5e5e5 solid;\n\tz-index: 0;\n}\n.uni-highlight[data-v-c05ffd80]:active {\n\tbackground-color: #f1f1f1;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -13924,7 +14006,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.gridleft {\n\tdisplay: inline-block;\n\tmargin-left: -350upx;\n}\n.gridmiddle{\n\tdisplay: inline-block;\n\tmargin-left: -100upx;\n}\n.gridright {\n\tdisplay: inline-block;\n\tmargin-left: 150upx;\n}\n.griditem {\t\t\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: flex-end;\n\ttext-align: center;\n\tfont-size: 25px;\n}\n.rectangle{\t\t\n\tdisplay: inline-block;\n\theight: 100upx;\n\twidth: 200upx;\n\tbackground-color: #1AAD19;\t\n\tborder-radius: 20upx;\n\tborder: 1px solid #000000;\n}\n.round{\n\tdisplay: inline-block;\n\theight: 50upx;\n\twidth: 50upx;\n\tborder-radius: 180upx;\n}\n", ""]);
+exports.push([module.i, "\n.gridboard {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: flex-end;\t\n\tpadding-top: 65upx;\t\t\n\tfont-size: 25px;\n}\n.gridpieceleft {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: flex-end;\t\n\tmargin-left: 100upx;\n\tfont-size: 25px;\n}\n.gridpiecemiddle {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: flex-end;\t\n\tmargin-left: 100upx;\n\tfont-size: 25px;\n}\n.gridpieceright {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: flex-end;\t\n\tmargin-left: 100upx;\n\tfont-size: 25px;\n}\n.rectangle {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: flex-end;\t\n\theight: 220upx;\n\twidth: 220upx;\n\tbackground-color: #1AAD19;\n\t/* border-radius: 20upx; */\n\tborder: 1px solid #000000;\n\tmargin-left: 15upx;\n\tmargin-top: 20upx;\n}\n.round {\n\tdisplay: inline-block;\n\theight: 60upx;\n\twidth: 60upx;\n\tbackground-color: #1AAD19;\n\tborder-radius: 180upx;\n\tfont-size: 20px;\n}\n.scrollview {\n\twidth: 100%;\n\theight: 950upx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 

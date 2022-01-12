@@ -112,6 +112,7 @@
 					data: '{"Sign":"sl2021","FUsername":"' + me.UserName + '","FPassword":"' + me.Password + '"}',
 					method: 'POST',
 					success: (result) => {
+						//console.log(result.data);
 						if (result.data.Result == 1) {
 							if (me.UserNameSearch.indexOf(me.UserName) == -1) {
 								if (me.UserNameSearch.length == 0) {
@@ -136,7 +137,7 @@
 							uni.hideLoading();
 						} else {
 							Config.PopAudioContext(false);
-							Config.ShowMessage('用户名或密码错误！');
+							Config.ShowMessage(result.data.Msg);
 						}
 					},
 					fail: () => {

@@ -36,8 +36,9 @@
 			<view class="pagehead">
 				<button class="addboard" v-on:click="AddBoard()">新增板</button>
 				<button class="queryboard" v-on:click="QueryBoard()">查询板</button>
-				<button class="auditstorageout" v-on:click="AuditStorageOut()" v-show="false">审核</button>
-				<button class="unauditstorageout" v-on:click="UnAuditStorageOut()" v-show="false">反审</button>
+				<button class="auditstorageout" v-on:click="AuditStorageOut()" v-show="IsAuditStorageOut">审核</button>
+				<button class="unauditstorageout" v-on:click="UnAuditStorageOut()"
+					v-show="!IsAuditStorageOut">反审</button>
 				<button class="deletestorageout" v-on:click="DeleteStorageOut()">删除</button>
 				<!-- v-show="IsAuditStorageOut" v-show="!IsAuditStorageOut" -->
 			</view>
@@ -53,13 +54,15 @@
 				<text class="title">总进度：</text>
 				<view class="data">{{ScanProgress}}</view>
 				<view class="dataline"></view>
-				
+
 				<text class="title">板进度：</text>
 				<view class="data">{{CurrentBoardId + '号板' + '     ' + CurBoardScanProgress}}</view>
-				<view class="dataline"></view>	
-							
+				<view class="dataline"></view>
+
 				<text class="switchtitle">显示全部：</text>
-				<view class="data"><switch checked @change="ShowBillGroupInfoByBoard"></switch></view>			
+				<view class="data">
+					<switch checked @change="ShowBillGroupInfoByBoard"></switch>
+				</view>
 			</view>
 
 			<scroll-view :scroll-top="ScrollTop" class="selectinfoscrollview"
@@ -208,7 +211,7 @@
 			SwitchAuditFlag: function(IsAuditStorageOut) {
 				this.IsAuditStorageOut = IsAuditStorageOut;
 			},
-			SwitchChanged: function(e){
+			SwitchChanged: function(e) {
 				// console.log(e.detail.value);
 				this.IsShowAllBoard = e.detail.value;
 			},
@@ -264,7 +267,7 @@
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);						
+						Config.PopAudioContext(false);
 					},
 					complete: (resultcomp) => {
 						let ResultMsg = resultcomp.data.ResultMsg;
@@ -383,7 +386,7 @@
 				//console.log('onBackPress');				
 			},
 			//新增板号
-			AddBoard: function() {				
+			AddBoard: function() {
 				if (this.AddSOutGroupInterId != 0 && this.IsAuditStorageOut) {
 					uni.showLoading({
 						title: 'Loading',
@@ -397,7 +400,7 @@
 							token: uni.getStorageSync('token'),
 							ModuleParam: {
 								FInterId: this.AddSOutGroupInterId,
-								FBoardId: 0,								
+								FBoardId: 0,
 								Result: 0,
 								Msg: ''
 							}
@@ -420,9 +423,9 @@
 								Config.PopAudioContext(false);
 								return;
 							}
-							Config.ShowMessage(DataParam.Msg);
-							Config.PopAudioContext(true);
-							
+							//Config.ShowMessage(DataParam.Msg);
+							//Config.PopAudioContext(true);
+
 							this.CurrentBoardId = DataParam.FBoardId;
 							this.CurBoardScanProgress = '0只';
 						},
@@ -448,13 +451,13 @@
 						mask: true
 					});
 					uni.navigateTo({
-						url: '/pages/outstorage/queryboard?AddSOutGroupInterId=' + this.AddSOutGroupInterId 
-						 + '&CurrentBoardId=' + this.SelectGroupModel.CurrentBoardId
+						url: '/pages/outstorage/queryboard?AddSOutGroupInterId=' + this.AddSOutGroupInterId +
+							'&CurrentBoardId=' + this.CurrentBoardId
 					});
-					uni.hideLoading();					
+					uni.hideLoading();
 				}
 			},
-			GetSOutGroupMaxBoard: function(){
+			GetSOutGroupMaxBoard: function() {
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -464,9 +467,9 @@
 						ModuleParam: {
 							FInterId: this.AddSOutGroupInterId,
 							FBoardId: this.CurrentBoardId,
-							FQty: 0,
+							FPieceCount: 0,
 							Result: 0,
-							Msg: ''								
+							Msg: ''
 						}
 					},
 					success: (result) => {
@@ -475,10 +478,10 @@
 						let ResultMsg = result.data.ResultMsg;
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 							Config.ShowMessage('账号登录异常，请重新登录！');
-							Config.PopAudioContext(false);							
+							Config.PopAudioContext(false);
 							return;
 						}
-						
+
 						let DataParam = result.data.ResultData.GetSOutGroupMaxBoard
 							.dataparam;
 						let Result = DataParam.Result;
@@ -487,8 +490,8 @@
 							Config.PopAudioContext(false);
 							return;
 						}
-			            this.CurrentBoardId = DataParam.FBoardId;
-						this.CurBoardScanProgress = DataParam.FQty + '只';
+						this.CurrentBoardId = DataParam.FBoardId;
+						this.CurBoardScanProgress = DataParam.FPieceCount + '件';
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -499,7 +502,7 @@
 						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							Config.ShowMessage(ResultMsg);
 							Config.PopAudioContext(false);
-						}						
+						}
 					}
 				});
 			},
@@ -640,19 +643,19 @@
 			},
 			//统计单据扫描总数量
 			StatBillQty: function() {
-				if(this.IsShowAllBoard){
-				   let FSQty = 0;
-				   let FFactQty = 0;
-				   for (let i = 0; i < this.BillGroupData.length; i++) {
-				   	let DataModel = this.BillGroupData[i];
-				   	if (DataModel.FInPackPreQty != null && DataModel.FInPackPreQty != 0) {
-				   		FSQty += parseFloat((DataModel.FSQty / DataModel.FInPackPreQty).toFixed(2));
-				   		FFactQty += parseFloat((DataModel.FFactQty / DataModel.FInPackPreQty).toFixed(2));
-				   	}
-				   }
-				   this.ScanProgress = FFactQty.toFixed(2) + '件' + '/' + FSQty.toFixed(2) + '     件';
-				}				
-			},			
+				if (this.IsShowAllBoard) {
+					let FSQty = 0;
+					let FFactQty = 0;
+					for (let i = 0; i < this.BillGroupData.length; i++) {
+						let DataModel = this.BillGroupData[i];
+						if (DataModel.FInPackPreQty != null && DataModel.FInPackPreQty != 0) {
+							FSQty += parseFloat((DataModel.FSQty / DataModel.FInPackPreQty).toFixed(2));
+							FFactQty += parseFloat((DataModel.FFactQty / DataModel.FInPackPreQty).toFixed(2));
+						}
+					}
+					this.ScanProgress = FFactQty.toFixed(2) + '件' + '/' + FSQty.toFixed(2) + '     件';
+				}
+			},
 			//扫描条码做出库
 			ScanBarCode: function(Barcode) {
 				if (this.AddSOutGroupInterId != 0 && this.BillListData.length != 0) {
@@ -719,8 +722,8 @@
 			//查询销售出库单
 			ConfirmSOutGroup: function() {
 				let IsSuccess = this.CheckConfirmSOutGroup();
-				if (IsSuccess != 0) {					
-					this.SwitchAuditFlag(true);					
+				if (IsSuccess != 0) {
+					this.SwitchAuditFlag(true);
 					this.SwitchTab(1);
 					this.AddBoard();
 					this.ShowBillGroupInfo(0, false);
@@ -1134,7 +1137,7 @@
 					this.ShowICStockBillQueryList();
 				}
 			},
-			ShowSelectMergeInfo: function(item) {				
+			ShowSelectMergeInfo: function(item) {
 				if (item.FStatus == "未审核") {
 					this.SwitchAuditFlag(true);
 				} else {
@@ -1151,9 +1154,9 @@
 				this.AddSOutGroupCustId = item.FCustId;
 				this.AddSOutGroupDate = item.FDate;
 			},
-			ShowBillGroupInfoByBoard: function(e){
+			ShowBillGroupInfoByBoard: function(e) {
 				this.SwitchChanged(e);
-				this.ShowBillGroupInfo(0,false);
+				this.ShowBillGroupInfo(0, false);
 			},
 			//显示单据分组信息
 			ShowBillGroupInfo: function(FItemId, FIsScanned) {
@@ -1186,11 +1189,11 @@
 								uni.hideLoading();
 								return;
 							}
-							
+
 							let DataInfo = result.data.ResultData.GetPdaSOutGroupByItemScan;
 							this.BillGroupData = DataInfo.data0;
 							this.BillGroupData.sort(x => x.FHighLight);
-							
+
 							this.GetBillSelectItem();
 							this.StatBillQty();
 							this.GetSOutGroupMaxBoard();
@@ -1269,7 +1272,7 @@
 								},
 								fail: () => {
 									Config.ShowMessage('请求数据失败！');
-									Config.PopAudioContext(false);									
+									Config.PopAudioContext(false);
 								},
 								complete: (resultcomp) => {
 									let ResultMsg = resultcomp.data.ResultMsg;
@@ -1277,7 +1280,7 @@
 											'执行成功') == -1) {
 										Config.ShowMessage(ResultMsg);
 										Config.PopAudioContext(false);
-									}									
+									}
 								}
 							});
 						}
@@ -1470,12 +1473,13 @@
 						}
 					}
 				});
-			},
+			},			
 			//获取出库单外箱明细信息
 			GetStorageOutCartonDetail: function() {
 				if (this.StorageOutInterId != 0 && this.SelectGroupModel != null) {
 					uni.showLoading({
-						title: 'Loading'
+						title: 'Loading',
+						mask: true
 					});
 					uni.navigateTo({
 						url: '/pages/outstorage/cartonlabeldetail?AddSOutGroupInterId=' + this
@@ -1493,13 +1497,7 @@
 			PopupFillQtyWindow: function() {
 				//console.log('PopupFillQtyWindow');
 				this.$refs.fillqty.open();
-			},
-			//数量异常检查
-			QtyExceptionCheck: function() {
-				uni.navigateTo({
-					url: '/pages/outstorage/qtycheck?StorageOutInterId=' + this.StorageOutInterId
-				});
-			},
+			},			
 			//选择出库日期
 			OutStorageDateChange(e) {
 				this.OutStorageDate = e.detail.value
@@ -1592,7 +1590,7 @@
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;
 		font-size: 15px;
-		margin-left: 190upx;
+		margin-left: 210upx;
 		margin-top: -97upx;
 	}
 
@@ -1603,8 +1601,8 @@
 		font-size: 15px;
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;
-		margin-left: 420upx;
-		margin-top: -70upx;
+		margin-left: 410upx;
+		margin-top: -85upx;
 	}
 
 	.unauditstorageout {
@@ -1613,8 +1611,8 @@
 		font-size: 15px;
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;
-		margin-left: 420upx;
-		margin-top: -70upx;
+		margin-left: 410upx;
+		margin-top: -85upx;
 	}
 
 	.deletestorageout {
@@ -1656,9 +1654,9 @@
 		text-align: center;
 		color: #777777;
 	}
-	
-	.switchtitle{
-		display:inline-block;
+
+	.switchtitle {
+		display: inline-block;
 		margin-top: 10upx;
 		margin-left: 50upx;
 		font-size: 40upx;

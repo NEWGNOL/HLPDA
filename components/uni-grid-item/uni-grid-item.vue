@@ -69,6 +69,8 @@
 <style scoped>
 	.uni-grid-item {
 		/* #ifndef APP-NVUE */
+		/* height: 80upx;
+		width: 150upx; */
 		height: 100%;
 		display: flex;
 		/* #endif */
@@ -79,6 +81,8 @@
 
 	.uni-grid-item__box {
 		/* #ifndef APP-NVUE */
+		/* height: 80upx;
+		width: 150upx; */
 		display: flex;
 		width: 100%;
 		/* #endif */
