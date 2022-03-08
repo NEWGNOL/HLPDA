@@ -804,7 +804,7 @@
 			},
 			//获取入库单外箱明细信息
 			GetStorageInCartonDetail: function() {	
-				if(this.SelectGroupModel != null){
+				if(this.StorageInterId != 0 && this.SelectGroupModel != null){
 				   uni.navigateTo({
 				   	url: '/pages/purchaseinstorage/cartonlabeldetail?StorageInterId=' + this.StorageInterId +
 				   		'&FItemId=' + this.SelectGroupModel.FItemId

@@ -10864,7 +10864,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.scrollview{\t\n\tmargin-top: 20rpx;\n\theight: 1000rpx;\n}\n.selectlabel{\n\twidth: 30%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\t\t\n\tborder-radius: 50rpx;\n\tmargin-left: 150rpx;\n\tmargin-top: 20rpx;\n}\n.deletelabel{\t\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50rpx;\n\tmargin-right: 150rpx;\n\tmargin-top: -95rpx;\n}\n", ""]);
+exports.push([module.i, "\n.scrollview {\n\tmargin-top: 20rpx;\n\theight: 1000rpx;\n}\n.selectlabel {\n\twidth: 30%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50rpx;\n\tmargin-left: 150rpx;\n\tmargin-top: 20rpx;\n}\n.deletelabel {\n\twidth: 20%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50rpx;\n\tmargin-right: 150rpx;\n\tmargin-top: -95rpx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -14833,11 +14833,17 @@ var render = function() {
           expression: "SelectInventoryArea"
         }
       }),
+      _c("v-uni-text", { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } }, [
+        _vm._v("盘点备注：")
+      ]),
+      _c("v-uni-text", { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } }, [
+        _vm._v(_vm._$g(8, "t0-0"))
+      ]),
       _c(
         "v-uni-button",
         {
-          staticClass: _vm._$g(7, "sc"),
-          attrs: { _i: 7 },
+          staticClass: _vm._$g(9, "sc"),
+          attrs: { _i: 9 },
           on: {
             click: function($event) {
               return _vm.$handleViewEvent($event)
@@ -14849,8 +14855,8 @@ var render = function() {
       _c(
         "v-uni-button",
         {
-          staticClass: _vm._$g(8, "sc"),
-          attrs: { _i: 8 },
+          staticClass: _vm._$g(10, "sc"),
+          attrs: { _i: 10 },
           on: {
             click: function($event) {
               return _vm.$handleViewEvent($event)
@@ -15891,7 +15897,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../开发插件/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.inventoryplantitle {\t\t\t\t\t\n\tmargin-left: -450upx;\n\tmargin-top: 30upx;\n\tfont-size: 20px;\n}\n.inventoryplan {\t\t\n\tmargin-left: 250upx;\n\tmargin-top: -65upx;\n\tfont-size: 20px;\n}\n.warehousetitle {\n\tmargin-left: -450upx;\n\tmargin-top: 50upx;\n\tfont-size: 20px;\n}\n.warehouse {\n\tmargin-left: 250upx;\n\tmargin-top: -65upx;\n\tfont-size: 20px;\n}\n.inventoryareatitle {\n\tmargin-left: -450upx;\n\tmargin-top: 50upx;\n\tfont-size: 20px;\n}\n.inventoryarea {\n\tmargin-left: 250upx;\n\tmargin-top: -65upx;\n\tfont-size: 20px;\n}\n.scrollviewinfo {\n\twidth: 100%;\n\theight: 800upx;\n}\n.tablebill{\n\twidth: 100%;\n\theight: 790upx;\n\tmargin-top: 50upx;\n}\n.enterinventory{\n\twidth: 40%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 30upx;\n\tmargin-top: 150upx;\n\tfont-size: 18px;\n}\n.updateinventoryreport{\n\twidth: 45%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 370upx;\n\tmargin-top: -95upx;\n\tfont-size: 18px;\n}\t\n", ""]);
+exports.push([module.i, "\n.title {\t\t\t\t\t\n\tmargin-left: -450upx;\n\tmargin-top: 50upx;\n\tfont-size: 20px;\n}\n.content{\n\tmargin-left: 250upx;\n\tmargin-top: -65upx;\n\tfont-size: 20px;\n}\n.scrollviewinfo {\n\twidth: 100%;\n\theight: 800upx;\n}\n.tablebill{\n\twidth: 100%;\n\theight: 790upx;\n\tmargin-top: 50upx;\n}\n.enterinventory{\n\twidth: 40%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 30upx;\n\tmargin-top: 100upx;\n\tfont-size: 18px;\n}\n.updateinventoryreport{\n\twidth: 45%;\n\tcolor: #FFFFFF;\n\tbackground-color: #007AFF;\n\tborder-radius: 50upx;\n\tmargin-left: 370upx;\n\tmargin-top: -95upx;\n\tfont-size: 18px;\n}\t\n", ""]);
 // Exports
 module.exports = exports;
 

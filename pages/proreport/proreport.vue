@@ -1112,14 +1112,12 @@
 			},
 			//根据汇报单信息获取明细
 			GetProReportDetail: function() {
-				uni.showLoading({
-					title: 'Loading'
-				});
-				uni.navigateTo({
-					url: '/pages/proreport/cartonlabeldetail?ProReportInterId=' + this.ProReportInterId +
-						'&ProReportSrcInterId=' + this.ProReportSrcInterId
-				});
-				uni.hideLoading();
+				if(this.ProReportInterId != 0 && this.ProReportSrcInterId != 0){
+				   uni.navigateTo({
+				   url: '/pages/proreport/cartonlabeldetail?ProReportInterId=' + this.ProReportInterId +
+				   		'&ProReportSrcInterId=' + this.ProReportSrcInterId
+				   });
+				}				
 			},
 			//根据汇报单信息获取扩展信息
 			GetProReportInfoExpandByFillQty: function(item) {

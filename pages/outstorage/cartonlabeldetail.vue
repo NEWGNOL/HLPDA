@@ -27,12 +27,15 @@
 				SelectCartonLabel: '',
 				IsSelectAllLabel: false
 			}
-		},
-		onLoad() {
-			this.GetStorageOutInterId();
-			this.ShowStorageOutDetail();
+		},		
+		onLoad() {			
+		    this.InitView();
 		},
 		methods: {
+			async InitView(){
+				await this.GetStorageOutInterId();
+				await this.ShowStorageOutDetail();
+			},
 			GetStorageOutInterId: function() {
 				let Pages = getCurrentPages();
 				let PrevPage = Pages[Pages.length - 2]; //上一个页面	
@@ -42,47 +45,53 @@
 				//#endif				
 			},
 			//显示外箱明细
-			ShowStorageOutDetail: function() {
-				uni.showLoading({
-					title: 'Loading',
-					mask: true
-				});
-				uni.request({
-					url: uni.getStorageSync('OtherUrl'),
-					method: 'POST',
-					data: {
-						ModuleCode: 'GetPdaSOutGroupCartonList',
-						token: uni.getStorageSync('token'),
-						ModuleParam: {
-							FInterId: this.AddSOutGroupInterId,
-							FItemId: this.ItemId
-						}
-					},
-					success: (result) => {
-						//console.log(result.data);
-						let ResultCode = result.data.ResultCode;
-						let ResultMsg = result.data.ResultMsg;
-						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-							Config.ShowMessage('账号登录异常，请重新登录！');
+			ShowStorageOutDetail: function() {			
+				return new Promise((resolve,reject) =>{
+					uni.showLoading({
+						title: 'Loading',
+						mask: true
+					});
+					uni.request({
+						url: uni.getStorageSync('OtherUrl'),
+						method: 'POST',
+						data: {
+							ModuleCode: 'GetPdaSOutGroupCartonList',
+							token: uni.getStorageSync('token'),
+							ModuleParam: {
+								FInterId: this.AddSOutGroupInterId,
+								FItemId: this.ItemId
+							}
+						},
+						success: (result) => {
+							//console.log(result.data);
+							let ResultCode = result.data.ResultCode;
+							let ResultMsg = result.data.ResultMsg;
+							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+								Config.ShowMessage('账号登录异常，请重新登录！');
+								Config.PopAudioContext(false);
+								uni.hideLoading();
+								return;
+							}
+							resolve(result);
+							this.DetailListData = result.data.ResultData.GetPdaSOutGroupCartonList.data0;								
+						},
+						fail: (error) => {
+							Config.ShowMessage('请求数据失败！');
 							Config.PopAudioContext(false);
-							uni.hideLoading();
-							return;
-						}
-						this.DetailListData = result.data.ResultData.GetPdaSOutGroupCartonList.data0;
-					},
-					fail: () => {
-						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);
-					},
-					complete: (resultcomp) => {
-						let ResultMsg = resultcomp.data.ResultMsg;
-						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-							Config.ShowMessage(ResultMsg);
-							Config.PopAudioContext(false);
-						}
-						uni.hideLoading();
-					}
-				});
+							reject(error);							
+						},
+						complete: (resultcomp) => {
+							let ResultMsg = resultcomp.data.ResultMsg;
+							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+								Config.ShowMessage(ResultMsg);
+								Config.PopAudioContext(false);
+							}
+							setTimeout(function () {
+							    uni.hideLoading();
+							}, 2000);
+						},						
+					});
+				})				
 			},
 			//切换内箱标签是否选中
 			ChangeIsChecked: function(item) {

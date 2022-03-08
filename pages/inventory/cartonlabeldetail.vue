@@ -73,6 +73,7 @@
 						ModuleParam:  {
 							FProcessID: this.ProcessID,							
 							FItemId: this.ItemId,
+							FUserId: uni.getStorageSync('FUserId'),
 							FInventoryAreaId: this.InventoryAreaId
 						}
 					},
@@ -99,7 +100,9 @@
 						Config.ShowMessage(ResultMsg);	
 						Config.PopAudioContext(false);					
 					}
-					uni.hideLoading();
+					setTimeout(function () {
+					    uni.hideLoading();
+					}, 2000);
 				}
 				});	
 			},

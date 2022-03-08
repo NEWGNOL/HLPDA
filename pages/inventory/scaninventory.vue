@@ -131,6 +131,7 @@
 						ModuleParam: {
 							FId: this.ProcessModel.FID,												
 							FPackBarCode: Barcode,
+							FUserId: uni.getStorageSync('FUserId'),
 							FStockId: this.WareHouseModel.FItemID,
 							FStockPlaceId: 0,		
 							FInventoryAreaId: this.InventoryAreaModel.FId,
@@ -270,17 +271,11 @@
 					Config.ShowMessage('请选择物料！');
 					Config.PopAudioContext(false);
 					return;
-				}	
-				
-				uni.showLoading({
-					title: 'Loading',
-					mask: true
-				});
+				}				
 				uni.navigateTo({
 					url: '/pages/inventory/cartonlabeldetail?ProcessID=' + this.ProcessModel.FProcessID +
 					'&ItemId=' + this.ProcessRecordModel.ItemID + '&InventoryAreaId=' + this.InventoryAreaModel.FId
-				});
-				uni.hideLoading();
+				});				
 			},
 			//修改物料数量
 			ModifyMaterialQty:function(){
@@ -288,6 +283,10 @@
 			},				
 			//获取盘点清单
 			GenInventoryList: function(){
+				uni.showLoading({
+					title: 'Loading',
+					mask: true
+				});
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
@@ -297,6 +296,7 @@
 						ModuleParam: {
 							FProcessID: this.ProcessModel.FProcessID,
 							FStockName: this.WareHouseModel.FName,
+							FUserId: uni.getStorageSync('FUserId'),
 							FInventoryAreaId: this.InventoryAreaModel.FId
 						}
 					},
@@ -306,7 +306,8 @@
 						let ResultMsg = result.data.ResultMsg;
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
 							Config.ShowMessage('账号登录异常，请重新登录！');
-							Config.PopAudioContext(false);							
+							Config.PopAudioContext(false);	
+							uni.hideLoading();						
 							return;
 						}						
 						this.ProcessRecordList = result.data.ResultData.GetPdaInventoryList.data0;	
@@ -321,7 +322,10 @@
 						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							Config.ShowMessage(ResultMsg);
 							Config.PopAudioContext(false);						
-						}						
+						}	
+						setTimeout(function () {
+						    uni.hideLoading();
+						}, 2000);					
 					}
 				});													
 			},

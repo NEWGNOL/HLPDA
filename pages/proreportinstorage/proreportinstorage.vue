@@ -1058,17 +1058,11 @@
 			},
 			//获取入库单外箱明细信息
 			GetStorageInCartonDetail: function() {
-				if(this.StorageInterId != 0 && this.ProReportSrcInterId != 0){
-					uni.showLoading({
-						title: 'Loading',
-						mask: true
-						
-					});
+				if(this.StorageInterId != 0 && this.ProReportSrcInterId != 0){					
 					uni.navigateTo({
 						url: '/pages/proreportinstorage/cartonlabeldetail?StorageInterId=' + this.StorageInterId +
 							'&ProReportSrcInterId=' + this.ProReportSrcInterId
-					});
-					uni.hideLoading();
+					});					
 				}				
 			},			
 			//汇总页面选中的Item

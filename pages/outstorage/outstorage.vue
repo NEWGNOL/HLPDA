@@ -1094,47 +1094,54 @@
 					title: 'Loading',
 					mask: true
 				});
-				uni.request({
-					url: uni.getStorageSync('OtherUrl'),
-					method: 'POST',
-					data: {
-						ModuleCode: 'GetPdaSOutGroupPutInList',
-						token: uni.getStorageSync('token'),
-						ModuleParam: {}
-					},
-					success: (result) => {
-						//console.log(result.data);
-						let ResultCode = result.data.ResultCode;
-						let ResultMsg = result.data.ResultMsg;
-						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
-							Config.ShowMessage('账号登录异常，请重新登录！');
+				return new Promise((resolve,reject) =>{
+					uni.request({
+						url: uni.getStorageSync('OtherUrl'),
+						method: 'POST',
+						data: {
+							ModuleCode: 'GetPdaSOutGroupPutInList',
+							token: uni.getStorageSync('token'),
+							ModuleParam: {
+								FBillerId: uni.getStorageSync('FUserId')
+							}
+						},
+						success: (result) => {
+							//console.log(result.data);
+							resolve('success');
+							let ResultCode = result.data.ResultCode;
+							let ResultMsg = result.data.ResultMsg;
+							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+								Config.ShowMessage('账号登录异常，请重新登录！');
+								Config.PopAudioContext(false);
+								uni.hideLoading();
+								return;
+							}
+							this.BillListData = result.data.ResultData.GetPdaSOutGroupPutInList.data0;
+						},
+						fail: (error) => {							
+							Config.ShowMessage('请求数据失败！');
 							Config.PopAudioContext(false);
+							reject('error');
+						},
+						complete: (resultcomp) => {
+							let ResultMsg = resultcomp.data.ResultMsg;
+							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+								Config.ShowMessage(ResultMsg);
+								Config.PopAudioContext(false);
+							}
 							uni.hideLoading();
-							return;
 						}
-						this.BillListData = result.data.ResultData.GetPdaSOutGroupPutInList.data0;
-					},
-					fail: () => {
-						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);
-					},
-					complete: (resultcomp) => {
-						let ResultMsg = resultcomp.data.ResultMsg;
-						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-							Config.ShowMessage(ResultMsg);
-							Config.PopAudioContext(false);
-						}
-						uni.hideLoading();
-					}
-				});
+					});
+				})				
 			},
 			//显示对应单据列表
-			ShowBillInfo: function(Barcode) {
+			async ShowBillInfo(Barcode) {
 				this.IsAddStorageOut = this.SelectStatus == '未出库' ? true : false;
 				if (this.SelectStatus == '未出库') {
 					this.FindICStockBillAddList();
 				} else {
-					this.ShowICStockBillQueryList();
+					await this.ShowICStockBillQueryList();	
+	                //console.log('Finish');
 				}
 			},
 			ShowSelectMergeInfo: function(item) {
@@ -1145,8 +1152,7 @@
 				}
 				this.GetSelectMergeInfo(item);
 				this.SwitchTab(1);
-				this.ShowBillGroupInfo(0, false);
-				this.GetSOutGroupMaxBoard();
+				this.ShowBillGroupInfo(0, false);				
 			},
 			GetSelectMergeInfo: function(item) {
 				this.AddSOutGroupInterId = item.FInterId;
@@ -1209,6 +1215,9 @@
 								Config.PopAudioContext(false);
 							}
 							uni.hideLoading();
+							// setTimeout(function () {
+							//     uni.hideLoading();
+							// }, 3000);
 						}
 					});
 				}
@@ -1476,16 +1485,11 @@
 			},			
 			//获取出库单外箱明细信息
 			GetStorageOutCartonDetail: function() {
-				if (this.StorageOutInterId != 0 && this.SelectGroupModel != null) {
-					uni.showLoading({
-						title: 'Loading',
-						mask: true
-					});
+				if (this.StorageOutInterId != 0 && this.SelectGroupModel != null) {					
 					uni.navigateTo({
 						url: '/pages/outstorage/cartonlabeldetail?AddSOutGroupInterId=' + this
 							.AddSOutGroupInterId + '&ItemId=' + this.SelectGroupModel.FItemId
-					});
-					uni.hideLoading();
+					});					
 				}
 			},
 			//获取选中的分组信息

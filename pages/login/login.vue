@@ -9,21 +9,21 @@
 			v-on:click="ClickTabTitle(false)">网络配置</text>
 		<view class="tabrightline" v-bind:class="{selecttabline : !IsShowLoginView}"></view>
 
-		<view class="summary" v-show="IsShowLoginView">			
+		<view class="summary" v-show="IsShowLoginView">
 			<view class="usernametext">用户名：</view>
 			<usernamesearch class="cla" :candidates="UserNameArray" placeholder="请输入用户名" v-model="UserName"
 				@input="SearchInput"></usernamesearch>
-		
+
 			<view class="passwordtext">密码：</view>
 			<input password="true" placeholder="请输入密码" v-model="Password" class="cla" :focus="focus2"
 				@confirm="tabEnter2" />
-			<button class="button" @click="Request()">确认</button>		
+			<button class="button" @click="Request()">确认</button>
 		</view>
 
-		<view class="summary" v-show="!IsShowLoginView">			
+		<view class="summary" v-show="!IsShowLoginView">
 			<view class="usernametext">IP地址：</view>
-			<input v-model="IPAddress" placeholder="请输入IP地址" class="cla">			
-			<button class="button" v-on:click="SaveLoginData()">确认</button>		
+			<input v-model="IPAddress" placeholder="请输入IP地址" class="cla">
+			<button class="button" v-on:click="SaveLoginData()">确认</button>
 		</view>
 	</view>
 </template>
@@ -50,19 +50,19 @@
 		onReady() {
 			this.CreateGraphic();
 		},
-		onLoad() {			
+		onLoad() {
 			this.LoadLoginData();
-			this.AutoCheckUpdate();		
-			this.GetScreenHeight();	
+			this.AutoCheckUpdate();
+			//this.GetScreenHeight();	
 		},
 		methods: {
-			GetScreenHeight: function(){
+			GetScreenHeight: function() {
 				uni.getSystemInfo({
-				                success: (res)=> {
-				                    let height=res.screenHeight; //获取系统信息，可使用窗口的高度
-				                    console.log(res);
-				                }
-				            });
+					success: (res) => {
+						let height = res.screenHeight; //获取系统信息，可使用窗口的高度
+						console.log(res);
+					}
+				});
 			},
 			//输入搜索
 			SearchInput: function(e) {
@@ -144,7 +144,7 @@
 						Config.PopAudioContext(false);
 						Config.ShowMessage('请求数据失败！');
 					}
-			    })					
+				})
 			},
 			//保存登录数据
 			SaveLoginData: function() {
@@ -218,7 +218,7 @@
 	}
 </script>
 
-<style>	
+<style>
 	.tableftline {
 		width: 15%;
 		height: 5upx;

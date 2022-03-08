@@ -1,13 +1,17 @@
 <template>
 	<view class="container">
-		<text class="inventoryplantitle">盘点方案：</text>
-		<InventoryPlan class="inventoryplan" :candidates="ProcessList"  v-model="SelectProcess" @input="SwitchInventoryPlan()"></InventoryPlan>
+		<text class="title">盘点方案：</text>
+		<InventoryPlan class="content" :candidates="ProcessList"  v-model="SelectProcess" @input="SwitchInventoryPlan()"></InventoryPlan>
 		
-		<text class="warehousetitle">盘点仓库：</text>
-		<InventoryStock class="warehouse" :candidates="WareHouseList"  v-model="SelectWareHouse" @input="SwitchWareHouse()"></InventoryStock>
+		<text class="title">盘点仓库：</text>
+		<InventoryStock class="content" :candidates="WareHouseList"  v-model="SelectWareHouse" @input="SwitchWareHouse()"></InventoryStock>
 		
-		<text class="inventoryareatitle">盘点区域：</text>
-		<InventoryArea class="inventoryarea" :candidates="InventoryAreaList"  v-model="SelectInventoryArea" @input="GetSelectInventoryArea()"></InventoryArea>
+		<text class="title">盘点区域：</text>
+		<InventoryArea class="content" :candidates="InventoryAreaList"  v-model="SelectInventoryArea" @input="GetSelectInventoryArea()"></InventoryArea>
+		
+		<text class="title">盘点备注：</text>
+		<text class="content">{{ProcessModel.length != 0 ? ProcessModel.FRemark : '空'}}</text>
+
 		
 		<button class="enterinventory" v-on:click="EnterInventory()">进入盘点界面</button>
 		<button class="updateinventoryreport" v-on:click="UpdateInventoryReport()">更新盘点报告单</button>	
@@ -61,17 +65,11 @@
 					Config.ShowMessage('请选择盘点区域！');
 					Config.PopAudioContext(false);
 					return;
-				}
-				
-				uni.showLoading({
-					title: 'Loading',
-					mask: true
-				});
+				}				
 				uni.navigateTo({
 					url: '/pages/inventory/scaninventory?WareHouseModel=' + this.WareHouseModel +
 					'&ProcessModel=' + this.ProcessModel + '&InventoryAreaModel=' + this.InventoryAreaModel
-				});
-				uni.hideLoading();
+				});				
 			},	
 			//更新盘点报告单
 			UpdateInventoryReport: function(){
@@ -93,6 +91,7 @@
 						token: uni.getStorageSync('token'),
 						ModuleParam: {	
 							FProcessId: this.ProcessModel.FID,
+							FUserId: uni.getStorageSync('FUserId'),
 							Result: 0,
 							Msg: ''
 						}
@@ -278,37 +277,13 @@
 </script>
 
 <style>
-	.inventoryplantitle {					
-		margin-left: -450upx;
-		margin-top: 30upx;
-		font-size: 20px;
-	}
-	
-	.inventoryplan {		
-		margin-left: 250upx;
-		margin-top: -65upx;
-		font-size: 20px;
-	}
-	
-	.warehousetitle {
+	.title {					
 		margin-left: -450upx;
 		margin-top: 50upx;
 		font-size: 20px;
 	}
 	
-	.warehouse {
-		margin-left: 250upx;
-		margin-top: -65upx;
-		font-size: 20px;
-	}
-	
-	.inventoryareatitle {
-		margin-left: -450upx;
-		margin-top: 50upx;
-		font-size: 20px;
-	}
-	
-	.inventoryarea {
+	.content{
 		margin-left: 250upx;
 		margin-top: -65upx;
 		font-size: 20px;
@@ -331,7 +306,7 @@
 		background-color: #007AFF;
 		border-radius: 50upx;
 		margin-left: 30upx;
-		margin-top: 150upx;
+		margin-top: 100upx;
 		font-size: 18px;
 	}	
 	

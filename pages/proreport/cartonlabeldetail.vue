@@ -80,8 +80,7 @@
 					},
 					fail: () => {						
 						Config.PopAudioContext(false);
-						Config.ShowMessage('请求数据失败！');	
-						
+						Config.ShowMessage('请求数据失败！');							
 					},
 					complete: (resultcomp) => {
 					    let ResultMsg = resultcomp.data.ResultMsg;
@@ -89,7 +88,9 @@
 							Config.PopAudioContext(false);
 							Config.ShowMessage(ResultMsg);													
 					    }
-						uni.hideLoading();	
+						setTimeout(function () {
+						    uni.hideLoading();
+						}, 2000);	
 					}
 				});				
 			},

@@ -73,6 +73,7 @@
 						{	
 							Config.PopAudioContext(false);
 							Config.ShowMessage('账号登录异常，请重新登录！');
+							uni.hideLoading();
 							return;
 						}
 						this.DetailListData = result.data.ResultData.getPdaStorageInRptCartonListInfo.data0;						
@@ -88,7 +89,9 @@
 						Config.PopAudioContext(false);
 						Config.ShowMessage(ResultMsg);							
 					}
-					uni.hideLoading();
+					setTimeout(function () {
+					    uni.hideLoading();
+					}, 2000);
 				}
 				});	
 			},
