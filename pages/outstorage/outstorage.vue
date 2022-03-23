@@ -308,6 +308,7 @@
 						token: uni.getStorageSync('token'),
 						ModuleParam: {
 							FInterId: this.AddSOutGroupInterId,
+							FBoardId: this.CurrentBoardId,
 							FItemId: this.SelectGroupModel.FItemId,
 							FQty: e,
 							FBillerId: uni.getStorageSync('FUserId'),
@@ -333,12 +334,12 @@
 						}
 						Config.ShowMessage(ResultData.dataparam.Msg);
 						Config.PopAudioContext(true);
+						this.GetSOutGroupMaxBoard();
 						this.ShowBillGroupInfo(0, false);
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);
-						return;
+						Config.PopAudioContext(false);						
 					},
 					complete: (resultcomp) => {
 						let ResultMsg = resultcomp.data.ResultMsg;
@@ -427,7 +428,7 @@
 							//Config.PopAudioContext(true);
 
 							this.CurrentBoardId = DataParam.FBoardId;
-							this.CurBoardScanProgress = '0只';
+							this.CurBoardScanProgress = '0件';
 						},
 						fail: () => {
 							Config.ShowMessage('请求数据失败！');
@@ -467,7 +468,7 @@
 						ModuleParam: {
 							FInterId: this.AddSOutGroupInterId,
 							FBoardId: this.CurrentBoardId,
-							FPieceCount: 0,
+							FPieceCount: '',
 							Result: 0,
 							Msg: ''
 						}
@@ -654,7 +655,7 @@
 						}
 					}
 					this.ScanProgress = FFactQty.toFixed(2) + '件' + '/' + FSQty.toFixed(2) + '     件';
-				}
+				}				
 			},
 			//扫描条码做出库
 			ScanBarCode: function(Barcode) {
@@ -796,8 +797,7 @@
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
-						Config.PopAudioContext(false);
-						return;
+						Config.PopAudioContext(false);						
 					},
 					complete: (resultcomp) => {
 						let ResultMsg = resultcomp.data.ResultMsg;
