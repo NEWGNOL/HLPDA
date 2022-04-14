@@ -187,7 +187,7 @@
 		{
 			"path": "pages/purchaseinstorage/outsideinstorage",
 			"style": {
-				"navigationBarTitleText": "外购入库",
+				"navigationBarTitleText": "采购入库",
 				"app-plus":{
 				                  "titleNView":{
 				                  "titleColor":"FFFFFF",

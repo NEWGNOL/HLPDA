@@ -30,11 +30,7 @@
 			      <button class="deletetransfers" v-on:click="DeleteTransfers()">删除</button>
 			</view>
 
-			<view class="billhead" v-show="IsBillHeadVisible">
-				<!-- <text class="title">单据编号：</text>
-				<text class="billnoempty">{{TransfersBillNo}}</text>
-				<view class="dataline"></view> -->
-
+			<view class="billhead" v-show="IsBillHeadVisible">				
 				<text class="title">出库日期：</text>
 				<picker mode="date" :value="TransfersDate" :start="StartDate" :end="EndDate"
 					@change="TransfersDateChange">
@@ -67,6 +63,10 @@
 			    </navigator>
 				<view class="dataline"></view>
 				<!-- @click="SwitchScanType(2)" v-bind:class="{selectdata : ScanType == 2}">{{SCStockArray[1]}} -->
+				
+				<text class="title">扫码进度：</text>
+				<view class="data">{{ScanProgress}}</view>
+				<view class="dataline"></view>
 			</view>
 
 			<scroll-view class="selectinfoscrollview" v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}"
@@ -155,6 +155,7 @@
 				SelectSEOutStockModel: null,
 				SelectGroupModel: null,
 				SelectItems: '',
+				ScanProgress: '空',
 				SEOutStockListData: [],
 				GroupListData: [],
 				InfoListData: [],
@@ -427,6 +428,17 @@
 				}
 				this.SelectSEOutStockModel = this.SEOutStockListData.find(x => x.FIsChecked);
 			},
+			//统计单据数量
+			StatBillQty: function() {
+				let FShouldSendQty = 0;
+				let FRealSendQty = 0;
+				for (let i = 0; i < this.GroupListData.length; i++) {
+					let DataModel = this.GroupListData[i];
+					FShouldSendQty += parseFloat((DataModel.FShouldSendQty / DataModel.FInPackPreQty).toFixed(2));
+					FRealSendQty += parseFloat((DataModel.FRealSendQty / DataModel.FInPackPreQty).toFixed(2));
+				}
+				this.ScanProgress = FRealSendQty.toFixed(2) + '件' + '/' + FShouldSendQty.toFixed(2) + '     件';
+			},
 			DealBillHeadData: function(IsLoad) {
 				if (IsLoad) {
 					this.TransfersInterId = this.SelectSEOutStockModel.FTransfersInterId;
@@ -696,7 +708,7 @@
 							token: uni.getStorageSync('token'),
 							ModuleParam: {
 								FScanBillNo: Barcode,
-								FSearchBillNo: this.SearchValue
+								FSearchBillNo: this.SearchValue									
 							}
 						},
 						success: (result) => {
@@ -725,7 +737,8 @@
 							uni.hideLoading();
 						}
 					});
-				} else {
+				} 
+				else {
 					uni.showLoading({
 						title: 'Loading',
 						mask: true
@@ -738,11 +751,12 @@
 							token: uni.getStorageSync('token'),
 							ModuleParam: {
 								FScanBillNo: Barcode,
-								FSearchBillNo: this.SearchValue
+								FSearchBillNo: this.SearchValue,
+								FBillerID: uni.getStorageSync('FUserId')
 							}
 						},
 						success: (result) => {
-							console.log(result.data);
+							//console.log(result.data);
 							let ResultCode = result.data.ResultCode;
 							let ResultMsg = result.data.ResultMsg;
 							if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
@@ -798,6 +812,7 @@
 							this.GroupListData = result.data.ResultData.GetPdaSEOutStockGroupByTrans
 								.data0;
 							this.GetBillSelectItem();
+							this.StatBillQty();
 						},
 						fail: () => {
 							Config.ShowMessage('请求数据失败！');

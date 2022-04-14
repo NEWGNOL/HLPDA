@@ -55,7 +55,7 @@
 			 		+ '/' + item.FNumber + '\n' + item.FShouldSendQty + '只/' + (item.FShouldSendQty/item.FInPackPreQty)
 					.toFixed(2)+ '件' + '\n' + item.FRealSendQty + '只/' + (item.FRealSendQty/item.FInPackPreQty)
 					.toFixed(2) + '件' + '\n' + '仓库：' + item.FStockName" :rownumber="index + 1" :ishighlight="item.FHighLight"
-					v-bind:percent="Math.round((item.FRealSendQty / item.FShouldSendQty) * 100, 0)"
+					:isshowbutton="false" v-bind:percent="Math.round((item.FRealSendQty / item.FShouldSendQty) * 100, 0)"
 					clickable v-on:click="GetPOOrderInfoExpand(item)">
 					</FillQty>
 				</uni-list>
@@ -78,6 +78,10 @@
 			
 			<text class="detailtitle">物料名称：</text>
 			<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FItemName : '空'}}</text>
+			<view class="listline"></view>	
+					
+			<text class="detailtitle">采购订单编号：</text>
+			<text class="detaildata">{{this.StorageInSrcBillNo}}</text>
 			<view class="listline"></view>			
 		</view>
 		
@@ -214,7 +218,7 @@
 			},
 			//切换审核标志
 			SwitchAuditFlag: function(IsAuditStorageIn){
-				this.IsAuditStorageIn = IsAuditStorageIn;
+				this.IsAuditStorageIn = IsAuditStorageIn;				
 			},
 			//扫描条码做入库
 			ScanBarCode: function(Barcode) {
@@ -401,7 +405,7 @@
 				}
 				this.SelectItems = this.SelectItems.substr(0, this.SelectItems.length - 1);
 			},
-			GetQueryStorageInfo: function(item){
+			GetQueryStorageInfo: function(item){				
 				if(item.FStatus == "未审核"){
 				   this.SwitchAuditFlag(true);
 				}
@@ -417,6 +421,7 @@
 				this.StorageInterId = item.FId;
 				this.StorageInBillNo = item.FBillNo;
 				this.StorageInDate = item.FDate;
+				this.StorageInSrcBillNo = item.FSrcBillNo
 			},
 			//显示采购订单分组信息
 			ShowPOOrderGroupInfo: function() {	
@@ -673,8 +678,7 @@
 							},
 						    fail: () => {
 								    Config.ShowMessage('请求数据失败！');
-									Config.PopAudioContext(false);									
-									return;
+									Config.PopAudioContext(false);								
 							},
 							complete: (resultcomp) => {
 									let ResultMsg = resultcomp.data.ResultMsg;

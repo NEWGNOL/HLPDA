@@ -29,7 +29,7 @@
 						:class="{'uni-list-item__content-titlehighlight' : ishighlight}">{{ title }}</text>
 						<text v-if="note" class="uni-list-item__content-note">
 						{{ note }}</text>															
-						<button class="fillqty" v-on:click="buttonclick()">改</button>	
+						<button class="fillqty" v-on:click="buttonclick()" v-show="isshowbutton">改</button>	
 						<cmd-progress class="progress" v-show="isshowprogress" v-bind:percent="percent"></cmd-progress>						
 						</view>									
 				</slot>
@@ -194,6 +194,10 @@
 			ishighlight: {
 				type: [Number],
 				default: 0
+			},
+			isshowbutton:{
+				type: Boolean,
+				default: true
 			}
 		},
 		// inject: ['list'],

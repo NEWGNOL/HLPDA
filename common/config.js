@@ -10,35 +10,35 @@ const ShowMessage=(Message)=>{
 const PopAudioContext=(IsSuccess)=>{
 	let AudioContext = uni.createInnerAudioContext();
 	AudioContext.autoplay = true;   
-	if(IsSuccess)		
-	{
-		AudioContext.src = '/static/success.mp3';
-	}
-	else
-	{
-		AudioContext.src = '/static/warning.wav';
-	}	
-	AudioContext.onPlay(() => {
-	    //console.log('开始播放');
-	});
-	AudioContext.onPause(() =>{
-		//console.log('播放暂停');
-	});
-	AudioContext.onStop(() =>{
-		//console.log('播放停止');
-	});
-	AudioContext.onEnded(() =>{
-		AudioContext.destroy();
-		//console.log('播放结束');
-	});
-	AudioContext.onWaiting(() =>{
-		//console.log('播放加载中');
-	});
-	AudioContext.onError((result) => {
-	  AudioContext.destroy();
-	  //console.log(result.errMsg);
-	  //console.log(result.errCode);
-    });
+	// if(IsSuccess)		
+	// {
+	// 	AudioContext.src = '/static/success.mp3';
+	// }
+	// else
+	// {
+	// 	AudioContext.src = '/static/warning.wav';
+	// }	
+	// AudioContext.onPlay(() => {
+	//     //console.log('开始播放');
+	// });
+	// AudioContext.onPause(() =>{
+	// 	//console.log('播放暂停');
+	// });
+	// AudioContext.onStop(() =>{
+	// 	//console.log('播放停止');
+	// });
+	// AudioContext.onEnded(() =>{
+	// 	AudioContext.destroy();
+	// 	//console.log('播放结束');
+	// });
+	// AudioContext.onWaiting(() =>{
+	// 	//console.log('播放加载中');
+	// });
+	// AudioContext.onError((result) => {
+	//   AudioContext.destroy();
+	//   //console.log(result.errMsg);
+	//   //console.log(result.errCode);
+ //    });
 }; 
   
 //获取选中的日期格式化

@@ -333,7 +333,8 @@
 							token: uni.getStorageSync('token'),
 							ModuleParam: {
 								FScanBillNo: Barcode,
-								FSearchBillNo: this.SearchValue							
+								FSearchBillNo: this.SearchValue,
+								FBillerID: uni.getStorageSync('FUserId'),						
 							}
 						},
 						success: (result) => {
