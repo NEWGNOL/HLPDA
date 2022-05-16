@@ -23,6 +23,7 @@
 				<button class="auditstoragein" v-on:click="AuditStorageIn()" v-show="IsAuditStorageIn">审核</button>
 				<button class="unauditstoragein" v-on:click="UnAuditStorageIn()" v-show="!IsAuditStorageIn">反审</button>
 				<button class="deletestoragein" v-on:click="DeleteStorageIn()">删除</button>
+				<button class="inputbyhand" v-on:click="OpenBarcodePopupWindow()">手工输入</button>
 			</view>			
 			
 			<view class="billhead" v-show="IsBillHeadVisible">		
@@ -43,20 +44,21 @@
 				</navigator>				
 				<view class="dataline"></view>
 				
-				<text class="title">扫码进度：</text>
+				<!-- <text class="title">扫码进度：</text>
 				<view class="data">{{ScanProgress}}</view>
-				<view class="dataline"></view>
+				<view class="dataline"></view> -->
 			</view>
 			
 			<scroll-view class="selectinfoscrollview" v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}"
 				scroll-y="true">
 				<uni-list>
 					<FillQty v-for="(item,index) in POOrderGroupData" :key="index" :title="item.FModel 
-			 		+ '/' + item.FNumber + '\n' + item.FShouldSendQty + '只/' + (item.FShouldSendQty/item.FInPackPreQty)
-					.toFixed(2)+ '件' + '\n' + item.FRealSendQty + '只/' + (item.FRealSendQty/item.FInPackPreQty)
-					.toFixed(2) + '件' + '\n' + '仓库：' + item.FStockName" :rownumber="index + 1" :ishighlight="item.FHighLight"
+			 		+ '/' + item.FNumber + '\n应收:' + item.FShouldSendQty + '只/' + (item.FShouldSendQty/item.FInPackPreQty)
+					.toFixed(2)+ '件' + '\n实收:' + item.FRealSendQty + '只/' + (item.FRealSendQty/item.FInPackPreQty)
+					.toFixed(2) + '件' + '\n' + '采购订单:' + item.FSrcBillNo + '\n' + '行号:' + item.FEntryID
+					+ '\n' + '仓库：' + item.FStockName" :rownumber="index + 1" :ishighlight="item.FHighLight"
 					:isshowbutton="false" v-bind:percent="Math.round((item.FRealSendQty / item.FShouldSendQty) * 100, 0)"
-					clickable v-on:click="GetPOOrderInfoExpand(item)">
+					clickable v-on:click="ShowPOOrdeInfoDetail(item)">
 					</FillQty>
 				</uni-list>
 			</scroll-view>
@@ -81,7 +83,7 @@
 			<view class="listline"></view>	
 					
 			<text class="detailtitle">采购订单编号：</text>
-			<text class="detaildata">{{this.StorageInSrcBillNo}}</text>
+			<text class="detaildata">{{this.SelectGroupModel != null ? this.SelectGroupModel.FSrcBillNo : '空'}}</text>
 			<view class="listline"></view>			
 		</view>
 		
@@ -96,6 +98,11 @@
 				v-on:click="SwitchTab(2)">明细</text>
 			<view class="tabrightline" v-bind:class="{selecttabline : TabSelectedIndex == 2}"></view>
 		</view>
+		
+		<uni-popup ref="barcode" type="center" :mask-click="false">
+			<mod-fty mode="input" message="提示" title="手工输入" placeholder="请手工输入外箱条码" :duration="2000"
+				:before-close="true" @close="CloseBarCodePopupWindowDirect" @confirm="CloseBarCodePopupWindow"></mod-fty>
+		</uni-popup>
 	</view>
 </template>
 
@@ -112,8 +119,7 @@
 		data() {
 			return {
 				StorageInterId: 0,
-				StorageInBillNo: '空',
-				StorageInSrcInterId: 0,
+				StorageInBillNo: '空',				
 				StorageInSrcBillNo: '空',
 				ScanProgress: '空',
 				SelectPOOrderModel: null,
@@ -186,12 +192,26 @@
 			RemoveListener: function() {
 				this.Main.unregisterReceiver(this.Receiver); //取消监听
 			},	
+			//打开手工输入外箱条码弹窗
+			OpenBarcodePopupWindow: function() {
+				this.$refs.barcode.open();
+			},
+			CloseBarCodePopupWindowDirect: function(e) {
+				this.$refs.barcode.close();
+			},
+			CloseBarCodePopupWindow: function(e) {
+				if (e == null || e == '') {
+					Config.ShowMessage('请手工填写要扫描的外箱条码！');
+					Config.PopAudioContext(false);
+					return;
+				}
+				this.$refs.barcode.close();
+				this.ScanBarCode(e);
+			},
 			//清除单据头数据
 			ClearBillHeadData: function(me) {
 				me.StorageInterId = 0;
-				me.StorageInBillNo = '空';
-				me.StorageInSrcInterId = 0;
-				me.StorageInSrcBillNo = '空';	
+				me.StorageInBillNo = '空';					
 				me.ScanProgress = '空';			
 				me.SelectWareHouseArray = [0, '请选择收料仓库'];				
 				me.StorageInDate = Config.DateFormat({
@@ -275,8 +295,8 @@
 						}
 						Config.ShowMessage(ResultData.dataparam.Msg);
 						Config.PopAudioContext(true);
-						//this.ShowPOOrderGroupInfo();
-						this.ShowPOOrderGroupInfoByCache(ResultData.dataparam.FLabelQty, ResultData.dataparam.FItemId);
+						this.ShowPOOrderGroupInfo();
+						//this.ShowPOOrderGroupInfoByCache(ResultData.dataparam.FLabelQty, ResultData.dataparam.FItemId);
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -420,8 +440,8 @@
 			GetStorageInfo: function(item){
 				this.StorageInterId = item.FId;
 				this.StorageInBillNo = item.FBillNo;
-				this.StorageInDate = item.FDate;
-				this.StorageInSrcBillNo = item.FSrcBillNo
+				this.StorageInDate = item.FDate;				
+				this.SelectWareHouseArray = [0, '请选择收料仓库'];
 			},
 			//显示采购订单分组信息
 			ShowPOOrderGroupInfo: function() {	
@@ -490,9 +510,14 @@
 					format: true,
 				});
 				this.SelectWareHouseArray = [0, '请选择收料仓库'];
+				this.ScanProgress = '空';
 				this.StorageInListData = [];
 				this.POOrderGroupData = [];
 				this.SelectGroupModel = null;
+			},
+			ShowPOOrdeInfoDetail: function(item){
+				this.GetPOOrderInfoExpand(item);
+				this.SwitchTab(2);
 			},
 			GetPOOrderInfoExpand: function(item){
 				this.SelectGroupModel = item;
@@ -628,17 +653,17 @@
 					}
 				});
 			},
-			//删除外购入库单
+			//删除采购入库单
 			DeleteStorageIn: function() {
 				if (this.StorageInterId == 0 && this.StorageInBillNo == '空') {
-					Config.ShowMessage('请选择要删除的入库单！');
+					Config.ShowMessage('请选择要删除的采购入库单！');
 					Config.PopAudioContext(false);					
 					return;
 				}				
 				let me = this;
 				uni.showModal({
 					title: '提示',
-					content: '是否需要删除单据编号为' + me.StorageInBillNo + '的入库单？',
+					content: '是否需要删除单据编号为' + me.StorageInBillNo + '的采购入库单？',
 					success: function(result) {
 					if (result.confirm) {
 						uni.request({
@@ -673,6 +698,7 @@
 									}
 									me.ClearBillHeadData(me);
 									me.SwitchTab(0);
+									me.ShowPOOrderInfo('');
 									Config.ShowMessage(DataParam.Msg);
 									Config.PopAudioContext(true);									
 							},
@@ -712,19 +738,19 @@
 	
 	.instoragelistview {
 		width: 100%;
-		height: 850upx;
+		height: 970upx;
 		margin-top: 20upx;
 	}
 	
 	.selectinfoscrollview {
 		width: 100%;
-		height: 620upx;
+		height: 670upx;
 		margin-top: 50upx;
 	}
 	
 	.unselectinfoscrollview {
 		width: 100%;
-		height: 850upx;
+		height: 900upx;
 		margin-top: 50upx;
 	}
 	
@@ -735,7 +761,7 @@
 		font-size: 15px;
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;		
-		margin-left: 30upx;
+		margin-left: 20upx;
 		margin-top: 20upx;	
 	}
 	
@@ -745,7 +771,7 @@
 		font-size: 15px;
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;		
-		margin-left: 310upx;
+		margin-left: 195upx;
 		margin-top: -97upx;	
 	}
 	
@@ -755,7 +781,7 @@
 		font-size: 15px;
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;		
-		margin-left: 310upx;
+		margin-left: 195upx;
 		margin-top: -97upx;
 	}
 	
@@ -766,9 +792,20 @@
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;
 		text-align: center;
-		margin-left: 580upx;
+		margin-left: 370upx;
 		margin-top: -85upx;
 	}	
+	
+	.inputbyhand{
+		width: 25%;
+		color: #FFFFFF;
+		font-size: 15px;
+		border: 1px solid #FFFFFF;
+		background-color: #1AAD19;
+		text-align: center;
+		margin-left: 545upx;
+		margin-top: -85upx;
+	}
 	
 	.billhead {
 		width: 100%;

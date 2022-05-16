@@ -224,14 +224,14 @@
 			},
 			//关闭物料弹窗
 			CloseMatPopupWindow: function(e) {
-				//console.log(e);
-				this.$refs.material.close();
+				//console.log(e);				
 				if (e == null || e == '') {
 					Config.ShowMessage('请填写要校验的物料编码！');
 					Config.PopAudioContext(false);
 					return;
-				}
-
+				}				
+				this.$refs.material.close();
+				
 				uni.request({
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
