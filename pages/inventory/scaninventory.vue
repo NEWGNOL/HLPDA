@@ -58,6 +58,7 @@
 				WareHouseModel: [],
 				InventoryAreaModel: [],
 				ProcessRecordModel: null,
+				UserLastScanLabelBatchNo: '',
 				InventoryItemId: '',
 				TotalText: '',				
 				Main: '',
@@ -158,6 +159,7 @@
 						Config.ShowMessage(ResultData.dataparam.Msg);
 						Config.PopAudioContext(true);	
 			            this.GenInventoryList();
+						this.GetUserLastScanLabelBatchNo(ResultData.dataparam.FBatchNo);
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -280,7 +282,8 @@
 			//修改物料数量
 			ModifyMaterialQty:function(){
 				this.OpenPopupWindow();
-			},				
+			},		
+			
 			//获取盘点清单
 			GenInventoryList: function(){
 				uni.showLoading({
@@ -297,7 +300,7 @@
 							FProcessID: this.ProcessModel.FProcessID,
 							FStockName: this.WareHouseModel.FName,
 							FUserId: uni.getStorageSync('FUserId'),
-							FInventoryAreaId: this.InventoryAreaModel.FId
+							FInventoryAreaId: this.InventoryAreaModel.FId							
 						}
 					},
 					success: (result) => {
@@ -328,6 +331,10 @@
 						}, 2000);					
 					}
 				});													
+			},
+			//获取当前用户最后一次盘点扫描的标签
+			GetUserLastScanLabelBatchNo: function(BatchNo){
+				this.UserLastScanLabelBatchNo = BatchNo;
 			},
 			//打开弹窗
 			OpenPopupWindow: function(){				
@@ -377,6 +384,7 @@
 							FInventoryQty: this.ProcessRecordModel.FQty,
 							FQty: e,
 							FBillerID: uni.getStorageSync('FUserId'),
+							FBatchNo: this.UserLastScanLabelBatchNo,
 							FIsAddMaterial: false,
 							Result: 0,
 							Msg: ''
