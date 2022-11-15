@@ -1,7 +1,6 @@
 <template>
 	<view class="container">
 		<uni-search-bar class="search" cancelButton="none" v-model="SearchValue" @input="StockChanged"></uni-search-bar>
-
 		<scroll-view class="scrollview" scroll-y="true">
 			<uni-list>
 				<uni-list-item v-for="(item,index) in StockList" :key="index" :title="item.FNumber + '     ' + item.FName" 

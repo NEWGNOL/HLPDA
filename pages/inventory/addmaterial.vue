@@ -114,7 +114,7 @@
 							FItemId: this.MaterialArray[0],
 							FInventoryQty: 0,
 							FQty: this.InventoryQty,
-							FBillerID: uni.getStorageSync('FUserId'),
+							FBillerID: uni.getStorageSync('FUserId'),							
 							FIsAddMaterial: true,
 							Result: 0,
 							Msg: ''

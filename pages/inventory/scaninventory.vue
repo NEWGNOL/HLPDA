@@ -57,8 +57,7 @@
 				ProcessModel: [],
 				WareHouseModel: [],
 				InventoryAreaModel: [],
-				ProcessRecordModel: null,
-				UserLastScanLabelBatchNo: '',
+				ProcessRecordModel: null,				
 				InventoryItemId: '',
 				TotalText: '',				
 				Main: '',
@@ -158,8 +157,7 @@
 						}
 						Config.ShowMessage(ResultData.dataparam.Msg);
 						Config.PopAudioContext(true);	
-			            this.GenInventoryList();
-						this.GetUserLastScanLabelBatchNo(ResultData.dataparam.FBatchNo);
+			            this.GenInventoryList();						
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -331,11 +329,7 @@
 						}, 2000);					
 					}
 				});													
-			},
-			//获取当前用户最后一次盘点扫描的标签
-			GetUserLastScanLabelBatchNo: function(BatchNo){
-				this.UserLastScanLabelBatchNo = BatchNo;
-			},
+			},		
 			//打开弹窗
 			OpenPopupWindow: function(){				
 				let IsSuccess = this.CheckPopupWindow();

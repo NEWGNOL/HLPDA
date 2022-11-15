@@ -53,7 +53,7 @@
 		onLoad() {
 			this.LoadLoginData();
 			this.AutoCheckUpdate();
-			//this.GetScreenHeight();	
+			this.GetScreenHeight();	
 		},
 		methods: {
 			GetScreenHeight: function() {
