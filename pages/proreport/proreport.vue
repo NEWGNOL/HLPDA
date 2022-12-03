@@ -55,7 +55,7 @@
 				<uni-list>
 					<FillQty v-for="(item,index) in InfoListData" :key="index" :title="item.FNumber + '/' + item.FModel
 					 + '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '批号：' + item.FGMPBatchNo + '\n' + '进度：' + item.FSumQty
-					 + '/' + item.FICMOQty + item.FUnitName + '\xa0\xa0\xa0\xa0\xa0' + (item.FSumQty/item.FOutPackPreQty/item.FInPackPreQty).toFixed(2) + '件'" :rownumber="index + 1"
+					 + '/' + item.FICMOQty + item.FUnitName + '\xa0\xa0\xa0\xa0\xa0' + (item.FSumQty/item.FOutPackPreQty).toFixed(2) + '件'" :rownumber="index + 1"
 					 isshowprogress v-bind:percent="Math.round((item.FSumQty / item.FICMOQty) * 100, 0)" clickable
 					 v-on:click="GetProReportInfoExpandByFillQty(item)" @ButtonClick="OpenQtyPopupWindow()">
 					</FillQty>
@@ -67,7 +67,7 @@
 				<uni-list>
 					<uni-list-item v-for="(item,index) in InfoListData" :key="index" :title="item.FNumber + '/' + item.FModel
 					 + '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '批号：' + item.FGMPBatchNo + '\n' + '进度：' + item.FSumQty
-					 + '/' + item.FICMOQty + item.FUnitName + '\xa0\xa0\xa0\xa0\xa0' + (item.FSumQty/item.FOutPackPreQty/item.FInPackPreQty).toFixed(2) + '件'" isshowprogress
+					 + '/' + item.FICMOQty + item.FUnitName + '\xa0\xa0\xa0\xa0\xa0' + (item.FSumQty/item.FOutPackPreQty).toFixed(2) + '件'" isshowprogress
 					 v-bind:percent="Math.round((item.FSumQty / item.FICMOQty) * 100, 0)" clickable
 					 v-on:click="GetProReportInfoExpand(item)">
 					</uni-list-item>
