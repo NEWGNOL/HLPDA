@@ -730,6 +730,7 @@
 							ModuleCode: 'getPdaICMORptGroupInfo',
 							token: uni.getStorageSync('token'),
 							ModuleParam: {
+								FInterId: this.StorageInterId,
 								FIndexIdList: this.SelectedProreport
 							}
 						},
