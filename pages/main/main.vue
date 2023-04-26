@@ -58,7 +58,17 @@
 		<view class="stockgoods" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[11].FIsAllow : true" @click="JumpPage('/pages/outstorage/stockgoods')">
 			<image class="img" src="../../static/stockgoods.png" mode="aspectFit"></image>
 			<text class="title">单据备货</text>
-		</view>			
+		</view>	
+		<!-- 标签绑定与解绑 -->
+		<view class="bindCode" @click="JumpPage('/pages/bindCode/bindCode')">
+			<image class="img" src="../../static/bindCode.png" mode="aspectFit"></image>
+			<text class="title">标签绑定</text>
+		</view>
+		
+		<view class="un-bindCode" @click="JumpPage('/pages/unbindCode/unbindCode')">
+			<image class="img" src="../../static/unBind.png" mode="aspectFit"></image>
+			<text class="title">标签解绑</text>
+		</view>
 	</view>	
 </template>
 
@@ -127,6 +137,11 @@
 </script>
 
 <style>	
+	/* .container{
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+	} */
 	.binding{
 		position: absolute;
 		width: 300upx;
@@ -259,6 +274,26 @@
 		margin-top: 1000upx;
 	}
 	
+	.bindCode{
+		position: absolute;
+		width: 300upx;
+		height: 150upx;
+		background-color: #007AFF;
+		border-radius: 25upx;
+		text-align: center;	
+		margin-left: -190upx;
+		margin-top: 1180upx;
+	}
+	.un-bindCode{
+		position: absolute;
+		width: 300upx;
+		height: 150upx;
+		background-color: #007AFF;
+		border-radius: 25upx;
+		text-align: center;	
+		margin-left: 190upx;
+		margin-top: 1180upx;
+	}
 	.title{
 		position: absolute;
 		color: #FFFFFF;

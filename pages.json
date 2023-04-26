@@ -472,7 +472,49 @@
 					 }
 			    }
 			}			
-		}	
+		},
+		{
+			"path": "pages/bindCode/bindCode",
+			"style": {
+				"navigationBarTitleText": "条码绑定",
+				"app-plus": {
+					"titleNView": {
+						"titleColor": "#ffffff",
+						"buttons":[{
+						   "text": "绑定历史",
+						   "fontSrc": "/static/fonts/icomoon.ttf",
+						   "fontSize": "17px",
+						   "color":"#FFFFFF",
+						   "float": "right",
+						   "width": "90px"
+						}]
+					}
+					
+				}
+			}
+		},
+		{
+			"path": "pages/unbindCode/unbindCode",
+			"style": {
+				"navigationBarTitleText": "条码解绑",
+				"app-plus": {
+					"titleNView": {
+						"titleColor": "#ffffff"
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/bindCode/bindingCodeHistory",
+			"style": {
+				"navigationBarTitleText": "条码绑定历史",
+				"app-plus": {
+					"titleNView": {
+						"titleColor": "#ffffff"
+					}
+				}
+			}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
