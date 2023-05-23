@@ -514,6 +514,44 @@
 					}
 				}
 			}
+		},
+		{
+			"path": "pages/SalesReturn/SalesReturn",
+			"style": {
+				"navigationBarTitleText": "退货单列表",
+				"app-plus": {
+					"titleNView": {
+						"titleColor": "#ffffff",
+						"buttons":[{
+						   "text": "新增",
+						   "fontSrc": "/static/fonts/icomoon.ttf",
+						   "fontSize": "17px",
+						   "color":"#FFFFFF",
+						   "float": "right",
+						   "width": "45px"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/SalesReturn/FCLReturn",
+			"style": {
+				"navigationBarTitleText": "退货扫码",
+				"app-plus": {
+					"titleNView": {
+						"titleColor": "#ffffff",
+						"buttons":[{
+						   "text": "隐藏表头",
+						   "fontSrc": "/static/fonts/icomoon.ttf",
+						   "fontSize": "17px",
+						   "color":"#FFFFFF",
+						   "float": "right",
+						   "width": "90px"
+						}]
+					}
+				}
+			}
 		}
     ],
 	"globalStyle": {

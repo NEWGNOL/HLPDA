@@ -60,14 +60,20 @@
 			<text class="title">单据备货</text>
 		</view>	
 		<!-- 标签绑定与解绑 -->
-		<view class="bindCode" @click="JumpPage('/pages/bindCode/bindCode')">
+		
+		<view class="bindCode"  @click="JumpPage('/pages/bindCode/bindCode')">
 			<image class="img" src="../../static/bindCode.png" mode="aspectFit"></image>
 			<text class="title">标签绑定</text>
 		</view>
 		
-		<view class="un-bindCode" @click="JumpPage('/pages/unbindCode/unbindCode')">
+		<view class="un-bindCode"  @click="JumpPage('/pages/unbindCode/unbindCode')">
 			<image class="img" src="../../static/unBind.png" mode="aspectFit"></image>
 			<text class="title">标签解绑</text>
+		</view>
+		
+		<view class="sales-Return"  @click="JumpPage('/pages/SalesReturn/SalesReturn')">
+			<image class="img" src="../../static/returnGoods.png" mode="aspectFit"></image>
+			<text class="title">退货解绑</text>
 		</view>
 	</view>	
 </template>
@@ -294,6 +300,17 @@
 		margin-left: 190upx;
 		margin-top: 1180upx;
 	}
+	.sales-Return{
+		position: absolute;
+		width: 300upx;
+		height: 150upx;
+		background-color: #007AFF;
+		border-radius: 25upx;
+		text-align: center;	
+		margin-left: -190upx;
+		margin-top: 1360upx;
+	}
+	
 	.title{
 		position: absolute;
 		color: #FFFFFF;

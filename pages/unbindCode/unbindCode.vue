@@ -18,10 +18,14 @@
 			</view>
 		</view>
 		<view class="history-info">
-			<view class="margin-bottom" v-for="item in historyInfo" :key="item.id">
+			<view class="margin-bottom" v-for="item in historyInfo" :key="item.FID">
 				<view class="his-box">
 					<view class="his-header">
-						<view class="his-title">内箱：{{item.wrapBox}}</view>
+						<view class="his-title">
+							<view>{{item.FNumber}}</view>
+							<view>{{item.FName}}</view>
+							<view>{{item.FModel}}</view>
+						</view>
 						<view class="his-btn">
 							<button  type="primary" @click="UnBindingCode(item)">
 								解绑
@@ -34,16 +38,19 @@
 					</view>
 					<view class="his-detail">
 						<view class="margin-bottom">
-							产品1：{{item.label1}}
+							内箱：{{item.FBoxLabel}}
 						</view>
 						<view class="margin-bottom">
-							产品2：{{item.label2}}
+							产品1：{{item.FLabel1}}
+						</view>
+						<view v-if="item.FLabel2" class="margin-bottom">
+							产品2：{{item.FLabel2}}
 						</view>
 						<view class="margin-bottom">
-							绑定日期：{{item.date}}
+							绑定日期：{{item.FDate}}
 						</view>
 						<view class="margin-bottom">
-							操作人：{{item.user}}
+							操作人：{{item.FUserName}}
 						</view>
 					</view>
 				</view>
@@ -53,6 +60,8 @@
 </template>
 
 <script>
+	import { unBindingCode,getRecently,searchQRCode } from '@/request/CodeBindingAPI/api.js'
+	import Config from '@/common/config.js'
 	export default{
 		name:"unbindCode",
 		data(){
@@ -95,37 +104,111 @@
 			ScanBarCode(Barcode){
 				this.searchValue = Barcode
 			},
-			searchBtn(){
-				var a = [
-					{
-						id:"1",
-						wrapBox:"SL-125S4561",
-						label1:"ws5425dzdwa",
-						label2:"wskxjs142wd",
-						date:"2023/4/26",
-						user:"梁健林"
-					},
-					{
-						id:"2",
-						wrapBox:"SL-125S4561",
-						label1:"ws5425dzdwa",
-						label2:"wskxjs142wd",
-						date:"2023/4/26",
-						user:"龙文"
-					}
-				]
-				this.historyInfo.length = 0;
-				this.historyInfo.push(...a)
+			async refresh(){
+				
 			},
-			UnBindingCode(item){
+			async searchBtn(){
+				let data = {
+					ModuleCode:"TM_QRCodeSearch",
+					token:uni.getStorageSync('token'),
+					ModuleParam:{
+						QRCode:this.searchValue,
+					},
+				}
+				try{
+					uni.showLoading({
+						title: '查找中'
+					});
+					var result = await searchQRCode(data)
+					if(result == -1){
+						uni.hideLoading();
+						config.ShowMessage('网络错误')
+						Config.PopAudioContext(false);
+						return
+					}
+					let ResultCode = result.data.ResultCode;
+					let ResultMsg = result.data.ResultMsg;
+					if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+						uni.hideLoading();
+						Config.ShowMessage('账号登录异常，请重新登录！');
+						Config.PopAudioContext(false);
+						return;
+					}
+					if(ResultCode == 'FAIL'){
+						uni.hideLoading();
+						Config.ShowMessage(ResultMsg);
+						Config.PopAudioContext(false);
+						return
+					}
+					let ResultData = result.data.ResultData.data.data0
+					this.historyInfo = ResultData
+					uni.hideLoading();
+				}catch(e){
+					console.log(e)
+					uni.hideLoading();
+					config.ShowMessage('异常')
+					Config.PopAudioContext(false);
+				}
+			},
+			async UnBindingCode(item){
 				uni.showModal({
 					title:"解绑操作",
 					content:"确认解绑？",
-					success:(res)=> {
+					success:async (res)=> {
 						if (res.confirm) {
 							// console.log('用户点击确定');
-							console.log(item.id)
+							// console.log(item.FID)
 							//此处做网络请求处理
+							uni.showLoading({
+								title: '解绑中'
+							});
+							let data = {
+								ModuleCode:"TM_QRCodeUnBinding",
+								token:uni.getStorageSync('token'),
+								ModuleParam:{
+									BoxLabel:item.FBoxLabel,
+									userName:uni.getStorageSync('FUserName'),
+								}
+							}
+							var result = await unBindingCode(data)
+							if(result == -1){
+								uni.hideLoading();
+								config.ShowMessage('网络错误')
+								Config.PopAudioContext(false);
+								return
+							}
+							try{
+								let ResultCode = result.data.ResultCode;
+								let ResultMsg = result.data.ResultMsg;
+								if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+									uni.hideLoading();
+									Config.ShowMessage('账号登录异常，请重新登录！');
+									Config.PopAudioContext(false);
+									return;
+								}
+								if(ResultCode == 'FAIL'){
+									uni.hideLoading();
+									Config.ShowMessage(ResultMsg);
+									Config.PopAudioContext(false);
+									return
+								}
+								let ResultData = result.data.ResultData.TM_QRCodeUnBinding.data0
+								console.log(ResultData)
+								if(ResultData.code != 0){
+									uni.hideLoading();
+									Config.ShowMessage(ResultData.Msg);
+									Config.PopAudioContext(false);
+									return
+								}
+								await this.searchBtn()
+								uni.hideLoading();
+								Config.ShowMessage(ResultData.Msg);
+							}catch(e){
+								console.log(e)
+								uni.hideLoading();
+								Config.ShowMessage('网络异常');
+								Config.PopAudioContext(false);
+							}
 						} else if (res.cancel) {
 							// console.log('用户点击取消');
 						}
@@ -173,6 +256,9 @@
 	}
 	.search-icon{
 		margin-right: 10upx;
+	}
+	.his-title{
+		font-size: 14px;
 	}
 	.his-box{
 		box-shadow: rgba(99, 99, 99, 0.2) 2px 2px 8px 0px;

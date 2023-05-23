@@ -15,6 +15,10 @@
 <style>
 	/*每个页面公共css */
 	/*每个页面的容器样式*/
+	.uni-data-checklist .checklist-group .checklist-box .checklist-content .checklist-text{
+		font-size: 20px !important;
+		line-height: 20px !important;
+	}
 	.container {		
 		display: flex;
 		flex-direction: column;
