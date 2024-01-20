@@ -56,10 +56,10 @@
 						scroll-y="true">
 						<uni-list>
 								<FillStock v-for="(item,index) in StorageInListData" :key="index" :title="item.FNumber 
-								+ '/' + item.FModel" :note="'入库进度：' + item.FStorageInCount + '件' + '/' + (item.FSumQty
-								/item.FInPackPreQty) + '件' + '\n' + '仓库：' + item.FStorageName" :rownumber="index + 1"
-								  isshowprogress :percent="Math.round(((item.FStorageInCount * item.FInPackPreQty) / item.FSumQty) 
-								* 100, 0)" :ishighlight="item.FHighLight" @ButtonClick="OpenStockPage(item)" clickable 
+								+ '/' + item.FModel" :note="'入库进度：' + item.FStorageInCount + '件' + '/' + item.FSumQty
+							    + '件' + '\n' + '仓库：' + item.FStorageName" :rownumber="index + 1"
+							    isshowprogress :percent="((item.FStorageInCount / item.FSumQty) * 100)" 
+							    :ishighlight="item.FHighLight" @ButtonClick="OpenStockPage(item)" clickable 
 								v-on:click="GetProReportInfoExpand(item)">
 								</FillStock>
 						</uni-list>
@@ -206,14 +206,14 @@
 					if (me.TabSelectedIndex == 0) {
 						me.ShowPdaIcmoInfo(Barcode);
 					} 
-					else if (me.TabSelectedIndex == 1) {
-						if(me.IsScanCartonBarCode){
-							me.GetStorageInItemByBarcode(Barcode);
-						}
-						else{
-							me.ScanWareHouse(Barcode);
-						}
-					} 
+					// else if (me.TabSelectedIndex == 1) {
+					// 	if(me.IsScanCartonBarCode){
+					// 		me.GetStorageInItemByBarcode(Barcode);
+					// 	}
+					// 	else{
+					// 		me.ScanWareHouse(Barcode);
+					// 	}
+					// } 
 				}
 			},
 			//移除广播监听
@@ -391,8 +391,7 @@
 				this.StorageInBillNo = DataModel.FBillNoStorageIn;
 				this.StorageInterId = DataModel.FStorageInId;
 				this.InStorageDate = DataModel.FDateStorageIn;	
-				this.SelectWorkShopArray = [DataModel.FDeptId, DataModel.FDeptName];
-				this.SelectWareHouseArray = [DataModel.FStockId, DataModel.FStockName];					
+				this.SelectWorkShopArray = [0, '请选择交货单位'];									
 			},
 			//获取选中的汇报单
 			GetSelectProreportByAdd: function() {
@@ -727,10 +726,9 @@
 						url: uni.getStorageSync('OtherUrl'),
 						method: 'POST',
 						data: {
-							ModuleCode: 'getPdaICMORptGroupInfo',
+							ModuleCode: 'getPdaICMORptGroupInfo1',
 							token: uni.getStorageSync('token'),
-							ModuleParam: {
-								FInterId: this.StorageInterId,
+							ModuleParam: {								
 								FIndexIdList: this.SelectedProreport
 							}
 						},
@@ -744,7 +742,7 @@
 								uni.hideLoading();
 								return;
 							}					
-							this.StorageInListData = result.data.ResultData.PdaICMORptGroupInfo.data0;						
+							this.StorageInListData = result.data.ResultData.PdaICMORptGroupInfo1.data0;						
 							this.StatBillQty();																										
 						},
 						fail: () => {
@@ -796,20 +794,21 @@
 					Config.PopAudioContext(false);					
 					return 0;
 				}
+				
 				if (this.SelectWorkShopArray[0] == 0) {
 					Config.ShowMessage('请选择交货单位！');
 					Config.PopAudioContext(false);					
 					return 0;
-				}
-				for (var i = 0; i < this.StorageInListData.length; i++) {
-					let DataModel = this.StorageInListData[i];	
-					if(DataModel.FStorageInCount < (DataModel.FSumQty / DataModel.FInPackPreQty))
-					{
-						Config.ShowMessage('汇报单编号为' + DataModel.FBillNo + '汇报没有完成，不允许审核单据！');
-						Config.PopAudioContext(false);						
+				}		
+					
+				for(let i = 0; i< this.StorageInListData.length; i++){					
+					var DataModel = this.StorageInListData[i];
+					if(DataModel.FStorageId == 0){
+						Config.ShowMessage('明细第' + (i + 1) + '行请选择汇报仓库！');
+						Config.PopAudioContext(false);					
 						return 0;
-					}
-				}				
+					}					
+				}
 			},
 			//审核入库单
 			AuditStorageIn: function() {
@@ -817,6 +816,25 @@
 				if(IsSuccess == 0){
 					return;
 				}
+				
+				
+				//获取单据体数据并拼接成字符串
+				var EntryAData = '';
+				for(let i = 0; i< this.StorageInListData.length; i++){
+					var DataModel = this.StorageInListData[i];					
+					if(i == 0){
+						EntryAData = EntryAData + DataModel.FItemId.toString() + ','	+ DataModel.FStorageId.toString() +
+						',' + DataModel.FICMOQty.toString() + ',' + DataModel.FId.toString() 
+					}
+					else{
+							EntryAData =  EntryAData + '|' + DataModel.FItemId.toString() + ',' + DataModel.FStorageId.toString() +
+							',' + DataModel.FICMOQty.toString() + ','  + DataModel.FId.toString() 
+					}						 
+				}
+				
+				// console.log(EntryAData);
+				
+				
 				uni.showLoading({
 					title: 'Loading',
 					mask: true
@@ -825,10 +843,14 @@
 					url: uni.getStorageSync('OtherUrl'),
 					method: 'POST',
 					data: {
-						ModuleCode: 'pdaICMORptToStorageInRpt',
+						ModuleCode: 'pdaICMORptToStorageInRpt1',
 						token: uni.getStorageSync('token'),
 						ModuleParam: {
 							FId: this.StorageInterId,
+							FBillNo: this.StorageInBillNo,
+							FBillerId: uni.getStorageSync('FUserId'),
+							FWorkShopId: this.SelectWorkShopArray[0],
+							FEntryAData: EntryAData,
 							Result: 0,
 							FStatus: 0,
 							FStatusCN: '',
@@ -845,9 +867,10 @@
 							uni.hideLoading();							
 							return;
 						}
-						let DataParam = result.data.ResultData.PdaICMORptToStorageInRpt.dataparam;
+						let DataParam = result.data.ResultData.pdaICMORptToStorageInRpt1.dataparam;
+						//console.log(DataParam);
 						let Result = DataParam.Result;
-						if (Result == 0) {
+						if (Result == 0) {							
 							Config.ShowMessage(DataParam.Msg);
 							Config.PopAudioContext(false);
 							uni.hideLoading();							
@@ -855,8 +878,7 @@
 						}
 						Config.ShowMessage(DataParam.Msg);
 						Config.PopAudioContext(true);						
-					    this.SwitchAuditFlag(false);
-						//this.ShowPdaIcmoInfo('');
+						this.SwitchAuditFlag(false);						
 					},
 					fail: () => {
 						Config.ShowMessage('请求数据失败！');
@@ -867,10 +889,10 @@
 						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
 							Config.ShowMessage(ResultMsg);
 							Config.PopAudioContext(false);						
-						}
+						}						
 						uni.hideLoading();
 					}
-				});
+				});					
 			},
 			//反审核入库单
 			UnAuditStorageIn: function() {
@@ -879,6 +901,16 @@
 					Config.PopAudioContext(false);					
 					return 0;
 				}
+				
+				// uni.showModal({
+				// 	title: '提示',
+				// 	content: '是否确定反审核该汇报入库单？',
+				// 	success: function(resultConfirm) {
+				// 		if (resultConfirm.confirm) {
+							
+				// 		}
+				// 	},
+				// });
 				
 				uni.showLoading({
 					title: 'Loading',
@@ -908,6 +940,7 @@
 							return;
 						}
 						let DataParam = result.data.ResultData.UnPdaICMORptToStorageInRpt.dataparam;
+						console.log(DataParam);
 						let Result = DataParam.Result;
 						if (Result == 0) {
 							Config.ShowMessage(DataParam.Msg);
@@ -1041,7 +1074,7 @@
 				for (let i = 0; i < this.StorageInListData.length; i++) {
 					let DataModel = this.StorageInListData[i];
 					RealSendQty += DataModel.FStorageInCount;
-					ShouldSendQty += DataModel.FSumQty / DataModel.FInPackPreQty;
+					ShouldSendQty += DataModel.FSumQty;
 				}
 				this.ScanProgress = RealSendQty + '/' + ShouldSendQty + '     件';
 			},
