@@ -108,7 +108,7 @@ export default{
 			console.log(Barcode)
 			// this.billEntry.push({barCode:Barcode})
 			//判断当前单据体是否有该标签
-			if(this.billHeader.FStatus = 1){
+			if(this.billHeader.FStatus == 1){
 				Config.ShowMessage('该单据已审核，不允许扫码');
 				Config.PopAudioContext(false);
 				return

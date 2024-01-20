@@ -1,17 +1,17 @@
 
-.scrollview{	
+.scrollview {
 	margin-top: 20rpx;
 	height: 1000rpx;
 }
-.selectlabel{
+.selectlabel {
 	width: 30%;
 	color: #FFFFFF;
-	background-color: #007AFF;		
+	background-color: #007AFF;
 	border-radius: 50rpx;
 	margin-left: 150rpx;
 	margin-top: 20rpx;
 }
-.deletelabel{	
+.deletelabel {
 	width: 20%;
 	color: #FFFFFF;
 	background-color: #007AFF;

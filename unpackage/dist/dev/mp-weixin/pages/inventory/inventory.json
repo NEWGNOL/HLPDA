@@ -1,13 +1,9 @@
 {
-  "navigationBarTitleText": "仓库盘点",
+  "navigationBarTitleText": "选择盘点方案",
   "usingComponents": {
+    "config": "/common/config",
     "inventory-plan": "/components/inventory-plan/inventory-plan",
     "inventory-stock": "/components/inventory-stock/inventory-stock",
-    "uni-table": "/components/uni-table/uni-table",
-    "uni-tr": "/components/uni-tr/uni-tr",
-    "uni-th": "/components/uni-th/uni-th",
-    "uni-td": "/components/uni-td/uni-td",
-    "inventory-keyboard": "/components/inventory-keyboard/inventory-keyboard",
-    "config": "/common/config"
+    "inventory-area": "/components/inventory-area/inventory-area"
   }
 }

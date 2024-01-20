@@ -3,6 +3,7 @@
   "usingComponents": {
     "uni-list": "/components/uni-list/uni-list",
     "uni-list-item": "/components/uni-list-item/uni-list-item",
-    "config": "/common/config"
+    "config": "/common/config",
+    "out-storage-keyboard": "/components/outstorage-keyboard/outstorage-keyboard"
   }
 }

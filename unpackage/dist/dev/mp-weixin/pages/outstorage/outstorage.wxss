@@ -3,20 +3,24 @@
 	width: 100%;
 	height: 950rpx;
 }
+.billstatus {
+	margin-top: -90rpx;
+	margin-left: 570rpx;
+}
 .billscrollview {
 	width: 100%;
-	height: 850rpx;
-	margin-top: 25rpx;
+	height: 950rpx;
+	margin-top: 10rpx;
 }
 .selectinfoscrollview {
 	width: 100%;
-	height: 750rpx;
-	margin-top: 50rpx;
+	height: 700rpx;
+	margin-top: 30rpx;
 }
 .unselectinfoscrollview {
 	width: 100%;
-	height: 900rpx;
-	margin-top: 50rpx;
+	height: 850rpx;
+	margin-top: 30rpx;
 }
 .scanseorder {
 	width: 31%;
@@ -35,43 +39,62 @@
 	margin-top: 30rpx;
 }
 .addstorageout {
-	width: 20%;
+	display: inline-block;
+	width: 25%;
 	height: 90rpx;
 	color: #FFFFFF;
-	background-color: #007AFF;
-	border-radius: 50rpx;
-	margin-left: 340rpx;
-	margin-top: -91rpx;
+	border: 1px solid #FFFFFF;
+	background-color: #1AAD19;
+	margin-left: 40rpx;
+	margin-top: 20rpx;
 }
-.querystorageout {
-	width: 20%;
+.confirmsoutgroup {
+	width: 25%;
 	height: 90rpx;
 	color: #FFFFFF;
-	background-color: #007AFF;
-	border-radius: 50rpx;
-	margin-left: 550rpx;
-	margin-top: -91rpx;
+	border: 1px solid #FFFFFF;
+	background-color: #1AAD19;
+	margin-left: 300rpx;
+	margin-top: -100rpx;
 }
-.auditstorageout {		
+.addboard {
+	display: inline-block;
+	color: #FFFFFF;
+	border: 1px solid #FFFFFF;
+	background-color: #1AAD19;
+	font-size: 15px;
+	margin-left: 20rpx;
+	margin-top: 30rpx;
+}
+.queryboard {
+	width: 22%;
+	color: #FFFFFF;
+	border: 1px solid #FFFFFF;
+	background-color: #1AAD19;
+	font-size: 15px;
+	margin-left: 210rpx;
+	margin-top: -97rpx;
+}
+.auditstorageout {
 	width: 20%;
-	color: #FFFFFF;	
+	color: #FFFFFF;
 	font-size: 15px;
 	border: 1px solid #FFFFFF;
-	background-color: #1AAD19;		
-	margin-left: 420rpx;
-	margin-top: -70rpx;
+	background-color: #1AAD19;
+	margin-left: 410rpx;
+	margin-top: -85rpx;
 }
 .unauditstorageout {
 	width: 20%;
 	color: #FFFFFF;
 	font-size: 15px;
 	border: 1px solid #FFFFFF;
-	background-color: #1AAD19;		
-	margin-left: 420rpx;
-	margin-top: -70rpx;
+	background-color: #1AAD19;
+	margin-left: 410rpx;
+	margin-top: -85rpx;
 }
-.deletestorageout {		
-	width: 20%;		
+.deletestorageout {
+	width: 20%;
 	color: #FFFFFF;
 	font-size: 15px;
 	border: 1px solid #FFFFFF;
@@ -88,17 +111,10 @@
 	margin-left: 580rpx;
 	margin-top: -96rpx;
 }
-.pagehead{
+.pagehead {
 	width: 100%;
 	height: 130rpx;
 	background-color: #1AAD19;
-}
-.srcbillno {
-	display: inline-block;
-	color: #FFFFFF;
-	font-size: 19px;
-	margin-left: 20rpx;
-	margin-top: 30rpx;
 }
 .billhead {
 	width: 100%;
@@ -111,6 +127,12 @@
 	margin-left: 50rpx;
 	text-align: center;
 	color: #777777;
+}
+.switchtitle {
+	display: inline-block;
+	margin-top: 10rpx;
+	margin-left: 50rpx;
+	font-size: 40rpx;
 }
 .title {
 	margin-left: 50rpx;
@@ -142,7 +164,7 @@
 	margin-left: 30rpx;
 	margin-top: 30rpx;
 }
-.queryall {		
+.queryall {
 	display: flex;
 	flex-direction: column;
 	font-size: 40rpx;
@@ -171,7 +193,7 @@
 .listline {
 	width: 100%;
 	height: 3rpx;
-	background-color: #000000;	
+	background-color: #000000;
 	margin-top: 20rpx;
 }
 .tabbackground {

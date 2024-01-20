@@ -6,12 +6,12 @@
 }
 .selectinfoscrollview {
 	width: 100%;
-	height: 670rpx;
+	height: 700rpx;
 	margin-top: 50rpx;
 }
 .unselectinfoscrollview {
 	width: 100%;
-	height: 950rpx;
+	height: 980rpx;
 	margin-top: 50rpx;
 }
 .addstoragein {

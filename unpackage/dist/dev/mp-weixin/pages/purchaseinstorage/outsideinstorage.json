@@ -1,10 +1,13 @@
 {
-  "navigationBarTitleText": "外购入库",
+  "navigationBarTitleText": "采购入库",
   "usingComponents": {
     "uni-search-bar": "/components/uni-search-bar/uni-search-bar",
-    "billstatus": "/components/billstatus/billstatus",
     "uni-list": "/components/uni-list/uni-list",
     "uni-list-item": "/components/uni-list-item/uni-list-item",
-    "config": "/common/config"
+    "uni-popup": "/components/uni-popup/uni-popup",
+    "mod-fty": "/components/mod-fty/mod-fty",
+    "config": "/common/config",
+    "fill-qty": "/components/fill-qty/fill-qty",
+    "bill-status": "/components/billstatus/billstatus"
   }
 }

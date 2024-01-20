@@ -36,6 +36,9 @@
 		<view class="clear">
 			<button type="warn" @click="clear()">全部清空</button>
 		</view>
+		<view class="clear">
+			<button type="warn" @click="GotoPacking()">切换装箱绑定</button>
+		</view>
 	</view>
 </template>
 
@@ -98,26 +101,42 @@
 			//扫描条码
 			async ScanBarCode(Barcode){
 				try{
-					let prefix = Barcode.slice(0,2)
+					
+					let prefix = Barcode.replace("https://api.shiliduo.cn/barcode?code=","").slice(0,2)
 				
 					//判断是一绑一还是一绑二
 					if(this.radio == 0){ //一绑二
 						if(prefix == "SL"){
 							// console.log(prefix)
+							if(this.wrapCode == Barcode && this.wrapCode !=""){
+								Config.PopAudioContext(false);
+								Config.ShowMessage("重复扫码")
+								return
+							}
 							this.wrapCode = Barcode
-						}else if(this.goodsCode1 == "" && this.goodsCode2 != Barcode){
-							this.goodsCode1 = Barcode
-						}else if(this.goodsCode2 == "" && this.goodsCode1 != Barcode){
-							this.goodsCode2 = Barcode
-						}else if(this.goodsCode1 == Barcode){
-							this.goodsCode1 = Barcode
-						}else if(this.goodsCode2 == Barcode){
-							this.goodsCode2 = Barcode
+							Config.PopAudioContext(true);
+						}else if(this.goodsCode1 == "" && this.goodsCode2 != Barcode.replace("https://api.shiliduo.cn/barcode?code=","")){
+							this.goodsCode1 = Barcode.replace("https://api.shiliduo.cn/barcode?code=","")
+							Config.PopAudioContext(true);
+						}else if(this.goodsCode2 == "" && this.goodsCode1 != Barcode.replace("https://api.shiliduo.cn/barcode?code=","")){
+							this.goodsCode2 = Barcode.replace("https://api.shiliduo.cn/barcode?code=","")
+							Config.PopAudioContext(true);
+						}else if(this.goodsCode1 == Barcode.replace("https://api.shiliduo.cn/barcode?code=","")){
+							// this.goodsCode1 = Barcode.replace("https://api.shiliduo.cn/barcode?code=","")
+							Config.PopAudioContext(false);
+							Config.ShowMessage("标签1重复扫码");
+							return
+						}else if(this.goodsCode2 == Barcode.replace("https://api.shiliduo.cn/barcode?code=","")){
+							// this.goodsCode2 = Barcode.replace("https://api.shiliduo.cn/barcode?code=","")
+							Config.PopAudioContext(false);
+							Config.ShowMessage("标签2重复扫码");
+							return
 						}
 						else{
 							uni.showModal({
 								title:"请先删除已有产品标签"
 							})
+							Config.PopAudioContext(false);
 							return
 						}
 						//已经扫完三个码
@@ -168,13 +187,26 @@
 							this.clear()
 							uni.hideLoading();
 							Config.ShowMessage(ResultData.Msg);
+							Config.PopAudioContext(true);
 						}
 					}else if(this.radio == 1){ //一绑一
 						if(prefix == "SL"){
 							// console.log(prefix)
+							if(this.wrapCode == Barcode && this.wrapCode !=""){
+								Config.PopAudioContext(false);
+								Config.ShowMessage("重复扫码")
+								return
+							}
 							this.wrapCode = Barcode
+							Config.PopAudioContext(true);
 						}else{
-							this.goodsCode1 = Barcode
+							if(this.goodsCode1 == Barcode.replace("https://api.shiliduo.cn/barcode?code=","")&&this.goodsCode1!=""){
+								Config.PopAudioContext(false);
+								Config.ShowMessage("重复扫码")
+								return
+							}
+							this.goodsCode1 = Barcode.replace("https://api.shiliduo.cn/barcode?code=","")
+							Config.PopAudioContext(true);
 						}
 						
 						if(this.wrapCode!=''&&this.goodsCode1!=''){
@@ -226,14 +258,26 @@
 							this.clear()
 							uni.hideLoading();
 							Config.ShowMessage(ResultData.Msg);
+							Config.PopAudioContext(true);
 						}
 					}
 				}catch(e){
 					console.log(e)
 					uni.hideLoading();
-					Config.ShowMessage();
+					Config.ShowMessage('异常，请检查网络或服务器网络');
 					Config.PopAudioContext(false);
 				}
+			},
+			GotoPacking(){
+				uni.navigateTo({
+					url:"/pages/binding/binding",
+					success() {
+						console.log('跳转成功')
+					},
+					fail(e) {
+						console.log(e)
+					}
+				})
 			},
 			async bindingCodeBtn(){
 				try{
@@ -283,6 +327,7 @@
 							this.clear()
 							uni.hideLoading();
 							Config.ShowMessage(ResultData.Msg);
+							Config.PopAudioContext(true);
 						}else{
 							Config.ShowMessage('条码不能为空');
 							Config.PopAudioContext(false);
@@ -333,6 +378,7 @@
 							this.clear()
 							uni.hideLoading();
 							Config.ShowMessage(ResultData.Msg);	
+							Config.PopAudioContext(true);
 						}else{
 							Config.ShowMessage('条码不能为空');
 							Config.PopAudioContext(false);
@@ -341,7 +387,7 @@
 				}catch(e){
 					console.log(e)
 					uni.hideLoading();
-					Config.ShowMessage(e);
+					Config.ShowMessage('异常，请检查网络或服务器网络');
 					Config.PopAudioContext(false);
 				}
 				
@@ -371,13 +417,18 @@
 			this.radio = uni.getStorageSync("selectType")||0
 		},
 		onLoad() {
+			
+		},
+		onUnload() {
+			
+		},
+		onShow() {
 			this.AddListener();
 			this.radio = uni.getStorageSync("selectType")||0
 		},
-		onUnload() {
+		onHide(){
 			this.RemoveListener();
 		},
-		
 		onNavigationBarButtonTap() {
 			uni.navigateTo({
 				url:'/pages/bindCode/bindingCodeHistory'

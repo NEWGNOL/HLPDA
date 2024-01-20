@@ -150,6 +150,30 @@
 			}
 		},
 		{
+			"path": "pages/proreportinstorage/proreportinstorage1",
+			"style": {
+				"navigationBarTitleText": "汇报入库",
+				"app-plus":{
+				                  "titleNView":{
+				                  "titleColor":"FFFFFF",
+								  "buttons": [{
+								      "text": "隐藏表头",
+								      "fontSrc": "/static/fonts/icomoon.ttf",
+								      "fontSize": "17px",
+								  	  "color":"#FFFFFF",
+								      "float": "right",
+								      "width": "90px"									  																			
+								  }],
+							      "backButton": {									 
+									  "title": "返回",
+									  "ftitleWeight": "bold",
+									  "fontSize": "26px"
+								  }
+							      }								  
+				}			
+			}
+		},
+		{
 			"path": "pages/proreportinstorage/cartonlabeldetail",
 			"style": {
 				"navigationBarTitleText": "外箱明细",

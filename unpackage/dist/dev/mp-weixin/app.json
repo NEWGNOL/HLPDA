@@ -16,14 +16,24 @@
     "pages/purchaseinstorage/cartonlabeldetail",
     "pages/outstorage/outstorage",
     "pages/outstorage/cartonlabeldetail",
+    "pages/outstorage/queryboard",
     "pages/transfers/transfers",
     "pages/inventory/inventory",
+    "pages/inventory/scaninventory",
     "pages/inventory/addmaterial",
     "pages/basic/icitem",
     "pages/inventory/queryinventory",
     "pages/outstorage/qtycheck",
     "pages/outsidetransfers/outsidetransfers",
-    "pages/outsidetransfers/cartonlabeldetail"
+    "pages/outsidetransfers/cartonlabeldetail",
+    "pages/inventory/cartonlabeldetail",
+    "pages/outstorage/receivegoods",
+    "pages/outstorage/stockgoods",
+    "pages/bindCode/bindCode",
+    "pages/unbindCode/unbindCode",
+    "pages/bindCode/bindingCodeHistory",
+    "pages/SalesReturn/SalesReturn",
+    "pages/SalesReturn/FCLReturn"
   ],
   "subPackages": [],
   "window": {
@@ -32,7 +42,5 @@
     "navigationBarBackgroundColor": "#007AFF",
     "backgroundColor": "#007AFF"
   },
-  "usingComponents": {
-    "digit-keyboard": "/components/digit-keyboard/digit-keyboard"
-  }
+  "usingComponents": {}
 }

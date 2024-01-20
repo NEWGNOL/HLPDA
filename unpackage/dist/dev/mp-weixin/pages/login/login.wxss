@@ -27,6 +27,7 @@
 .button {
 	margin-top: 100rpx;
 	width: 250rpx;
+	height: 100rpx;
 	color: #FFFFFF;
 	background-color: #007AFF;
 	border-radius: 50rpx;

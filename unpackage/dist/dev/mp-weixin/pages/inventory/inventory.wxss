@@ -1,20 +1,10 @@
 
-.inventoryplantitle {					
-	margin-left: -450rpx;
-	margin-top: 30rpx;
-	font-size: 20px;
-}
-.inventoryplan {		
-	margin-left: 250rpx;
-	margin-top: -65rpx;
-	font-size: 20px;
-}
-.warehousetitle {
+.title {					
 	margin-left: -450rpx;
 	margin-top: 50rpx;
 	font-size: 20px;
 }
-.warehouse {
+.content{
 	margin-left: 250rpx;
 	margin-top: -65rpx;
 	font-size: 20px;
@@ -28,22 +18,22 @@
 	height: 790rpx;
 	margin-top: 50rpx;
 }
-.modifymaterialqty {
+.enterinventory{
+	width: 40%;
+	color: #FFFFFF;
+	background-color: #007AFF;
+	border-radius: 50rpx;
+	margin-left: 30rpx;
+	margin-top: 100rpx;
+	font-size: 18px;
+}
+.updateinventoryreport{
 	width: 45%;
 	color: #FFFFFF;
 	background-color: #007AFF;
 	border-radius: 50rpx;
-	margin-left: 50rpx;
-	margin-top: 50rpx;
-	font-size: 20px;
-}
-.addmaterial {
-	width: 30%;
-	color: #FFFFFF;
-	background-color: #007AFF;
-	border-radius: 50rpx;
-	margin-left: 480rpx;
-	margin-top: -110rpx;
-	font-size: 20px;
-}
+	margin-left: 370rpx;
+	margin-top: -95rpx;
+	font-size: 18px;
+}	
 

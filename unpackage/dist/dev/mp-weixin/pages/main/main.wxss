@@ -1,4 +1,153 @@
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* .container{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+} */
 .binding{
 	position: absolute;
 	width: 300rpx;
@@ -94,10 +243,60 @@
 	width: 300rpx;
 	height: 150rpx;
 	background-color: #007AFF;
-	border-radius: 25rpx;	
-	text-align: center;
-	margin-left: 190rpx;	
-	margin-top: 820rpx;
+	border-radius: 25rpx;
+	text-align: center;	
+	margin-left: 190rpx;
+	margin-top: 280rpx;
+}
+.receivegoods{
+	position: absolute;
+	width: 300rpx;
+	height: 150rpx;
+	background-color: #007AFF;
+	border-radius: 25rpx;
+	text-align: center;	
+	margin-left: -190rpx;
+	margin-top: 1000rpx;
+}
+.stockgoods{
+	position: absolute;
+	width: 300rpx;
+	height: 150rpx;
+	background-color: #007AFF;
+	border-radius: 25rpx;
+	text-align: center;	
+	margin-left: 190rpx;
+	margin-top: 1000rpx;
+}
+.bindCode{
+	position: absolute;
+	width: 300rpx;
+	height: 150rpx;
+	background-color: #007AFF;
+	border-radius: 25rpx;
+	text-align: center;	
+	margin-left: -190rpx;
+	margin-top: 1180rpx;
+}
+.un-bindCode{
+	position: absolute;
+	width: 300rpx;
+	height: 150rpx;
+	background-color: #007AFF;
+	border-radius: 25rpx;
+	text-align: center;	
+	margin-left: 190rpx;
+	margin-top: 1180rpx;
+}
+.sales-Return{
+	position: absolute;
+	width: 300rpx;
+	height: 150rpx;
+	background-color: #007AFF;
+	border-radius: 25rpx;
+	text-align: center;	
+	margin-left: -190rpx;
+	margin-top: 1360rpx;
 }
 .title{
 	position: absolute;

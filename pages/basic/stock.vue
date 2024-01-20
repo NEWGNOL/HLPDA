@@ -109,13 +109,15 @@
 						} 						
 					}
 					else{
-						let ProreportInfoItem = PrevPage.$vm.ProreportInfoItem;
-						PrevPage.$vm.StorageInListData[ProreportInfoItem.FIndex].FStorageId = e.FItemID;
-						PrevPage.$vm.StorageInListData[ProreportInfoItem.FIndex].FStorageName = e.FName;
+							// console.log(PrevPage.$vm.ProreportInfoItem);
+							// console.log(PrevPage.$vm.StorageInListData);
+							let ProreportInfoItem = PrevPage.$vm.ProreportInfoItem;
+							PrevPage.$vm.StorageInListData[ProreportInfoItem.FIndex].FStorageId = e.FItemID;
+							PrevPage.$vm.StorageInListData[ProreportInfoItem.FIndex].FStorageName = e.FName;
 					}					 				
 				}
 				else{					
-					PrevPage.$vm.SelectWareHouseArray = [e.FItemID, e.FName];
+							PrevPage.$vm.SelectWareHouseArray = [e.FItemID, e.FName];
 				}				
 				//#endif
 				uni.navigateBack();

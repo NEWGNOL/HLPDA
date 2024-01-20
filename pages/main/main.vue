@@ -10,7 +10,7 @@
 			<text class="title">生产汇报</text>
 		</view>
 		
-		<view class="proreportinstorage" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[2].FIsAllow : true" @click="JumpPage('/pages/proreportinstorage/proreportinstorage')">
+		<view class="proreportinstorage" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[2].FIsAllow : true" @click="JumpPage('/pages/proreportinstorage/proreportinstorage1')">
 			<image class="img" src="../../static/proreportinstorage.png" mode="aspectFit"></image>
 			<text class="title">汇报入库</text>
 		</view>	
@@ -61,17 +61,17 @@
 		</view>	
 		<!-- 标签绑定与解绑 -->
 		
-		<view class="bindCode"  @click="JumpPage('/pages/bindCode/bindCode')">
+		<view class="bindCode" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[12].FIsAllow : true" @click="JumpPage('/pages/bindCode/bindCode')">
 			<image class="img" src="../../static/bindCode.png" mode="aspectFit"></image>
 			<text class="title">标签绑定</text>
 		</view>
 		
-		<view class="un-bindCode"  @click="JumpPage('/pages/unbindCode/unbindCode')">
+		<view class="un-bindCode" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[13].FIsAllow : true" @click="JumpPage('/pages/unbindCode/unbindCode')">
 			<image class="img" src="../../static/unBind.png" mode="aspectFit"></image>
 			<text class="title">标签解绑</text>
 		</view>
 		
-		<view class="sales-Return"  @click="JumpPage('/pages/SalesReturn/SalesReturn')">
+		<view class="sales-Return" v-show="UserPermissionArray.length != 0 ? UserPermissionArray[13].FIsAllow : true"  @click="JumpPage('/pages/SalesReturn/SalesReturn')">
 			<image class="img" src="../../static/returnGoods.png" mode="aspectFit"></image>
 			<text class="title">退货解绑</text>
 		</view>
@@ -170,6 +170,37 @@
 		margin-top: 100upx;
 	}
 	
+	.bindCode{
+		position: absolute;
+		width: 300upx;
+		height: 150upx;
+		background-color: #007AFF;
+		border-radius: 25upx;
+		text-align: center;	
+		margin-left: -190upx;
+		margin-top: 280upx;
+	}
+	.un-bindCode{
+		position: absolute;
+		width: 300upx;
+		height: 150upx;
+		background-color: #007AFF;
+		border-radius: 25upx;
+		text-align: center;	
+		margin-left: 190upx;
+		margin-top: 280upx;
+	}
+	.sales-Return{
+		position: absolute;
+		width: 300upx;
+		height: 150upx;
+		background-color: #007AFF;
+		border-radius: 25upx;
+		text-align: center;	
+		margin-left: -190upx;
+		margin-top: 460upx;
+	}
+	
 	.proreportinstorage{
 		position: absolute;
 		width: 300upx;
@@ -178,7 +209,7 @@
 		border-radius: 25upx;	
 		text-align: center;
 		margin-left: -190upx;	
-		margin-top: 280upx;
+		margin-top: 640upx;
 	}
 	
 	.purchaseinstorage{
@@ -189,7 +220,7 @@
 		border-radius: 25upx;
 		text-align: center;	
 		margin-left: 190upx;
-		margin-top: 280upx;
+		margin-top: 640upx;
 	}
 	
 	.outstorage{
@@ -200,7 +231,7 @@
 		border-radius: 25upx;	
 		text-align: center;
 		margin-left: -190upx;	
-		margin-top: 460upx;
+		margin-top: 820upx;
 	}
 	
 	.transfers{
@@ -211,7 +242,7 @@
 		border-radius: 25upx;	
 		text-align: center;
 		margin-left: 190upx;	
-		margin-top: 460upx;
+		margin-top: 820upx;
 	}
 	
 	.inventory{
@@ -222,7 +253,7 @@
 		border-radius: 25upx;	
 		text-align: center;
 		margin-left: -190upx;	
-		margin-top: 640upx;
+		margin-top: 1000upx;
 	}
 	
 	.queryinventory{
@@ -233,7 +264,7 @@
 		border-radius: 25upx;	
 		text-align: center;
 		margin-left: 190upx;	
-		margin-top: 640upx;
+		margin-top: 1000upx;
 	}
 	
 	.outsidetransfers{
@@ -244,7 +275,7 @@
 		border-radius: 25upx;	
 		text-align: center;
 		margin-left: -190upx;	
-		margin-top: 820upx;
+		margin-top: 1180upx;
 	}
 	
 	.outsideinstorage{
@@ -255,7 +286,7 @@
 		border-radius: 25upx;
 		text-align: center;	
 		margin-left: 190upx;
-		margin-top: 280upx;
+		margin-top: 640upx;
 	}
 	
 	.receivegoods{
@@ -266,7 +297,7 @@
 		border-radius: 25upx;
 		text-align: center;	
 		margin-left: -190upx;
-		margin-top: 1000upx;
+		margin-top: 1360upx;
 	}
 	
 	.stockgoods{
@@ -277,39 +308,10 @@
 		border-radius: 25upx;
 		text-align: center;	
 		margin-left: 190upx;
-		margin-top: 1000upx;
-	}
-	
-	.bindCode{
-		position: absolute;
-		width: 300upx;
-		height: 150upx;
-		background-color: #007AFF;
-		border-radius: 25upx;
-		text-align: center;	
-		margin-left: -190upx;
-		margin-top: 1180upx;
-	}
-	.un-bindCode{
-		position: absolute;
-		width: 300upx;
-		height: 150upx;
-		background-color: #007AFF;
-		border-radius: 25upx;
-		text-align: center;	
-		margin-left: 190upx;
-		margin-top: 1180upx;
-	}
-	.sales-Return{
-		position: absolute;
-		width: 300upx;
-		height: 150upx;
-		background-color: #007AFF;
-		border-radius: 25upx;
-		text-align: center;	
-		margin-left: -190upx;
 		margin-top: 1360upx;
 	}
+	
+	
 	
 	.title{
 		position: absolute;

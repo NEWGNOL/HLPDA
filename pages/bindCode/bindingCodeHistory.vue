@@ -40,7 +40,7 @@
 			</view>
 		</view>
 		<view class="tip">
-			<view>————仅显示近期20条记录————</view>
+			<view>————仅显示近期30条记录————</view>
 		</view>
 	</view>
 </template>

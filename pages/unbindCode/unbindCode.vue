@@ -102,7 +102,7 @@
 			},
 				
 			ScanBarCode(Barcode){
-				this.searchValue = Barcode
+				this.searchValue = Barcode.replace("https://api.shiliduo.cn/barcode?code=","")
 			},
 			async refresh(){
 				
