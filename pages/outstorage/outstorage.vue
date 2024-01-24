@@ -166,6 +166,7 @@
 				EndDate: Config.DateFormat('end'),
 				BillListData: [],
 				BillGroupData: [],
+				ScanBarCodeData: [], //扫描条码数组
 				IsBillHeadVisible: true,
 				IsShowAllBoard: true,
 				IsAuditStorageOut: true,
@@ -659,7 +660,10 @@
 			},
 			//扫描条码做出库
 			ScanBarCode: function(Barcode) {
+				//存在有新增合并出库单内码
 				if (this.AddSOutGroupInterId != 0 && this.BillListData.length != 0) {
+					//不存在已经扫描该条码的记录
+					// if((this.ScanBarCodeData.indexOf(Barcode) == -1)					
 					uni.request({
 						url: uni.getStorageSync('OtherUrl'),
 						method: 'POST',
@@ -1041,7 +1045,7 @@
 					};
 				}
 				Config.PopAudioContext(true);
-				this.BillListData.push(AddItem);
+				this.BillListData.push(AddItem);				
 				//console.log(this.BillListData);					
 			},
 			FindICStockBillAddList: function() {
