@@ -56,7 +56,7 @@
 						scroll-y="true">
 						<uni-list>
 								<FillStock v-for="(item,index) in StorageInListData" :key="index" :title="item.FNumber 
-								+ '/' + item.FModel" :note="'入库进度：' + item.FStorageInCount + '件' + '/' + item.FSumQty
+								+ '/' + item.FModel" :note="'入库进度：' + item.FICMOQty + '只' + '/' + item.FStorageInCount
 							    + '件' + '\n' + '仓库：' + item.FStorageName" :rownumber="index + 1"
 							    isshowprogress :percent="((item.FStorageInCount / item.FSumQty) * 100)" 
 							    :ishighlight="item.FHighLight" @ButtonClick="OpenStockPage(item)" clickable 
