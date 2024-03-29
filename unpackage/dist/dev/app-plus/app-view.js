@@ -1094,7 +1094,11 @@ module.exports = function (url, options) {
   url = url && url.__esModule ? url.default : url
 
   if (typeof url !== 'string') {
-    return url
+    if (url.protocol && url.protocol === 'file:' && url.pathname) {
+      url = url.pathname
+    } else {
+      return url
+    }
   } // If url is already wrapped in quotes, remove them
 
   if (/^['"].*['"]$/.test(url)) {
@@ -1124,9 +1128,9 @@ module.exports = function (url, options) {
   !*** D:/所有公司工作资料/金蝶/开发项目/KDPDA/KDPDA/components/uni-icons/uni.ttf ***!
   \********************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "/components/uni-icons/uni.ttf";
+module.exports = __webpack_require__.p + "assets/uni.75745d34.ttf";
 
 /***/ }),
 /* 19 */

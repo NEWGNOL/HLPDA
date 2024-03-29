@@ -235,8 +235,10 @@
 			RefreshListByChecked: function(item){
 			   for(let i = 0; i < this.IcmoListData.length; i++){
 				   let DataModel = this.IcmoListData[i];
-				   DataModel.FIsChecked = (DataModel.FBillNo == item.FBillNo) ? true : false;				   
-			   }
+				   DataModel.FIsChecked = !DataModel.FIsChecked;
+				   // console.log(item.FIsChecked);
+				   // DataModel.FIsChecked = (DataModel.FBillNo == item.FBillNo) ? true : false;
+				}
 			},					
 			//获取手指滑动页面的起点
 			TouchStart: function(e) {
