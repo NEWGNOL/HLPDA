@@ -825,11 +825,11 @@
 					var DataModel = this.StorageInListData[i];					
 					if(i == 0){
 						EntryAData = EntryAData + DataModel.FItemId.toString() + ','	+ DataModel.FStorageId.toString() +
-						',' + DataModel.FICMOQty.toString() + ',' + DataModel.FId.toString() 
+						',' + DataModel.FICMOQty.toString() + ',' + DataModel.FId.toString() + ',' + DataModel.FSrcInterId.toString()
 					}
 					else{
 							EntryAData =  EntryAData + '|' + DataModel.FItemId.toString() + ',' + DataModel.FStorageId.toString() +
-							',' + DataModel.FICMOQty.toString() + ','  + DataModel.FId.toString() 
+							',' + DataModel.FICMOQty.toString() + ','  + DataModel.FId.toString() + ',' + DataModel.FSrcInterId.toString()
 					}						 
 				}
 				
