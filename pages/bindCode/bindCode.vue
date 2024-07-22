@@ -420,7 +420,7 @@
 			
 		},
 		onUnload() {
-			
+			this.RemoveListener();
 		},
 		onShow() {
 			this.AddListener();

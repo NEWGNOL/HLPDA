@@ -224,6 +224,9 @@
 		},
 		onUnload() {
 			this.RemoveListener();
+		},
+		onHide() {
+			this.RemoveListener();
 		}
 	}
 </script>

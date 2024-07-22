@@ -463,6 +463,9 @@ export default{
 	onUnload() {
 		this.RemoveListener();
 	},
+	onHide() {
+		this.RemoveListener();
+	},
 	onNavigationBarButtonTap() {
 		// this.$refs.inputDialog.open()
 		// console.log(this.$refs.billheader.$el.style)
