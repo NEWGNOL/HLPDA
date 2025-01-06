@@ -62,7 +62,7 @@
 						//获取系统信息，可使用窗口的高度和宽度
 						let height = res.screenHeight; 
 						let width = res.screenWidth;
-						console.log('screenHeight：' + height + '  screenWidth：' + width);
+						//console.log('screenHeight：' + height + '  screenWidth：' + width);
 					}
 				});
 			},
