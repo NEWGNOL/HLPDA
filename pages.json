@@ -126,6 +126,17 @@
 			}
 		},
 		{
+			"path": "pages/basic/exceptiontype",
+			"style": {
+				"navigationBarTitleText": "生产异常类型查询",
+				"app-plus":{
+					"titleNView":{
+						"titleColor":"FFFFFF"
+					}
+				}
+			}
+		},
+		{
 			"path": "pages/proreportinstorage/proreportinstorage",
 			"style": {
 				"navigationBarTitleText": "汇报入库",

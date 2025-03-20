@@ -15,6 +15,10 @@
 				    + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '编号：' + item.FBillNo" clickable
 					:ischecked="item.FIsChecked" :isshowcheckbox="true" @CheckBoxChange="RefreshListByChecked(item)">
 					</uni-list-item>
+					<!-- <uni-list-item v-for="(item,index) in IcmoListData" :key="index" :title="item.FBillNo + '          ' +
+					'|' + item.FDate + '\n'" clickable
+					:ischecked="item.FIsChecked" :isshowcheckbox="true" @CheckBoxChange="RefreshListByChecked(item)">
+					</uni-list-item> -->
 				</uni-list>
 			</scroll-view>
 		</view>
@@ -312,11 +316,15 @@
 							Config.PopAudioContext(false);							
 						},
 						complete: (resultcomp) => {
-							let ResultMsg = resultcomp.data.ResultMsg;
-							if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
-								Config.ShowMessage(ResultMsg);
-								Config.PopAudioContext(false);							
-							}
+							//console.log(resultcomp);
+							let Data = resultcomp.data;
+							if(Data != 'undefined'){
+								let ResultMsg = Data.ResultMsg;
+								if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+									Config.ShowMessage(ResultMsg);
+									Config.PopAudioContext(false);							
+								}
+							}							
 							uni.hideLoading();
 						}
 					});

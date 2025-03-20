@@ -69,13 +69,11 @@
 				v-bind:class="{unselectinfoscrollview : !IsBillHeadVisible}" scroll-y="true">
 				<uni-list>
 					<FillQty v-for="(item,index) in BillGroupData" :key="index" :title="item.FModel 
-			 		+ '/' + item.FNumber" :note="'应发:' + item.FSQty + '只/'
-			        + (item.FSQty/item.FInPackPreQty).toFixed(1)
-			        + '件' + '\n' + '实发:'+ item.FFactQty + '只/' 
-			        + (item.FFactQty/item.FInPackPreQty).toFixed(1) + '件'" :rownumber="index + 1"
-						v-bind:percent="Math.round((item.FFactQty / item.FSQty) * 100, 0)" isshowprogress
-						:ishighlight="item.FHighLight" clickable v-on:click="GetSelectGroupModel(item)"
-						@ButtonClick="OpenQtyPopupWindow(index)">
+			 		+ '/' + item.FNumber" :note="'应发:' + item.FSQty + '只/' + (item.FSQty/item.FInPackPreQty).toFixed(1)
+			        + '件' + '\n' + '实发:'+ item.FFactQty + '只/' + (item.FFactQty/item.FInPackPreQty).toFixed(1) + '件'" 
+					:rownumber="index + 1" v-bind:percent="Math.round((item.FFactQty / item.FSQty) * 100, 0)" isshowprogress
+					:ishighlight="item.FHighLight" clickable v-on:click="GetSelectGroupModel(item)"
+					@ButtonClick="OpenQtyPopupWindow(index)">
 					</FillQty>
 				</uni-list>
 			</scroll-view>

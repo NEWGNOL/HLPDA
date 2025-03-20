@@ -47,6 +47,7 @@
 				<picker mode="date" :value="FinishDate" :start="StartDate" :end="EndDate" @change="FinishDateChange">
 					<view class="data">{{FinishDate}}</view>
 				</picker>
+				
 				<view class="dataline"></view>
 
 				<text class="title">汇报工时：</text>
@@ -55,6 +56,16 @@
 
 				<text class="title">汇报人数：</text>
 				<text class="billreport" v-on:click="OpenQtyPopupWindow2()">{{ProReportPeopleNumber}}</text>
+				<view class="dataline"></view>
+				
+				<text class="title">异常类型：</text>
+				<navigator url="/pages/basic/exceptiontype" hover-class="navigator-hover">
+					<view class="data1">{{SelectExceptionTypeArray[1]}}</view>
+				</navigator>
+				<view class="dataline"></view>
+				
+				<text class="title">异常原因：</text>
+				<input class="billreport1" v-model="ExceptionReason">				
 				<view class="dataline"></view>
 			</view>
 
@@ -193,6 +204,7 @@
 				IsRequesting: false,
 				SelectWorkShopArray: [0, '请选择车间'],
 				SelectTeamArray: [0, '请选择班组'],
+				SelectExceptionTypeArray: [0, '请选择类型'],
 				StatusArray: ['未审核', '已审核', '全部'],
 				FinishDate: DateFormat({
 					format: true
@@ -200,6 +212,7 @@
 				ProReportManHour: 0,
 				ProReportPeopleNumber: 0,
 				//KeyBoardOperationNumer: 0, //1.修改散件数量 2.修改汇报工时 3.修改汇报人数
+				ExceptionReason: '',//异常原因
 				ItemTouchStartDate: null,
 				StartDate: DateFormat('start'),
 				EndDate: DateFormat('end'),
@@ -1357,7 +1370,7 @@
 		width: 200upx;
 		font-size: 40upx;
 		margin-top: -60upx;
-		margin-left: 300upx;
+		margin-left: 450upx;
 		text-align: center;
 		color: #777777;
 	}
@@ -1367,7 +1380,19 @@
 		width: 200upx;
 		font-size: 40upx;
 		margin-top: -60upx;
-		margin-left: 450upx;
+		margin-left: 400upx;
+		text-align: center;
+		color: #777777;
+	}
+	
+	.billreport1 {
+		display: flex;
+		width: 60%;
+		/* border: 5upx solid;
+		border-color: #888888; */
+		font-size: 40upx;
+		margin-top: -60upx;
+		margin-left: 250upx;
 		text-align: center;
 		color: #777777;
 	}
@@ -1405,6 +1430,15 @@
 		margin-left: 370upx;
 		text-align: center;
 	}
+	
+	.data1 {
+		display: flex;
+		width: 60%;
+		font-size: 40upx;
+		margin-top: -60upx;
+		margin-left: 370upx;
+		text-align: center;
+	}
 
 	.dataline {
 		width: 60%;
@@ -1425,7 +1459,7 @@
 
 	.unselectinfoscrollview {
 		width: 100%;
-		height: 450upx;
+		height: 350upx;
 		margin-top: 50upx;
 	}
 
