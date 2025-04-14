@@ -296,7 +296,7 @@
 		justify-content: space-between;
 		align-items: center;
 		background-color: #fff;
-		flex-direction: row;
+		flex-direction: row;		
 		/* #ifdef H5 */
 		cursor: pointer;
 		/* #endif */
@@ -320,7 +320,7 @@
 		padding: 12px 15px;
 		padding-left: 15px;
 		flex: 1;
-		overflow: hidden;		
+		overflow: hidden;
 	}
 
 	.container--right {
@@ -459,7 +459,7 @@
 	.uni-ellipsis-1 {
 		/* #ifndef APP-NVUE */
 		overflow: hidden;
-		white-space: nowrap;
+		white-space: nowrap;		
 		text-overflow: ellipsis;
 		/* #endif */
 		/* #ifdef APP-NVUE */

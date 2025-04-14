@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="proreportview" v-show="TabSelectedIndex == 0" @touchstart='TouchStart' @touchend='TouchEnd'>
-			<uni-search-bar class="search" cancelButton="none" v-model="SearchValue" @input="ValueChanged">
+			<uni-search-bar class="search" cancelButton="none" placeholder="单号或者型号" v-model="SearchValue" @input="ValueChanged">
 			</uni-search-bar>
 			<billstatus class="billstatus" :candidates="StatusArray" v-model="SelectStatus" @input="ShowPdaIcmoInfo('')">
 			</billstatus>
@@ -10,15 +10,18 @@
 			<button class="querystoragein" v-bind:disabled="IsAddStorageIn" v-on:click="QueryStorageIn()">查询</button>
 			
 			<scroll-view class="icmoscrollview" scroll-y="true" show-scrollbar>
-				<uni-list @scrolltolower="ScrollToLower">
+				<uni-list @scrolltolower="ScrollToLower" v-show="SelectStatus == '未入库'">
+					<uni-list-item v-for="(item,index) in IcmoListData" :key="index" :title="item.FBillNo + ' ' + 
+					'|' + ' ' + item.FDate + '\n' + item.FRemark" clickable
+					:ischecked="item.FIsChecked" :isshowcheckbox="true" @CheckBoxChange="RefreshListByChecked(item)">
+					</uni-list-item>									
+				</uni-list>
+				
+				<uni-list @scrolltolower="ScrollToLower" v-show="SelectStatus == '已入库'">					
 					<uni-list-item v-for="(item,index) in IcmoListData" :key="index" :title="'制单人：'
 				    + item.FBillerName + '\n'+ '制单日期：' + item.FDate + '\n' + '编号：' + item.FBillNo" clickable
 					:ischecked="item.FIsChecked" :isshowcheckbox="true" @CheckBoxChange="RefreshListByChecked(item)">
-					</uni-list-item>
-					<!-- <uni-list-item v-for="(item,index) in IcmoListData" :key="index" :title="item.FBillNo + '          ' +
-					'|' + item.FDate + '\n'" clickable
-					:ischecked="item.FIsChecked" :isshowcheckbox="true" @CheckBoxChange="RefreshListByChecked(item)">
-					</uni-list-item> -->
+					</uni-list-item>					
 				</uni-list>
 			</scroll-view>
 		</view>

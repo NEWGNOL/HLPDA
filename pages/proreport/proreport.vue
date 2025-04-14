@@ -745,7 +745,9 @@
 								FTeamId: this.SelectTeamArray[0],
 								FDate: this.FinishDate,
 								FProReportManHour : this.ProReportManHour,
-								FProReportPeopleNumber: this.ProReportPeopleNumber,								
+								FProReportPeopleNumber: this.ProReportPeopleNumber,	
+								FExceptionTypeId: this.SelectExceptionTypeArray[0],
+								FExceptionReason: this.ExceptionReason,
 								FBillerID: uni.getStorageSync('FUserId'),
 								FPackBarCode: Barcode,
 								Result: 0,
@@ -1184,6 +1186,7 @@
 						}
 					});
 					//列表数据赋值
+					//console.log('item',item);
 					this.TabSelectedIndex = 1;
 					this.ProReportInterId = item.FId;
 					this.ProReportBillNo = item.FBillNo;
@@ -1192,6 +1195,8 @@
 					this.FinishDate = item.FDate;
 					this.ProReportManHour = item.FProReportManHour;
 					this.ProReportPeopleNumber = item.FProReportPeopleNumber;
+					this.SelectExceptionTypeArray = [item.FExceptionTypeId, item.FExceptionTypeName];
+					this.ExceptionReason = item.FExceptionReason;
 				}
 			},
 			//显示生产汇报单信息

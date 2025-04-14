@@ -72,7 +72,7 @@
 				this.LoadWorkShopData();
 			},
 			ItemSelected: function(e) {
-				console.log(e);
+				//console.log(e);
 				let Pages = getCurrentPages();			
 				let PrevPage = Pages[Pages.length - 2];  //上一个页面						
 				//#ifdef H5

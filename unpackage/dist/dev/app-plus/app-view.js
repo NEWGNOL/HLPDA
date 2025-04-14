@@ -3966,7 +3966,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../InstallSoftware/HBuilderX.3.1.13.20210514.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 16);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.uni-list-item[data-v-1093b690] {\n\n\tdisplay: flex;\n\n\tfont-size: 16px;\n\tposition: relative;\n\tjustify-content: space-between;\n\talign-items: center;\n\tbackground-color: #fff;\n\tflex-direction: row;\n}\n.uni-list-item--disabled[data-v-1093b690] {\n\topacity: 0.3;\n}\n.uni-list-item--hover[data-v-1093b690] {\n\tbackground-color: #f1f1f1;\n}\n.uni-list-item__container[data-v-1093b690] {\n\tposition: relative;\n\n\tdisplay: flex;\n\n\tflex-direction: row;\n\tpadding: 12px 15px;\n\tpadding-left: 15px;\n\tflex: 1;\n\toverflow: hidden;\n}\n.container--right[data-v-1093b690] {\n\tpadding-right: 0;\n}\n.uni-list--border[data-v-1093b690] {\n\tposition: absolute;\n\ttop: 0;\n\tright: 0;\n\tleft: 0;\n}\n.uni-list--border[data-v-1093b690]:after {\n\tposition: absolute;\n\ttop: 0;\n\tright: 0;\n\tleft: 0;\n\theight: 1px;\n\tcontent: \"\";\n\t-webkit-transform: scaleY(0.5);\n\ttransform: scaleY(0.5);\n\tbackground-color: #e5e5e5;\n}\n.uni-list-item__content[data-v-1093b690] {\n\n\tdisplay: flex;\t\t\n\n\tpadding-right: 8px;\n\tflex: 1;\n\tcolor: #3b4144;\n\tflex-direction: column;\n\tjustify-content: space-between;\n\toverflow: hidden;\n}\n.uni-list-item__content--center[data-v-1093b690] {\n\tjustify-content: center;\n}\n.uni-list-item__content-title[data-v-1093b690] {\n\tfont-size: 16px;\n\tcolor: #3b4144;\n\toverflow: hidden;\n}\n.uni-list-item__content-note[data-v-1093b690] {\n\tmargin-top: 6rpx;\n\tcolor: #000;\n\tfont-size: 18px;\n\toverflow: hidden;\n}\n.uni-list-item__extra[data-v-1093b690] {\n\n\tdisplay: flex;\n\n\tflex-direction: row;\n\tjustify-content: flex-end;\n\talign-items: center;\n}\n.uni-list-item__header[data-v-1093b690] {\n\n\tdisplay: flex;\n\n\tflex-direction: row;\n\talign-items: center;\n}\n.uni-list-item__icon[data-v-1093b690] {\n\tmargin-right: 18rpx;\n\tflex-direction: row;\n\tjustify-content: center;\n\talign-items: center;\n}\n.uni-list-item__icon-img[data-v-1093b690] {\n\n\tdisplay: block;\n\n\theight: 26px;\n\twidth: 26px;\n\tmargin-right: 10px;\n}\n.uni-icon-wrapper[data-v-1093b690] {\n\n\tdisplay: flex;\n\n\talign-items: center;\n\tpadding: 0 10px;\n}\n.flex--direction[data-v-1093b690] {\n\tflex-direction: column;\n\n\talign-items: initial;\n}\n.flex--justify[data-v-1093b690] {\n\n\tjustify-content: initial;\n}\n.uni-list--lg[data-v-1093b690] {\n\theight: 40px;\n\twidth: 40px;\n}\n.uni-list--base[data-v-1093b690] {\n\theight: 26px;\n\twidth: 26px;\n}\n.uni-list--sm[data-v-1093b690] {\n\theight: 20px;\n\twidth: 20px;\n}\n.uni-list-item__extra-text[data-v-1093b690] {\n\tcolor: #999;\n\tfont-size: 12px;\n}\n.uni-ellipsis-1[data-v-1093b690] {\n\n\toverflow: hidden;\n\twhite-space: nowrap;\n\ttext-overflow: ellipsis;\n}\n.uni-ellipsis-2[data-v-1093b690] {\n\n\toverflow: hidden;\n\ttext-overflow: ellipsis;\n\tdisplay: -webkit-box;\n\t-webkit-line-clamp: 2;\n\t-webkit-box-orient: vertical;\n}\n.checkbox[data-v-1093b690]{\n}\n.icon[data-v-1093b690]{\t\t\n\twidth: 70rpx;\n\theight: 70rpx;\t\n    margin-right: 100rpx;\n}\n", ""]);
+exports.push([module.i, "\n.uni-list-item[data-v-1093b690] {\n\n\tdisplay: flex;\n\n\tfont-size: 16px;\n\tposition: relative;\n\tjustify-content: space-between;\n\talign-items: center;\n\tbackground-color: #fff;\n\tflex-direction: row;\n}\n.uni-list-item--disabled[data-v-1093b690] {\n\topacity: 0.3;\n}\n.uni-list-item--hover[data-v-1093b690] {\n\tbackground-color: #f1f1f1;\n}\n.uni-list-item__container[data-v-1093b690] {\n\tposition: relative;\n\n\tdisplay: flex;\n\n\tflex-direction: row;\n\tpadding: 12px 15px;\n\tpadding-left: 15px;\n\tflex: 1;\n\toverflow: hidden;\n}\n.container--right[data-v-1093b690] {\n\tpadding-right: 0;\n}\n.uni-list--border[data-v-1093b690] {\n\tposition: absolute;\n\ttop: 0;\n\tright: 0;\n\tleft: 0;\n}\n.uni-list--border[data-v-1093b690]:after {\n\tposition: absolute;\n\ttop: 0;\n\tright: 0;\n\tleft: 0;\n\theight: 1px;\n\tcontent: \"\";\n\t-webkit-transform: scaleY(0.5);\n\ttransform: scaleY(0.5);\n\tbackground-color: #e5e5e5;\n}\n.uni-list-item__content[data-v-1093b690] {\n\n\tdisplay: flex;\t\t\n\n\tpadding-right: 8px;\n\tflex: 1;\n\tcolor: #3b4144;\n\tflex-direction: column;\n\tjustify-content: space-between;\n\toverflow: hidden;\n}\n.uni-list-item__content--center[data-v-1093b690] {\n\tjustify-content: center;\n}\n.uni-list-item__content-title[data-v-1093b690] {\n\tfont-size: 16px;\n\tcolor: #3b4144;\n\toverflow: hidden;\n}\n.uni-list-item__content-note[data-v-1093b690] {\n\tmargin-top: 6rpx;\n\tcolor: #000;\n\tfont-size: 18px;\n\toverflow: hidden;\n}\n.uni-list-item__extra[data-v-1093b690] {\n\n\tdisplay: flex;\n\n\tflex-direction: row;\n\tjustify-content: flex-end;\n\talign-items: center;\n}\n.uni-list-item__header[data-v-1093b690] {\n\n\tdisplay: flex;\n\n\tflex-direction: row;\n\talign-items: center;\n}\n.uni-list-item__icon[data-v-1093b690] {\n\tmargin-right: 18rpx;\n\tflex-direction: row;\n\tjustify-content: center;\n\talign-items: center;\n}\n.uni-list-item__icon-img[data-v-1093b690] {\n\n\tdisplay: block;\n\n\theight: 26px;\n\twidth: 26px;\n\tmargin-right: 10px;\n}\n.uni-icon-wrapper[data-v-1093b690] {\n\n\tdisplay: flex;\n\n\talign-items: center;\n\tpadding: 0 10px;\n}\n.flex--direction[data-v-1093b690] {\n\tflex-direction: column;\n\n\talign-items: initial;\n}\n.flex--justify[data-v-1093b690] {\n\n\tjustify-content: initial;\n}\n.uni-list--lg[data-v-1093b690] {\n\theight: 40px;\n\twidth: 40px;\n}\n.uni-list--base[data-v-1093b690] {\n\theight: 26px;\n\twidth: 26px;\n}\n.uni-list--sm[data-v-1093b690] {\n\theight: 20px;\n\twidth: 20px;\n}\n.uni-list-item__extra-text[data-v-1093b690] {\n\tcolor: #999;\n\tfont-size: 12px;\n}\n.uni-ellipsis-1[data-v-1093b690] {\n\n\toverflow: hidden;\n\twhite-space: nowrap;\t\t\n\ttext-overflow: ellipsis;\n}\n.uni-ellipsis-2[data-v-1093b690] {\n\n\toverflow: hidden;\n\ttext-overflow: ellipsis;\n\tdisplay: -webkit-box;\n\t-webkit-line-clamp: 2;\n\t-webkit-box-orient: vertical;\n}\n.checkbox[data-v-1093b690]{\n}\n.icon[data-v-1093b690]{\t\t\n\twidth: 70rpx;\n\theight: 70rpx;\t\n    margin-right: 100rpx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -9539,6 +9539,14 @@ var render = function () {
               _c(
                 "uni-list",
                 {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm._$g(7, "v-show"),
+                      expression: "_$g(7,'v-show')",
+                    },
+                  ],
                   attrs: { _i: 7 },
                   on: {
                     scrolltolower: function ($event) {
@@ -9550,6 +9558,37 @@ var render = function () {
                   return _c("uni-list-item", {
                     key: item,
                     attrs: { _i: "8-" + $30 },
+                    on: {
+                      CheckBoxChange: function ($event) {
+                        return _vm.$handleViewEvent($event)
+                      },
+                    },
+                  })
+                }),
+                1
+              ),
+              _c(
+                "uni-list",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm._$g(9, "v-show"),
+                      expression: "_$g(9,'v-show')",
+                    },
+                  ],
+                  attrs: { _i: 9 },
+                  on: {
+                    scrolltolower: function ($event) {
+                      return _vm.$handleViewEvent($event)
+                    },
+                  },
+                },
+                _vm._l(_vm._$g(10, "f"), function (item, index, $21, $31) {
+                  return _c("uni-list-item", {
+                    key: item,
+                    attrs: { _i: "10-" + $31 },
                     on: {
                       CheckBoxChange: function ($event) {
                         return _vm.$handleViewEvent($event)
@@ -9572,12 +9611,12 @@ var render = function () {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm._$g(9, "v-show"),
-              expression: "_$g(9,'v-show')",
+              value: _vm._$g(11, "v-show"),
+              expression: "_$g(11,'v-show')",
             },
           ],
-          staticClass: _vm._$g(9, "sc"),
-          attrs: { _i: 9 },
+          staticClass: _vm._$g(11, "sc"),
+          attrs: { _i: 11 },
           on: {
             touchstart: function ($event) {
               return _vm.$handleViewEvent($event)
@@ -9590,12 +9629,12 @@ var render = function () {
         [
           _c(
             "uni-view",
-            { staticClass: _vm._$g(10, "sc"), attrs: { _i: 10 } },
+            { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
             [
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
-                [_vm._v(_vm._$g(11, "t0-0"))]
+                { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
+                [_vm._v(_vm._$g(13, "t0-0"))]
               ),
               _c(
                 "v-uni-button",
@@ -9604,12 +9643,12 @@ var render = function () {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm._$g(12, "v-show"),
-                      expression: "_$g(12,'v-show')",
+                      value: _vm._$g(14, "v-show"),
+                      expression: "_$g(14,'v-show')",
                     },
                   ],
-                  staticClass: _vm._$g(12, "sc"),
-                  attrs: { _i: 12 },
+                  staticClass: _vm._$g(14, "sc"),
+                  attrs: { _i: 14 },
                   on: {
                     click: function ($event) {
                       return _vm.$handleViewEvent($event)
@@ -9625,12 +9664,12 @@ var render = function () {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm._$g(13, "v-show"),
-                      expression: "_$g(13,'v-show')",
+                      value: _vm._$g(15, "v-show"),
+                      expression: "_$g(15,'v-show')",
                     },
                   ],
-                  staticClass: _vm._$g(13, "sc"),
-                  attrs: { _i: 13 },
+                  staticClass: _vm._$g(15, "sc"),
+                  attrs: { _i: 15 },
                   on: {
                     click: function ($event) {
                       return _vm.$handleViewEvent($event)
@@ -9642,8 +9681,8 @@ var render = function () {
               _c(
                 "v-uni-button",
                 {
-                  staticClass: _vm._$g(14, "sc"),
-                  attrs: { _i: 14 },
+                  staticClass: _vm._$g(16, "sc"),
+                  attrs: { _i: 16 },
                   on: {
                     click: function ($event) {
                       return _vm.$handleViewEvent($event)
@@ -9662,31 +9701,31 @@ var render = function () {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm._$g(15, "v-show"),
-                  expression: "_$g(15,'v-show')",
+                  value: _vm._$g(17, "v-show"),
+                  expression: "_$g(17,'v-show')",
                 },
               ],
-              staticClass: _vm._$g(15, "sc"),
-              attrs: { _i: 15 },
+              staticClass: _vm._$g(17, "sc"),
+              attrs: { _i: 17 },
             },
             [
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
+                { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
                 [_vm._v("交货单位：")]
               ),
               _c(
                 "uni-view",
-                { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
-                [_vm._v(_vm._$g(17, "t0-0"))]
+                { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
+                [_vm._v(_vm._$g(19, "t0-0"))]
               ),
               _c("uni-view", {
-                staticClass: _vm._$g(18, "sc"),
-                attrs: { _i: 18 },
+                staticClass: _vm._$g(20, "sc"),
+                attrs: { _i: 20 },
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
+                { staticClass: _vm._$g(21, "sc"), attrs: { _i: 21 } },
                 [_vm._v("入库日期：")]
               ),
               _c(
@@ -9694,11 +9733,11 @@ var render = function () {
                 {
                   attrs: {
                     mode: "date",
-                    value: _vm._$g(20, "a-value"),
-                    start: _vm._$g(20, "a-start"),
-                    end: _vm._$g(20, "a-end"),
-                    disabled: _vm._$g(20, "a-disabled"),
-                    _i: 20,
+                    value: _vm._$g(22, "a-value"),
+                    start: _vm._$g(22, "a-start"),
+                    end: _vm._$g(22, "a-end"),
+                    disabled: _vm._$g(22, "a-disabled"),
+                    _i: 22,
                   },
                   on: {
                     change: function ($event) {
@@ -9709,19 +9748,19 @@ var render = function () {
                 [
                   _c(
                     "uni-view",
-                    { staticClass: _vm._$g(21, "sc"), attrs: { _i: 21 } },
-                    [_vm._v(_vm._$g(21, "t0-0"))]
+                    { staticClass: _vm._$g(23, "sc"), attrs: { _i: 23 } },
+                    [_vm._v(_vm._$g(23, "t0-0"))]
                   ),
                 ],
                 1
               ),
               _c("uni-view", {
-                staticClass: _vm._$g(22, "sc"),
-                attrs: { _i: 22 },
+                staticClass: _vm._$g(24, "sc"),
+                attrs: { _i: 24 },
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(23, "sc"), attrs: { _i: 23 } },
+                { staticClass: _vm._$g(25, "sc"), attrs: { _i: 25 } },
                 [_vm._v("汇报仓库：")]
               ),
               _c(
@@ -9730,43 +9769,43 @@ var render = function () {
                   attrs: {
                     url: "/pages/basic/stock",
                     "hover-class": "navigator-hover",
-                    _i: 24,
+                    _i: 26,
                   },
                 },
                 [
                   _c(
                     "uni-view",
                     {
-                      staticClass: _vm._$g(25, "sc"),
-                      attrs: { _i: 25 },
+                      staticClass: _vm._$g(27, "sc"),
+                      attrs: { _i: 27 },
                       on: {
                         click: function ($event) {
                           return _vm.$handleViewEvent($event)
                         },
                       },
                     },
-                    [_vm._v(_vm._$g(25, "t0-0"))]
+                    [_vm._v(_vm._$g(27, "t0-0"))]
                   ),
                 ],
                 1
               ),
               _c("uni-view", {
-                staticClass: _vm._$g(26, "sc"),
-                attrs: { _i: 26 },
+                staticClass: _vm._$g(28, "sc"),
+                attrs: { _i: 28 },
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(27, "sc"), attrs: { _i: 27 } },
+                { staticClass: _vm._$g(29, "sc"), attrs: { _i: 29 } },
                 [_vm._v("扫码进度：")]
               ),
               _c(
                 "uni-view",
-                { staticClass: _vm._$g(28, "sc"), attrs: { _i: 28 } },
-                [_vm._v(_vm._$g(28, "t0-0"))]
+                { staticClass: _vm._$g(30, "sc"), attrs: { _i: 30 } },
+                [_vm._v(_vm._$g(30, "t0-0"))]
               ),
               _c("uni-view", {
-                staticClass: _vm._$g(29, "sc"),
-                attrs: { _i: 29 },
+                staticClass: _vm._$g(31, "sc"),
+                attrs: { _i: 31 },
               }),
             ],
             1
@@ -9774,18 +9813,18 @@ var render = function () {
           _c(
             "v-uni-scroll-view",
             {
-              staticClass: _vm._$g(30, "sc"),
-              class: _vm._$g(30, "c"),
-              attrs: { "scroll-y": "true", _i: 30 },
+              staticClass: _vm._$g(32, "sc"),
+              class: _vm._$g(32, "c"),
+              attrs: { "scroll-y": "true", _i: 32 },
             },
             [
               _c(
                 "uni-list",
-                { attrs: { _i: 31 } },
-                _vm._l(_vm._$g(32, "f"), function (item, index, $21, $31) {
+                { attrs: { _i: 33 } },
+                _vm._l(_vm._$g(34, "f"), function (item, index, $22, $32) {
                   return _c("FillStock", {
                     key: item,
-                    attrs: { _i: "32-" + $31 },
+                    attrs: { _i: "34-" + $32 },
                     on: {
                       ButtonClick: function ($event) {
                         return _vm.$handleViewEvent($event)
@@ -9811,12 +9850,12 @@ var render = function () {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm._$g(33, "v-show"),
-              expression: "_$g(33,'v-show')",
+              value: _vm._$g(35, "v-show"),
+              expression: "_$g(35,'v-show')",
             },
           ],
-          staticClass: _vm._$g(33, "sc"),
-          attrs: { _i: 33 },
+          staticClass: _vm._$g(35, "sc"),
+          attrs: { _i: 35 },
           on: {
             touchstart: function ($event) {
               return _vm.$handleViewEvent($event)
@@ -9829,18 +9868,18 @@ var render = function () {
         [
           _c(
             "uni-view",
-            { staticClass: _vm._$g(34, "sc"), attrs: { _i: 34 } },
+            { staticClass: _vm._$g(36, "sc"), attrs: { _i: 36 } },
             [
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(35, "sc"), attrs: { _i: 35 } },
+                { staticClass: _vm._$g(37, "sc"), attrs: { _i: 37 } },
                 [_vm._v("已扫描条码：")]
               ),
               _c(
                 "v-uni-text",
                 {
-                  staticClass: _vm._$g(36, "sc"),
-                  attrs: { clickable: true, _i: 36 },
+                  staticClass: _vm._$g(38, "sc"),
+                  attrs: { clickable: true, _i: 38 },
                   on: {
                     click: function ($event) {
                       return _vm.$handleViewEvent($event)
@@ -9855,107 +9894,107 @@ var render = function () {
           _c(
             "v-uni-scroll-view",
             {
-              staticClass: _vm._$g(37, "sc"),
-              attrs: { "scroll-y": "true", _i: 37 },
+              staticClass: _vm._$g(39, "sc"),
+              attrs: { "scroll-y": "true", _i: 39 },
             },
             [
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(38, "sc"), attrs: { _i: 38 } },
+                { staticClass: _vm._$g(40, "sc"), attrs: { _i: 40 } },
                 [_vm._v("物料编码：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(39, "sc"), attrs: { _i: 39 } },
-                [_vm._v(_vm._$g(39, "t0-0"))]
+                { staticClass: _vm._$g(41, "sc"), attrs: { _i: 41 } },
+                [_vm._v(_vm._$g(41, "t0-0"))]
               ),
               _c("uni-view", {
-                staticClass: _vm._$g(40, "sc"),
-                attrs: { _i: 40 },
+                staticClass: _vm._$g(42, "sc"),
+                attrs: { _i: 42 },
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(41, "sc"), attrs: { _i: 41 } },
+                { staticClass: _vm._$g(43, "sc"), attrs: { _i: 43 } },
                 [_vm._v("物料名称：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(42, "sc"), attrs: { _i: 42 } },
-                [_vm._v(_vm._$g(42, "t0-0"))]
+                { staticClass: _vm._$g(44, "sc"), attrs: { _i: 44 } },
+                [_vm._v(_vm._$g(44, "t0-0"))]
               ),
               _c("uni-view", {
-                staticClass: _vm._$g(43, "sc"),
-                attrs: { _i: 43 },
+                staticClass: _vm._$g(45, "sc"),
+                attrs: { _i: 45 },
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(44, "sc"), attrs: { _i: 44 } },
+                { staticClass: _vm._$g(46, "sc"), attrs: { _i: 46 } },
                 [_vm._v("标签类型：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(45, "sc"), attrs: { _i: 45 } },
-                [_vm._v(_vm._$g(45, "t0-0"))]
+                { staticClass: _vm._$g(47, "sc"), attrs: { _i: 47 } },
+                [_vm._v(_vm._$g(47, "t0-0"))]
               ),
               _c("uni-view", {
-                staticClass: _vm._$g(46, "sc"),
-                attrs: { _i: 46 },
+                staticClass: _vm._$g(48, "sc"),
+                attrs: { _i: 48 },
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(47, "sc"), attrs: { _i: 47 } },
+                { staticClass: _vm._$g(49, "sc"), attrs: { _i: 49 } },
                 [_vm._v("订单号：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(48, "sc"), attrs: { _i: 48 } },
-                [_vm._v(_vm._$g(48, "t0-0"))]
+                { staticClass: _vm._$g(50, "sc"), attrs: { _i: 50 } },
+                [_vm._v(_vm._$g(50, "t0-0"))]
               ),
               _c("uni-view", {
-                staticClass: _vm._$g(49, "sc"),
-                attrs: { _i: 49 },
+                staticClass: _vm._$g(51, "sc"),
+                attrs: { _i: 51 },
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(50, "sc"), attrs: { _i: 50 } },
+                { staticClass: _vm._$g(52, "sc"), attrs: { _i: 52 } },
                 [_vm._v("源单编号：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(51, "sc"), attrs: { _i: 51 } },
-                [_vm._v(_vm._$g(51, "t0-0"))]
+                { staticClass: _vm._$g(53, "sc"), attrs: { _i: 53 } },
+                [_vm._v(_vm._$g(53, "t0-0"))]
               ),
               _c("uni-view", {
-                staticClass: _vm._$g(52, "sc"),
-                attrs: { _i: 52 },
+                staticClass: _vm._$g(54, "sc"),
+                attrs: { _i: 54 },
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(53, "sc"), attrs: { _i: 53 } },
+                { staticClass: _vm._$g(55, "sc"), attrs: { _i: 55 } },
                 [_vm._v("条码类型：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(54, "sc"), attrs: { _i: 54 } },
-                [_vm._v(_vm._$g(54, "t0-0"))]
+                { staticClass: _vm._$g(56, "sc"), attrs: { _i: 56 } },
+                [_vm._v(_vm._$g(56, "t0-0"))]
               ),
               _c("uni-view", {
-                staticClass: _vm._$g(55, "sc"),
-                attrs: { _i: 55 },
+                staticClass: _vm._$g(57, "sc"),
+                attrs: { _i: 57 },
               }),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(56, "sc"), attrs: { _i: 56 } },
+                { staticClass: _vm._$g(58, "sc"), attrs: { _i: 58 } },
                 [_vm._v("基本单位：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(57, "sc"), attrs: { _i: 57 } },
-                [_vm._v(_vm._$g(57, "t0-0"))]
+                { staticClass: _vm._$g(59, "sc"), attrs: { _i: 59 } },
+                [_vm._v(_vm._$g(59, "t0-0"))]
               ),
               _c("uni-view", {
-                staticClass: _vm._$g(58, "sc"),
-                attrs: { _i: 58 },
+                staticClass: _vm._$g(60, "sc"),
+                attrs: { _i: 60 },
               }),
             ],
             1
@@ -9966,27 +10005,8 @@ var render = function () {
       _vm._v("·"),
       _c(
         "uni-view",
-        { staticClass: _vm._$g(59, "sc"), attrs: { _i: 59 } },
+        { staticClass: _vm._$g(61, "sc"), attrs: { _i: 61 } },
         [
-          _c(
-            "v-uni-text",
-            {
-              staticClass: _vm._$g(60, "sc"),
-              class: _vm._$g(60, "c"),
-              attrs: { _i: 60 },
-              on: {
-                click: function ($event) {
-                  return _vm.$handleViewEvent($event)
-                },
-              },
-            },
-            [_vm._v("汇报单")]
-          ),
-          _c("uni-view", {
-            staticClass: _vm._$g(61, "sc"),
-            class: _vm._$g(61, "c"),
-            attrs: { _i: 61 },
-          }),
           _c(
             "v-uni-text",
             {
@@ -9999,7 +10019,7 @@ var render = function () {
                 },
               },
             },
-            [_vm._v("入库单")]
+            [_vm._v("汇报单")]
           ),
           _c("uni-view", {
             staticClass: _vm._$g(63, "sc"),
@@ -10018,12 +10038,31 @@ var render = function () {
                 },
               },
             },
-            [_vm._v("明细")]
+            [_vm._v("入库单")]
           ),
           _c("uni-view", {
             staticClass: _vm._$g(65, "sc"),
             class: _vm._$g(65, "c"),
             attrs: { _i: 65 },
+          }),
+          _c(
+            "v-uni-text",
+            {
+              staticClass: _vm._$g(66, "sc"),
+              class: _vm._$g(66, "c"),
+              attrs: { _i: 66 },
+              on: {
+                click: function ($event) {
+                  return _vm.$handleViewEvent($event)
+                },
+              },
+            },
+            [_vm._v("明细")]
+          ),
+          _c("uni-view", {
+            staticClass: _vm._$g(67, "sc"),
+            class: _vm._$g(67, "c"),
+            attrs: { _i: 67 },
           }),
         ],
         1
