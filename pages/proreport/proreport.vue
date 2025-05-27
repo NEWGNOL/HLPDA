@@ -14,7 +14,8 @@
 					</uni-list-item>
 				</uni-list>
 			</scroll-view>
-			<!-- @TouchStart="ItemTouchStart" @TouchEnd="ItemTouchEnd" @LongPress="ItemLongPress(item)" -->
+			<!-- 
+			@TouchStart="ItemTouchStart" @TouchEnd="ItemTouchEnd" @LongPress="ItemLongPress(item)" -->
 		</view>
 
 
@@ -50,9 +51,9 @@
 				
 				<view class="dataline"></view>
 
-				<text class="title">汇报工时：</text>
+				<!-- <text class="title">汇报工时：</text>
 				<text class="billreport" v-on:click="OpenQtyPopupWindow1()">{{ProReportManHour}}</text>
-				<view class="dataline"></view>
+				<view class="dataline"></view> -->
 
 				<text class="title">汇报人数：</text>
 				<text class="billreport" v-on:click="OpenQtyPopupWindow2()">{{ProReportPeopleNumber}}</text>
@@ -72,8 +73,7 @@
 			<scroll-view class="unselectinfoscrollview" v-bind:class="{selectinfoscrollview : !IsBillHeadVisible}"
 				scroll-y="true" v-show="IsMotorDepartment">
 				<uni-list>
-					<FillQty v-for="(item,index) in InfoListData" :key="index"
-						:title="item.FNumber + '/' + item.FModel
+					<FillQty v-for="(item,index) in InfoListData" :key="index" :title="item.FNumber + '/' + item.FModel
 					 + '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '批号：' + item.FGMPBatchNo + '\n' + '进度：' + item.FSumQty
 					 + '/' + item.FICMOQty + item.FUnitName + '\xa0\xa0\xa0\xa0\xa0' + (item.FSumQty/item.FOutPackPreQty).toFixed(2) + '件'" :rownumber="index + 1" isshowprogress
 						v-bind:percent="Math.round((item.FSumQty / item.FICMOQty) * 100, 0)" clickable
@@ -85,13 +85,22 @@
 			<scroll-view class="unselectinfoscrollview" v-bind:class="{selectinfoscrollview : !IsBillHeadVisible}"
 				scroll-y="true" v-show="!IsMotorDepartment">
 				<uni-list>
-					<uni-list-item v-for="(item,index) in InfoListData" :key="index"
+					<!-- <uni-list-item v-for="(item,index) in InfoListData" :key="index"
 						:title="item.FNumber + '/' + item.FModel
 					 + '\n' + '源单编号：' + item.FSrcBillNo + '\n' + '批号：' + item.FGMPBatchNo + '\n' + '进度：' + item.FSumQty
 					 + '/' + item.FICMOQty + item.FUnitName + '\xa0\xa0\xa0\xa0\xa0' + (item.FSumQty/item.FOutPackPreQty).toFixed(2) + '件'" isshowprogress
 						v-bind:percent="Math.round((item.FSumQty / item.FICMOQty) * 100, 0)" clickable
 						v-on:click="GetProReportInfoExpand(item)">
-					</uni-list-item>
+					</uni-list-item> -->
+					
+					<FillReport v-for="(item,index) in InfoListData" :key="index" :rownumber = "index + 1"
+						:title="item.FNumber + '/' + item.FModel + '\n' + '源单：' + item.FSrcBillNo + '\n' + '批号：' 
+						+ item.FGMPBatchNo + '\xa0\xa0\xa0\xa0\xa0' + '工时：' + item.FProReportManHour + '\n' + '进度：' 
+						+ item.FSumQty + '/' + item.FICMOQty + item.FUnitName + '\xa0\xa0\xa0\xa0\xa0' 
+						+ (item.FSumQty/item.FOutPackPreQty).toFixed(2) + '件' " isshowprogress 
+						v-bind:percent="Math.round((item.FSumQty / item.FICMOQty) * 100, 0)" clickable
+						v-on:click="GetProReportInfoExpand(item)" @ButtonClick="OpenQtyPopupWindow1()">
+					</FillReport>
 				</uni-list>
 			</scroll-view>
 		</view>
@@ -184,12 +193,14 @@
 
 <script>
 	import Config from '../../common/config.js';
-	import FillQty from '../../components/fill-qty/fill-qty.vue';
+	import FillQty from '../../components/fill-qty/fill-qty.vue';	
+	import FillReport from '../../components/fill-report/fill-report.vue';	
 	import OutStorageKeyboard from '../../components/outstorage-keyboard/outstorage-keyboard.vue';
 	export default {
 		components: {
 			Config,
 			FillQty,
+			FillReport,
 			OutStorageKeyboard
 		},
 		data() {
@@ -466,8 +477,8 @@
 				//打开键盘界面
 				this.IsOpenDigitKeyboard = true;				
 			},
-			//打开数量弹窗
-			OpenQtyPopupWindow1: function() {
+			//打开工时弹窗
+			OpenQtyPopupWindow1: function() {				
 				//打开键盘界面
 				this.IsOpenDigitKeyboard1 = true;				
 			},
@@ -552,7 +563,7 @@
 					});
 				}				
 			},
-			//关闭数量弹窗
+			//关闭工时弹窗
 			CloseQtyPopupWindow1: function(e) {						
 				if (e == null || e == '' || e == 0) {
 					Config.ShowMessage('请填写数据！');
@@ -563,7 +574,57 @@
 				//关闭键盘界面
 				this.IsOpenDigitKeyboard1 = false;
 				//修改汇报工时
-				this.ProReportManHour = e;
+				//this.ProReportManHour = e;				
+				//console.log('ProreportInfoItem',this.ProreportInfoItem);
+				
+				//调用接口修改扫码汇报明细工时
+				uni.request({
+					url: uni.getStorageSync('OtherUrl'),
+					method: 'POST',
+					data: {
+						ModuleCode: 'updatePdaICMORptPeopleManHour',
+						token: uni.getStorageSync('token'),
+						ModuleParam: {
+							FId: this.ProReportInterId,
+							FICMOId: this.ProreportInfoItem.FSrcInterId,
+							FProReportManHour: e,							
+							Result: 0,
+							Msg: ''
+						}
+					},
+					success: (result) => {
+						//console.log(result.data);
+						let ResultCode = result.data.ResultCode;
+						let ResultMsg = result.data.ResultMsg;
+						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
+							Config.ShowMessage('账号登录异常，请重新登录！');
+							Config.PopAudioContext(false);
+							return;
+						}
+						let ResultData = result.data.ResultData.UpdatePdaICMORptPeopleManHour;
+						let Result = ResultData.dataparam.Result;
+						if (Result == 0) {
+							Config.ShowMessage(ResultData.dataparam.Msg);
+							Config.PopAudioContext(false);
+							return;
+						}
+						Config.ShowMessage(ResultData.dataparam.Msg);
+						Config.PopAudioContext(true);
+						//重新加载该汇报单明细汇总数据
+						this.GetProReportByScan();
+					},
+					fail: () => {
+						Config.ShowMessage('请求数据失败！');
+						Config.PopAudioContext(false);
+					},
+					complete: (resultcomp) => {
+						let ResultMsg = resultcomp.data.ResultMsg;
+						if (ResultMsg != 'undefined' && ResultMsg.indexOf('执行成功') == -1) {
+							Config.ShowMessage(ResultMsg);
+							Config.PopAudioContext(false);
+						}
+					}
+				});				
 			},
 			//关闭数量弹窗
 			CloseQtyPopupWindow2: function(e) {						
@@ -591,6 +652,8 @@
 						}
 					},
 					success: (result) => {
+						//console.log(result);
+						//console.log(this.UserDepartment);
 						let ResultCode = result.data.ResultCode;
 						let ResultMsg = result.data.ResultMsg;
 						if (ResultCode == 'FAIL' && ResultMsg == '不存在的Token') {
@@ -714,11 +777,11 @@
 					return;
 				}
 				
-				if(this.ProReportManHour == 0){
-					Config.ShowMessage('请填写汇报工时！');
-					Config.PopAudioContext(false);
-					return;
-				}
+				// if(this.ProReportManHour == 0){
+				// 	Config.ShowMessage('请填写汇报工时！');
+				// 	Config.PopAudioContext(false);
+				// 	return;
+				// }
 				
 				if(this.ProReportPeopleNumber == 0){
 					Config.ShowMessage('请填写汇报人数！');
@@ -860,11 +923,11 @@
 					return;
 				}
 				
-				if(this.ProReportManHour == 0){
-					Config.ShowMessage('请填写汇报工时！');
-					Config.PopAudioContext(false);
-					return;
-				}
+				// if(this.ProReportManHour == 0){
+				// 	Config.ShowMessage('请填写汇报工时！');
+				// 	Config.PopAudioContext(false);
+				// 	return;
+				// }
 				
 				if(this.ProReportPeopleNumber == 0){
 					Config.ShowMessage('请填写汇报人数！');
@@ -882,6 +945,13 @@
 					let DataModel = this.InfoListData[i];
 					if (DataModel.FSumQty > DataModel.FICMOQty) {
 						Config.ShowMessage('物料编码为' + DataModel.FNumber + '扫描数量大于订单数量，请检查！');
+						Config.PopAudioContext(false);
+						return;
+					}
+					
+					//校验汇报工时不能为0(2025-5-14 Dragon改)
+					if(DataModel.FProReportManHour == 0){
+						Config.ShowMessage('存在汇报工时为0的记录，请检查！');
 						Config.PopAudioContext(false);
 						return;
 					}
@@ -1268,14 +1338,21 @@
 				}
 			},
 			//根据汇报单信息获取扩展信息
-			GetProReportInfoExpand: function(item) {
-				if (item != null) {
-					this.TabSelectedIndex = 2;
+			GetProReportInfoExpand: function(item) {					
+				//不是点击工时按钮则执行下面逻辑
+				if(this.IsOpenDigitKeyboard1 == false){
+					if (item != null) {
+						this.TabSelectedIndex = 2;
+						this.ProreportInfoItem = item;
+						this.ProReportSrcInterId = item.FSrcInterId;
+					} else {
+						this.ProreportInfoItem = null;
+					}
+				}	
+				//点击工时按钮则获取当前选中汇总明细信息
+				else{
 					this.ProreportInfoItem = item;
-					this.ProReportSrcInterId = item.FSrcInterId;
-				} else {
-					this.ProreportInfoItem = null;
-				}
+				}			
 			},
 			//选择完工日期
 			FinishDateChange(e) {
@@ -1464,8 +1541,8 @@
 
 	.unselectinfoscrollview {
 		width: 100%;
-		height: 350upx;
-		margin-top: 50upx;
+		height: 450rpx;
+		margin-top: 50rpx;
 	}
 
 	.selectinfoscrollview {

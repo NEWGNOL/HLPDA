@@ -33,6 +33,27 @@
 		margin-left: 5upx;
 	}
 	
+	/*搜索框样式*/
+	.search1 {
+		position: absolute;
+		width: 60%;
+		margin-left: 5rpx;
+	}
+	
+	/*复选框样式*/
+	.checkbox{		
+		position: absolute;
+		margin-top: -80rpx;
+		margin-left: 500rpx;
+	}
+	
+	/*单据状态样式*/
+	.billstatus1{
+		position: absolute;
+		margin-top: -90rpx;
+		margin-left: 570rpx;
+	}
+	
 	/*单据状态样式*/
 	.billstatus {
 		margin-top: -90upx;

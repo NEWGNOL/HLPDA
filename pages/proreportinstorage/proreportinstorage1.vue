@@ -1,20 +1,24 @@
 <template>
 	<view class="container">
 		<view class="proreportview" v-show="TabSelectedIndex == 0" @touchstart='TouchStart' @touchend='TouchEnd'>
-			<uni-search-bar class="search" cancelButton="none" placeholder="单号或者型号" v-model="SearchValue" @input="ValueChanged">
-			</uni-search-bar>
-			<billstatus class="billstatus" :candidates="StatusArray" v-model="SelectStatus" @input="ShowPdaIcmoInfo('')">
-			</billstatus>
+			<uni-search-bar class="search1" cancelButton="none" placeholder="单号或者型号" v-model="SearchValue" @input="ValueChanged"></uni-search-bar>
+			<checkbox-group @change="OnCheckBoxChange">
+			<checkbox class="checkbox" :checked="IsQueryRptBillNo"></checkbox>	
+			</checkbox-group>
+			<billstatus class="billstatus1" :candidates="StatusArray" v-model="SelectStatus" @input="ShowPdaIcmoInfo('')"></billstatus>
 			
 			<button class="addstoragein" v-bind:disabled="!IsAddStorageIn" v-on:click="AddStorageIn()">新增</button>
 			<button class="querystoragein" v-bind:disabled="IsAddStorageIn" v-on:click="QueryStorageIn()">查询</button>
 			
 			<scroll-view class="icmoscrollview" scroll-y="true" show-scrollbar>
 				<uni-list @scrolltolower="ScrollToLower" v-show="SelectStatus == '未入库'">
-					<uni-list-item v-for="(item,index) in IcmoListData" :key="index" :title="item.FBillNo + ' ' + 
+					<!-- <uni-list-item v-for="(item,index) in IcmoListData" :key="index" :title="item.FBillNo + ' ' + 
 					'|' + ' ' + item.FDate + '\n' + item.FRemark" clickable
 					:ischecked="item.FIsChecked" :isshowcheckbox="true" @CheckBoxChange="RefreshListByChecked(item)">
-					</uni-list-item>									
+					</uni-list-item> -->	
+					<uni-list-item v-for="(item,index) in IcmoListData" :key="index" :title="item.FRemark" clickable
+					:ischecked="item.FIsChecked" :isshowcheckbox="true" @CheckBoxChange="RefreshListByChecked(item)">
+					</uni-list-item>							
 				</uni-list>
 				
 				<uni-list @scrolltolower="ScrollToLower" v-show="SelectStatus == '已入库'">					
@@ -140,6 +144,7 @@
 			return {
 				TabSelectedIndex: 0,
 				SearchValue: '',
+				IsQueryRptBillNo: true,
 				SelectStatus: '未入库',
 				StorageInterId: 0,
 				StorageInBillNo: '空',				
@@ -280,6 +285,12 @@
 					this.TabSelectedIndex--;
 				}					
 			},
+			//复选框改变事件
+			OnCheckBoxChange(e){
+				//this.$emit('CheckBoxChange', e);
+				//console.log(e);
+				this.IsQueryRptBillNo = !this.IsQueryRptBillNo;
+			},
 			//显示汇报单
 			ShowPdaIcmoInfo: function(Barcode) {				
 				if (this.SelectStatus == '未入库') {					
@@ -294,6 +305,7 @@
 							ModuleCode: 'getPdaIcmoRptNoPutInList',
 							token: uni.getStorageSync('token'),
 							ModuleParam: {
+								FIsQueryRptBillNo: this.IsQueryRptBillNo,
 								FBillNoList: Barcode,
 								FBillNo: this.SearchValue								
 							}
