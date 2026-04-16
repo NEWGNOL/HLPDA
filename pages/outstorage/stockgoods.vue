@@ -150,38 +150,38 @@
 <style>	
 	.tabbackground {
 		width: 100%;
-		height: 90upx;
-		margin-top: 100upx;
+		height: 90rpx;
+		margin-top: 100rpx;
 		background-color: #F4F4F4;
 	}
 
 	.tableft {
-		font-size: 45upx;
-		margin-top: 20upx;
-		margin-left: 110upx;
+		font-size: 45rpx;
+		margin-top: 20rpx;
+		margin-left: 110rpx;
 	}
 
 	.tabright {
 		display: flex;
-		font-size: 45upx;
-		margin-top: -68upx;
-		margin-left: 485upx;
+		font-size: 45rpx;
+		margin-top: -68rpx;
+		margin-left: 485rpx;
 	}
 
 	.tableftline {
 		width: 25%;
-		height: 5upx;
-		margin-left: 100upx;
+		height: 5rpx;
+		margin-left: 100rpx;
 	}
 
 	.tabrightline {
 		width: 25%;
-		height: 5upx;
-		margin-left: 475upx;
+		height: 5rpx;
+		margin-left: 475rpx;
 	}
 	
 	.summary {		
-		height: 1000upx;	
+		height: 1000rpx;	
 		width: 100%;
 	}
 	
@@ -189,8 +189,8 @@
 		display: flex;
 		flex-direction: column;
 		font-size: 22px;
-		margin-top: 30upx;
-		margin-left: 10upx;
+		margin-top: 30rpx;
+		margin-left: 10rpx;
 		text-align: left;	
 	}
 	
@@ -198,8 +198,8 @@
 		display: flex;
 		flex-direction: column;
 		font-size: 22px;
-		margin-top: -70upx;	
-		margin-left: 260upx;
+		margin-top: -70rpx;	
+		margin-left: 260rpx;
 		text-align: left;
 	}
 	

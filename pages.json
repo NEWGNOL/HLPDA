@@ -4,6 +4,11 @@
 			"path": "pages/login/login",			
 			"style": {
 				"navigationBarTitleText": "登录界面",
+				"enablePullDownRefresh": false,
+				"pageOrientation": "portrait",
+				"viewportFit": "cover",
+				"rpxCalcMaxDeviceWidth": 360,
+				"rpxCalcBaseDeviceWidth": 360,
 				"app-plus":{
 					"titleNView":{
 						"titleColor":"FFFFFF"

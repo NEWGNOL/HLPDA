@@ -1119,12 +1119,12 @@
 <style>		
 	.addstoragein {
 		width: 20%;
-		height: 90upx;
+		height: 90rpx;
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 150upx;
-		margin-top: 20upx;
+		border-radius: 50rpx;
+		margin-left: 150rpx;
+		margin-top: 20rpx;
 	}
 
 	.querystoragein {
@@ -1132,15 +1132,15 @@
 		height: 90rpx;
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 450upx;
-		margin-top: -90upx;
+		border-radius: 50rpx;
+		margin-left: 450rpx;
+		margin-top: -90rpx;
 	}
 
 	.icmoscrollview {
 		width: 100%;
-		height: 850upx;
-		margin-top: 20upx;
+		height: 850rpx;
+		margin-top: 20rpx;
 	}
 
 	.auditstoragein {
@@ -1149,8 +1149,8 @@
 		font-size: 15px;
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;		
-		margin-left: 420upx;
-		margin-top: -70upx;
+		margin-left: 420rpx;
+		margin-top: -70rpx;
 	}
 
 	.unauditstoragein {
@@ -1159,8 +1159,8 @@
 		font-size: 15px;
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;		
-		margin-left: 420upx;
-		margin-top: -70upx;
+		margin-left: 420rpx;
+		margin-top: -70rpx;
 	}
 
 	.deletestoragein {
@@ -1170,94 +1170,94 @@
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;
 		text-align: center;
-		margin-left: 590upx;
-		margin-top: -85upx;
+		margin-left: 590rpx;
+		margin-top: -85rpx;
 	}
 	
 	.srcbillno {
 		display: inline-block;
 		color: #FFFFFF;
 		font-size: 19px;
-		margin-left: 20upx;
-		margin-top: 30upx;
+		margin-left: 20rpx;
+		margin-top: 30rpx;
 	}
 	
 	.scancartonbarcode {
 		width: 25%;
 		color: #FFFFFF;
 		background-color: #F0AD4E;
-		border-radius: 50upx;
-		margin-left: 560upx;
-		margin-top: -96upx;
+		border-radius: 50rpx;
+		margin-left: 560rpx;
+		margin-top: -96rpx;
 	}
 	
 	.scanwarehousebarcode{
 		width: 25%;
 		color: #FFFFFF;
 		background-color: #1AAD19;
-		border-radius: 50upx;
-		margin-left: 560upx;
-		margin-top: -96upx;
+		border-radius: 50rpx;
+		margin-left: 560rpx;
+		margin-top: -96rpx;
 	}	
 	
 	.billhead {
 		width: 100%;
-		margin-top: 50upx;
+		margin-top: 50rpx;
 	}
 
 	.title {
 		display: flex;
-		margin-left: 50upx;
-		font-size: 40upx;
+		margin-left: 50rpx;
+		font-size: 40rpx;
 	}
 
 	.billnoempty {	
 		display: flex;
-		width: 200upx;
-		font-size: 40upx;
-		margin-top: -60upx;
-		margin-left: 300upx;
+		width: 200rpx;
+		font-size: 40rpx;
+		margin-top: -60rpx;
+		margin-left: 300rpx;
 		text-align: center;
 		color: #777777;
 	}
 
 	.billnofull {		
-		width: 200upx;
-		font-size: 40upx;
-		margin-top: -60upx;
-		margin-left: 300upx;
+		width: 200rpx;
+		font-size: 40rpx;
+		margin-top: -60rpx;
+		margin-left: 300rpx;
 		text-align: center;
 		color: #000000;
 	}
 
 	.detailtitle {	
 		display: flex;
-		font-size: 35upx;
-		margin-top: 30upx;
-		margin-left: 30upx;
+		font-size: 35rpx;
+		margin-top: 30rpx;
+		margin-left: 30rpx;
 	}
 
 	.detaildata {	
 		display: flex;		
-		font-size: 35upx;
-		margin-top: -50upx;
-		margin-left: 270upx;
+		font-size: 35rpx;
+		margin-top: -50rpx;
+		margin-left: 270rpx;
 		text-align: center;
 	}
 	
 	.listline {
 		width: 100%;
-		height: 3upx;
+		height: 3rpx;
 		background-color: #000000;	
-		margin-top: 20upx;
+		margin-top: 20rpx;
 	}
 
 	.data {
 		display: flex;
-		width: 300upx;
-		font-size: 40upx;
-		margin-top: -60upx;
-		margin-left: 320upx;
+		width: 300rpx;
+		font-size: 40rpx;
+		margin-top: -60rpx;
+		margin-left: 320rpx;
 		text-align: center;
 	}
 	
@@ -1267,44 +1267,44 @@
 
 	.dataline {
 		width: 60%;
-		height: 5upx;
+		height: 5rpx;
 		background-color: #4CD964;
-		margin-left: 250upx;
+		margin-left: 250rpx;
 	}
 
 	.proreportview {
 		width: 100%;
-		height: 950upx;
+		height: 950rpx;
 	}
 
 	.sumscrollview {
 		width: 100%;
-		height: 920upx;
-		margin-top: 30upx;
+		height: 920rpx;
+		margin-top: 30rpx;
 	}
 
 	.cartonlabelscrollview {
 		width: 100%;
-		height: 550upx;
-		margin-top: 20upx;
+		height: 550rpx;
+		margin-top: 20rpx;
 	}
 
 	.selectinfoscrollview {		
 		width: 100%;
-		height: 630upx;
-		margin-top: 50upx;
+		height: 630rpx;
+		margin-top: 50rpx;
 	}
 
 	.unselectinfoscrollview {		
 		width: 100%;
-		height: 950upx;
-		margin-top: 50upx;
+		height: 950rpx;
+		margin-top: 50rpx;
 	}
 
 	.detailscrollview {
 		width: 100%;
-		height: 950upx;
-		margin-top: 20upx;
+		height: 950rpx;
+		margin-top: 20rpx;
 	}
 
 	.selecttab {
@@ -1317,137 +1317,137 @@
 
 	.tabbackground {			
 		width: 100%;
-		height: 90upx;
-		margin-top: 100upx;
+		height: 90rpx;
+		margin-top: 100rpx;
 		background-color: #F4F4F4;
 	}
 
 	.tableft {		
-		font-size: 45upx;
-		margin-top: 30upx;
-		margin-left: 40upx;
+		font-size: 45rpx;
+		margin-top: 30rpx;
+		margin-left: 40rpx;
 	}
 
 	.tabmiddle {
 		display: flex;
-		font-size: 45upx;
-		margin-top: -68upx;
-		margin-left: 330upx;
+		font-size: 45rpx;
+		margin-top: -68rpx;
+		margin-left: 330rpx;
 	}
 
 	.tabright {	
 		display: flex;
-		font-size: 45upx;
-		margin-top: -68upx;
-		margin-left: 630upx;
+		font-size: 45rpx;
+		margin-top: -68rpx;
+		margin-left: 630rpx;
 	}
 
 	.tableftline {		
 		width: 18%;
-		height: 5upx;		
-		margin-left: 40upx;
+		height: 5rpx;		
+		margin-left: 40rpx;
 	}
 
 	.tabmiddleline {	
 		width: 18%;
-		height: 5upx;		
-		margin-left: 330upx;
+		height: 5rpx;		
+		margin-left: 330rpx;
 	}
 
 	.tabrightline {		
 		width: 15%;
-		height: 5upx;		
-		margin-left: 620upx;
+		height: 5rpx;		
+		margin-left: 620rpx;
 	}
 	
 	.productdetail {		
-		margin-top: 50upx;
+		margin-top: 50rpx;
 	}
 
 	.scanned {	
 		display: inline-block;
 		color: #FFFFFF;
-		font-size: 40upx;
-		margin-left: 30upx;
-		margin-top: 30upx;
+		font-size: 40rpx;
+		margin-left: 30rpx;
+		margin-top: 30rpx;
 	}
 	
 	.queryall {
 		display: flex;
 		flex-direction: column;
-		font-size: 40upx;
+		font-size: 40rpx;
 		color: #007AFF;
-		margin-left: 570upx;
-		margin-top: -60upx;
+		margin-left: 570rpx;
+		margin-top: -60rpx;
 	}
 
 	.modeltitle {		
-		font-size: 40upx;
-		margin-left: 50upx;
-		margin-top: 180upx;
+		font-size: 40rpx;
+		margin-left: 50rpx;
+		margin-top: 180rpx;
 	}
 
 	.modeldata {		
-		width: 500upx;
-		font-size: 45upx;
-		margin-left: 300upx;
-		margin-top: 180upx;
+		width: 500rpx;
+		font-size: 45rpx;
+		margin-left: 300rpx;
+		margin-top: 180rpx;
 	}
 
 	.numbertitle {		
-		font-size: 40upx;
-		margin-left: 50upx;
-		margin-top: 280upx;
+		font-size: 40rpx;
+		margin-left: 50rpx;
+		margin-top: 280rpx;
 	}
 
 	.numberdata {		
-		width: 500upx;
-		font-size: 45upx;
-		margin-left: 300upx;
-		margin-top: 280upx;
+		width: 500rpx;
+		font-size: 45rpx;
+		margin-left: 300rpx;
+		margin-top: 280rpx;
 	}
 
 	.nametitle {		
-		font-size: 40upx;
-		margin-left: 50upx;
-		margin-top: 380upx;
+		font-size: 40rpx;
+		margin-left: 50rpx;
+		margin-top: 380rpx;
 	}
 
 	.namedata {		
-		width: 500upx;
-		font-size: 45upx;
-		margin-left: 300upx;
-		margin-top: 380upx;
+		width: 500rpx;
+		font-size: 45rpx;
+		margin-left: 300rpx;
+		margin-top: 380rpx;
 	}
 
 	.labelcounttitle {		
-		font-size: 40upx;
-		margin-left: 50upx;
-		margin-top: 480upx;
+		font-size: 40rpx;
+		margin-left: 50rpx;
+		margin-top: 480rpx;
 	}
 
 	.labelcountdata {		
-		width: 500upx;
-		font-size: 45upx;
-		margin-left: 300upx;
-		margin-top: 480upx;
+		width: 500rpx;
+		font-size: 45rpx;
+		margin-left: 300rpx;
+		margin-top: 480rpx;
 	}
 
 	.selectlabel {
 		width: 30%;
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 150upx;
-		margin-top: 20upx;
+		border-radius: 50rpx;
+		margin-left: 150rpx;
+		margin-top: 20rpx;
 	}
 
 	.deletelabel {
 		width: 20%;
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-right: 150upx;
-		margin-top: -95upx;
+		border-radius: 50rpx;
+		margin-right: 150rpx;
+		margin-top: -95rpx;
 	}	
 </style>

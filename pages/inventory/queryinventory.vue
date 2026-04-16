@@ -149,28 +149,28 @@
 <style>
 	.title {
 		display: flex;
-		margin-left: -500upx;
-		margin-top: 50upx;
+		margin-left: -500rpx;
+		margin-top: 50rpx;
 		font-size: 20px;
 	}
 	
 	.data {	
 		display: flex;
-		width: 400upx;
+		width: 400rpx;
 		font-size: 20px;
-		margin-top: -60upx;
-		margin-left: 150upx;
+		margin-top: -60rpx;
+		margin-left: 150rpx;
 		text-align: center;		
 	}
 	
 	.scrollviewinfo{
 		width: 100%;
-		height: 910upx;
-		margin-top: 50upx;
+		height: 910rpx;
+		margin-top: 50rpx;
 	}
 	
 	.tablebill{
 		width: 100%;
-		height: 890upx;		
+		height: 890rpx;		
 	}
 </style>

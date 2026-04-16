@@ -5,7 +5,7 @@
 				<uni-grid-item v-for="item in BoardList" :index="item.FBoardId">
 					<view class="rectangle">
 						<view :style="{'margin-top': (RectHeight * ((item.FBoardId - 1) / 3 + 1) + FixedHeight *
-						  ((item.FBoardId - 1) / 3)) + 'upx',
+						  ((item.FBoardId - 1) / 3)) + 'rpx',
 						  'background-color': CurrentBoardId == item.FBoardId ? '#1890FF' : '#1AAD19'}"
 						  	v-if="(item.FBoardId - 1) % 3 == 0">
 						  <text class="gridboard">{{item.FBoardId}}</text>
@@ -13,21 +13,21 @@
 						</view>						
 
                         <view :style="{'margin-top': (RectHeight * ((item.FBoardId - 2) / 3 + 1) + FixedHeight *
-						  ((item.FBoardId - 2) / 3)) + 'upx','background-color': CurrentBoardId == item.FBoardId ? '#1890FF' : '#1AAD19'}"
+						  ((item.FBoardId - 2) / 3)) + 'rpx','background-color': CurrentBoardId == item.FBoardId ? '#1890FF' : '#1AAD19'}"
 						  v-if="(item.FBoardId - 2) % 3 == 0">
 						  <text class="gridboard" >{{item.FBoardId}}</text>
 						  <text class="gridpiecemiddle" v-if="(item.FBoardId - 2) % 3 == 0">{{item.FPieceCount}}件</text> 
 						</view>
 						
                         <view :style="{'margin-top': (RectHeight * ((item.FBoardId - 3) / 3 + 1) + FixedHeight *
-						  ((item.FBoardId - 3) / 3)) + 'upx','background-color': CurrentBoardId == item.FBoardId ? '#1890FF' : '#1AAD19'}"
+						  ((item.FBoardId - 3) / 3)) + 'rpx','background-color': CurrentBoardId == item.FBoardId ? '#1890FF' : '#1AAD19'}"
 						  	v-if="(item.FBoardId % 3) == 0">
 						  <text class="gridboard">{{item.FBoardId}}</text>
 						  <text class="gridpieceright" v-if="(item.FBoardId - 3) % 3 == 0">{{item.FPieceCount}}件</text>
 						</view>						
 					</view>
 
-					<!-- <view class="round" :style="{'margin-left': RoundLeft + 'upx','margin-top': RoundTop + 'upx'}">
+					<!-- <view class="round" :style="{'margin-left': RoundLeft + 'rpx','margin-top': RoundTop + 'rpx'}">
 				 	<text>1</text>
 				 </view> -->
 				</uni-grid-item>
@@ -142,7 +142,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;	
-		padding-top: 65upx;		
+		padding-top: 65rpx;		
 		font-size: 25px;
 	}
 	
@@ -150,7 +150,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;	
-		margin-left: 100upx;
+		margin-left: 100rpx;
 		font-size: 25px;
 	}
 
@@ -158,7 +158,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;	
-		margin-left: 100upx;
+		margin-left: 100rpx;
 		font-size: 25px;
 	}
 
@@ -166,7 +166,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;	
-		margin-left: 100upx;
+		margin-left: 100rpx;
 		font-size: 25px;
 	}
 
@@ -174,26 +174,26 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;	
-		height: 220upx;
-		width: 220upx;
+		height: 220rpx;
+		width: 220rpx;
 		background-color: #1AAD19;
-		/* border-radius: 20upx; */
+		/* border-radius: 20rpx; */
 		border: 1px solid #000000;
-		margin-left: 15upx;
-		margin-top: 20upx;		
+		margin-left: 15rpx;
+		margin-top: 20rpx;		
 	}
 
 	.round {
 		display: inline-block;
-		height: 60upx;
-		width: 60upx;
+		height: 60rpx;
+		width: 60rpx;
 		background-color: #1AAD19;
-		border-radius: 180upx;
+		border-radius: 180rpx;
 		font-size: 20px;
 	}
 
 	.scrollview {
 		width: 100%;
-		height: 950upx;
+		height: 950rpx;
 	}
 </style>

@@ -1,29 +1,59 @@
 <template>
 	<view class="container">
+		<!-- 登录图片适配 -->
 		<image src="../../static/login.png" class="img" mode="widthFix"></image>
 
-		<text class="tableft" v-bind:class="{selecttab : IsShowLoginView}" v-on:click="ClickTabTitle(true)">登录</text>
-		<view class="tableftline" v-bind:class="{selecttabline : IsShowLoginView}"></view>
-
-		<text class="tabright" v-bind:class="{selecttab : !IsShowLoginView}"
-			v-on:click="ClickTabTitle(false)">网络配置</text>
-		<view class="tabrightline" v-bind:class="{selecttabline : !IsShowLoginView}"></view>
-
-		<view class="summary" v-show="IsShowLoginView">
-			<view class="usernametext">用户名：</view>
-			<usernamesearch class="cla" :candidates="UserNameArray" placeholder="请输入用户名" v-model="UserName"
-				@input="SearchInput"></usernamesearch>
-
-			<view class="passwordtext">密码：</view>
-			<input password="true" placeholder="请输入密码" v-model="Password" class="cla" :focus="focus2"
-				@confirm="tabEnter2" />
-			<button class="button" @click="Request()">确认</button>
+		<!-- 标签切换区域 - 重构布局 -->
+		<view class="tab-wrap">
+			<view class="tab-item" @click="ClickTabTitle(true)">
+				<text class="tab-text" :class="{selecttab : IsShowLoginView}">登录</text>
+				<view class="tab-line" :class="{selecttabline : IsShowLoginView}"></view>
+			</view>
+			<view class="tab-item" @click="ClickTabTitle(false)">
+				<text class="tab-text" :class="{selecttab : !IsShowLoginView}">网络配置</text>
+				<view class="tab-line" :class="{selecttabline : !IsShowLoginView}"></view>
+			</view>
 		</view>
 
-		<view class="summary" v-show="!IsShowLoginView">
-			<view class="usernametext">IP地址：</view>
-			<input v-model="IPAddress" placeholder="请输入IP地址" class="cla">
-			<button class="button" v-on:click="SaveLoginData()">确认</button>
+		<!-- 登录表单 -->
+		<view class="form-wrap" v-show="IsShowLoginView">
+			<view class="form-item">
+				<view class="form-label">用户名：</view>
+				<usernamesearch 
+					class="form-input" 
+					:candidates="UserNameArray" 
+					placeholder="请输入用户名" 
+					v-model="UserName"
+					@input="SearchInput"
+				></usernamesearch>
+			</view>
+
+			<view class="form-item">
+				<view class="form-label">密码：</view>
+				<input 
+					password="true" 
+					placeholder="请输入密码" 
+					v-model="Password" 
+					class="form-input" 
+					:focus="focus2"
+					@confirm="tabEnter2" 
+				/>
+			</view>
+			
+			<button class="form-btn" @click="Request()">确认</button>
+		</view>
+
+		<!-- 网络配置表单 -->
+		<view class="form-wrap" v-show="!IsShowLoginView">
+			<view class="form-item">
+				<view class="form-label">IP地址：</view>
+				<input 
+					v-model="IPAddress" 
+					placeholder="请输入IP地址" 
+					class="form-input"
+				/>
+			</view>
+			<button class="form-btn" @click="SaveLoginData()">确认</button>
 		</view>
 	</view>
 </template>
@@ -62,7 +92,12 @@
 						//获取系统信息，可使用窗口的高度和宽度
 						let height = res.screenHeight; 
 						let width = res.screenWidth;
+						console.log('res',res);
 						//console.log('screenHeight：' + height + '  screenWidth：' + width);
+						// 640*360
+						// 720*360
+						
+						// http://localhost:8080/#/
 					}
 				});
 			},
@@ -221,83 +256,122 @@
 </script>
 
 <style>
-	.tableftline {
-		width: 15%;
-		height: 5upx;
-		margin-right: 500upx;
+	/* 基础容器适配PDA 360*640 */
+	.container {
+		width: 360px;
+		min-height: 640px;
+		margin: 0 auto;
+		padding: 15px;
+		background: #f5f5f5;
+		box-sizing: border-box;
 	}
 
-	.tabrightline {
-		width: 29%;
-		height: 5upx;
-		margin-left: 400upx;
-	}
-
+	/* 登录图片适配 */
 	.img {
-		width: 400upx;
-		height: 200upx;
-		margin-top: 50upx;
+		width: 100%;
+		max-width: 320px;
+		height: auto;
+		display: block;
+		/* margin: 10px; */
 	}
 
-	.tableft {
-		font-size: 50upx;
-		margin-top: 100upx;
-		margin-left: -500upx;
+	/* 标签切换区域 */
+	.tab-wrap {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		margin: 10px 0 20px;
 	}
 
-	.tabright {
-		font-size: 50upx;
-		margin-top: -80upx;
-		margin-left: 400upx;
+	.tab-item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;		
 	}
 
-	.button {
-		margin-top: 100upx;
-		width: 250upx;
-		height: 100upx;
+	.tab-text {
+		font-size: 30px;
+		margin-bottom: 5rpx;	
+		padding: 30rpx;
+	}
+
+	.tab-line {
+		width: 40px;
+		height: 3px;
+		background: transparent;
+		transition: background-color 0.3s;
+	}
+
+	/* 表单区域 */
+	.form-wrap {
+		padding: 10rpx;
+	}
+
+	.form-item {
+		display: flex;
+		align-items: center;
+		margin-bottom: 25px;
+	}
+
+	.form-label {
+		font-size: 20px;
+		width: 80px;
+		text-align: right;
+		margin-right: 10px;
+	}
+
+	.form-input {
+		flex: 1;
+		height: 45px;
+		line-height: 45px;
+		padding: 0 10px;
+		border: 1px solid #888;
+		border-radius: 4px;
+		font-size: 20px;
+		/* 加大点击区域 */
+		min-width: 200px;
+	}
+
+	.form-btn {
+		width: 100%;
+		height: 50px;
+		line-height: 50px;
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50upx;
+		border-radius: 8px;
 		text-align: center;
+		font-size: 18px;
+		border: none;
+		margin-top: 20px;
+		/* 适配触控 */
+		touch-action: manipulation;
 	}
 
-	.usernametext {
-		font-size: 40upx;
-		margin-left: 30upx;
-		margin-top: 50upx;
-	}
-
-	.passwordtext {
-		font-size: 40upx;
-		margin-left: 30upx;
-		margin-top: 100upx;
-	}
-
-	.cla {
-		width: 400upx;
-		border: 5upx solid;
-		border-color: #888888;
-		margin-left: 220upx;
-		margin-top: -55upx;
-	}
-
-	.summary {
-		height: 500upx;
-		margin-top: 50upx;
-		display: grid;
-		flex-direction: row;
-	}
-
+	/* 选中态样式 */
 	.selecttab {
 		color: #007AFF;
+		font-weight: bold;
 	}
 
 	.selecttabline {
 		background-color: #007AFF;
 	}
 
+	/* 画布适配 */
 	.loginpagecanvas {
-		height: 250upx;
-		width: 350upx;
+		height: 200px;
+		width: 320px;
+		margin: 0 auto;
+	}
+
+	/* 适配PDA小屏滚动 */
+	::-webkit-scrollbar {
+		width: 4px;
+		height: 4px;
+	}
+
+	::-webkit-scrollbar-thumb {
+		border-radius: 2px;
+		background: #ccc;
 	}
 </style>

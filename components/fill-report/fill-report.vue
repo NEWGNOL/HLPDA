@@ -361,10 +361,10 @@
 	}
 	
 	.uni-list-item__rownumber{
-		padding-right: 8upx;
-		height: 50upx;
-		width: 50upx;
-		border-radius: 45upx;
+		padding-right: 8rpx;
+		height: 50rpx;
+		width: 50rpx;
+		border-radius: 45rpx;
 		color: #FFFFFF;
 		background-color: #CCCCCC;		
 	}
@@ -378,8 +378,8 @@
 	}
 
 	.uni-list-item__content-title {
-		margin-top: -60upx;
-		padding-left: 100upx;
+		margin-top: -60rpx;
+		padding-left: 100rpx;
 		font-size: 18px;		
 		color: #3b4144;
 		overflow: hidden;
@@ -391,7 +391,7 @@
 
 	.uni-list-item__content-note {
 		margin-top: 6rpx;
-		padding-left: 100upx;
+		padding-left: 100rpx;
 		color: #000;
 		font-size: 18px;
 		overflow: hidden;
@@ -502,16 +502,16 @@
 	.inputsectiontitle{		
 		font-size: 16px;
 		color: #000000;	
-		margin-top: 20upx;
+		margin-top: 20rpx;
 	}
 	
 	.inputsection{		
 		font-size: 16px;
 		color: #000000;
-		border: 5upx solid;
+		border: 5rpx solid;
 		border-color: #888888;
-		margin-left: 170upx;
-		margin-top: -55upx;
+		margin-left: 170rpx;
+		margin-top: -55rpx;
 	}
 	
 	.progress{
@@ -535,7 +535,7 @@
 	}
 	
 	.rownumber{
-		padding-left: 5upx;
+		padding-left: 5rpx;
 		font-size: 15px;
 		text-align: center;
 		display: block;		

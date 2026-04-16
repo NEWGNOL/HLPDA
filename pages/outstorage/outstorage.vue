@@ -101,7 +101,7 @@
 
 
 		<view class="tabbackground">
-			<text class="tableft" v-bind:class="{selecttab : TabSelectedIndex == 0}"
+			<!-- <text class="tableft" v-bind:class="{selecttab : TabSelectedIndex == 0}"
 				v-on:click="SwitchTab(0)">来源单</text>
 			<view class="tableftline" v-bind:class="{selecttabline : TabSelectedIndex == 0}"></view>
 			<text class="tabmiddle" v-bind:class="{selecttab : TabSelectedIndex == 1}"
@@ -109,7 +109,22 @@
 			<view class="tabmiddleline" v-bind:class="{selecttabline : TabSelectedIndex == 1}"></view>
 			<text class="tabright" v-bind:class="{selecttab : TabSelectedIndex == 2}"
 				v-on:click="SwitchTab(2)">明细</text>
-			<view class="tabrightline" v-bind:class="{selecttabline : TabSelectedIndex == 2}"></view>
+			<view class="tabrightline" v-bind:class="{selecttabline : TabSelectedIndex == 2}"></view> -->
+			
+			<view class="tab-item" v-on:click="SwitchTab(0)">
+				<text class="tabtext" v-bind:class="{active: TabSelectedIndex == 0}">来源单</text>
+				<view class="tabline" v-bind:class="{active: TabSelectedIndex == 0}"></view>
+			</view>
+			
+			<view class="tab-item" v-on:click="SwitchTab(1)">
+				<text class="tabtext" v-bind:class="{active: TabSelectedIndex == 1}">出库单</text>
+				<view class="tabline" v-bind:class="{active: TabSelectedIndex == 1}"></view>
+			</view>
+			
+			<view class="tab-item" v-on:click="SwitchTab(2)">
+				<text class="tabtext" v-bind:class="{active: TabSelectedIndex == 2}">明细</text>
+				<view class="tabline" v-bind:class="{active: TabSelectedIndex == 2}"></view>
+			</view>
 		</view>
 
 
@@ -1513,71 +1528,85 @@
 </script>
 
 <style>
+	/* .container {
+	  width: 100%;
+	  height: 100vh;
+	  max-height: 360px; 
+	  display: flex;
+	  flex-direction: column;
+	  overflow: hidden;
+	  background-color: #f5f5f5;
+	  font-size: 14px;
+	  box-sizing: border-box;
+	  margin: 0;
+	  padding: 0;
+	} */
+	
 	.outstorageview {
 		width: 100%;
-		height: 950upx;
+		height: 950rpx;
 	}
 
 	.billstatus {
-		margin-top: -90upx;
-		margin-left: 570upx;
+		margin-top: -90rpx;
+		margin-left: 570rpx;
 	}
 
 	.billscrollview {
 		width: 100%;
-		height: 950upx;
-		margin-top: 10upx;
+		height: 950rpx;
+		margin-top: 10rpx;
 	}
 
 	.selectinfoscrollview {
 		width: 100%;
-		height: 700upx;
-		margin-top: 30upx;
+		height: 700rpx;
+		margin-top: 30rpx;
 	}
 
 	.unselectinfoscrollview {
 		width: 100%;
-		height: 850upx;
-		margin-top: 30upx;
+		height: 850rpx;
+		margin-top: 30rpx;
 	}
 
 	.scanseorder {
 		width: 31%;
 		color: #FFFFFF;
 		background-color: #F0AD4E;
-		border-radius: 50upx;
-		margin-left: 50upx;
-		margin-top: 20upx;
+		border-radius: 50rpx;
+		margin-left: 50rpx;
+		margin-top: 20rpx;
 	}
 
 	.scanseoutstockorder {
 		width: 31%;
 		color: #FFFFFF;
 		background-color: #1AAD19;
-		border-radius: 50upx;
-		margin-left: 50upx;
-		margin-top: 30upx;
+		border-radius: 50rpx;
+		margin-left: 50rpx;
+		margin-top: 30rpx;
 	}
 
 	.addstorageout {
 		display: inline-block;
 		width: 25%;
-		height: 90upx;
+		height: 90rpx;
 		color: #FFFFFF;
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;
-		margin-left: 40upx;
-		margin-top: 20upx;
+		margin-left: 40rpx;
+		margin-top: 20rpx;
 	}
 
 	.confirmsoutgroup {
 		width: 25%;
-		height: 90upx;
+		height: 90rpx;
 		color: #FFFFFF;
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;
-		margin-left: 300upx;
-		margin-top: -100upx;
+		margin-left: 300rpx;
+		margin-top: -100rpx;
 	}
 
 	.addboard {
@@ -1586,8 +1615,8 @@
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;
 		font-size: 15px;
-		margin-left: 20upx;
-		margin-top: 30upx;
+		margin-left: 20rpx;
+		margin-top: 30rpx;
 	}
 
 	.queryboard {
@@ -1596,8 +1625,8 @@
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;
 		font-size: 15px;
-		margin-left: 210upx;
-		margin-top: -97upx;
+		margin-left: 210rpx;
+		margin-top: -97rpx;
 	}
 
 
@@ -1607,8 +1636,8 @@
 		font-size: 15px;
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;
-		margin-left: 410upx;
-		margin-top: -85upx;
+		margin-left: 410rpx;
+		margin-top: -85rpx;
 	}
 
 	.unauditstorageout {
@@ -1617,8 +1646,8 @@
 		font-size: 15px;
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;
-		margin-left: 410upx;
-		margin-top: -85upx;
+		margin-left: 410rpx;
+		margin-top: -85rpx;
 	}
 
 	.deletestorageout {
@@ -1628,64 +1657,64 @@
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;
 		text-align: center;
-		margin-left: 590upx;
-		margin-top: -85upx;
+		margin-left: 590rpx;
+		margin-top: -85rpx;
 	}
 
 	.checkitem {
 		width: 20%;
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 580upx;
-		margin-top: -96upx;
+		border-radius: 50rpx;
+		margin-left: 580rpx;
+		margin-top: -96rpx;
 	}
 
 	.pagehead {
 		width: 100%;
-		height: 130upx;
+		height: 130rpx;
 		background-color: #1AAD19;
 	}
 
 	.billhead {
 		width: 100%;
-		margin-top: 30upx;
+		margin-top: 30rpx;
 	}
 
 	.billnoempty {
-		width: 200upx;
-		font-size: 40upx;
-		margin-top: -60upx;
-		margin-left: 50upx;
+		width: 200rpx;
+		font-size: 40rpx;
+		margin-top: -60rpx;
+		margin-left: 50rpx;
 		text-align: center;
 		color: #777777;
 	}
 
 	.switchtitle {
 		display: inline-block;
-		margin-top: 10upx;
-		margin-left: 50upx;
-		font-size: 40upx;
+		margin-top: 10rpx;
+		margin-left: 50rpx;
+		font-size: 40rpx;
 	}
 
 	.title {
-		margin-left: 50upx;
-		font-size: 40upx;
+		margin-left: 50rpx;
+		font-size: 40rpx;
 	}
 
 	.data {
-		width: 450upx;
-		font-size: 40upx;
-		margin-top: -60upx;
-		margin-left: 250upx;
+		width: 450rpx;
+		font-size: 40rpx;
+		margin-top: -60rpx;
+		margin-left: 250rpx;
 		text-align: center;
 	}
 
 	.dataline {
 		width: 60%;
-		height: 5upx;
+		height: 5rpx;
 		background-color: #4CD964;
-		margin-left: 250upx;
+		margin-left: 250rpx;
 	}
 
 	.selecttab {
@@ -1699,105 +1728,168 @@
 	.scanned {
 		display: inline-block;
 		color: #FFFFFF;
-		font-size: 40upx;
-		margin-left: 30upx;
-		margin-top: 30upx;
+		font-size: 40rpx;
+		margin-left: 30rpx;
+		margin-top: 30rpx;
 	}
 
 	.queryall {
 		display: flex;
 		flex-direction: column;
-		font-size: 40upx;
+		font-size: 40rpx;
 		color: #007AFF;
-		margin-left: 570upx;
-		margin-top: -60upx;
+		margin-left: 570rpx;
+		margin-top: -60rpx;
 	}
 
 	.detailscrollview {
 		width: 100%;
-		height: 950upx;
-		margin-top: 20upx;
+		height: 950rpx;
+		margin-top: 20rpx;
 	}
 
 	.detailtitle {
 		display: flex;
-		font-size: 35upx;
-		margin-top: 30upx;
-		margin-left: 30upx;
+		font-size: 35rpx;
+		margin-top: 30rpx;
+		margin-left: 30rpx;
 	}
 
 	.detaildata {
 		display: flex;
-		font-size: 35upx;
-		margin-top: -50upx;
-		margin-left: 270upx;
+		font-size: 35rpx;
+		margin-top: -50rpx;
+		margin-left: 270rpx;
 		text-align: center;
 	}
 
 	.listline {
 		width: 100%;
-		height: 3upx;
+		height: 3rpx;
 		background-color: #000000;
-		margin-top: 20upx;
+		margin-top: 20rpx;
 	}
 
 	.tabbackground {
-		width: 100%;
-		height: 90upx;
-		margin-top: 150upx;
-		background-color: #F4F4F4;
+		position: fixed;
+	    bottom: 0;
+	    left: 0;
+	    width: 100%; /* 关键：百分比宽度适配640/670px */
+	    height: 50px; /* PDA触控舒适高度，固定值 */
+	    display: flex;
+	    flex-direction: row;
+	    background-color: #ffffff;
+	    border-top: 1px solid #e5e5e5;
+	    z-index: 999; /* 防止被内容遮挡 */
+	    box-sizing: border-box; /* 避免边框撑大宽度 */
 	}
 
 	.tableft {
-		font-size: 45upx;
-		margin-top: 20upx;
-		margin-left: 40upx;
+		font-size: 45rpx;
+		margin-top: 20rpx;
+		margin-left: 40rpx;
 	}
 
 	.tabmiddle {
 		display: flex;
-		font-size: 45upx;
-		margin-top: -68upx;
-		margin-left: 330upx;
+		font-size: 45rpx;
+		margin-top: -68rpx;
+		margin-left: 330rpx;
 	}
 
 	.tabright {
 		display: flex;
-		font-size: 45upx;
-		margin-top: -68upx;
-		margin-left: 630upx;
+		font-size: 45rpx;
+		margin-top: -68rpx;
+		margin-left: 630rpx;
 	}
 
 	.tableftline {
 		width: 18%;
-		height: 5upx;
-		margin-left: 40upx;
+		height: 5rpx;
+		margin-left: 40rpx;
 	}
 
 	.tabmiddleline {
 		width: 18%;
-		height: 5upx;
-		margin-left: 330upx;
+		height: 5rpx;
+		margin-left: 330rpx;
 	}
 
 	.tabrightline {
 		width: 15%;
-		height: 5upx;
-		margin-left: 620upx;
+		height: 5rpx;
+		margin-left: 620rpx;
 	}
 
 	.inputsectiontitle {
 		font-size: 16px;
 		color: #000000;
-		margin-top: 20upx;
+		margin-top: 20rpx;
 	}
 
 	.inputsection {
 		font-size: 16px;
 		color: #000000;
-		border: 5upx solid;
+		border: 5rpx solid;
 		border-color: #888888;
-		margin-left: 170upx;
-		margin-top: -55upx;
+		margin-left: 170rpx;
+		margin-top: -55rpx;
+	}
+	
+	/* 底部tab容器：适配任意宽度（640/670），固定高度50px，固定在底部 */
+	.tab-footer {
+	  position: fixed;
+	  bottom: 0;
+	  left: 0;
+	  width: 100%; /* 关键：百分比宽度适配640/670px */
+	  height: 50px; /* PDA触控舒适高度，固定值 */
+	  display: flex;
+	  flex-direction: row;
+	  background-color: #ffffff;
+	  border-top: 1px solid #e5e5e5;
+	  z-index: 999; /* 防止被内容遮挡 */
+	  box-sizing: border-box; /* 避免边框撑大宽度 */
+	}
+	
+	/* 单个tab项：flex均分宽度，占满高度 */
+	.tab-item {
+	  flex: 1; /* 3个item均分100%宽度，兼容640/670px */
+	  height: 100%;
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: center;
+	  align-items: center;
+	  position: relative;
+	  /* 增加点击热区，适配PDA触控精度 */
+	  padding: 2px 0;
+	}	
+	
+	/* 页签激活态文本 */
+	.tabtext.active{
+		color: #007aff;
+		font-weight: bold;
+	}
+	
+	/* tab文字：小屏适配，字号18px（清晰不挤） */
+	.tabtext{
+		font-size: 40rpx;
+		color: #666666;
+		transition: color 0.3s ease;
+	}
+	
+	/* 页签下划线 */
+	.tabline {
+		width: 40rpx;
+		height: 4rpx;
+		background-color: transparent;
+		margin-top: 8rpx;
+		transition: background-color 0.3s ease;
+	}	
+	
+	/* 页签激活态下划线 */
+	.tabline.active {
+		background-color: #007aff;
+		border-radius: 2rpx;
 	}
 </style>

@@ -278,35 +278,35 @@
 
 <style>
 	.title {					
-		margin-left: -450upx;
-		margin-top: 50upx;
+		margin-left: -450rpx;
+		margin-top: 50rpx;
 		font-size: 20px;
 	}
 	
 	.content{
-		margin-left: 250upx;
-		margin-top: -65upx;
+		margin-left: 250rpx;
+		margin-top: -65rpx;
 		font-size: 20px;
 	}
 	
 	.scrollviewinfo {
 		width: 100%;
-		height: 800upx;
+		height: 800rpx;
 	}
 	
 	.tablebill{
 		width: 100%;
-		height: 790upx;
-		margin-top: 50upx;
+		height: 790rpx;
+		margin-top: 50rpx;
 	}
 	
 	.enterinventory{
 		width: 40%;
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 30upx;
-		margin-top: 100upx;
+		border-radius: 50rpx;
+		margin-left: 30rpx;
+		margin-top: 100rpx;
 		font-size: 18px;
 	}	
 	
@@ -314,9 +314,9 @@
 		width: 45%;
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 370upx;
-		margin-top: -95upx;
+		border-radius: 50rpx;
+		margin-left: 370rpx;
+		margin-top: -95rpx;
 		font-size: 18px;
 	}	
 </style>

@@ -1,48 +1,91 @@
 <template>
-	<view class="container">
-		<view class="tabbackground">
-			<text class="tableft" v-bind:class="{selecttab : IsShowBindingView}" v-on:click="SwitchTab(true)">汇总</text>
-			<view class="tableftline" v-bind:class="{selecttabline : IsShowBindingView}"></view>
+	<view class="container">		
+		<!-- 内容区域（调整为置顶显示） -->
+		<view class="content-wrapper">
+			<!-- 汇总模块 -->
+			<view class="summary" v-show="IsShowBindingView">
+				<!-- 进度条：移除原宽80%和居中，改为整行 -->
+				<cmd-progress class="summary-progress"
+					v-bind:percent="Math.round((this.ScannerLabelCount / this.InnerCartonLabelCount) * 100, 0)">
+				</cmd-progress>
+				
+				<!-- 汇总表单（网格布局，标题+字段对齐） -->
+				<view class="summary-form">
+					<view class="form-row">
+						<text class="form-label">外箱标签：</text>
+						<text class="form-value">{{CartonLabel}}</text>
+					</view>
+					<view class="form-row">
+						<text class="form-label">已扫内箱数：</text>
+						<text class="form-value scannedcount">{{ScannerLabelCount}}</text>
+					</view>
+					<view class="form-row">
+						<text class="form-label">装满内箱数：</text>
+						<text class="form-value">{{InnerCartonLabelCount}}</text>
+					</view>
+					<view class="form-row">
+						<text class="form-label">物料编码：</text>
+						<text class="form-value">{{FNumber}}</text>
+					</view>
+					<view class="form-row">
+						<text class="form-label">物料名称：</text>
+						<text class="form-value">{{FName}}</text>
+					</view>
+					<view class="form-row">
+						<text class="form-label">物料规格：</text>
+						<text class="form-value">{{FModel}}</text>
+					</view>
+					<view class="form-row">
+						<text class="form-label">批次：</text>
+						<text class="form-value">{{FGMPBatchNo != '' ? FGMPBatchNo : '空'}}</text>
+					</view>
+					<view class="form-row">
+						<text class="form-label">扫描模式：</text>
+						<text class="form-value">{{IsPack ? '扫码装箱' : '查询外箱'}}</text>
+					</view>
+				</view>
+			</view>
 
-			<text class="tabright" v-bind:class="{selecttab : !IsShowBindingView}"
-				v-on:click="SwitchTab(false)">明细</text>
-			<view class="tabrightline" v-bind:class="{selecttabline : !IsShowBindingView}"></view>
+			<!-- 明细模块 -->
+			<view class="detail" v-show="!IsShowBindingView">
+				<!-- 操作按钮 -->
+				<view class="detail-btns">
+					<button class="btn selectlabel" v-on:click="SelectAllLabel()">全选/反选</button>
+					<button class="btn deletelabel" v-on:click="DeleteSelectLabel()">删除</button>
+				</view>
+				<!-- 明细列表（滚动） -->
+				<scroll-view class="scrollview" scroll-y="true">
+					<uni-list class="detaillist">
+						<uni-list-item 
+							v-for="(item,index) in DetailListData" 
+							:key="index"
+							:title="`内箱标签：${item.FBarCode}`"
+							:note="`数量：${item.FQty}`"
+							:checkboxvalue="item.FBarCode"
+							:ischecked="item.FIsChecked" 
+							:isshowcheckbox="true" 
+							@CheckBoxChange="ChangeIsChecked(item)"
+							clickable>
+						</uni-list-item>
+					</uni-list>
+				</scroll-view>
+			</view>
 		</view>
+		
+		<!-- 底部Tab栏 -->
+		<view class="tab-container">			
+				<text class="tab-item left" 
+					v-bind:class="{selecttab : IsShowBindingView}" 
+					v-on:click="SwitchTab(true)">装箱汇总</text>
+				<view class="tab-line left-line" 
+					v-bind:class="{selecttabline : IsShowBindingView}"></view>
 
-		<view class="summary" v-show="IsShowBindingView">
-			<cmd-progress style="width: 80%; margin-top: -50rpx; margin-left: 90rpx;"
-				v-bind:percent="Math.round((this.ScannerLabelCount / this.InnerCartonLabelCount) * 100, 0)">
-			</cmd-progress>
-			<text class="cartonlabeltitle">外箱标签：</text>
-			<text class="cartonlabelcode">{{CartonLabel}}</text>
-			<text class="otherscantitle">已扫内箱数：</text>
-			<text class="scannedcount">{{ScannerLabelCount}}</text>
-			<text class="otherscantitle">装满内箱数：</text>
-			<text class="otherscandata">{{InnerCartonLabelCount}}</text>
-			<text class="otherscantitle">物料编码：</text>
-			<text class="otherscandata">{{FNumber}}</text>
-			<text class="otherscantitle">物料名称：</text>
-			<text class="otherscandata">{{FName}}</text>
-			<text class="otherscantitle">物料规格：</text>
-			<text class="otherscandata">{{FModel}}</text>
-			<text class="otherscantitle">批次：</text>
-			<text class="otherscandata">{{FGMPBatchNo != '' ? FGMPBatchNo : '空'}}</text>
-			<text class="otherscantitle">扫描模式：</text>
-			<text class="otherscandata">{{IsPack ? '扫码装箱' : '查询外箱'}}</text>
+				<text class="tab-item right" 
+					v-bind:class="{selecttab : !IsShowBindingView}"
+					v-on:click="SwitchTab(false)">内箱明细</text>
+				<view class="tab-line right-line" 
+					v-bind:class="{selecttabline : !IsShowBindingView}"></view>			
 		</view>
-
-
-
-		<button v-show="!IsShowBindingView" class="selectlabel" v-on:click="SelectAllLabel()">全选/反选</button>
-		<button v-show="!IsShowBindingView" class="deletelabel" v-on:click="DeleteSelectLabel()">删除</button>
-		<scroll-view class="scrollview" v-show="!IsShowBindingView" scroll-y="true">
-			<uni-list class="detaillist">
-				<uni-list-item v-for="(item,index) in DetailListData" :key="index"
-					:title="'内箱标签：' + item.FBarCode + '\n' + '数量：' + item.FQty" :checkboxvalue="item.FBarCode"
-					:ischecked="item.FIsChecked" :isshowcheckbox="true" @CheckBoxChange="ChangeIsChecked(item)"
-					clickable></uni-list-item>
-			</uni-list>
-		</scroll-view>
 	</view>
 </template>
 
@@ -248,7 +291,7 @@
 											me.DetailListData = resdetail.data
 												.ResultData.LabelInfo.data0;
 										},
-										fail: () => {											
+										fail: () => {										
 											Config.PopAudioContext(false);
 											Config.ShowMessage('请求数据失败！');
 										},
@@ -443,157 +486,191 @@
 	}
 </script>
 
-
-<style>	
-	.cartonlabeltitle {
+<style>
+	page {
+		height: 100%;
+		width: 100%;
+	}
+	.container {
 		display: flex;
-		font-size: 40upx;
-		margin-left: 90upx;
-		margin-top: 40upx;
+		flex-direction: column;
+		height: 100%;
+		width: 100%;
+		box-sizing: border-box;		
 	}
 
-	.cartonlabelcode {
+	/* Tab栏样式 */
+	.tab-container {		
+		/* height: 0rpx; */
+		background-color: #F4F4F4;
+		/* padding-bottom: 20rpx; */
+		position: relative;
+		width: 100vw; /* 基于视口宽度 */
+		height: 12vh; /* 基于视口高度的百分比，适配竖屏 */
+		max-height: 80px; /* 720高度兜底 */
+		min-height: 60px; /* 640高度兜底 */
 		display: flex;
-		width: 500upx;
-		font-size: 45upx;
-		margin-left: 350upx;
-		margin-top: -63upx;
-	}
-
-	.otherscantitle {
-		display: flex;
-		font-size: 40upx;
-		margin-left: 90upx;
-		margin-top: 50upx;
-	}
-
-	.otherscandata {
-		display: flex;
-		width: 500upx;
-		font-size: 45upx;
-		margin-left: 350upx;
-		margin-top: -63upx;
-	}
-
-	.scannedcount {
-		display: flex;
-		width: 500upx;
-		font-size: 50upx;
-		margin-left: 350upx;
-		margin-top: -70upx;
-		color: #1AAD19;
+		justify-content: space-between;
+		align-items: center;		
+		box-sizing: border-box;
+	}	
+	
+	.tab-item {
+		font-size: 40rpx; /* 固定字体大小，适配360宽 */
+		position: relative;
+		width: 50%;
+		text-align: center;		
+		box-sizing: border-box;	
+		line-height: 90rpx; /* 行高匹配Tab栏高度，避免文字溢出 */
 	}
 	
-	.tabbackground {
-		width: 100%;
-		height: 100upx;
-		margin-top: 1090upx;
-		background-color: #F4F4F4;
+	.tab-item.left, .tab-item.right {
+		margin: 0;
+	}
+	
+	.tab-line {
+		position: absolute;
+		width: 15vw; /* 基于视口宽度的线条宽度 */
+		height: 2px; /* 固定细线条，适配不同分辨率 */
+		bottom: 1vh; /* 基于视口高度的底部间距 */
+		transition: background-color 0.3s ease;
+	}
+	
+	.left-line {
+		left: 25vw;
+		transform: translateX(-50%);
+	}
+	
+	.right-line {
+		right: 25vw;
+		transform: translateX(50%);
 	}
 
-	.tableftline {
-		width: 15%;
-		height: 5upx;
-		margin-top: 5upx;
-		margin-left: 145upx;
-	}
-
-	.tabrightline {
-		width: 15%;
-		height: 5upx;
-		margin-top: 5upx;
-		margin-left: 495upx;
-	}
-
-	.tableft {
+	/* 内容区域 - 弹性适配 */
+	.content-wrapper {
+		flex: 1;
 		display: flex;
-		font-size: 50upx;
-		margin-top: 5upx;
-		margin-left: 150upx;
+		flex-direction: column;
+		justify-content: flex-start; 
+		align-items: stretch; 		
+		padding: 1% 2%; /* 百分比内边距 */
+		box-sizing: border-box;
 	}
 
-	.tabright {
-		display: flex;
-		font-size: 50upx;
-		margin-top: -86upx;
-		margin-left: 500upx;
-	}
-
+	/* 汇总模块样式 */
 	.summary {
-		height: 650upx;
-		margin-top: -1100upx;
-		display: grid;
-		flex-direction: row;
+		width: 100%;
+	}
+	
+	/* 进度条样式：填充整行 + 底部间距（调大间距） */
+	.summary-progress {
+	  width: 100% !important; /* 强制覆盖组件内置宽度 */
+	  max-width: 100% !important; /* 防止组件限制最大宽度 */
+	  margin: 0 0 50rpx 0 !important; /* 进度条底部间距从30rpx调大到50rpx */
+	  display: block !important; /* 确保以块级元素占满整行 */
+	  padding: 0 !important; /* 清空内置内边距 */
+	}
+	
+	.summary-form {
+		width: 100%;
+	}
+	
+	.form-row {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start; 
+		/* 核心：表单行之间的间距从30rpx调大到40rpx（可自行调整） */
+		margin-bottom: 80rpx;
+		width: 100%;
+		/* 可选：增加行高，让单行内容更舒展 */
+		line-height: 40rpx;
+	}
+	
+	.form-label {
+		font-size: 40rpx;
+		text-align: left; 
+		flex-shrink: 0; 
+		margin-right: 250rpx;
+	}
+	
+	.form-value {
+		font-size: 45rpx;
+		text-align: right;
+		flex-shrink: 1;
+	}
+	
+	.scannedcount {
+		font-size: 50rpx;
+		color: #1AAD19;
 	}
 
-	.summarytitle {
-		font-size: 40px;	
-		margin-top: -80upx;
+	/* 明细模块样式 */
+	.detail {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+	}
+	
+	.detail-btns {
+		display: flex;
+		justify-content: space-between;
+		/* 按钮区与列表间距适配 */
+		margin-bottom: 4vw; 
+		/* 按钮之间的基础间距 */
+		gap: 12vw; 
+		padding: 0 2vw;
+		box-sizing: border-box;
+	}
+	
+	.btn {
+		color: #FFFFFF;
+		background-color: #007AFF;
+		border-radius: 50rpx;
+		/* 内边距适配 */
+		padding: 2.5vw 4vw;
+		/* 字体大小适配 */
+		font-size: 3.8vw;
+		/* 按钮宽度适配 */
+		flex: 1;
+		/* 最小宽度限制，防止挤压 */
+		min-width: 200rpx;
+		/* 最大宽度限制，适配宽屏 */
+		max-width: 250rpx;
+		/* 居中显示文字 */
+		text-align: center;
+		border: none;
+	}
+	
+	.selectlabel {
+		margin: 0;
+	}
+	
+	.deletelabel {
+		margin: 0;
+	}
+	
+	.scrollview {
+		/* 高度适配：基于视口高度计算 */
+		height: calc(100vh - 20vh - 12vh);
+		min-height: 520rpx; /* 360*640兜底 */
+		max-height: 600rpx; /* 360*720兜底 */
+		width: 100%;
+		box-sizing: border-box;
+	}
+	
+	.detaillist {
+		width: 100%;
+		/* 可选：明细列表项之间增加间距 */
+		--uni-list-item-padding: 20rpx 0;
 	}
 
-	.summarydata {
-		font-size: 40upx;
-		margin-left: 50upx;
-		margin-top: -50upx;
-	}
-
+	/* 通用选中样式 */
 	.selecttab {
 		color: #007AFF;
 	}
-
+	
 	.selecttabline {
 		background-color: #007AFF;
 	}
-
-	.unselectitem {
-		color: #FFFFFF;
-	}
-
-	.selectitem {
-		background-color: #808080;
-	}
-
-	.detaillist {
-		width: 100%;
-	}
-
-	.scrollview {
-		height: 870upx;
-		margin-top: 30upx;
-	}
-
-	.logo {
-		height: 200upx;
-		width: 200upx;
-		margin-top: 200upx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50upx;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36upx;
-		color: #8f8f94;
-	}
-
-	.selectlabel {
-		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-top: -1170upx;
-		margin-left: 200upx;
-	}
-
-	.deletelabel {
-		color: #FFFFFF;
-		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-top: -95upx;
-		margin-right: 150upx;
-	}	
 </style>

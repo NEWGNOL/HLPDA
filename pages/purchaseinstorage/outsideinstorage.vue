@@ -733,25 +733,25 @@
 <style>
 	.instorageview {
 		width: 100%;
-		height: 950upx;
+		height: 950rpx;
 	}
 	
 	.instoragelistview {
 		width: 100%;
-		height: 970upx;
-		margin-top: 20upx;
+		height: 970rpx;
+		margin-top: 20rpx;
 	}
 	
 	.selectinfoscrollview {
 		width: 100%;
-		height: 670upx;
-		margin-top: 50upx;
+		height: 670rpx;
+		margin-top: 50rpx;
 	}
 	
 	.unselectinfoscrollview {
 		width: 100%;
-		height: 900upx;
-		margin-top: 50upx;
+		height: 900rpx;
+		margin-top: 50rpx;
 	}
 	
 	.addstoragein {
@@ -761,8 +761,8 @@
 		font-size: 15px;
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;		
-		margin-left: 20upx;
-		margin-top: 20upx;	
+		margin-left: 20rpx;
+		margin-top: 20rpx;	
 	}
 	
 	.auditstoragein {
@@ -771,8 +771,8 @@
 		font-size: 15px;
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;		
-		margin-left: 195upx;
-		margin-top: -97upx;	
+		margin-left: 195rpx;
+		margin-top: -97rpx;	
 	}
 	
 	.unauditstoragein {
@@ -781,8 +781,8 @@
 		font-size: 15px;
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;		
-		margin-left: 195upx;
-		margin-top: -97upx;
+		margin-left: 195rpx;
+		margin-top: -97rpx;
 	}
 	
 	.deletestoragein {
@@ -792,8 +792,8 @@
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;
 		text-align: center;
-		margin-left: 370upx;
-		margin-top: -85upx;
+		margin-left: 370rpx;
+		margin-top: -85rpx;
 	}	
 	
 	.inputbyhand{
@@ -803,42 +803,42 @@
 		border: 1px solid #FFFFFF;
 		background-color: #1AAD19;
 		text-align: center;
-		margin-left: 545upx;
-		margin-top: -85upx;
+		margin-left: 545rpx;
+		margin-top: -85rpx;
 	}
 	
 	.billhead {
 		width: 100%;
-		margin-top: 20upx;
+		margin-top: 20rpx;
 	}
 	
 	.title {
-		margin-left: 50upx;
-		font-size: 40upx;
+		margin-left: 50rpx;
+		font-size: 40rpx;
 	}
 	
 	.billnoempty {
-		width: 200upx;
-		font-size: 38upx;
-		margin-top: -60upx;
-		margin-left: 100upx;
+		width: 200rpx;
+		font-size: 38rpx;
+		margin-top: -60rpx;
+		margin-left: 100rpx;
 		text-align: center;
 		color: #777777;
 	}
 	
 	.data {
-		width: 400upx;
-		font-size: 40upx;
-		margin-top: -60upx;
-		margin-left: 300upx;
+		width: 400rpx;
+		font-size: 40rpx;
+		margin-top: -60rpx;
+		margin-left: 300rpx;
 		text-align: center;
 	}
 	
 	.dataline {
 		width: 60%;
-		height: 5upx;
+		height: 5rpx;
 		background-color: #4CD964;
-		margin-left: 250upx;
+		margin-left: 250rpx;
 	}
 	
 	.selecttab {
@@ -851,85 +851,85 @@
 	
 	.tabbackground {
 		width: 100%;
-		height: 90upx;
-		margin-top: 150upx;
+		height: 90rpx;
+		margin-top: 150rpx;
 		background-color: #F4F4F4;
 	}
 	
 	.tableft {		
-		font-size: 45upx;
-		margin-top: 20upx;
-		margin-left: 50upx;
+		font-size: 45rpx;
+		margin-top: 20rpx;
+		margin-left: 50rpx;
 	}
 	
 	.tabmiddle {
 		display: flex;
-		font-size: 45upx;
-		margin-top: -68upx;
-		margin-left: 340upx;
+		font-size: 45rpx;
+		margin-top: -68rpx;
+		margin-left: 340rpx;
 	}
 	
 	.tabright {		
 		display: flex;
-		font-size: 45upx;
-		margin-top: -68upx;
-		margin-left: 630upx;
+		font-size: 45rpx;
+		margin-top: -68rpx;
+		margin-left: 630rpx;
 	}
 	
 	.tableftline {		
 		width: 15%;
-		height: 5upx;		
-		margin-left: 40upx;
+		height: 5rpx;		
+		margin-left: 40rpx;
 	}
 	
 	.tabmiddleline {		
 		width: 15%;
-		height: 5upx;		
-		margin-left: 330upx;
+		height: 5rpx;		
+		margin-left: 330rpx;
 	}
 	
 	.tabrightline {		
 		width: 15%;
-		height: 5upx;		
-		margin-left: 620upx;
+		height: 5rpx;		
+		margin-left: 620rpx;
 	}
 	
 	.scanned {
 		display: inline-block;
 		color: #FFFFFF;
-		font-size: 40upx;
-		margin-left: 30upx;
-		margin-top: 30upx;
+		font-size: 40rpx;
+		margin-left: 30rpx;
+		margin-top: 30rpx;
 	}
 	
 	.queryall {
 		display: flex;
 		flex-direction: column;
-		font-size: 40upx;
+		font-size: 40rpx;
 		color: #007AFF;
-		margin-left: 570upx;
-		margin-top: -60upx;
+		margin-left: 570rpx;
+		margin-top: -60rpx;
 	}
 	
 	.detailtitle {
 		display: flex;
-		font-size: 35upx;
-		margin-top: 30upx;
-		margin-left: 30upx;
+		font-size: 35rpx;
+		margin-top: 30rpx;
+		margin-left: 30rpx;
 	}
 	
 	.detaildata {
 		display: flex;
-		font-size: 35upx;
-		margin-top: -50upx;
-		margin-left: 270upx;
+		font-size: 35rpx;
+		margin-top: -50rpx;
+		margin-left: 270rpx;
 		text-align: center;
 	}
 	
 	.listline {
 		width: 100%;
-		height: 3upx;
+		height: 3rpx;
 		background-color: #000000;	
-		margin-top: 20upx;
+		margin-top: 20rpx;
 	}
 </style>

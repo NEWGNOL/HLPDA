@@ -253,25 +253,25 @@
 
 <style>
 	.scrollview {
-		margin-top: 20upx;
-		height: 1000upx;
+		margin-top: 20rpx;
+		height: 1000rpx;
 	}
 
 	.selectlabel {
 		width: 30%;
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-left: 150upx;
-		margin-top: 20upx;
+		border-radius: 50rpx;
+		margin-left: 150rpx;
+		margin-top: 20rpx;
 	}
 
 	.deletelabel {
 		width: 20%;
 		color: #FFFFFF;
 		background-color: #007AFF;
-		border-radius: 50upx;
-		margin-right: 150upx;
-		margin-top: -95upx;
+		border-radius: 50rpx;
+		margin-right: 150rpx;
+		margin-top: -95rpx;
 	}
 </style>

@@ -127,15 +127,15 @@
 		display: flex;
 		/* #endif */
 		width: 63%;
-		height: 25px;
+		height: 45px;
 		flex-direction: row;
 		align-items: center;
 		
 	}
 
 	.uni-combox__label {
-		font-size: 16px;
-		line-height: 22px;
+		font-size: 20px;
+		line-height: 45px;
 		padding-right: 10px;
 		color: #999999;
 	}
@@ -149,14 +149,14 @@
 		flex-direction: row;
 		align-items: center;		
 		width: 100rpx;	
-	    height: 33px;
+	    height: 45px;
 	}
 
 	.uni-combox__input {
 		flex: 1;
-		font-size: 16px;		
-		line-height: 22px;		
-		height: 33px;		
+		font-size: 20px;		
+		line-height: 45px;		
+		height: 45px;		
 	}
 
 	.uni-combox__input-arrow {
